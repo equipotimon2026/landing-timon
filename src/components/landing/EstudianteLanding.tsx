@@ -8,7 +8,7 @@ import { Marquee } from './Marquee'
 import { SectionMark } from './SectionMark'
 import { useInView } from '@/hooks/useInView'
 
-const PRODUCT_URL = 'https://app.timon.com.ar'
+const PRODUCT_URL = 'https://app.timonear.com.ar'
 
 type Props = { onBack: () => void; onPricing: () => void }
 

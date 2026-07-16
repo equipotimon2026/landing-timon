@@ -3,7 +3,7 @@
 import { Logo } from './Logo'
 import { ArrowLeft, ArrowRight } from 'lucide-react'
 
-const APP_URL = 'https://app.timon.com.ar'
+const APP_URL = 'https://app.timonear.com.ar'
 
 type Audience = 'universal' | 'colegios' | 'pricing'
 
