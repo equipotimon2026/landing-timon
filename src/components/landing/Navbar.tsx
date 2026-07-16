@@ -66,14 +66,16 @@ export function Navbar({ audience, onLogoClick, onSwitchAudience, onBack }: Prop
             Iniciar sesión
           </a>
           {!isColegios && !isPricing && (
-            <button
-              onClick={() => onSwitchAudience('pricing')}
+            <a
+              href={APP_URL}
+              target="_blank"
+              rel="noopener noreferrer"
               className="group inline-flex items-center gap-2 px-4 py-[7px] rounded-full bg-[var(--ocean)] text-[var(--cream-elev)] text-[12px] font-medium hover:bg-[var(--ocean-deep)] transition-all whitespace-nowrap cursor-pointer"
             >
               <span className="sm:hidden">Empezar</span>
               <span className="hidden sm:inline">Empezar el recorrido</span>
               <ArrowRight size={12} className="group-hover:translate-x-0.5 transition-transform" />
-            </button>
+            </a>
           )}
         </nav>
       </div>
