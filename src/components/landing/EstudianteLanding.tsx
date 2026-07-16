@@ -181,14 +181,16 @@ export function EstudianteLanding({ onBack: _onBack, onPricing }: Props) {
 
       {/* ─── CTA INTERMEDIO ─── */}
       <section className="bg-[var(--cream-elev)] border-t border-[var(--border-cream)] py-12 sm:py-16 text-center">
-        <button
-          onClick={onPricing}
+        <a
+          href={PRODUCT_URL}
+          target="_blank"
+          rel="noopener noreferrer"
           className="group inline-flex items-center gap-3 px-8 py-[18px] rounded-full bg-[var(--ocean)] text-[var(--cream-elev)] font-medium text-[15px] hover:bg-[var(--ocean-deep)] transition-all cursor-pointer"
           style={{ boxShadow: '0 12px 32px rgba(30, 91, 160, 0.20)' }}
         >
           Empezar el recorrido
           <ArrowRight size={16} className="group-hover:translate-x-0.5 transition-transform" />
-        </button>
+        </a>
       </section>
 
       {/* ─── ANTES / DESPUÉS — shift visual ─── */}
@@ -233,14 +235,16 @@ export function EstudianteLanding({ onBack: _onBack, onPricing }: Props) {
               empezamos.
             </span>
           </h2>
-          <button
-            onClick={onPricing}
+          <a
+            href={PRODUCT_URL}
+            target="_blank"
+            rel="noopener noreferrer"
             className="group inline-flex items-center gap-3 px-8 py-[18px] rounded-full bg-[var(--ocean)] text-[var(--cream-elev)] font-medium text-[15px] hover:bg-[var(--ocean-deep)] transition-all cursor-pointer"
             style={{ boxShadow: '0 12px 32px rgba(30, 91, 160, 0.20)' }}
           >
             Empezar el recorrido
             <ArrowRight size={16} className="group-hover:translate-x-0.5 transition-transform" />
-          </button>
+          </a>
           <p className="mt-7 font-mono text-[10px] uppercase tracking-[0.18em] text-[var(--hueso)]">
             Privado · sin límite de tiempo
           </p>
