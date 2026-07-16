@@ -4,7 +4,7 @@ import { useState } from 'react'
 import { X, Send } from 'lucide-react'
 import { WheelMark } from './Logo'
 
-type Step = 'idle' | 'open' | 'done'
+type Step = 'idle' | 'open' | 'sending' | 'done' | 'error'
 
 export function FloatingChat() {
   const [step, setStep] = useState<Step>('idle')
@@ -14,16 +14,27 @@ export function FloatingChat() {
   const open = () => setStep('open')
   const close = () => setStep('idle')
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    setStep('done')
+    setStep('sending')
+    try {
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ message, email }),
+      })
+      if (!res.ok) throw new Error()
+      setStep('done')
+    } catch {
+      setStep('error')
+    }
   }
 
   return (
     <div className="fixed bottom-6 right-6 z-[200] flex flex-col items-end gap-3">
 
       {/* Chat panel */}
-      {(step === 'open' || step === 'done') && (
+      {(step === 'open' || step === 'sending' || step === 'done' || step === 'error') && (
         <div
           className="bg-[var(--cream-elev)] border border-[var(--border-cream)] rounded-2xl overflow-hidden animate-fade-in-up w-[320px] max-w-[calc(100vw-2rem)]"
           style={{ boxShadow: '0 16px 48px rgba(15,31,54,0.15)' }}
@@ -55,12 +66,14 @@ export function FloatingChat() {
                 <p className="text-[var(--navy)] text-[13px] leading-[1.5]">
                   {step === 'done'
                     ? `Recibido. Te escribimos a ${email}.`
+                    : step === 'error'
+                    ? 'Hubo un error al enviar. Intentá de nuevo o escribinos a info@timonear.com.'
                     : '¿Tenés alguna pregunta? Escribila y te respondemos a la brevedad.'}
                 </p>
               </div>
             </div>
 
-            {step === 'open' && (
+            {(step === 'open' || step === 'sending' || step === 'error') && (
               <form onSubmit={handleSubmit} className="flex flex-col gap-2.5 mt-1">
                 <textarea
                   rows={3}
@@ -68,7 +81,8 @@ export function FloatingChat() {
                   placeholder="Tu pregunta…"
                   value={message}
                   onChange={(e) => setMessage(e.target.value)}
-                  className="bg-[var(--cream)] border border-[var(--border-cream)] focus:border-[var(--ocean)] text-[var(--navy)] text-[13px] rounded-xl px-3 py-2.5 outline-none transition-colors resize-none placeholder:text-[var(--hueso)]"
+                  disabled={step === 'sending'}
+                  className="bg-[var(--cream)] border border-[var(--border-cream)] focus:border-[var(--ocean)] text-[var(--navy)] text-[13px] rounded-xl px-3 py-2.5 outline-none transition-colors resize-none placeholder:text-[var(--hueso)] disabled:opacity-50"
                 />
                 <input
                   type="email"
@@ -76,14 +90,16 @@ export function FloatingChat() {
                   placeholder="Tu email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="bg-[var(--cream)] border border-[var(--border-cream)] focus:border-[var(--ocean)] text-[var(--navy)] text-[13px] rounded-xl px-3 py-2.5 outline-none transition-colors placeholder:text-[var(--hueso)]"
+                  disabled={step === 'sending'}
+                  className="bg-[var(--cream)] border border-[var(--border-cream)] focus:border-[var(--ocean)] text-[var(--navy)] text-[13px] rounded-xl px-3 py-2.5 outline-none transition-colors placeholder:text-[var(--hueso)] disabled:opacity-50"
                 />
                 <button
                   type="submit"
-                  className="group inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-full bg-[var(--ocean)] text-[var(--cream-elev)] font-medium text-[13px] hover:bg-[var(--ocean-deep)] transition-all cursor-pointer"
+                  disabled={step === 'sending'}
+                  className="group inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-full bg-[var(--ocean)] text-[var(--cream-elev)] font-medium text-[13px] hover:bg-[var(--ocean-deep)] transition-all cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed"
                 >
-                  Enviar
-                  <Send size={12} className="group-hover:translate-x-0.5 transition-transform" />
+                  {step === 'sending' ? 'Enviando…' : 'Enviar'}
+                  {step !== 'sending' && <Send size={12} className="group-hover:translate-x-0.5 transition-transform" />}
                 </button>
               </form>
             )}
