@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96" width="96" height="96" fill="none" color="#4361EE">
+  <!-- Timon (timón/brújula) — variante favicon: trazos más gruesos para 16-32px -->
+  <circle cx="48" cy="48" r="22" stroke="currentColor" stroke-width="6" fill="none"/>
+  <circle cx="48" cy="48" r="7" fill="currentColor"/>
+  <line x1="48" y1="10" x2="48" y2="86" stroke="currentColor" stroke-width="6" stroke-linecap="round"/>
+  <line x1="10" y1="48" x2="86" y2="48" stroke="currentColor" stroke-width="6" stroke-linecap="round"/>
+  <line x1="74.87" y1="21.13" x2="21.13" y2="74.87" stroke="currentColor" stroke-width="6" stroke-linecap="round"/>
+  <line x1="74.87" y1="74.87" x2="21.13" y2="21.13" stroke="currentColor" stroke-width="6" stroke-linecap="round"/>
+  <circle cx="48" cy="10" r="6" fill="currentColor"/>
+  <circle cx="48" cy="86" r="6" fill="currentColor"/>
+  <circle cx="10" cy="48" r="6" fill="currentColor"/>
+  <circle cx="86" cy="48" r="6" fill="currentColor"/>
+  <circle cx="74.87" cy="21.13" r="6" fill="currentColor"/>
+  <circle cx="21.13" cy="74.87" r="6" fill="currentColor"/>
+  <circle cx="74.87" cy="74.87" r="6" fill="currentColor"/>
+  <circle cx="21.13" cy="21.13" r="6" fill="currentColor"/>
+</svg>
