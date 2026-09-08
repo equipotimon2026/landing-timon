@@ -1,7 +1,7 @@
 'use client'
 
 import { Logo } from './Logo'
-import { ArrowLeft, ArrowRight } from 'lucide-react'
+import { ArrowLeft } from 'lucide-react'
 
 const APP_URL = 'https://app.timonear.com'
 
@@ -14,69 +14,61 @@ type Props = {
   onBack: () => void
 }
 
+/**
+ * Navbar liviana.
+ *
+ * Desde que el hero ES la puerta de entrada (reunión 07/09/2026), el botón
+ * "Empezar el recorrido" acá arriba duplicaba el formulario que está tres
+ * centímetros más abajo. Queda solo "Entrar" para el que vuelve y ya scrolleó,
+ * y en las vistas internas (precios / colegios), donde no hay formulario.
+ */
 export function Navbar({ audience, onLogoClick, onSwitchAudience, onBack }: Props) {
   const isHome = audience === 'universal'
   const isColegios = audience === 'colegios'
   const isPricing = audience === 'pricing'
 
-  const textBase = 'text-[var(--hueso)]'
-  const textHover = 'hover:text-[var(--navy)]'
-  const btnClass = `hidden sm:inline-flex text-[13px] ${textBase} ${textHover} transition-colors cursor-pointer`
+  const link =
+    'hidden sm:inline-flex text-[13px] text-[var(--hueso)] hover:text-[var(--navy)] transition-colors cursor-pointer'
 
   return (
-    <header className="sticky top-0 left-0 right-0 z-50">
-      <div className="w-full px-5 sm:px-8 lg:px-12 xl:px-[5vw] 2xl:px-[6vw] h-16 flex items-center justify-between gap-3">
-
-        <div className="flex items-center gap-3 sm:gap-4 min-w-0">
+    <header className="sticky left-0 right-0 top-0 z-50">
+      <div className="flex h-16 w-full items-center justify-between gap-3 px-5 sm:px-8 lg:px-12 xl:px-[5vw] 2xl:px-[6vw]">
+        <div className="flex min-w-0 items-center gap-3 sm:gap-4">
           {!isHome && (
             <button
               onClick={onBack}
               aria-label="Volver al inicio"
-              className={`inline-flex items-center gap-1.5 text-sm ${textBase} ${textHover} transition-colors cursor-pointer pr-3 sm:border-r sm:border-[var(--border-cream)] shrink-0`}
+              className="inline-flex shrink-0 cursor-pointer items-center gap-1.5 pr-3 text-sm text-[var(--hueso)] transition-colors hover:text-[var(--navy)] sm:border-r sm:border-[var(--border-cream)]"
             >
               <ArrowLeft size={14} />
               <span className="hidden sm:inline">Volver</span>
             </button>
           )}
           <Logo onClick={onLogoClick} tone="navy" size={28} />
-          {!isHome && (
-            <span className="hidden md:inline-flex items-center font-mono text-[10px] uppercase tracking-[0.16em] text-[var(--hueso)] ml-1">
-              Claridad antes de elegir
-            </span>
-          )}
         </div>
 
-        <nav className="flex items-center gap-4 sm:gap-5 shrink-0">
+        <nav className="flex shrink-0 items-center gap-4 sm:gap-5">
           {!isPricing && (
-            <button onClick={() => onSwitchAudience('pricing')} className={btnClass}>
+            <button onClick={() => onSwitchAudience('pricing')} className={link}>
               Precios
             </button>
           )}
           {!isColegios && !isPricing && (
-            <button onClick={() => onSwitchAudience('colegios')} className={btnClass}>
+            <button onClick={() => onSwitchAudience('colegios')} className={link}>
               Para colegios
             </button>
           )}
-          <a
-            href={APP_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="hidden sm:inline-flex items-center px-4 py-[7px] rounded-full text-[12px] font-medium whitespace-nowrap cursor-pointer border border-[var(--border-cream-strong)] text-[var(--navy)] hover:border-[var(--navy)] transition-all"
-          >
-            Iniciar sesión
-          </a>
-          {!isColegios && !isPricing && (
-            <a
-              href={APP_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group inline-flex items-center gap-2 px-4 py-[7px] rounded-full bg-[var(--ocean)] text-[var(--cream-elev)] text-[12px] font-medium hover:bg-[var(--ocean-deep)] transition-all whitespace-nowrap cursor-pointer"
-            >
-              <span className="sm:hidden">Empezar</span>
-              <span className="hidden sm:inline">Empezar el recorrido</span>
-              <ArrowRight size={12} className="group-hover:translate-x-0.5 transition-transform" />
+          {isHome && (
+            <a href="#faq" className={link}>
+              Preguntas
             </a>
           )}
+          <a
+            href={`${APP_URL}/entrar`}
+            className="inline-flex cursor-pointer items-center whitespace-nowrap rounded-[var(--r-pill)] bg-[var(--ocean)] px-4 py-[7px] text-[12px] font-semibold text-white transition-all hover:bg-[var(--ocean-deep)]"
+          >
+            Entrar
+          </a>
         </nav>
       </div>
     </header>

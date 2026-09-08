@@ -9,6 +9,7 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-sans);
   --font-display: var(--font-display);
+  --font-serif: var(--font-serif);
   --font-mono: var(--font-mono);
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
@@ -47,56 +48,79 @@
   --radius-3xl: calc(var(--radius) * 2.2);
   --radius-4xl: calc(var(--radius) * 2.6);
 
-  /* ─── Timon — Crema + Navy brand tokens ─────────────────────────── */
-  --cream: #F5EDE0;
-  --cream-elev: #FBF5EA;
-  --cream-deep: #EDE2CF;
-  --navy: #0F1F36;
-  --navy-mid: #1A2D4D;
-  --ocean: #1E5BA0;
-  --ocean-deep: #1B5390;
-  --ocean-light: #4F84C2;
-  --terra: #C97F5E;
-  --terra-soft: #E2A88B;
-  --hueso: #6B7B96;
-  --border-cream: #E6DCC9;
-  --border-cream-soft: #EFE6D5;
-  --border-cream-strong: #D8CCB4;
+  /* ─── Timon — sistema del deck "Timón Final" ────────────────────
+     Crema clara + azul eléctrico + acentos cálidos. Los nombres de token
+     no cambian (los usan todos los componentes); cambian los valores. */
+  --cream: #FAF8F3;
+  --cream-elev: #FFFFFF;
+  --cream-deep: #F1ECE2;
+  --navy: #0F1B33;
+  --navy-mid: #1E2A44;
+  --ocean: #2563EB;
+  --ocean-deep: #1D4ED8;
+  --ocean-light: #93B4FB;
+  --ocean-wash: #EAF0FE;
+  /* "terra" era el acento cálido apagado; ahora es el ámbar de la racha */
+  --terra: #F59E0B;
+  --terra-soft: #FDE9C4;
+  --verde: #10B981;
+  --verde-soft: #D6F5E8;
+  --rosa: #EC4899;
+  --rosa-soft: #FCE1EF;
+  --indigo: #6366F1;
+  --hueso: #6B7793;
+  --border-cream: #E9E3D8;
+  --border-cream-soft: #F1ECE3;
+  --border-cream-strong: #DCD3C4;
+
+  /* Vidrio líquido — superficie base de todas las tarjetas del deck */
+  --glass-bg: rgba(255, 255, 255, 0.72);
+  --glass-bg-strong: rgba(255, 255, 255, 0.88);
+  --glass-border: rgba(255, 255, 255, 0.9);
+  --glass-shadow: 0 1px 2px rgba(15, 27, 51, 0.04), 0 12px 32px rgba(15, 27, 51, 0.06);
+  --glass-shadow-lg: 0 2px 4px rgba(15, 27, 51, 0.05), 0 24px 60px rgba(15, 27, 51, 0.10);
+
+  /* Radios del deck */
+  --r-sm: 12px;
+  --r-md: 16px;
+  --r-lg: 22px;
+  --r-xl: 28px;
+  --r-pill: 999px;
 }
 
 :root {
-  --background: #F5EDE0;
-  --foreground: #0F1F36;
-  --card: #FBF5EA;
-  --card-foreground: #0F1F36;
-  --popover: #FBF5EA;
-  --popover-foreground: #0F1F36;
-  --primary: #1E5BA0;
-  --primary-foreground: #FBF5EA;
-  --secondary: #EDE2CF;
-  --secondary-foreground: #0F1F36;
-  --muted: #EDE2CF;
-  --muted-foreground: #6B7B96;
-  --accent: #C97F5E;
-  --accent-foreground: #FBF5EA;
+  --background: #FAF8F3;
+  --foreground: #0F1B33;
+  --card: #FFFFFF;
+  --card-foreground: #0F1B33;
+  --popover: #FFFFFF;
+  --popover-foreground: #0F1B33;
+  --primary: #2563EB;
+  --primary-foreground: #FFFFFF;
+  --secondary: #F1ECE2;
+  --secondary-foreground: #0F1B33;
+  --muted: #F1ECE2;
+  --muted-foreground: #6B7793;
+  --accent: #F59E0B;
+  --accent-foreground: #FFFFFF;
   --destructive: oklch(0.577 0.245 27.325);
-  --border: #E6DCC9;
-  --input: #E6DCC9;
-  --ring: #1E5BA0;
-  --chart-1: #1E5BA0;
-  --chart-2: #0F1F36;
-  --chart-3: #C97F5E;
-  --chart-4: #4F84C2;
-  --chart-5: #6B7B96;
-  --radius: 0.875rem;
-  --sidebar: #F5EDE0;
-  --sidebar-foreground: #0F1F36;
-  --sidebar-primary: #1E5BA0;
-  --sidebar-primary-foreground: #FBF5EA;
-  --sidebar-accent: #EDE2CF;
-  --sidebar-accent-foreground: #0F1F36;
-  --sidebar-border: #E6DCC9;
-  --sidebar-ring: #1E5BA0;
+  --border: #E9E3D8;
+  --input: #E9E3D8;
+  --ring: #2563EB;
+  --chart-1: #2563EB;
+  --chart-2: #0F1B33;
+  --chart-3: #F59E0B;
+  --chart-4: #10B981;
+  --chart-5: #EC4899;
+  --radius: 1rem;
+  --sidebar: #FAF8F3;
+  --sidebar-foreground: #0F1B33;
+  --sidebar-primary: #2563EB;
+  --sidebar-primary-foreground: #FFFFFF;
+  --sidebar-accent: #F1ECE2;
+  --sidebar-accent-foreground: #0F1B33;
+  --sidebar-border: #E9E3D8;
+  --sidebar-ring: #2563EB;
 }
 
 @layer base {
@@ -148,8 +172,8 @@
 /* ─── Editorial grid background for hero sections ──────────────────── */
 .editorial-grid {
   background-image:
-    linear-gradient(to right, rgba(15, 31, 54, 0.04) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(15, 31, 54, 0.04) 1px, transparent 1px);
+    linear-gradient(to right, rgba(15, 27, 51, 0.04) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(15, 27, 51, 0.04) 1px, transparent 1px);
   background-size: 64px 64px;
 }
 
@@ -160,7 +184,7 @@
 
 /* ─── Dot grid — modern, quiet, on-brand ───────────────────────────── */
 .dot-grid {
-  background-image: radial-gradient(circle, rgba(15, 31, 54, 0.11) 1.1px, transparent 1.3px);
+  background-image: radial-gradient(circle, rgba(15, 27, 51, 0.11) 1.1px, transparent 1.3px);
   background-size: 28px 28px;
   background-position: 0 0;
 }
@@ -173,9 +197,9 @@
 /* ─── Hero mesh — soft brand-color wash (ocean + terra) ────────────── */
 .hero-mesh {
   background:
-    radial-gradient(900px 700px at 12% 18%, rgba(30, 91, 160, 0.10), transparent 60%),
-    radial-gradient(700px 600px at 88% 78%, rgba(201, 127, 94, 0.07), transparent 60%),
-    radial-gradient(500px 400px at 78% 12%, rgba(30, 91, 160, 0.05), transparent 60%);
+    radial-gradient(900px 700px at 12% 18%, rgba(37, 99, 235, 0.10), transparent 60%),
+    radial-gradient(700px 600px at 88% 78%, rgba(245, 158, 11, 0.07), transparent 60%),
+    radial-gradient(500px 400px at 78% 12%, rgba(37, 99, 235, 0.05), transparent 60%);
 }
 
 /* ─── Animated gradient blobs — modern AWWWards-style background ───── */
@@ -197,7 +221,7 @@
   height: 720px;
   top: -12%;
   left: -8%;
-  background: rgba(30, 91, 160, 0.32);
+  background: rgba(37, 99, 235, 0.32);
   animation: mesh-flow-a 22s ease-in-out infinite alternate;
 }
 .mesh-blob--terra {
@@ -205,7 +229,7 @@
   height: 620px;
   top: 25%;
   right: -6%;
-  background: rgba(201, 127, 94, 0.28);
+  background: rgba(245, 158, 11, 0.28);
   animation: mesh-flow-b 28s ease-in-out infinite alternate;
 }
 .mesh-blob--ocean-b {
@@ -213,7 +237,7 @@
   height: 540px;
   bottom: -10%;
   left: 32%;
-  background: rgba(30, 91, 160, 0.22);
+  background: rgba(37, 99, 235, 0.22);
   animation: mesh-flow-c 24s ease-in-out infinite alternate;
 }
 
@@ -241,7 +265,7 @@
 
 /* Soft ocean orb for hero backgrounds */
 .ocean-orb {
-  background: radial-gradient(circle, rgba(30, 91, 160, 0.10) 0%, transparent 60%);
+  background: radial-gradient(circle, rgba(37, 99, 235, 0.10) 0%, transparent 60%);
   filter: blur(60px);
 }
 
@@ -370,3 +394,93 @@
 .chat-ring-pulse {
   animation: chat-ring-pulse 2.2s ease-out infinite;
 }
+
+/* ─── Superficies de vidrio líquido (sistema del deck) ─────────────── */
+.glass {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--glass-shadow);
+  backdrop-filter: blur(20px) saturate(1.4);
+  -webkit-backdrop-filter: blur(20px) saturate(1.4);
+  border-radius: var(--r-lg);
+}
+.glass-strong {
+  background: var(--glass-bg-strong);
+  box-shadow: var(--glass-shadow-lg);
+}
+
+/* Lavado de fondo de la app: azul arriba-izq, cálido abajo-der */
+.timon-wash {
+  background:
+    radial-gradient(1100px 780px at 8% 0%, rgba(37, 99, 235, 0.10), transparent 62%),
+    radial-gradient(900px 700px at 100% 92%, rgba(245, 158, 11, 0.09), transparent 60%),
+    radial-gradient(700px 560px at 62% 8%, rgba(99, 102, 241, 0.06), transparent 60%),
+    var(--cream);
+}
+
+/* Micro-label monoespaciada — el "TU CAMINO" / "13 PARADAS" del deck */
+.mono-label {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 10px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: var(--hueso);
+}
+
+/* Línea emotiva en serif itálica (el "Tu email decide el resto.") */
+.serif-accent {
+  font-family: var(--font-serif), Georgia, serif;
+  font-style: italic;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+}
+
+/* ─── Botón "chunky" estilo Duolingo ───────────────────────────────────
+   Radio grande, peso alto, mayúsculas con tracking y una sombra sólida
+   abajo que se hunde al apretar. Es lo que hace que el botón se sienta
+   como un botón físico y no como un rectángulo de color. */
+.btn-chunky {
+  --sombra: rgba(15, 27, 51, 0.22);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-height: 56px;
+  padding: 0 28px;
+  border-radius: 16px;
+  font-weight: 800;
+  font-size: 15px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  cursor: pointer;
+  box-shadow: 0 4px 0 var(--sombra);
+  transition: transform 0.06s ease, box-shadow 0.06s ease, filter 0.15s ease;
+}
+.btn-chunky:hover { filter: brightness(1.04); }
+.btn-chunky:active {
+  transform: translateY(4px);
+  box-shadow: 0 0 0 var(--sombra);
+}
+.btn-chunky--primary {
+  --sombra: #1B4CC4;
+  background: var(--ocean);
+  color: #fff;
+}
+.btn-chunky--ghost {
+  --sombra: var(--border-cream-strong);
+  background: var(--cream-elev);
+  color: var(--ocean);
+  border: 2px solid var(--border-cream-strong);
+  border-bottom: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btn-chunky, .btn-chunky:active { transition: none; transform: none; }
+}
+
+/* Scrollbar fina — la usa la tira de momentos del hero en móvil. */
+.thin-scroll { scrollbar-width: thin; scrollbar-color: var(--border-cream-strong) transparent; }
+.thin-scroll::-webkit-scrollbar { height: 5px; width: 5px; }
+.thin-scroll::-webkit-scrollbar-thumb { background: var(--border-cream-strong); border-radius: 999px; }
+.thin-scroll::-webkit-scrollbar-track { background: transparent; }

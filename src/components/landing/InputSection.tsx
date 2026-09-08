@@ -8,12 +8,12 @@ import { InputMacBook } from './InputMacBook'
 import { ViewToggle, ViewMode } from './ViewToggle'
 
 const C = {
-  creamElev: '#FBF5EA',
-  creamBorder: '#E6DCC9',
-  creamDeep: '#EDE2CF',
-  navy: '#0F1F36',
-  ocean: '#1E5BA0',
-  hueso: '#6B7B96',
+  creamElev: '#FFFFFF',
+  creamBorder: '#E9E3D8',
+  creamDeep: '#F1ECE2',
+  navy: '#0F1B33',
+  ocean: '#2563EB',
+  hueso: '#6B7793',
 }
 
 

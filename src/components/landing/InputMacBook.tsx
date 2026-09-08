@@ -3,18 +3,18 @@
 import { useState, useRef, useEffect } from 'react'
 
 const C = {
-  cream: '#F5EDE0',
-  creamElev: '#FBF5EA',
-  creamDeep: '#EDE2CF',
-  creamBorder: '#E6DCC9',
-  creamBorderStrong: '#D8CCB4',
-  navy: '#0F1F36',
+  cream: '#FAF8F3',
+  creamElev: '#FFFFFF',
+  creamDeep: '#F1ECE2',
+  creamBorder: '#E9E3D8',
+  creamBorderStrong: '#DCD3C4',
+  navy: '#0F1B33',
   navyMid: '#1A2D4D',
-  ocean: '#1E5BA0',
-  oceanDeep: '#1B5390',
-  oceanLight: '#4F84C2',
-  terra: '#C97F5E',
-  hueso: '#6B7B96',
+  ocean: '#2563EB',
+  oceanDeep: '#1D4ED8',
+  oceanLight: '#93B4FB',
+  terra: '#F59E0B',
+  hueso: '#6B7793',
 }
 
 function MacMenuBar({ title }: { title: string }) {
@@ -97,7 +97,7 @@ function DesktopSlide1() {
             <p style={{ fontSize: 9, color: C.hueso, lineHeight: 1.6 }}>Módulo 1 de 6 completados</p>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 3, marginTop: 8 }}>
               {['Conversacional', 'Situacional', 'Posición', 'Selección', 'Elección binaria', 'Contexto'].map((item, i) => (
-                <div key={item} style={{ display: 'flex', alignItems: 'center', gap: 6, padding: '4px 8px', borderRadius: 6, background: i === 0 ? 'rgba(30,91,160,0.08)' : 'transparent' }}>
+                <div key={item} style={{ display: 'flex', alignItems: 'center', gap: 6, padding: '4px 8px', borderRadius: 6, background: i === 0 ? 'rgba(37,99,235,0.08)' : 'transparent' }}>
                   <div style={{ width: 6, height: 6, borderRadius: '50%', background: i === 0 ? C.ocean : C.creamBorderStrong, flexShrink: 0 }} />
                   <span style={{ fontSize: 10, color: i === 0 ? C.ocean : C.hueso, fontWeight: i === 0 ? 500 : 400 }}>{item}</span>
                 </div>
@@ -187,7 +187,7 @@ function DesktopSlide2() {
                 <div style={{
                   position: 'absolute', inset: 0, background: C.cream, border: `1px solid ${C.creamBorder}`, borderRadius: 20, padding: '22px 22px 18px',
                   display: 'flex', flexDirection: 'column', justifyContent: 'space-between',
-                  boxShadow: '0 8px 28px rgba(15,31,54,0.08)',
+                  boxShadow: '0 8px 28px rgba(15,27,51,0.08)',
                   transform: exit === 'left' ? 'translateX(-300px) rotate(-12deg)' : exit === 'right' ? 'translateX(300px) rotate(12deg)' : 'none',
                   opacity: exit ? 0 : 1,
                   transition: 'transform 0.3s ease-out, opacity 0.25s',
@@ -252,7 +252,7 @@ function DesktopSlide3() {
               <div onClick={(e) => handleTrackClick(axis.id, e)} style={{ flex: 1, padding: '8px 0', cursor: 'pointer' }}>
                 <div style={{ height: 4, background: C.creamBorderStrong, borderRadius: 999, position: 'relative' }}>
                   <div style={{ position: 'absolute', left: 0, top: 0, height: '100%', width: `${values[axis.id]}%`, background: C.ocean, borderRadius: 999, transition: 'width 0.08s' }} />
-                  <div style={{ position: 'absolute', top: '50%', left: `${values[axis.id]}%`, transform: 'translate(-50%,-50%)', width: 18, height: 18, background: C.ocean, borderRadius: '50%', transition: 'left 0.08s', boxShadow: '0 2px 8px rgba(30,91,160,0.3)' }} />
+                  <div style={{ position: 'absolute', top: '50%', left: `${values[axis.id]}%`, transform: 'translate(-50%,-50%)', width: 18, height: 18, background: C.ocean, borderRadius: '50%', transition: 'left 0.08s', boxShadow: '0 2px 8px rgba(37,99,235,0.3)' }} />
                 </div>
               </div>
               <span style={{ fontSize: 10.5, color: C.hueso, width: 120, lineHeight: 1.3 }}>{axis.right}</span>
@@ -316,7 +316,7 @@ function DesktopSlide4() {
                 const fs = size === 'lg' ? 14 : size === 'sm' ? 10.5 : 12
                 const pad = size === 'lg' ? '7px 16px' : size === 'sm' ? '5px 10px' : '6px 13px'
                 return (
-                  <div key={w} onClick={() => toggle(w)} style={{ padding: pad, borderRadius: 24, fontSize: fs, cursor: 'pointer', userSelect: 'none', transition: 'all 0.15s', border: `1px solid ${sel ? C.ocean : C.creamBorder}`, color: sel ? C.ocean : C.hueso, background: sel ? 'rgba(30,91,160,0.08)' : C.creamElev }}>
+                  <div key={w} onClick={() => toggle(w)} style={{ padding: pad, borderRadius: 24, fontSize: fs, cursor: 'pointer', userSelect: 'none', transition: 'all 0.15s', border: `1px solid ${sel ? C.ocean : C.creamBorder}`, color: sel ? C.ocean : C.hueso, background: sel ? 'rgba(37,99,235,0.08)' : C.creamElev }}>
                     {w}
                   </div>
                 )
@@ -370,7 +370,7 @@ function DesktopSlide5() {
               style={{
                 flex: 1, padding: '20px 18px', borderRadius: 16, cursor: 'pointer', textAlign: 'center',
                 border: `2px solid ${hover === opt.side ? opt.color : C.creamBorder}`,
-                background: hover === opt.side ? (opt.side === 'a' ? 'rgba(201,127,94,0.06)' : 'rgba(30,91,160,0.06)') : C.creamElev,
+                background: hover === opt.side ? (opt.side === 'a' ? 'rgba(245,158,11,0.06)' : 'rgba(37,99,235,0.06)') : C.creamElev,
                 transition: 'all 0.18s',
                 opacity: animating ? 0.5 : 1,
               }}

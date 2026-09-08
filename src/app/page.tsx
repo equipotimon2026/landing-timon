@@ -2,12 +2,13 @@
 
 import { useState, useEffect } from 'react'
 import { Navbar } from '@/components/landing/Navbar'
-import { HeroUniversal } from '@/components/landing/HeroUniversal'
+import { HeroEntrada } from '@/components/landing/HeroEntrada'
 import { InputSection } from '@/components/landing/InputSection'
 import { OutputSection } from '@/components/landing/OutputSection'
 import { Footer } from '@/components/landing/Footer'
 import { ColegiosSection } from '@/components/landing/ColegiosSection'
 import { PricingSection } from '@/components/landing/PricingSection'
+import { FaqSection } from '@/components/landing/FaqSection'
 import { FloatingChat } from '@/components/landing/FloatingChat'
 import { ScrollProgress } from '@/components/landing/ScrollProgress'
 
@@ -48,9 +49,12 @@ export default function Home() {
       <div className="flex-1">
         {audience === 'universal' && (
           <>
-            <HeroUniversal onPricing={() => handleSelect('pricing')} />
-            <InputSection />
+            <HeroEntrada />
+            <div id="que-es">
+              <InputSection />
+            </div>
             <OutputSection onPricing={() => handleSelect('pricing')} />
+            <FaqSection />
           </>
         )}
         {audience === 'colegios' && <ColegiosSection onBack={handleReset} />}

@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { Plus_Jakarta_Sans, JetBrains_Mono } from 'next/font/google'
+import { Plus_Jakarta_Sans, JetBrains_Mono, Instrument_Serif } from 'next/font/google'
 import './globals.css'
 
 const jakarta = Plus_Jakarta_Sans({
@@ -13,6 +13,16 @@ const jakartaDisplay = Plus_Jakarta_Sans({
   subsets: ['latin'],
   variable: '--font-display',
   weight: ['300', '400', '500', '600', '700', '800'],
+  display: 'swap',
+})
+
+// Serif itálica de acento: las líneas emotivas del deck ("Tu email decide
+// el resto.", las citas de Timón). Solo se usa en itálica.
+const serif = Instrument_Serif({
+  subsets: ['latin'],
+  variable: '--font-serif',
+  weight: ['400'],
+  style: ['italic'],
   display: 'swap',
 })
 
@@ -44,7 +54,7 @@ export default function RootLayout({
   return (
     <html
       lang="es"
-      className={`${jakarta.variable} ${jakartaDisplay.variable} ${mono.variable} h-full antialiased`}
+      className={`${jakarta.variable} ${jakartaDisplay.variable} ${serif.variable} ${mono.variable} h-full antialiased`}
       suppressHydrationWarning
     >
       <body

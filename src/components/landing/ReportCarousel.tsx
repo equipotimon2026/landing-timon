@@ -4,17 +4,17 @@ import { useState, useRef, useEffect } from 'react'
 import { ViewToggle, ViewMode } from './ViewToggle'
 
 const C = {
-  cream: '#F5EDE0',
-  creamElev: '#FBF5EA',
-  creamDeep: '#EDE2CF',
-  creamBorder: '#E6DCC9',
-  creamBorderStrong: '#D8CCB4',
-  navy: '#0F1F36',
+  cream: '#FAF8F3',
+  creamElev: '#FFFFFF',
+  creamDeep: '#F1ECE2',
+  creamBorder: '#E9E3D8',
+  creamBorderStrong: '#DCD3C4',
+  navy: '#0F1B33',
   navyMid: '#1A2D4D',
-  ocean: '#1E5BA0',
-  oceanLight: '#4F84C2',
-  terra: '#C97F5E',
-  hueso: '#6B7B96',
+  ocean: '#2563EB',
+  oceanLight: '#93B4FB',
+  terra: '#F59E0B',
+  hueso: '#6B7793',
   green: '#10B981',
   amber: '#F59E0B',
 }
@@ -77,7 +77,7 @@ function MacBookFrame({ children }: { children: React.ReactNode }) {
 
 function PhoneShell({ children }: { children: React.ReactNode }) {
   return (
-    <div style={{ width: 232, height: 470, background: C.navy, borderRadius: 33, border: `1.5px solid ${C.navyMid}`, overflow: 'hidden', position: 'relative', flexShrink: 0, boxShadow: '0 24px 48px rgba(15,31,54,0.18)' }}>
+    <div style={{ width: 232, height: 470, background: C.navy, borderRadius: 33, border: `1.5px solid ${C.navyMid}`, overflow: 'hidden', position: 'relative', flexShrink: 0, boxShadow: '0 24px 48px rgba(15,27,51,0.18)' }}>
       <div style={{ position: 'absolute', top: 9, left: '50%', transform: 'translateX(-50%)', width: 58, height: 18, background: C.navyMid, borderRadius: 10, zIndex: 100 }} />
       <div style={{ width: '100%', height: '100%', paddingTop: 34, display: 'flex', flexDirection: 'column', background: C.cream, overflow: 'hidden' }}>
         {children}
@@ -284,7 +284,7 @@ function SlidePersona() {
       <MacMenuBar section="Secciones 01 – 08" />
       <div style={{ flex: 1, display: 'flex', overflow: 'hidden' }}>
         {/* Sidebar */}
-        <div style={{ width: 158, borderRight: `1px solid ${C.creamBorder}`, display: 'flex', flexDirection: 'column', background: 'rgba(15,31,54,0.02)', flexShrink: 0, overflowY: 'auto', scrollbarWidth: 'none' }}>
+        <div style={{ width: 158, borderRight: `1px solid ${C.creamBorder}`, display: 'flex', flexDirection: 'column', background: 'rgba(15,27,51,0.02)', flexShrink: 0, overflowY: 'auto', scrollbarWidth: 'none' }}>
           <p style={{ padding: '9px 10px 7px', fontSize: 7.5, fontFamily: 'monospace', textTransform: 'uppercase', letterSpacing: '0.15em', color: C.ocean, borderBottom: `1px solid ${C.creamBorder}`, flexShrink: 0 }}>01 · Entenderte</p>
           {PERSONA_CATS.map((c, i) => (
             <div key={c} style={{ padding: '6px 10px', display: 'flex', alignItems: 'flex-start', gap: 6, borderBottom: `1px solid ${C.creamBorder}` }}>
@@ -304,7 +304,7 @@ function SlidePersona() {
               </div>
             </div>
           ))}
-          <div style={{ padding: '7px 10px', borderRadius: 8, background: 'rgba(30,91,160,0.04)', border: '1px solid rgba(30,91,160,0.09)', textAlign: 'center' }}>
+          <div style={{ padding: '7px 10px', borderRadius: 8, background: 'rgba(37,99,235,0.04)', border: '1px solid rgba(37,99,235,0.09)', textAlign: 'center' }}>
             <p style={{ fontSize: 8.5, color: C.hueso, fontStyle: 'italic' }}>Tu análisis completo aparece cuando hacés el recorrido</p>
           </div>
         </div>
@@ -375,7 +375,7 @@ function SlideCarreras() {
             {detailTab === 'why' && (
               <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
                 {c.why.map((w, i) => (
-                  <div key={i} style={{ display: 'flex', gap: 8, alignItems: 'flex-start', padding: '7px 10px', background: 'rgba(30,91,160,0.04)', borderRadius: 8, border: '1px solid rgba(30,91,160,0.09)' }}>
+                  <div key={i} style={{ display: 'flex', gap: 8, alignItems: 'flex-start', padding: '7px 10px', background: 'rgba(37,99,235,0.04)', borderRadius: 8, border: '1px solid rgba(37,99,235,0.09)' }}>
                     <span style={{ color: C.ocean, fontSize: 8.5, fontWeight: 700, flexShrink: 0, marginTop: 0.5 }}>✓</span>
                     <span style={{ fontSize: 9, lineHeight: 1.5, color: C.navy, opacity: 0.85 }}>{w}</span>
                   </div>
@@ -513,7 +513,7 @@ function SlideLaboral() {
                 </div>
               </div>
             ))}
-            <div style={{ marginTop: 10, padding: '8px 10px', borderRadius: 8, background: 'rgba(30,91,160,0.04)', border: '1px solid rgba(30,91,160,0.09)' }}>
+            <div style={{ marginTop: 10, padding: '8px 10px', borderRadius: 8, background: 'rgba(37,99,235,0.04)', border: '1px solid rgba(37,99,235,0.09)' }}>
               <p style={{ fontSize: 8, color: C.hueso, lineHeight: 1.5 }}>Los rangos ARS reflejan mercado local 2025. Remoto internacional: ingresos en USD para empresas del exterior, que pueden duplicar o triplicar los valores locales.</p>
             </div>
           </div>
@@ -533,16 +533,16 @@ function SlideUniversidades() {
       <MacMenuBar section="Acto 03 — Dónde estudiar" />
       <div style={{ flex: 1, overflowY: 'auto', scrollbarWidth: 'none', padding: '8px 12px' }}>
         {UNIVERSITIES_DATA.map((u, i) => (
-          <div key={u.rank} style={{ marginBottom: 5, borderRadius: 10, border: `1px solid ${expanded === i ? C.ocean : C.creamBorder}`, background: expanded === i ? 'rgba(30,91,160,0.025)' : C.creamElev, overflow: 'hidden', transition: 'border-color 0.15s' }}>
+          <div key={u.rank} style={{ marginBottom: 5, borderRadius: 10, border: `1px solid ${expanded === i ? C.ocean : C.creamBorder}`, background: expanded === i ? 'rgba(37,99,235,0.025)' : C.creamElev, overflow: 'hidden', transition: 'border-color 0.15s' }}>
             <div onClick={() => setExpanded(expanded === i ? null : i)} style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '8px 10px', cursor: 'pointer' }}>
-              <span style={{ fontSize: 10, fontWeight: 300, color: 'rgba(15,31,54,0.22)', width: 14, textAlign: 'center', flexShrink: 0 }}>{u.rank}</span>
+              <span style={{ fontSize: 10, fontWeight: 300, color: 'rgba(15,27,51,0.22)', width: 14, textAlign: 'center', flexShrink: 0 }}>{u.rank}</span>
               <div style={{ width: 30, height: 30, background: C.navy, borderRadius: 7, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
                 <span style={{ fontSize: 6.5, fontWeight: 700, color: C.creamElev, fontFamily: 'monospace' }}>{u.abbr}</span>
               </div>
               <div style={{ flex: 1, minWidth: 0 }}>
                 <p style={{ fontSize: 9.5, fontWeight: 500, color: C.navy, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{u.name}</p>
                 <div style={{ display: 'flex', gap: 5, marginTop: 2, alignItems: 'center' }}>
-                  <span style={{ padding: '1px 5px', borderRadius: 999, fontSize: 6.5, fontFamily: 'monospace', textTransform: 'uppercase', letterSpacing: '0.1em', fontWeight: 600, background: u.type === 'Pública' ? 'rgba(30,91,160,0.1)' : 'rgba(15,31,54,0.07)', color: u.type === 'Pública' ? C.ocean : C.hueso }}>{u.type}</span>
+                  <span style={{ padding: '1px 5px', borderRadius: 999, fontSize: 6.5, fontFamily: 'monospace', textTransform: 'uppercase', letterSpacing: '0.1em', fontWeight: 600, background: u.type === 'Pública' ? 'rgba(37,99,235,0.1)' : 'rgba(15,27,51,0.07)', color: u.type === 'Pública' ? C.ocean : C.hueso }}>{u.type}</span>
                   <span style={{ fontSize: 8, color: C.hueso }}>{u.duration}</span>
                   <span style={{ fontSize: 8, color: C.hueso }}>·</span>
                   <span style={{ fontSize: 8, color: C.hueso }}>{u.modality}</span>
@@ -574,7 +574,7 @@ function SlideUniversidades() {
 
                 {/* Cost + pros/cons */}
                 <div style={{ display: 'flex', gap: 8 }}>
-                  <div style={{ padding: '7px 10px', borderRadius: 8, background: u.type === 'Pública' ? 'rgba(16,185,129,0.06)' : 'rgba(15,31,54,0.04)', border: `1px solid ${C.creamBorder}`, flexShrink: 0 }}>
+                  <div style={{ padding: '7px 10px', borderRadius: 8, background: u.type === 'Pública' ? 'rgba(16,185,129,0.06)' : 'rgba(15,27,51,0.04)', border: `1px solid ${C.creamBorder}`, flexShrink: 0 }}>
                     <p style={{ fontSize: 7, fontFamily: 'monospace', textTransform: 'uppercase', letterSpacing: '0.1em', color: C.hueso, marginBottom: 2 }}>Cuota</p>
                     <p style={{ fontSize: 10, fontWeight: 600, color: u.type === 'Pública' ? C.green : C.navy }}>{u.monthlyFee}</p>
                   </div>
@@ -603,7 +603,7 @@ function SlideUniversidades() {
                 </div>
 
                 {/* Scholarship */}
-                <div style={{ padding: '7px 10px', borderRadius: 8, background: 'rgba(30,91,160,0.05)', border: '1px solid rgba(30,91,160,0.1)' }}>
+                <div style={{ padding: '7px 10px', borderRadius: 8, background: 'rgba(37,99,235,0.05)', border: '1px solid rgba(37,99,235,0.1)' }}>
                   <p style={{ fontSize: 7, fontFamily: 'monospace', textTransform: 'uppercase', letterSpacing: '0.1em', color: C.ocean, marginBottom: 2 }}>Beca destacada</p>
                   <p style={{ fontSize: 8.5, color: C.navy, lineHeight: 1.4 }}>{u.scholarship}</p>
                 </div>
@@ -749,14 +749,14 @@ function PhoneSlideUniversidades() {
       <div style={{ flex: 1, padding: '12px 11px', overflowY: 'auto', scrollbarWidth: 'none' }}>
         {UNIVERSITIES_DATA.map((u) => (
           <div key={u.rank} style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '12px 0', borderBottom: `1px solid ${C.creamBorder}` }}>
-            <span style={{ fontSize: 10, fontWeight: 300, color: 'rgba(15,31,54,0.25)', width: 12, flexShrink: 0 }}>{u.rank}</span>
+            <span style={{ fontSize: 10, fontWeight: 300, color: 'rgba(15,27,51,0.25)', width: 12, flexShrink: 0 }}>{u.rank}</span>
             <div style={{ width: 28, height: 28, background: C.navy, borderRadius: 6, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
               <span style={{ fontSize: 6, fontWeight: 700, color: C.creamElev, fontFamily: 'monospace' }}>{u.abbr}</span>
             </div>
             <div style={{ flex: 1, minWidth: 0 }}>
               <p style={{ fontSize: 9, fontWeight: 500, color: C.navy, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{u.name}</p>
               <div style={{ display: 'flex', gap: 4, marginTop: 2 }}>
-                <span style={{ padding: '1px 4px', borderRadius: 999, fontSize: 6, fontFamily: 'monospace', textTransform: 'uppercase', fontWeight: 600, background: u.type === 'Pública' ? 'rgba(30,91,160,0.1)' : 'rgba(15,31,54,0.07)', color: u.type === 'Pública' ? C.ocean : C.hueso }}>{u.type}</span>
+                <span style={{ padding: '1px 4px', borderRadius: 999, fontSize: 6, fontFamily: 'monospace', textTransform: 'uppercase', fontWeight: 600, background: u.type === 'Pública' ? 'rgba(37,99,235,0.1)' : 'rgba(15,27,51,0.07)', color: u.type === 'Pública' ? C.ocean : C.hueso }}>{u.type}</span>
                 <span style={{ fontSize: 8, color: C.hueso }}>{u.duration}</span>
               </div>
             </div>

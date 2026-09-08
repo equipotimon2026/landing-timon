@@ -1,283 +1,295 @@
 'use client'
 
+import { useState } from 'react'
 import { ArrowRight, Check } from 'lucide-react'
 import { useInView } from '@/hooks/useInView'
+import {
+  LIST_PRICE_ARS,
+  PSICO_ADDON_ARS,
+  INSTALLMENTS,
+  UPFRONT_DISCOUNT_PCT,
+  GROUP_SIZE_THRESHOLD,
+  GROUP_DISCOUNT_PCT,
+  fmtArs,
+} from '@/lib/pricing'
 
 const PRODUCT_URL = 'https://app.timonear.com'
 
 type Props = { onBack: () => void }
+type Mode = 'cuotas' | 'unico'
 
-const C = {
-  navy: '#0F1F36',
-  ocean: '#1E5BA0',
-  creamElev: '#FBF5EA',
-  creamDeep: '#EDE2CF',
-  creamBorder: '#E6DCC9',
-  creamBorderStrong: '#D8CCB4',
-  hueso: '#6B7B96',
-  terra: '#C97F5E',
-}
-
-const BASE_PRICE = 140000
-const PSICO_ADDON_PRICE = 50000
-
+/**
+ * Pricing con cuotas — reunión del 07/09/2026.
+ *
+ * El problema no era el precio, era el número: "si mostrar 150 lucas asusta,
+ * mostremos 12 de 12". Por eso la modalidad de pago es lo primero que se elige
+ * y el número grande cambia con ella.
+ *
+ * Es pago en cuotas, NO suscripción: no se puede dar de baja a mitad de camino
+ * y por eso no lo llamamos "por mes" en ningún lado.
+ */
 const MODALITIES = [
-  { id: 'individual', name: 'Individual', size: '1 persona',     discountPct: 0,  discountNote: '',                   highlight: false },
-  { id: 'amigos',    name: 'Amigos',     size: '4 personas',     discountPct: 25, discountNote: 'Si invitás 4 amigos tenés 25% off',       highlight: true  },
+  {
+    id: 'individual',
+    name: 'Individual',
+    size: '1 persona',
+    discountPct: 0,
+    note: '',
+    highlight: false,
+  },
+  {
+    id: 'amigos',
+    name: 'Con amigos',
+    size: `${GROUP_SIZE_THRESHOLD} personas`,
+    discountPct: GROUP_DISCOUNT_PCT,
+    note: `Junten ${GROUP_SIZE_THRESHOLD} y todos pagan ${GROUP_DISCOUNT_PCT}% menos`,
+    highlight: true,
+  },
 ]
 
-const BASE_FEATURES = [
-  'Análisis de quién sos',
-  'Carreras compatibles con tu perfil',
-  'Universidades en Argentina',
-  'Salida laboral y rangos salariales',
+const FEATURES = [
+  'Las 13 paradas completas',
+  'Informe con carreras y universidades sugeridas',
+  'Una charla de 30 minutos con un profesional afín',
+  'Acceso de tu familia al informe (nunca a tus respuestas)',
 ]
 
-function formatPrice(n: number): string {
-  return '$' + n.toLocaleString('es-AR')
+/** Precio final por persona según modalidad y forma de pago. */
+function priceFor(groupPct: number, mode: Mode) {
+  const afterGroup = Math.round((LIST_PRICE_ARS * (100 - groupPct)) / 100)
+  if (mode === 'cuotas') {
+    return {
+      total: afterGroup,
+      perInstallment: Math.round(afterGroup / INSTALLMENTS / 100) * 100,
+    }
+  }
+  const upfront =
+    Math.round((afterGroup * (100 - UPFRONT_DISCOUNT_PCT)) / 100 / 100) * 100
+  return { total: upfront, perInstallment: null }
 }
 
-function calcPrice(base: number, pct: number): number {
-  return Math.round(base * (1 - pct / 100))
-}
-
-// ── Desktop table ──────────────────────────────────────────────────────────────
-
-function DesktopTable() {
-  const COL = 'grid-cols-[200px_1fr_1fr]'
-  const cellBase = 'px-6 py-5 flex flex-col items-center justify-center text-center'
-
+function ModeToggle({ mode, onChange }: { mode: Mode; onChange: (m: Mode) => void }) {
   return (
-    <div className={`w-full hidden lg:block rounded-2xl overflow-hidden border border-[var(--border-cream)]`} style={{ background: C.creamElev }}>
-
-      {/* Column headers */}
-      <div className={`grid ${COL}`}>
-        <div className="px-4 pt-7 pb-5 flex items-end justify-center text-center">
-          <span className="font-mono text-[10px] uppercase tracking-[0.14em]" style={{ color: C.hueso }}>Funcionalidades</span>
-        </div>
-        {MODALITIES.map(m => (
-          <div
-            key={m.id}
-            className="px-6 pt-7 pb-5 flex flex-col items-center text-center"
-            style={{
-              background: m.highlight ? C.ocean : 'transparent',
-              borderLeft: `1px solid ${C.creamBorder}`,
-            }}
-          >
-            {m.highlight && (
-              <span className="font-mono text-[10px] uppercase tracking-[0.14em] px-3 py-1 rounded-full mb-3" style={{ background: C.terra, color: C.creamElev }}>
-                Mejor valor
-              </span>
-            )}
-            <p className="font-display font-normal text-[1.3rem] tracking-[-0.02em]" style={{ color: m.highlight ? C.creamElev : C.navy }}>
-              {m.name}
-            </p>
-            <p className="font-mono text-[10px] uppercase tracking-[0.1em] mt-1" style={{ color: m.highlight ? 'rgba(251,245,234,0.55)' : C.hueso }}>
-              {m.size}
-            </p>
-            {m.discountNote && (
-              <p
-                className="text-[11px] leading-snug mt-2 max-w-[160px]"
-                style={{ color: m.highlight ? 'rgba(251,245,234,0.75)' : C.ocean }}
-              >
-                {m.discountNote}
-              </p>
-            )}
-          </div>
-        ))}
-      </div>
-
-      {/* Price row */}
-      <div className={`grid ${COL} border-t border-[var(--border-cream)]`}>
-        <div className="px-4 py-5 flex items-center justify-center text-center">
-          <span className="font-mono text-[11px] uppercase tracking-[0.14em]" style={{ color: C.hueso }}>Precio</span>
-        </div>
-        {MODALITIES.map(m => {
-          const total = calcPrice(BASE_PRICE, m.discountPct)
-          return (
-            <div key={m.id} className={cellBase} style={{ background: m.highlight ? 'rgba(30,91,160,0.04)' : 'transparent', borderLeft: `1px solid ${C.creamBorder}` }}>
-              <span className="font-display font-light tracking-[-0.035em]" style={{ fontSize: '1.75rem', color: C.navy }}>
-                {formatPrice(total)}
-              </span>
-              {m.discountPct > 0 && (
-                <span className="font-mono text-[10px] uppercase tracking-[0.1em] mt-0.5" style={{ color: C.hueso }}>c/u</span>
-              )}
-            </div>
-          )
-        })}
-      </div>
-
-      {/* Feature rows */}
-      {BASE_FEATURES.map(feat => (
-        <div key={feat} className={`grid ${COL} border-t border-[var(--border-cream)]`}>
-          <div className="px-4 py-5 flex items-center justify-center text-center">
-            <span className="text-[13px] leading-snug" style={{ color: C.navy }}>{feat}</span>
-          </div>
-          {MODALITIES.map(m => (
-            <div key={m.id} className={cellBase} style={{ background: m.highlight ? 'rgba(30,91,160,0.04)' : 'transparent', borderLeft: `1px solid ${C.creamBorder}` }}>
-              <Check size={16} style={{ color: C.ocean }} strokeWidth={2.5} />
-            </div>
-          ))}
-        </div>
+    <div className="inline-flex rounded-[var(--r-pill)] border border-[var(--border-cream-strong)] bg-white p-1">
+      {(
+        [
+          ['cuotas', `${INSTALLMENTS} cuotas`],
+          ['unico', 'Un solo pago'],
+        ] as const
+      ).map(([id, label]) => (
+        <button
+          key={id}
+          onClick={() => onChange(id)}
+          aria-pressed={mode === id}
+          className={`cursor-pointer rounded-[var(--r-pill)] px-5 py-2 text-[13px] font-semibold transition-all ${
+            mode === id
+              ? 'bg-[var(--ocean)] text-white'
+              : 'text-[var(--hueso)] hover:text-[var(--navy)]'
+          }`}
+        >
+          {label}
+          {id === 'unico' && mode !== id && (
+            <span className="ml-1.5 text-[11px] text-[var(--terra)]">
+              −{UPFRONT_DISCOUNT_PCT}%
+            </span>
+          )}
+        </button>
       ))}
-
-      {/* Add-on info row — psicopedagogo (informativo, se agrega en el proceso) */}
-      <div className={`grid ${COL} border-t`} style={{ borderColor: C.creamBorderStrong, borderTopStyle: 'dashed', background: 'rgba(30,91,160,0.015)' }}>
-        <div className="px-4 py-5 flex items-center justify-center text-center">
-          <span className="text-[13px] leading-snug" style={{ color: C.navy }}>
-            Incluir una reunión con un psicopedagogo profesional{' '}
-            <span className="font-mono text-[10px] uppercase tracking-[0.1em]" style={{ color: C.hueso }}>
-              · + {formatPrice(PSICO_ADDON_PRICE)}
-            </span>
-          </span>
-        </div>
-        {MODALITIES.map(m => (
-          <div key={m.id} className={cellBase} style={{ background: m.highlight ? 'rgba(30,91,160,0.04)' : 'transparent', borderLeft: `1px solid ${C.creamBorder}` }}>
-            <span className="text-[11px] leading-snug text-center" style={{ color: C.hueso, maxWidth: 150 }}>
-              Vas a poder sumarlo más adelante, durante el proceso
-            </span>
-          </div>
-        ))}
-      </div>
-
-      {/* CTA row */}
-      <div className={`grid ${COL} border-t border-[var(--border-cream)]`}>
-        <div />
-        {MODALITIES.map(m => (
-          <div key={m.id} className="px-6 py-5" style={{ background: m.highlight ? 'rgba(30,91,160,0.04)' : 'transparent', borderLeft: `1px solid ${C.creamBorder}` }}>
-            <a
-              href={PRODUCT_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              className={`group w-full flex items-center justify-center gap-2 py-2.5 rounded-full font-medium text-[13px] transition-all cursor-pointer ${
-                m.highlight
-                  ? 'bg-[var(--ocean)] text-[var(--cream-elev)] hover:bg-[var(--ocean-deep)]'
-                  : 'border border-[var(--border-cream-strong)] text-[var(--navy)] hover:border-[var(--ocean)] hover:text-[var(--ocean)]'
-              }`}
-            >
-              Empezar
-              <ArrowRight size={13} className="group-hover:translate-x-0.5 transition-transform" />
-            </a>
-          </div>
-        ))}
-      </div>
-
     </div>
   )
 }
 
-// ── Mobile cards ───────────────────────────────────────────────────────────────
+function PlanCard({ m, mode }: { m: (typeof MODALITIES)[number]; mode: Mode }) {
+  const p = priceFor(m.discountPct, mode)
+  const hi = m.highlight
 
-function MobileCards() {
   return (
-    <div className="lg:hidden flex flex-col gap-4">
-      {MODALITIES.map(m => {
-        const total = calcPrice(BASE_PRICE, m.discountPct)
-        return (
-          <div
-            key={m.id}
-            className="relative rounded-2xl overflow-hidden"
-            style={{
-              background: m.highlight ? C.ocean : C.creamElev,
-              border: m.highlight ? 'none' : `1px solid ${C.creamBorder}`,
-              boxShadow: m.highlight ? '0 12px 40px rgba(30,91,160,0.22)' : undefined,
-            }}
-          >
-            {m.highlight && (
-              <div className="flex justify-center pt-4">
-                <span className="font-mono text-[10px] uppercase tracking-[0.14em] px-3 py-1 rounded-full" style={{ background: C.terra, color: C.creamElev }}>
-                  Mejor valor
-                </span>
-              </div>
-            )}
-            <div className="px-6 pt-5 pb-6">
-              <p className="font-display font-normal text-[1.2rem] tracking-[-0.02em]" style={{ color: m.highlight ? C.creamElev : C.navy }}>
-                {m.name}
-              </p>
-              <p className="font-mono text-[10px] uppercase tracking-[0.1em] mt-0.5" style={{ color: m.highlight ? 'rgba(251,245,234,0.55)' : C.hueso }}>
-                {m.size}
-              </p>
-              <div className="flex items-baseline gap-1.5 mt-3">
-                <span className="font-display font-light text-[2rem] tracking-[-0.03em]" style={{ color: m.highlight ? C.creamElev : C.navy }}>
-                  {formatPrice(total)}
-                </span>
-                {m.discountPct > 0 && (
-                  <span className="font-mono text-[11px] uppercase tracking-[0.1em]" style={{ color: m.highlight ? 'rgba(251,245,234,0.6)' : C.hueso }}>c/u</span>
-                )}
-              </div>
-              {m.discountNote && (
-                <span className="inline-block font-mono text-[11px] font-semibold px-2 py-0.5 rounded-full mt-2" style={{ background: m.highlight ? 'rgba(255,255,255,0.15)' : 'rgba(30,91,160,0.1)', color: m.highlight ? C.creamElev : C.ocean }}>
-                  {m.discountNote}
-                </span>
-              )}
-              <a
-                href={PRODUCT_URL}
-                target="_blank"
-                rel="noopener noreferrer"
-                className={`group mt-5 w-full flex items-center justify-center gap-2 py-3 rounded-full font-medium text-[14px] transition-all cursor-pointer ${
-                  m.highlight
-                    ? 'bg-[var(--cream-elev)] text-[var(--ocean)] hover:bg-white'
-                    : 'bg-[var(--ocean)] text-[var(--cream-elev)] hover:bg-[var(--ocean-deep)]'
-                }`}
+    <div
+      className={`relative flex flex-col overflow-hidden rounded-[var(--r-xl)] p-7 ${
+        hi ? 'text-white' : 'border border-[var(--border-cream)] bg-white'
+      }`}
+      style={
+        hi
+          ? {
+              background: 'linear-gradient(155deg, #2563EB 0%, #1D4ED8 100%)',
+              boxShadow: '0 20px 50px rgba(37,99,235,0.24)',
+            }
+          : { boxShadow: 'var(--glass-shadow)' }
+      }
+    >
+      {hi && (
+        <span className="mono-label mb-4 w-fit rounded-[var(--r-pill)] bg-[var(--terra)] px-3 py-1 !text-white">
+          Mejor valor
+        </span>
+      )}
+
+      <p
+        className="font-display text-[1.35rem] font-bold tracking-[-0.02em]"
+        style={{ color: hi ? '#fff' : 'var(--navy)' }}
+      >
+        {m.name}
+      </p>
+      <p className="mono-label mt-1" style={{ color: hi ? 'rgba(255,255,255,0.6)' : undefined }}>
+        {m.size}
+      </p>
+
+      {/* El número grande: cambia con el toggle */}
+      <div className="mt-5">
+        {p.perInstallment !== null ? (
+          <>
+            <div className="flex items-baseline gap-2">
+              <span
+                className="font-display text-[2.6rem] font-extrabold leading-none tracking-[-0.045em]"
+                style={{ color: hi ? '#fff' : 'var(--navy)' }}
               >
-                Empezar
-                <ArrowRight size={14} className="group-hover:translate-x-0.5 transition-transform" />
-              </a>
-              <div
-                className="mt-3 w-full py-2.5 px-3 rounded-xl text-center"
-                style={{ border: `1px dashed ${m.highlight ? 'rgba(251,245,234,0.35)' : C.creamBorderStrong}` }}
+                {fmtArs(p.perInstallment)}
+              </span>
+              <span
+                className="text-[15px] font-semibold"
+                style={{ color: hi ? 'rgba(255,255,255,0.75)' : 'var(--hueso)' }}
               >
-                <p className="text-[11px] leading-snug" style={{ color: m.highlight ? 'rgba(251,245,234,0.85)' : C.navy }}>
-                  Incluir una reunión con un psicopedagogo profesional
-                </p>
-                <p className="font-mono text-[10px] uppercase tracking-[0.1em] mt-1" style={{ color: m.highlight ? 'rgba(251,245,234,0.55)' : C.hueso }}>
-                  Costo adicional + {formatPrice(PSICO_ADDON_PRICE)} · se agrega más adelante en el proceso
-                </p>
-              </div>
+                × {INSTALLMENTS}
+              </span>
             </div>
-          </div>
-        )
-      })}
+            <p
+              className="mt-1.5 text-[12px]"
+              style={{ color: hi ? 'rgba(255,255,255,0.7)' : 'var(--hueso)' }}
+            >
+              {fmtArs(p.total)} en total · sin interés
+            </p>
+          </>
+        ) : (
+          <>
+            <div className="flex items-baseline gap-2.5">
+              <span
+                className="font-display text-[2.6rem] font-extrabold leading-none tracking-[-0.045em]"
+                style={{ color: hi ? '#fff' : 'var(--navy)' }}
+              >
+                {fmtArs(p.total)}
+              </span>
+              <span
+                className="text-[14px] line-through"
+                style={{ color: hi ? 'rgba(255,255,255,0.5)' : 'var(--hueso)' }}
+              >
+                {fmtArs(Math.round((LIST_PRICE_ARS * (100 - m.discountPct)) / 100))}
+              </span>
+            </div>
+            <p
+              className="mt-1.5 text-[12px]"
+              style={{ color: hi ? 'rgba(255,255,255,0.7)' : 'var(--hueso)' }}
+            >
+              {UPFRONT_DISCOUNT_PCT}% menos por pagarlo de una
+            </p>
+          </>
+        )}
+      </div>
+
+      {m.note && (
+        <span
+          className="mt-3 w-fit rounded-[var(--r-pill)] px-3 py-1 text-[12px] font-semibold"
+          style={{
+            background: hi ? 'rgba(255,255,255,0.16)' : 'var(--ocean-wash)',
+            color: hi ? '#fff' : 'var(--ocean)',
+          }}
+        >
+          {m.note}
+        </span>
+      )}
+
+      <ul className="mt-6 flex flex-col gap-2.5">
+        {FEATURES.map((f) => (
+          <li key={f} className="flex items-start gap-2.5">
+            <Check
+              size={15}
+              strokeWidth={3}
+              className="mt-0.5 shrink-0"
+              style={{ color: hi ? '#fff' : 'var(--verde)' }}
+            />
+            <span
+              className="text-[13.5px] leading-snug"
+              style={{ color: hi ? 'rgba(255,255,255,0.92)' : 'var(--navy)' }}
+            >
+              {f}
+            </span>
+          </li>
+        ))}
+      </ul>
+
+      <a
+        href={PRODUCT_URL}
+        className={`group mt-7 flex h-12 items-center justify-center gap-2 rounded-[var(--r-md)] text-[15px] font-semibold transition-all ${
+          hi
+            ? 'bg-white text-[var(--ocean)] hover:bg-white/90'
+            : 'bg-[var(--ocean)] text-white hover:bg-[var(--ocean-deep)]'
+        }`}
+      >
+        Empezar
+        <ArrowRight size={15} className="transition-transform group-hover:translate-x-0.5" />
+      </a>
+
+      <p
+        className="mt-3 text-center text-[11px]"
+        style={{ color: hi ? 'rgba(255,255,255,0.65)' : 'var(--hueso)' }}
+      >
+        Las primeras paradas son gratis. Pagás cuando querés seguir.
+      </p>
     </div>
   )
 }
-
-// ── Main export ────────────────────────────────────────────────────────────────
 
 export function PricingSection({ onBack: _onBack }: Props) {
   const block = useInView<HTMLDivElement>()
+  const [mode, setMode] = useState<Mode>('cuotas')
 
   return (
-    <div className="animate-fade-in bg-[var(--cream)]">
-      <section className="relative overflow-hidden min-h-screen flex flex-col justify-center" style={{ marginTop: '-4rem', paddingTop: '4rem' }}>
-        <div className="mesh-stage" aria-hidden>
-          <div className="mesh-blob mesh-blob--ocean-a" />
-          <div className="mesh-blob mesh-blob--terra" />
-          <div className="mesh-blob mesh-blob--ocean-b" />
-        </div>
-
-        <div className="relative w-full px-5 sm:px-8 lg:px-12 xl:px-[5vw] 2xl:px-[6vw] py-16 sm:py-20 z-10">
+    <div className="timon-wash animate-fade-in">
+      <section
+        className="relative flex min-h-screen flex-col justify-center overflow-hidden"
+        style={{ marginTop: '-4rem', paddingTop: '4rem' }}
+      >
+        <div className="relative z-10 mx-auto w-full max-w-[1080px] px-5 py-16 sm:px-8 sm:py-20 lg:px-10">
           <div ref={block.ref} className={`reveal ${block.inView ? 'is-visible' : ''}`}>
+            <span className="eyebrow eyebrow--with-rule">Planes y precios</span>
 
-            <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-[var(--hueso)] mb-8 inline-flex items-center gap-3">
-              <span className="w-8 h-px bg-[var(--terra)]/60" />
-              Planes y precios
-            </p>
             <h1
-              className="font-display font-light text-[var(--navy)] mb-10"
-              style={{ fontSize: 'clamp(2rem, 4vw, 4rem)', lineHeight: 0.98, letterSpacing: '-0.04em' }}
+              className="mt-4 font-display font-extrabold tracking-[-0.045em] text-[var(--navy)]"
+              style={{ fontSize: 'clamp(2rem, 4.4vw, 3.4rem)', lineHeight: 1.02 }}
             >
-              El recorrido es 100% individual.{' '}
-              <span className="text-[var(--ocean)] font-normal">El descuento es grupal.</span>
+              Un solo pago.
+              <br />
+              <span className="serif-accent font-normal text-[var(--ocean)]">
+                O doce, si te queda mejor.
+              </span>
             </h1>
 
-            <MobileCards />
-            <DesktopTable />
-
-            <p className="mt-5 text-[12px] leading-[1.55]" style={{ color: C.hueso, maxWidth: 520 }}>
-              En grupos, cada persona puede elegir su modalidad de forma independiente. El descuento aplica sobre el precio de Timon de cada integrante.
+            <p className="mt-4 max-w-[34rem] text-[15px] leading-relaxed text-[var(--hueso)]">
+              No es una suscripción: no se renueva y no hay nada que dar de baja.
+              Es el recorrido completo, una sola vez, pagado como te sirva.
             </p>
 
+            <div className="mt-7">
+              <ModeToggle mode={mode} onChange={setMode} />
+            </div>
+
+            <div className="mt-8 grid gap-5 md:grid-cols-2">
+              {MODALITIES.map((m) => (
+                <PlanCard key={m.id} m={m} mode={mode} />
+              ))}
+            </div>
+
+            <div className="mt-6 rounded-[var(--r-lg)] border border-dashed border-[var(--border-cream-strong)] bg-white/60 px-5 py-4">
+              <p className="text-[13.5px] leading-snug text-[var(--navy)]">
+                Podés sumar una reunión con un psicopedagogo profesional por{' '}
+                <span className="font-semibold">{fmtArs(PSICO_ADDON_ARS)}</span> más.
+              </p>
+              <p className="mono-label mt-1">Se agrega más adelante, dentro del proceso</p>
+            </div>
+
+            <p className="mt-5 max-w-[34rem] text-[12px] leading-[1.55] text-[var(--hueso)]">
+              El recorrido es individual: cada persona hace el suyo y recibe su propio
+              informe. Lo único grupal es el descuento — el código se comparte y el
+              precio baja para todos los del grupo que todavía no pagaron.
+            </p>
           </div>
         </div>
       </section>
