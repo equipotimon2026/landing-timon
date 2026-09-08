@@ -8,7 +8,7 @@
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --font-sans: var(--font-sans);
-  --font-display: var(--font-display);
+  --font-display: var(--font-sans);
   --font-serif: var(--font-serif);
   --font-mono: var(--font-mono);
   --color-sidebar-ring: var(--sidebar-ring);
@@ -48,59 +48,61 @@
   --radius-3xl: calc(var(--radius) * 2.2);
   --radius-4xl: calc(var(--radius) * 2.6);
 
-  /* ─── Timon — sistema del deck "Timón Final" ────────────────────
-     Crema clara + azul eléctrico + acentos cálidos. Los nombres de token
-     no cambian (los usan todos los componentes); cambian los valores. */
+  /* ─── Timon ─────────────────────────────────────────────────────────
+     Valores del canvas "Rediseño Timón estilo Duolingo" (05/09/2026), el
+     diseño aprobado por el equipo. Mismos nombres que en la app: si cambia
+     uno, cambiar el otro. */
   --cream: #FAF8F3;
   --cream-elev: #FFFFFF;
-  --cream-deep: #F1ECE2;
-  --navy: #0F1B33;
-  --navy-mid: #1E2A44;
+  --cream-deep: #F1EEE7;
+  --navy: #0F1F36;
+  --navy-mid: #1E2F4D;
   --ocean: #2563EB;
   --ocean-deep: #1D4ED8;
   --ocean-light: #93B4FB;
-  --ocean-wash: #EAF0FE;
-  /* "terra" era el acento cálido apagado; ahora es el ámbar de la racha */
+  --ocean-wash: #E9F0FB;
   --terra: #F59E0B;
-  --terra-soft: #FDE9C4;
+  --terra-soft: #FDEBC8;
+  --terra-ink: #9A6206;
   --verde: #10B981;
-  --verde-soft: #D6F5E8;
+  --verde-soft: #DCF5EA;
   --rosa: #EC4899;
   --rosa-soft: #FCE1EF;
   --indigo: #6366F1;
-  --hueso: #6B7793;
-  --border-cream: #E9E3D8;
-  --border-cream-soft: #F1ECE3;
-  --border-cream-strong: #DCD3C4;
+  --hueso: #5A6B85;
+  --hueso-soft: #7C8CA6;
+  --border-cream: #E3E8F0;
+  --border-cream-soft: #EEF1F6;
+  --border-cream-strong: #D3DAE6;
 
-  /* Vidrio líquido — superficie base de todas las tarjetas del deck */
-  --glass-bg: rgba(255, 255, 255, 0.72);
-  --glass-bg-strong: rgba(255, 255, 255, 0.88);
-  --glass-border: rgba(255, 255, 255, 0.9);
-  --glass-shadow: 0 1px 2px rgba(15, 27, 51, 0.04), 0 12px 32px rgba(15, 27, 51, 0.06);
-  --glass-shadow-lg: 0 2px 4px rgba(15, 27, 51, 0.05), 0 24px 60px rgba(15, 27, 51, 0.10);
+  /* Vidrio líquido: blanco al 55% con blur fuerte y un filo de luz arriba. */
+  --glass-bg: rgba(255, 255, 255, 0.58);
+  --glass-bg-strong: rgba(255, 255, 255, 0.82);
+  --glass-border: rgba(255, 255, 255, 0.85);
+  --glass-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.95), 0 10px 26px rgba(15, 31, 54, 0.08);
+  --glass-shadow-lg: inset 0 1px 0 rgba(255, 255, 255, 0.95), 0 24px 56px rgba(15, 31, 54, 0.13);
+  --btn-shadow: 0 10px 26px rgba(37, 99, 235, 0.32);
 
-  /* Radios del deck */
   --r-sm: 12px;
   --r-md: 16px;
-  --r-lg: 22px;
+  --r-lg: 24px;
   --r-xl: 28px;
   --r-pill: 999px;
 }
 
 :root {
   --background: #FAF8F3;
-  --foreground: #0F1B33;
+  --foreground: #0F1F36;
   --card: #FFFFFF;
-  --card-foreground: #0F1B33;
+  --card-foreground: #0F1F36;
   --popover: #FFFFFF;
-  --popover-foreground: #0F1B33;
+  --popover-foreground: #0F1F36;
   --primary: #2563EB;
   --primary-foreground: #FFFFFF;
   --secondary: #F1ECE2;
-  --secondary-foreground: #0F1B33;
+  --secondary-foreground: #0F1F36;
   --muted: #F1ECE2;
-  --muted-foreground: #6B7793;
+  --muted-foreground: #5A6B85;
   --accent: #F59E0B;
   --accent-foreground: #FFFFFF;
   --destructive: oklch(0.577 0.245 27.325);
@@ -108,17 +110,17 @@
   --input: #E9E3D8;
   --ring: #2563EB;
   --chart-1: #2563EB;
-  --chart-2: #0F1B33;
+  --chart-2: #0F1F36;
   --chart-3: #F59E0B;
   --chart-4: #10B981;
   --chart-5: #EC4899;
   --radius: 1rem;
   --sidebar: #FAF8F3;
-  --sidebar-foreground: #0F1B33;
+  --sidebar-foreground: #0F1F36;
   --sidebar-primary: #2563EB;
   --sidebar-primary-foreground: #FFFFFF;
   --sidebar-accent: #F1ECE2;
-  --sidebar-accent-foreground: #0F1B33;
+  --sidebar-accent-foreground: #0F1F36;
   --sidebar-border: #E9E3D8;
   --sidebar-ring: #2563EB;
 }
@@ -134,7 +136,7 @@
   body {
     background: var(--cream);
     color: var(--navy);
-    font-family: var(--font-sans), 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-family: var(--font-sans), 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
     font-size: 17px;
     line-height: 1.65;
     -webkit-font-smoothing: antialiased;
@@ -172,8 +174,8 @@
 /* ─── Editorial grid background for hero sections ──────────────────── */
 .editorial-grid {
   background-image:
-    linear-gradient(to right, rgba(15, 27, 51, 0.04) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(15, 27, 51, 0.04) 1px, transparent 1px);
+    linear-gradient(to right, rgba(15, 31, 54, 0.04) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(15, 31, 54, 0.04) 1px, transparent 1px);
   background-size: 64px 64px;
 }
 
@@ -184,7 +186,7 @@
 
 /* ─── Dot grid — modern, quiet, on-brand ───────────────────────────── */
 .dot-grid {
-  background-image: radial-gradient(circle, rgba(15, 27, 51, 0.11) 1.1px, transparent 1.3px);
+  background-image: radial-gradient(circle, rgba(15, 31, 54, 0.11) 1.1px, transparent 1.3px);
   background-size: 28px 28px;
   background-position: 0 0;
 }
@@ -395,89 +397,108 @@
   animation: chat-ring-pulse 2.2s ease-out infinite;
 }
 
-/* ─── Superficies de vidrio líquido (sistema del deck) ─────────────── */
+/* ─── Sistema visual de Timon (idéntico al de la app) ─────────────── */
 .glass {
   background: var(--glass-bg);
   border: 1px solid var(--glass-border);
   box-shadow: var(--glass-shadow);
-  backdrop-filter: blur(20px) saturate(1.4);
-  -webkit-backdrop-filter: blur(20px) saturate(1.4);
+  backdrop-filter: blur(26px) saturate(165%);
+  -webkit-backdrop-filter: blur(26px) saturate(165%);
   border-radius: var(--r-lg);
 }
 .glass-strong {
   background: var(--glass-bg-strong);
   box-shadow: var(--glass-shadow-lg);
 }
+.glass-xl { border-radius: var(--r-xl); }
 
-/* Lavado de fondo de la app: azul arriba-izq, cálido abajo-der */
+/* Lavado de fondo del canvas: azul arriba a la izquierda, ámbar abajo. */
 .timon-wash {
   background:
-    radial-gradient(1100px 780px at 8% 0%, rgba(37, 99, 235, 0.10), transparent 62%),
-    radial-gradient(900px 700px at 100% 92%, rgba(245, 158, 11, 0.09), transparent 60%),
-    radial-gradient(700px 560px at 62% 8%, rgba(99, 102, 241, 0.06), transparent 60%),
-    var(--cream);
+    radial-gradient(560px 560px at 12% -8%, rgba(37, 99, 235, 0.26), transparent 70%),
+    radial-gradient(520px 520px at 42% 112%, rgba(245, 158, 11, 0.20), transparent 70%),
+    linear-gradient(160deg, #E7EEFB 0%, #FDF9F3 50%, #EAF1FC 100%);
 }
 
-/* Micro-label monoespaciada — el "TU CAMINO" / "13 PARADAS" del deck */
+/* Micro-label monoespaciada — el "TU CAMINO" / "13 PARADAS" del canvas */
 .mono-label {
   font-family: var(--font-mono), ui-monospace, monospace;
-  font-size: 10px;
-  font-weight: 500;
+  font-size: 11px;
+  font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.18em;
-  color: var(--hueso);
+  letter-spacing: 0.16em;
+  color: var(--hueso-soft);
 }
 
-/* Línea emotiva en serif itálica (el "Tu email decide el resto.") */
+/* Línea emotiva en serif itálica ("Es entenderte.") */
 .serif-accent {
-  font-family: var(--font-serif), Georgia, serif;
+  font-family: var(--font-serif), 'Crimson Pro', Georgia, serif;
   font-style: italic;
-  font-weight: 400;
+  font-weight: 600;
   letter-spacing: -0.01em;
 }
 
-/* ─── Botón "chunky" estilo Duolingo ───────────────────────────────────
-   Radio grande, peso alto, mayúsculas con tracking y una sombra sólida
-   abajo que se hunde al apretar. Es lo que hace que el botón se sienta
-   como un botón físico y no como un rectángulo de color. */
-.btn-chunky {
-  --sombra: rgba(15, 27, 51, 0.22);
+/* Burbuja de Timon */
+.timon-bubble {
+  position: relative;
+  background: rgba(255, 255, 255, 0.86);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  border-radius: var(--r-md);
+  border-bottom-left-radius: 6px;
+  box-shadow: 0 10px 26px rgba(15, 31, 54, 0.08);
+}
+
+/* Botones del canvas: radio 12, sombra azul, se hunden al apretar. */
+.btn-timon {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 10px;
-  min-height: 56px;
-  padding: 0 28px;
-  border-radius: 16px;
-  font-weight: 800;
+  gap: 8px;
+  min-height: 48px;
+  padding: 0 22px;
+  border-radius: var(--r-sm);
+  font-weight: 700;
   font-size: 15px;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
+  letter-spacing: -0.01em;
   cursor: pointer;
-  box-shadow: 0 4px 0 var(--sombra);
-  transition: transform 0.06s ease, box-shadow 0.06s ease, filter 0.15s ease;
+  transition: transform 0.12s ease, box-shadow 0.15s ease, background 0.15s ease, opacity 0.15s ease;
 }
-.btn-chunky:hover { filter: brightness(1.04); }
-.btn-chunky:active {
-  transform: translateY(4px);
-  box-shadow: 0 0 0 var(--sombra);
-}
-.btn-chunky--primary {
-  --sombra: #1B4CC4;
-  background: var(--ocean);
-  color: #fff;
-}
-.btn-chunky--ghost {
-  --sombra: var(--border-cream-strong);
-  background: var(--cream-elev);
-  color: var(--ocean);
-  border: 2px solid var(--border-cream-strong);
-  border-bottom: none;
-}
+.btn-timon:active { transform: translateY(1px); }
+.btn-timon:disabled { opacity: 0.45; cursor: not-allowed; }
+.btn-timon--primary { background: var(--ocean); color: #fff; box-shadow: var(--btn-shadow); }
+.btn-timon--primary:hover:not(:disabled) { background: var(--ocean-deep); }
+.btn-timon--ghost { background: rgba(255, 255, 255, 0.7); color: var(--navy); border: 1px solid var(--border-cream); }
+.btn-timon--ghost:hover:not(:disabled) { border-color: var(--ocean); color: var(--ocean); }
+.btn-timon--navy { background: var(--navy); color: #fff; }
+.btn-timon--navy:hover:not(:disabled) { background: var(--navy-mid); }
+.btn-timon--white { background: #fff; color: var(--ocean); box-shadow: 0 8px 22px rgba(15, 31, 54, 0.12); }
 
-@media (prefers-reduced-motion: reduce) {
-  .btn-chunky, .btn-chunky:active { transition: none; transform: none; }
+/* Input del canvas */
+.input-timon {
+  display: block;
+  width: 100%;
+  height: 48px;
+  padding: 0 16px;
+  border-radius: var(--r-sm);
+  border: 1px solid var(--border-cream-strong);
+  background: #fff;
+  font-size: 15px;
+  color: var(--navy);
+  outline: none;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
 }
+.input-timon::placeholder { color: rgba(90, 107, 133, 0.55); }
+.input-timon:focus { border-color: var(--ocean); box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.12); }
+
+/* La mascota flota apenas, como en el canvas. */
+@keyframes timon-bob {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-6px); }
+}
+.timon-bob { animation: timon-bob 5s ease-in-out infinite; }
+@media (prefers-reduced-motion: reduce) { .timon-bob { animation: none; } }
 
 /* Scrollbar fina — la usa la tira de momentos del hero en móvil. */
 .thin-scroll { scrollbar-width: thin; scrollbar-color: var(--border-cream-strong) transparent; }

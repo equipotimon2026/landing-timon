@@ -5,17 +5,17 @@ import { useState, useRef, useEffect } from 'react'
 const C = {
   cream: '#FAF8F3',
   creamElev: '#FFFFFF',
-  creamDeep: '#F1ECE2',
-  creamBorder: '#E9E3D8',
-  creamBorderStrong: '#DCD3C4',
-  navy: '#0F1B33',
-  navyMid: '#1A2D4D',
+  creamDeep: '#F1EEE7',
+  creamBorder: '#E3E8F0',
+  creamBorderStrong: '#D3DAE6',
+  navy: '#0F1F36',
+  navyMid: '#1E2F4D',
   ocean: '#2563EB',
   oceanDeep: '#1D4ED8',
   oceanLight: '#93B4FB',
   terra: '#F59E0B',
   terraSoft: '#FDE9C4',
-  hueso: '#6B7793',
+  hueso: '#5A6B85',
 }
 
 // ─── Shell ───────────────────────────────────────────────────────────────────

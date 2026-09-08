@@ -10,6 +10,7 @@ export function FloatingChat() {
   const [step, setStep] = useState<Step>('idle')
   const [message, setMessage] = useState('')
   const [email, setEmail] = useState('')
+  const [fallback, setFallback] = useState<string | null>(null)
 
   const open = () => setStep('open')
   const close = () => setStep('idle')
@@ -23,7 +24,12 @@ export function FloatingChat() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ message, email }),
       })
-      if (!res.ok) throw new Error()
+      if (!res.ok) {
+        const data = await res.json().catch(() => ({}))
+        setFallback(data.fallbackEmail ?? null)
+        setStep('error')
+        return
+      }
       setStep('done')
     } catch {
       setStep('error')
@@ -67,7 +73,7 @@ export function FloatingChat() {
                   {step === 'done'
                     ? `Recibido. Te escribimos a ${email}.`
                     : step === 'error'
-                    ? 'Hubo un error al enviar. Intentá de nuevo o escribinos a info@timonear.com.'
+                    ? `Hubo un error al enviar. Intentá de nuevo o escribinos a ${fallback ?? 'info@timonear.com'}.`
                     : '¿Tenés alguna pregunta? Escribila y te respondemos a la brevedad.'}
                 </p>
               </div>
@@ -112,7 +118,7 @@ export function FloatingChat() {
         {step !== 'open' && step !== 'done' && (
           <button
             onClick={open}
-            className="relative bg-[var(--cream-elev)] border border-[var(--border-cream)] rounded-2xl rounded-br-sm px-4 py-3 cursor-pointer text-left animate-float hidden min-[380px]:block"
+            className="relative bg-[var(--cream-elev)] border border-[var(--border-cream)] rounded-2xl rounded-br-sm px-4 py-3 cursor-pointer text-left animate-float hidden sm:block"
             style={{ boxShadow: '0 8px 28px rgba(15,31,54,0.14)', maxWidth: 'min(220px, calc(100vw - 100px))' }}
           >
             <p className="text-[var(--navy)] text-[13px] font-medium leading-[1.45]">
@@ -137,7 +143,7 @@ export function FloatingChat() {
             onClick={() => step === 'open' ? close() : open()}
             aria-label="Chat con Timon"
             className="relative w-16 h-16 rounded-full bg-[var(--ocean)] flex items-center justify-center hover:bg-[var(--ocean-deep)] transition-colors cursor-pointer"
-            style={{ boxShadow: '0 8px 32px rgba(30,91,160,0.42)' }}
+            style={{ boxShadow: '0 8px 32px rgba(37,99,235,0.40)' }}
           >
             <WheelMark tone="cream" size={32} spin />
           </button>

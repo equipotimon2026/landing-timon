@@ -109,8 +109,8 @@ export function Marquee({ variant, surface = 'cream', speedSec = 70 }: Props) {
   const sequence = [...items, ...items]
 
   const isNavy = surface === 'navy'
-  const fadeColor = isNavy ? 'rgb(15,31,54)' : 'rgb(237,226,207)'
-  const textColor = isNavy ? 'rgba(245,237,224,0.78)' : 'rgba(15,27,51,0.72)'
+  const fadeColor = isNavy ? 'rgb(15,31,54)' : 'rgb(241,238,231)'
+  const textColor = isNavy ? 'rgba(250,248,243,0.78)' : 'rgba(15,31,54,0.72)'
   const sepColor = isNavy ? 'var(--terra-soft)' : 'var(--terra)'
   // CSS filter chain — converts any SVG color to monochrome target.
   // For cream surface: aim for navy #0F1B33. For navy surface: aim for cream #FAF8F3.

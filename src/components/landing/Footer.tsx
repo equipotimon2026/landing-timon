@@ -1,31 +1,38 @@
+import Link from 'next/link'
 import { Logo } from './Logo'
 
-export function Footer() {
+const CONTACT_EMAIL = 'info@timonear.com'
+
+export function Footer({ onColegios }: { onColegios?: () => void }) {
   return (
-    <footer className="bg-[var(--cream-deep)] border-t border-[var(--border-cream)]">
-      <div className="w-full px-5 sm:px-8 lg:px-12 xl:px-[5vw] 2xl:px-[6vw] h-16 flex items-center justify-between gap-3">
+    <footer className="border-t border-[var(--border-cream)] bg-[var(--cream-deep)]">
+      <div className="mx-auto flex w-full max-w-[1280px] flex-col gap-4 px-5 py-6 sm:h-16 sm:flex-row sm:items-center sm:justify-between sm:gap-3 sm:px-8 sm:py-0">
         {/* Brand */}
-        <div className="flex items-center gap-3 min-w-0 shrink-0">
+        <div className="flex min-w-0 shrink-0 items-center gap-3">
           <Logo tone="navy" size={26} />
-          <span className="hidden md:inline font-mono text-[10px] uppercase tracking-[0.16em] text-[var(--hueso)] ml-1">
-            Claridad antes de elegir
-          </span>
+          <span className="mono-label ml-1 hidden md:inline">El primer paso no es elegir</span>
         </div>
 
         {/* Links */}
-        <nav className="hidden md:flex items-center gap-6 text-[13px] text-[var(--hueso)]">
-          <a href="#" className="hover:text-[var(--navy)] transition-colors">Estudiantes</a>
-          <a href="#" className="hover:text-[var(--navy)] transition-colors">Familias</a>
-          <a href="#colegios" className="hover:text-[var(--navy)] transition-colors">Colegios</a>
-          <a href="/terminos" className="hover:text-[var(--navy)] transition-colors">Términos</a>
-          <a href="mailto:hola@timon.com.ar" className="hover:text-[var(--navy)] transition-colors">Contacto</a>
+        <nav className="flex flex-wrap items-center gap-x-5 gap-y-2 text-[13px] font-semibold text-[var(--hueso)]">
+          <a href="#que-es" className="transition-colors hover:text-[var(--navy)]">Cómo funciona</a>
+          <a href="#precios" className="transition-colors hover:text-[var(--navy)]">Precios</a>
+          {onColegios ? (
+            <button onClick={onColegios} className="cursor-pointer transition-colors hover:text-[var(--navy)]">
+              Colegios
+            </button>
+          ) : (
+            <Link href="/" className="transition-colors hover:text-[var(--navy)]">Colegios</Link>
+          )}
+          <Link href="/terminos" className="transition-colors hover:text-[var(--navy)]">Términos</Link>
+          <a href={`mailto:${CONTACT_EMAIL}`} className="transition-colors hover:text-[var(--navy)]">Contacto</a>
         </nav>
 
         {/* Legal */}
-        <div className="flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.16em] text-[var(--hueso)] shrink-0">
+        <div className="mono-label flex shrink-0 items-center gap-2">
           <span>© {new Date().getFullYear()} Timon</span>
           <span className="text-[var(--terra)]">⌖</span>
-          <span className="hidden sm:inline">Hecho en Argentina</span>
+          <span>Hecho en Argentina</span>
         </div>
       </div>
     </footer>

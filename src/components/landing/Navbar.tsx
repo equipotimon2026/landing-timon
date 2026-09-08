@@ -5,12 +5,12 @@ import { ArrowLeft } from 'lucide-react'
 
 const APP_URL = 'https://app.timonear.com'
 
-type Audience = 'universal' | 'colegios' | 'pricing'
+type Audience = 'universal' | 'colegios'
 
 type Props = {
   audience: Audience
   onLogoClick: () => void
-  onSwitchAudience: (a: 'colegios' | 'pricing') => void
+  onSwitchAudience: (a: 'colegios') => void
   onBack: () => void
 }
 
@@ -18,21 +18,20 @@ type Props = {
  * Navbar liviana.
  *
  * Desde que el hero ES la puerta de entrada (reunión 07/09/2026), el botón
- * "Empezar el recorrido" acá arriba duplicaba el formulario que está tres
- * centímetros más abajo. Queda solo "Entrar" para el que vuelve y ya scrolleó,
- * y en las vistas internas (precios / colegios), donde no hay formulario.
+ * grande de "Empezar" acá arriba duplicaba el formulario que está tres
+ * centímetros más abajo. Queda "Entrar" para el que vuelve y ya scrolleó, y
+ * los enlaces a las secciones de la misma página (precios incluido, que ahora
+ * es una sección y no una vista aparte).
  */
 export function Navbar({ audience, onLogoClick, onSwitchAudience, onBack }: Props) {
   const isHome = audience === 'universal'
-  const isColegios = audience === 'colegios'
-  const isPricing = audience === 'pricing'
 
   const link =
-    'hidden sm:inline-flex text-[13px] text-[var(--hueso)] hover:text-[var(--navy)] transition-colors cursor-pointer'
+    'hidden sm:inline-flex text-[13.5px] font-semibold text-[var(--hueso)] hover:text-[var(--navy)] transition-colors cursor-pointer'
 
   return (
-    <header className="sticky left-0 right-0 top-0 z-50">
-      <div className="flex h-16 w-full items-center justify-between gap-3 px-5 sm:px-8 lg:px-12 xl:px-[5vw] 2xl:px-[6vw]">
+    <header className="sticky left-0 right-0 top-0 z-50 border-b border-[rgba(15,31,54,0.06)] bg-white/60 backdrop-blur-xl">
+      <div className="mx-auto flex h-16 w-full max-w-[1280px] items-center justify-between gap-3 px-5 sm:px-8">
         <div className="flex min-w-0 items-center gap-3 sm:gap-4">
           {!isHome && (
             <button
@@ -47,25 +46,21 @@ export function Navbar({ audience, onLogoClick, onSwitchAudience, onBack }: Prop
           <Logo onClick={onLogoClick} tone="navy" size={28} />
         </div>
 
-        <nav className="flex shrink-0 items-center gap-4 sm:gap-5">
-          {!isPricing && (
-            <button onClick={() => onSwitchAudience('pricing')} className={link}>
-              Precios
-            </button>
-          )}
-          {!isColegios && !isPricing && (
-            <button onClick={() => onSwitchAudience('colegios')} className={link}>
-              Para colegios
-            </button>
-          )}
+        <nav className="flex shrink-0 items-center gap-4 sm:gap-6">
           {isHome && (
-            <a href="#faq" className={link}>
-              Preguntas
-            </a>
+            <>
+              <a href="#que-es" className={link}>Cómo funciona</a>
+              <a href="#precios" className={link}>Precios</a>
+              <button onClick={() => onSwitchAudience('colegios')} className={link}>
+                Para colegios
+              </button>
+              <a href="#faq" className={link}>Preguntas</a>
+            </>
           )}
           <a
-            href={`${APP_URL}/entrar`}
-            className="inline-flex cursor-pointer items-center whitespace-nowrap rounded-[var(--r-pill)] bg-[var(--ocean)] px-4 py-[7px] text-[12px] font-semibold text-white transition-all hover:bg-[var(--ocean-deep)]"
+            href={`${APP_URL}/entrar?modo=entrar`}
+            className="inline-flex h-10 cursor-pointer items-center whitespace-nowrap rounded-[var(--r-sm)] bg-[var(--ocean)] px-4 text-[13.5px] font-bold text-white transition-all hover:bg-[var(--ocean-deep)]"
+            style={{ boxShadow: 'var(--btn-shadow)' }}
           >
             Entrar
           </a>

@@ -110,7 +110,7 @@ export function FaqSection() {
   const [open, setOpen] = useState<number | null>(0)
 
   return (
-    <section id="faq" className="relative px-5 py-20 sm:px-8 sm:py-28 lg:px-10">
+    <section id="faq" className="relative border-t border-[var(--border-cream)] bg-[var(--cream-elev)] px-5 py-20 sm:px-8 sm:py-28 lg:px-10">
       <div className="mx-auto w-full max-w-[900px]">
         <div ref={head.ref} className={`reveal ${head.inView ? 'is-visible' : ''}`}>
           <span className="eyebrow eyebrow--with-rule">Preguntas</span>
@@ -120,9 +120,7 @@ export function FaqSection() {
           >
             Lo que todos preguntan
             <br />
-            <span className="serif-accent font-normal text-[var(--ocean)]">
-              antes de empezar.
-            </span>
+            <span className="serif-accent text-[var(--ocean)]">antes de empezar.</span>
           </h2>
         </div>
 
@@ -162,8 +160,11 @@ export function FaqSection() {
         </div>
 
         <p className="mt-8 text-center text-[14px] text-[var(--hueso)]">
-          ¿Te quedó otra duda? Escribinos por el chat de acá abajo y te
-          contestamos nosotros.
+          ¿Te quedó otra duda? Escribinos por el chat de acá abajo o a{' '}
+          <a href="mailto:info@timonear.com" className="font-bold text-[var(--ocean)]">
+            info@timonear.com
+          </a>
+          . Contestamos nosotros.
         </p>
       </div>
     </section>

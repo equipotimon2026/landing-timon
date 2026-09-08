@@ -14,7 +14,7 @@ type Props = {
 
 const TONE: Record<Tone, string> = {
   ocean: '#2563EB',
-  navy: '#0F1B33',
+  navy: '#0F1F36',
   terra: '#F59E0B',
   cream: '#FAF8F3',
 }

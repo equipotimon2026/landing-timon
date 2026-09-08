@@ -1,46 +1,40 @@
 import type { Metadata } from 'next'
-import { Plus_Jakarta_Sans, JetBrains_Mono, Instrument_Serif } from 'next/font/google'
+import { DM_Sans, JetBrains_Mono, Crimson_Pro } from 'next/font/google'
 import './globals.css'
 
-const jakarta = Plus_Jakarta_Sans({
+// Las mismas tres fuentes que la app (canvas "Rediseño Timón estilo Duolingo"):
+// DM Sans para todo, Crimson Pro itálica para las líneas de acento y JetBrains
+// Mono para las micro-etiquetas. Los dos deploys tienen que verse iguales.
+const sans = DM_Sans({
   subsets: ['latin'],
   variable: '--font-sans',
-  weight: ['300', '400', '500', '600', '700', '800'],
+  weight: ['400', '500', '600', '700', '800'],
   display: 'swap',
 })
 
-const jakartaDisplay = Plus_Jakarta_Sans({
-  subsets: ['latin'],
-  variable: '--font-display',
-  weight: ['300', '400', '500', '600', '700', '800'],
-  display: 'swap',
-})
-
-// Serif itálica de acento: las líneas emotivas del deck ("Tu email decide
-// el resto.", las citas de Timón). Solo se usa en itálica.
-const serif = Instrument_Serif({
+const serif = Crimson_Pro({
   subsets: ['latin'],
   variable: '--font-serif',
-  weight: ['400'],
-  style: ['italic'],
+  weight: ['400', '600', '700'],
+  style: ['normal', 'italic'],
   display: 'swap',
 })
 
 const mono = JetBrains_Mono({
   subsets: ['latin'],
   variable: '--font-mono',
-  weight: ['400', '500'],
+  weight: ['400', '500', '700'],
   display: 'swap',
 })
 
 export const metadata: Metadata = {
-  title: 'Timon — Claridad antes de elegir',
+  title: 'Timon — El primer paso no es elegir',
   description:
-    'El primer paso no es elegir. Es entenderte. Un recorrido al ritmo que vos vayas — carreras, universidades argentinas y salidas laborales reales.',
+    'El primer paso no es elegir. Es entenderte. 13 paradas cortas para saber quién sos antes de decidir qué estudiar — carreras, universidades argentinas y salidas laborales reales.',
   openGraph: {
-    title: 'Timon — Claridad antes de elegir',
+    title: 'Timon — El primer paso no es elegir',
     description:
-      'El primer paso no es elegir. Es entenderte. Un recorrido al ritmo que vos vayas.',
+      'El primer paso no es elegir. Es entenderte. 13 paradas cortas para saber quién sos antes de decidir qué estudiar.',
     locale: 'es_AR',
     type: 'website',
   },
@@ -54,7 +48,7 @@ export default function RootLayout({
   return (
     <html
       lang="es"
-      className={`${jakarta.variable} ${jakartaDisplay.variable} ${serif.variable} ${mono.variable} h-full antialiased`}
+      className={`${sans.variable} ${serif.variable} ${mono.variable} h-full antialiased`}
       suppressHydrationWarning
     >
       <body

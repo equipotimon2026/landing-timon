@@ -186,7 +186,7 @@ export function EstudianteLanding({ onBack: _onBack, onPricing }: Props) {
           target="_blank"
           rel="noopener noreferrer"
           className="group inline-flex items-center gap-3 px-8 py-[18px] rounded-full bg-[var(--ocean)] text-[var(--cream-elev)] font-medium text-[15px] hover:bg-[var(--ocean-deep)] transition-all cursor-pointer"
-          style={{ boxShadow: '0 12px 32px rgba(30, 91, 160, 0.20)' }}
+          style={{ boxShadow: '0 12px 32px rgba(37, 99, 235, 0.28)' }}
         >
           Empezar el recorrido
           <ArrowRight size={16} className="group-hover:translate-x-0.5 transition-transform" />
@@ -240,7 +240,7 @@ export function EstudianteLanding({ onBack: _onBack, onPricing }: Props) {
             target="_blank"
             rel="noopener noreferrer"
             className="group inline-flex items-center gap-3 px-8 py-[18px] rounded-full bg-[var(--ocean)] text-[var(--cream-elev)] font-medium text-[15px] hover:bg-[var(--ocean-deep)] transition-all cursor-pointer"
-            style={{ boxShadow: '0 12px 32px rgba(30, 91, 160, 0.20)' }}
+            style={{ boxShadow: '0 12px 32px rgba(37, 99, 235, 0.28)' }}
           >
             Empezar el recorrido
             <ArrowRight size={16} className="group-hover:translate-x-0.5 transition-transform" />

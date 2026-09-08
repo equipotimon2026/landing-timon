@@ -13,7 +13,7 @@ export function ReportPreview() {
     <div className="relative w-full max-w-md mx-auto">
       <div
         className="absolute -inset-8 rounded-full opacity-50 blur-3xl pointer-events-none"
-        style={{ background: 'radial-gradient(circle, rgba(30, 91, 160, 0.16) 0%, transparent 65%)' }}
+        style={{ background: 'radial-gradient(circle, rgba(37, 99, 235, 0.16) 0%, transparent 65%)' }}
       />
 
       <div

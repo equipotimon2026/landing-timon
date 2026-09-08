@@ -5,6 +5,7 @@ import { Navbar } from '@/components/landing/Navbar'
 import { HeroEntrada } from '@/components/landing/HeroEntrada'
 import { InputSection } from '@/components/landing/InputSection'
 import { OutputSection } from '@/components/landing/OutputSection'
+import { CierreSection } from '@/components/landing/CierreSection'
 import { Footer } from '@/components/landing/Footer'
 import { ColegiosSection } from '@/components/landing/ColegiosSection'
 import { PricingSection } from '@/components/landing/PricingSection'
@@ -12,12 +13,25 @@ import { FaqSection } from '@/components/landing/FaqSection'
 import { FloatingChat } from '@/components/landing/FloatingChat'
 import { ScrollProgress } from '@/components/landing/ScrollProgress'
 
-type Audience = 'universal' | 'colegios' | 'pricing'
+type Audience = 'universal' | 'colegios'
 
+/**
+ * Orden de la home (reuniones del 06/09 y 07/09/2026):
+ *
+ *   1. Hero = la puerta de entrada (formulario).
+ *   2. Cómo funciona (las paradas, en el teléfono y en la compu).
+ *   3. Qué devuelve: el antes/después y un ejemplo tangible del informe.
+ *   4. Precios, visibles en la misma página — Fede: "en ninguna parte está el
+ *      precio visible de forma fácil".
+ *   5. Preguntas frecuentes.
+ *   6. Cierre con la llamada a empezar.
+ *
+ * "Para colegios" sigue siendo una vista aparte: es otro público.
+ */
 export default function Home() {
   const [audience, setAudience] = useState<Audience>('universal')
 
-  const handleSelect = (a: 'colegios' | 'pricing') => {
+  const handleSelect = (a: 'colegios') => {
     setAudience(a)
     if (typeof window !== 'undefined') window.scrollTo({ top: 0, behavior: 'instant' })
   }
@@ -31,13 +45,11 @@ export default function Home() {
     document.title =
       audience === 'colegios'
         ? 'Timon — Para colegios'
-        : audience === 'pricing'
-        ? 'Timon — Planes y Precios'
-        : 'Timon — Claridad antes de elegir'
+        : 'Timon — El primer paso no es elegir'
   }, [audience])
 
   return (
-    <main className="flex-1 flex flex-col bg-[var(--cream)] paper-grain">
+    <main className="flex-1 flex flex-col bg-[var(--cream)]">
       <ScrollProgress />
       <Navbar
         audience={audience}
@@ -53,15 +65,16 @@ export default function Home() {
             <div id="que-es">
               <InputSection />
             </div>
-            <OutputSection onPricing={() => handleSelect('pricing')} />
+            <OutputSection />
+            <PricingSection />
             <FaqSection />
+            <CierreSection />
           </>
         )}
         {audience === 'colegios' && <ColegiosSection onBack={handleReset} />}
-        {audience === 'pricing' && <PricingSection onBack={handleReset} />}
       </div>
 
-      <Footer />
+      <Footer onColegios={() => handleSelect('colegios')} />
       <FloatingChat />
     </main>
   )

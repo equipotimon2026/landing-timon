@@ -2,7 +2,7 @@
 
 export type ViewMode = 'all' | 'phone' | 'desktop'
 
-const C = { creamDeep: '#F1ECE2', creamElev: '#FFFFFF', navy: '#0F1B33', hueso: '#6B7793' }
+const C = { creamDeep: '#F1EEE7', creamElev: '#FFFFFF', navy: '#0F1F36', hueso: '#5A6B85' }
 
 type Props = {
   value: ViewMode
