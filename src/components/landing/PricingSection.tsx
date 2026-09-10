@@ -243,10 +243,10 @@ export function PricingSection() {
 
   return (
     <section id="precios" className="timon-wash relative overflow-hidden border-t border-[var(--border-cream)]">
-      <div className="relative z-10 mx-auto w-full max-w-[1080px] px-5 py-16 sm:px-8 sm:py-24">
+      <div className="shell relative z-10 py-20 sm:py-28">
         <div>
-          <div ref={block.ref} className={`reveal ${block.inView ? 'is-visible' : ''}`}>
-          <span className="eyebrow eyebrow--with-rule">Planes y precios</span>
+          <div ref={block.ref} className={`reveal ${block.inView ? 'is-visible' : ''} mx-auto max-w-[46rem] text-center`}>
+          <span className="eyebrow eyebrow--with-rule eyebrow--center">Planes y precios</span>
 
           <h2
             className="mt-4 font-display font-extrabold tracking-[-0.045em] text-[var(--navy)]"
@@ -259,14 +259,14 @@ export function PricingSection() {
             </span>
           </h2>
 
-          <p className="mt-4 max-w-[34rem] text-[15.5px] leading-relaxed text-[var(--hueso)]">
+          <p className="mx-auto mt-4 max-w-[34rem] text-[15.5px] leading-relaxed text-[var(--hueso)]">
             No es una suscripción: no se renueva y no hay nada que dar de baja.
             Es el recorrido completo, una sola vez, pagado como te sirva.
           </p>
 
           </div>
 
-          <div className="mt-7">
+          <div className="mt-7 flex justify-center">
             <ModeToggle mode={mode} onChange={setMode} />
           </div>
 
@@ -284,7 +284,7 @@ export function PricingSection() {
             <p className="mono-label mt-1">Se agrega más adelante, dentro del proceso</p>
           </div>
 
-          <p className="mt-5 max-w-[34rem] text-[12.5px] leading-[1.55] text-[var(--hueso)]">
+          <p className="mx-auto mt-5 max-w-[34rem] text-center text-[12.5px] leading-[1.55] text-[var(--hueso)]">
             El recorrido es individual: cada persona hace el suyo y recibe su propio
             informe. Lo único grupal es el descuento: el código se comparte y el
             precio baja para todos los del grupo que todavía no pagaron.

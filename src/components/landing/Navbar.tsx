@@ -31,7 +31,7 @@ export function Navbar({ audience, onLogoClick, onSwitchAudience, onBack }: Prop
 
   return (
     <header className="sticky left-0 right-0 top-0 z-50 border-b border-[rgba(15,31,54,0.06)] bg-white/60 backdrop-blur-xl">
-      <div className="mx-auto flex h-16 w-full max-w-[1280px] items-center justify-between gap-3 px-5 sm:px-8">
+      <div className="shell flex h-16 items-center justify-between gap-3">
         <div className="flex min-w-0 items-center gap-3 sm:gap-4">
           {!isHome && (
             <button

@@ -110,10 +110,10 @@ export function FaqSection() {
   const [open, setOpen] = useState<number | null>(0)
 
   return (
-    <section id="faq" className="relative border-t border-[var(--border-cream)] bg-[var(--cream-elev)] px-5 py-20 sm:px-8 sm:py-28 lg:px-10">
-      <div className="mx-auto w-full max-w-[900px]">
-        <div ref={head.ref} className={`reveal ${head.inView ? 'is-visible' : ''}`}>
-          <span className="eyebrow eyebrow--with-rule">Preguntas</span>
+    <section id="faq" className="relative border-t border-[var(--border-cream)] bg-[var(--cream-elev)] py-20 sm:py-28">
+      <div className="shell prose-shell">
+        <div ref={head.ref} className={`reveal ${head.inView ? 'is-visible' : ''} text-center`}>
+          <span className="eyebrow eyebrow--with-rule eyebrow--center">Preguntas</span>
           <h2
             className="mt-4 font-display font-extrabold tracking-[-0.04em] text-[var(--navy)]"
             style={{ fontSize: 'clamp(1.8rem, 4vw, 2.9rem)', lineHeight: 1.06 }}

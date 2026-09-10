@@ -58,10 +58,14 @@ export function HeroEntrada() {
       className="timon-wash relative flex flex-col overflow-hidden"
       style={{ marginTop: '-4rem', paddingTop: '4rem' }}
     >
-      <div className="relative z-10 mx-auto flex w-full max-w-[1200px] flex-1 flex-col px-5 pb-8 pt-6 sm:px-8 lg:min-h-[calc(100dvh-4rem)] lg:flex-row lg:items-center lg:gap-16 lg:py-10">
+      {/* En escritorio son dos columnas de ancho fijo, no un flex que se
+          abre: el sobrante del monitor queda afuera del par en vez de
+          acumularse en la columna izquierda. Y la altura la manda el
+          contenido, no el viewport. */}
+      <div className="shell relative z-10 flex flex-col pb-8 pt-6 lg:grid lg:grid-cols-[minmax(0,1fr)_400px] lg:items-center lg:gap-12 lg:py-20">
 
         {/* ── Izquierda: la promesa y Timon ── */}
-        <div className="flex flex-1 flex-col items-center text-center lg:items-start lg:text-left">
+        <div className="flex flex-col items-center text-center lg:items-start lg:text-left">
           {/* Móvil: globito, mascota grande, frase (M01) */}
           <div className="timon-bubble mb-3 px-4 py-2.5 lg:hidden">
             <p className="text-[14px] font-bold text-[var(--navy)]">Hola, soy Timon.</p>
@@ -146,7 +150,7 @@ export function HeroEntrada() {
         </div>
 
         {/* ── Derecha: la tarjeta (escritorio) ── */}
-        <div className="hidden w-[440px] shrink-0 lg:block">
+        <div className="hidden lg:block">
           <div className="glass glass-strong glass-xl p-8">
             <div role="tablist" className="flex rounded-[var(--r-md)] bg-[rgba(15,31,54,0.06)] p-1">
               {(

@@ -31,16 +31,16 @@ export function BeforeAfter({
   pairs,
 }: Props) {
   return (
-    <section className="relative py-12 sm:py-28 border-y border-[var(--border-cream)] bg-[var(--cream-elev)] overflow-hidden">
+    <section className="relative py-20 sm:py-28 border-y border-[var(--border-cream)] bg-[var(--cream-elev)] overflow-hidden">
       {/* Decorative editorial halo */}
       <div
         className="absolute pointer-events-none ocean-orb"
         style={{ top: '20%', right: '-10%', width: 600, height: 600 }}
       />
 
-      <div className="relative mx-auto w-full max-w-[1280px] px-5 sm:px-8">
-        <div className="mb-14 sm:mb-16 max-w-[920px]">
-          <p className="eyebrow eyebrow--with-rule mb-7">{eyebrow}</p>
+      <div className="shell relative">
+        <div className="mx-auto mb-14 max-w-[46rem] text-center sm:mb-16">
+          <p className="eyebrow eyebrow--with-rule eyebrow--center mb-7">{eyebrow}</p>
           <h2
             className="font-display font-extrabold text-[var(--navy)]"
             style={{
@@ -57,7 +57,7 @@ export function BeforeAfter({
             )}
           </h2>
           {subtitle && (
-            <p className="mt-5 text-[1.0625rem] sm:text-[1.125rem] leading-[1.55] text-[var(--navy)]/65 max-w-[560px]">
+            <p className="mt-5 text-[1.0625rem] sm:text-[1.125rem] leading-[1.55] text-[var(--navy)]/65 mx-auto max-w-[560px]">
               {subtitle}
             </p>
           )}

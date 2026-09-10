@@ -13,7 +13,7 @@ export function CierreSection() {
 
   return (
     <section className="timon-wash relative overflow-hidden border-t border-[var(--border-cream)]">
-      <div className="mx-auto flex w-full max-w-[900px] flex-col items-center px-5 py-20 text-center sm:px-8 sm:py-28">
+      <div className="shell prose-shell flex flex-col items-center py-20 text-center sm:py-28">
         <Image
           src="/timon/mascota.png"
           alt=""

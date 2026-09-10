@@ -42,19 +42,19 @@ export function OutputSection() {
       />
 
       <section className="relative overflow-hidden border-t border-[var(--border-cream)] bg-[var(--cream-elev)]">
-        <div className="relative mx-auto w-full max-w-[1280px] px-5 py-16 sm:px-8 sm:py-24">
+        <div className="shell relative py-20 sm:py-28">
           <div
             ref={titleReveal.ref}
-            className={`reveal ${titleReveal.inView ? 'is-visible' : ''} mb-10 sm:mb-14`}
+            className={`reveal ${titleReveal.inView ? 'is-visible' : ''} mx-auto mb-10 max-w-[46rem] text-center sm:mb-14`}
           >
-            <p className="eyebrow eyebrow--with-rule mb-6">Lo que te llevás</p>
+            <p className="eyebrow eyebrow--with-rule eyebrow--center mb-6">Lo que te llevás</p>
             <h2
-              className="max-w-[760px] font-display font-extrabold tracking-[-0.04em] text-[var(--navy)]"
+              className="font-display font-extrabold tracking-[-0.04em] text-[var(--navy)]"
               style={{ fontSize: 'clamp(2rem, 4.6vw, 3.6rem)', lineHeight: 1.02 }}
             >
               ¿Qué devuelve Timon?
             </h2>
-            <p className="mt-4 max-w-[60ch] text-[16px] leading-relaxed text-[var(--hueso)] sm:text-[17px]">
+            <p className="mx-auto mt-4 max-w-[60ch] text-[16px] leading-relaxed text-[var(--hueso)] sm:text-[17px]">
               Un informe con quién sos, las carreras que te pegan y por qué, las
               universidades argentinas donde podés estudiarlas y a qué trabajo lleva
               cada una. Las preguntas y la forma de leerlas las armamos con

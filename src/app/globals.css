@@ -299,6 +299,14 @@
 .eyebrow--center {
   justify-content: center;
 }
+/* Centrado, la regla de un solo lado queda descolgada: se espeja. */
+.eyebrow--center.eyebrow--with-rule::after {
+  content: '';
+  width: 32px;
+  height: 1px;
+  background: currentColor;
+  opacity: 0.5;
+}
 
 /* Helm spin animation for the wheel mark */
 @keyframes spin-helm {
@@ -397,6 +405,27 @@
   animation: chat-ring-pulse 2.2s ease-out infinite;
 }
 
+/* ─── Eje de contenido ─────────────────────────────────────────────
+   Un solo ancho para toda la home. Antes convivían cuatro (1280 en
+   navbar/input/output/footer, 1200 en el hero, 1080 en precios, 900 en
+   FAQ y cierre) y el borde del contenido se movía al scrollear, que es
+   lo que hacía ver la página estirada. */
+.shell {
+  width: 100%;
+  max-inline-size: 1080px;
+  margin-inline: auto;
+  padding-inline: 20px;
+}
+@media (min-width: 640px) {
+  .shell { padding-inline: 32px; }
+}
+
+/* Columna de lectura, para texto largo (FAQ, cierre). Mismo eje. */
+.prose-shell {
+  max-inline-size: 720px;
+  margin-inline: auto;
+}
+
 /* ─── Sistema visual de Timon (idéntico al de la app) ─────────────── */
 .glass {
   background: var(--glass-bg);
@@ -450,7 +479,9 @@
   box-shadow: 0 10px 26px rgba(15, 31, 54, 0.08);
 }
 
-/* Botones del canvas: radio 12, sombra azul, se hunden al apretar. */
+/* Botones: bloque sólido con sombra dura abajo, se hunden al apretar.
+   La sombra difusa se reemplaza por un borde inferior sólido — es la
+   firma del botón de Duolingo y lo que le da el aire de juego. */
 .btn-timon {
   display: inline-flex;
   align-items: center;
@@ -458,22 +489,39 @@
   gap: 8px;
   min-height: 48px;
   padding: 0 22px;
-  border-radius: var(--r-sm);
-  font-weight: 700;
+  border-radius: var(--r-md);
+  font-weight: 800;
   font-size: 15px;
-  letter-spacing: -0.01em;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
   cursor: pointer;
-  transition: transform 0.12s ease, box-shadow 0.15s ease, background 0.15s ease, opacity 0.15s ease;
+  transition: transform 0.08s ease, box-shadow 0.08s ease, background 0.15s ease, opacity 0.15s ease;
 }
-.btn-timon:active { transform: translateY(1px); }
+/* Al apretar baja hasta apoyarse sobre su propia sombra. */
+.btn-timon:active:not(:disabled) {
+  transform: translateY(4px);
+  box-shadow: none;
+}
 .btn-timon:disabled { opacity: 0.45; cursor: not-allowed; }
-.btn-timon--primary { background: var(--ocean); color: #fff; box-shadow: var(--btn-shadow); }
+
+.btn-timon--primary { background: var(--ocean); color: #fff; box-shadow: 0 4px 0 var(--ocean-deep); }
 .btn-timon--primary:hover:not(:disabled) { background: var(--ocean-deep); }
-.btn-timon--ghost { background: rgba(255, 255, 255, 0.7); color: var(--navy); border: 1px solid var(--border-cream); }
-.btn-timon--ghost:hover:not(:disabled) { border-color: var(--ocean); color: var(--ocean); }
-.btn-timon--navy { background: var(--navy); color: #fff; }
+.btn-timon--ghost {
+  background: #fff;
+  color: var(--navy);
+  border: 2px solid var(--border-cream-strong);
+  box-shadow: 0 4px 0 var(--border-cream-strong);
+}
+.btn-timon--ghost:hover:not(:disabled) { border-color: var(--ocean); color: var(--ocean); box-shadow: 0 4px 0 var(--ocean-light); }
+.btn-timon--navy { background: var(--navy); color: #fff; box-shadow: 0 4px 0 #060E1A; }
 .btn-timon--navy:hover:not(:disabled) { background: var(--navy-mid); }
-.btn-timon--white { background: #fff; color: var(--ocean); box-shadow: 0 8px 22px rgba(15, 31, 54, 0.12); }
+.btn-timon--white { background: #fff; color: var(--ocean); box-shadow: 0 4px 0 var(--border-cream-strong); }
+
+/* Sin animación de hundido para quien la tiene desactivada. */
+@media (prefers-reduced-motion: reduce) {
+  .btn-timon { transition: background 0.15s ease, opacity 0.15s ease; }
+  .btn-timon:active:not(:disabled) { transform: none; }
+}
 
 /* Input del canvas */
 .input-timon {

@@ -6,7 +6,7 @@ const CONTACT_EMAIL = 'info@timonear.com'
 export function Footer({ onColegios }: { onColegios?: () => void }) {
   return (
     <footer className="border-t border-[var(--border-cream)] bg-[var(--cream-deep)]">
-      <div className="mx-auto flex w-full max-w-[1280px] flex-col gap-4 px-5 py-6 sm:h-16 sm:flex-row sm:items-center sm:justify-between sm:gap-3 sm:px-8 sm:py-0">
+      <div className="shell flex flex-col gap-4 py-6 sm:h-16 sm:flex-row sm:items-center sm:justify-between sm:gap-3 sm:py-0">
         {/* Brand */}
         <div className="flex min-w-0 shrink-0 items-center gap-3">
           <Logo tone="navy" size={26} />
