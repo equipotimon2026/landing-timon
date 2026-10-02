@@ -3,19 +3,19 @@
 import { useState, useRef, useEffect } from 'react'
 
 const C = {
-  cream: '#F5EDE0',
-  creamElev: '#FBF5EA',
-  creamDeep: '#EDE2CF',
-  creamBorder: '#E6DCC9',
-  creamBorderStrong: '#D8CCB4',
+  cream: '#FAF8F3',
+  creamElev: '#FFFFFF',
+  creamDeep: '#F1EEE7',
+  creamBorder: '#E3E8F0',
+  creamBorderStrong: '#D3DAE6',
   navy: '#0F1F36',
-  navyMid: '#1A2D4D',
-  ocean: '#1E5BA0',
-  oceanDeep: '#1B5390',
-  oceanLight: '#4F84C2',
-  terra: '#C97F5E',
-  terraSoft: '#E2A88B',
-  hueso: '#6B7B96',
+  navyMid: '#1E2F4D',
+  ocean: '#2563EB',
+  oceanDeep: '#1D4ED8',
+  oceanLight: '#93B4FB',
+  terra: '#F59E0B',
+  terraSoft: '#FDE9C4',
+  hueso: '#5A6B85',
 }
 
 // ─── Shell ───────────────────────────────────────────────────────────────────
@@ -100,7 +100,7 @@ export function PhoneCarousel() {
                 borderRadius: 33,
                 border: `1.5px solid ${C.navyMid}`,
                 overflow: 'hidden', position: 'relative', flexShrink: 0,
-                boxShadow: '0 24px 48px rgba(15,31,54,0.18)',
+                boxShadow: '0 24px 48px rgba(15,27,51,0.18)',
               }}>
                 {/* Dynamic island */}
                 <div style={{ position: 'absolute', top: 9, left: '50%', transform: 'translateX(-50%)', width: 58, height: 18, background: C.navyMid, borderRadius: 10, zIndex: 100 }} />
@@ -242,7 +242,7 @@ function ChatOpt({ label, onClick, disabled }: { label: string; onClick: () => v
         padding: '6px 9px', borderRadius: 8, fontSize: 10, textAlign: 'left', width: '100%', cursor: 'pointer',
         border: `1px solid ${hov ? C.ocean : C.creamBorder}`,
         color: hov ? C.ocean : C.hueso,
-        background: hov ? 'rgba(30,91,160,0.05)' : C.creamElev,
+        background: hov ? 'rgba(37,99,235,0.05)' : C.creamElev,
         transition: 'all 0.15s',
       }}
     >
@@ -306,7 +306,7 @@ function Slide2() {
           display: 'flex', flexDirection: 'column', justifyContent: 'space-between', zIndex: 3,
           transform: frontTransform, opacity: exit ? 0 : 1,
           transition: 'transform 0.3s cubic-bezier(0.34,1.2,0.64,1), opacity 0.2s',
-          boxShadow: '0 8px 24px rgba(15,31,54,0.08)',
+          boxShadow: '0 8px 24px rgba(15,27,51,0.08)',
         }}>
           <div style={{ fontSize: 8, fontWeight: 600, letterSpacing: '.12em', textTransform: 'uppercase', color: C.ocean }}>{card.tag}</div>
           <div style={{ fontSize: 11.5, fontWeight: 600, color: C.navy, lineHeight: 1.3 }}>{card.text}</div>
@@ -359,7 +359,7 @@ function Slide3() {
         <div ref={trackRef} onClick={handleClick} style={{ padding: '8px 0', cursor: 'pointer' }}>
           <div style={{ height: 3, background: C.creamBorderStrong, borderRadius: 2, position: 'relative' }}>
             <div style={{ position: 'absolute', left: 0, top: 0, height: '100%', background: C.ocean, borderRadius: 2, width: `${pct}%`, transition: 'width .08s' }} />
-            <div style={{ position: 'absolute', top: '50%', left: `${pct}%`, transform: 'translate(-50%,-50%)', width: 16, height: 16, background: C.ocean, borderRadius: '50%', transition: 'left .08s', cursor: 'pointer', boxShadow: '0 2px 8px rgba(30,91,160,0.3)' }} />
+            <div style={{ position: 'absolute', top: '50%', left: `${pct}%`, transform: 'translate(-50%,-50%)', width: 16, height: 16, background: C.ocean, borderRadius: '50%', transition: 'left .08s', cursor: 'pointer', boxShadow: '0 2px 8px rgba(37,99,235,0.3)' }} />
           </div>
         </div>
 
@@ -450,7 +450,7 @@ function WordPill({ word, size, selected, onToggle }: { word: string; size: 'lar
         padding: pad, borderRadius: 20, fontSize: fs, cursor: 'pointer', userSelect: 'none', transition: 'all 0.15s',
         border: `1px solid ${selected ? C.ocean : hov ? C.oceanLight : C.creamBorder}`,
         color: selected ? C.ocean : hov ? C.navy : C.hueso,
-        background: selected ? 'rgba(30,91,160,0.08)' : C.creamElev,
+        background: selected ? 'rgba(37,99,235,0.08)' : C.creamElev,
       }}
     >
       {word}
@@ -530,11 +530,11 @@ function Slide5() {
           }}>Me va</div>
 
           <div style={{
-            background: hover === 'left' ? `rgba(201,127,94,0.06)` : hover === 'right' ? 'rgba(30,91,160,0.06)' : C.creamElev,
-            border: `1px solid ${hover === 'left' ? `rgba(201,127,94,0.3)` : hover === 'right' ? 'rgba(30,91,160,0.22)' : C.creamBorder}`,
+            background: hover === 'left' ? `rgba(245,158,11,0.06)` : hover === 'right' ? 'rgba(37,99,235,0.06)' : C.creamElev,
+            border: `1px solid ${hover === 'left' ? `rgba(245,158,11,0.3)` : hover === 'right' ? 'rgba(37,99,235,0.22)' : C.creamBorder}`,
             borderRadius: 16, overflow: 'hidden',
             transition: 'background 0.18s, border-color 0.18s',
-            boxShadow: '0 8px 24px rgba(15,31,54,0.08)',
+            boxShadow: '0 8px 24px rgba(15,27,51,0.08)',
           }}>
             <div style={{ padding: '36px 14px 12px', fontSize: 12, fontWeight: 600, color: C.navy, lineHeight: 1.35, textAlign: 'center' }}>
               {d.q}
@@ -548,7 +548,7 @@ function Slide5() {
                 style={{
                   flex: 1, padding: '9px 10px 11px', cursor: 'pointer',
                   borderRight: `1px solid ${C.creamBorder}`,
-                  background: hover === 'left' ? 'rgba(201,127,94,0.08)' : 'transparent',
+                  background: hover === 'left' ? 'rgba(245,158,11,0.08)' : 'transparent',
                   transition: 'background 0.15s',
                 }}
               >
@@ -561,7 +561,7 @@ function Slide5() {
                 onClick={() => swipe('right')}
                 style={{
                   flex: 1, padding: '9px 10px 11px', cursor: 'pointer',
-                  background: hover === 'right' ? 'rgba(30,91,160,0.07)' : 'transparent',
+                  background: hover === 'right' ? 'rgba(37,99,235,0.07)' : 'transparent',
                   transition: 'background 0.15s',
                 }}
               >

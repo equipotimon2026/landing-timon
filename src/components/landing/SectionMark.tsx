@@ -12,9 +12,9 @@ type Props = {
 }
 
 const TONES: Record<NonNullable<Props['tone']>, string> = {
-  terra: 'rgba(201, 127, 94, 0.20)',
-  ocean: 'rgba(30, 91, 160, 0.16)',
-  cream: 'rgba(245, 237, 224, 0.16)',
+  terra: 'rgba(245, 158, 11, 0.22)',
+  ocean: 'rgba(37, 99, 235, 0.16)',
+  cream: 'rgba(250, 248, 243, 0.16)',
   navy: 'rgba(15, 31, 54, 0.10)',
 }
 

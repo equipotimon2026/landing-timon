@@ -1,11 +1,20 @@
 'use client'
 
 import { useState } from 'react'
-import { ArrowRight } from 'lucide-react'
+import { ArrowRight, Loader2 } from 'lucide-react'
 import { useInView } from '@/hooks/useInView'
 
 type Props = { onBack: () => void }
 
+const CONTACT_EMAIL = 'info@timonear.com'
+
+/**
+ * Para colegios: una promesa y un formulario para pedir reunión.
+ *
+ * El formulario manda de verdad: va a /api/contact con tipo 'colegio' y
+ * termina en un mail a info@. Antes solo mostraba "recibimos tu solicitud"
+ * sin enviar nada.
+ */
 export function ColegiosSection({ onBack: _onBack }: Props) {
   const heroBlock = useInView<HTMLDivElement>()
   const formBlock = useInView<HTMLDivElement>()
@@ -17,11 +26,34 @@ export function ColegiosSection({ onBack: _onBack }: Props) {
     email: '',
     interes: '',
   })
-  const [submitted, setSubmitted] = useState(false)
+  const [estado, setEstado] = useState<'idle' | 'enviando' | 'ok' | 'error'>('idle')
+  const [error, setError] = useState<string | null>(null)
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    setSubmitted(true)
+    setEstado('enviando')
+    setError(null)
+    try {
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ tipo: 'colegio', ...form }),
+      })
+      const data = await res.json().catch(() => ({}))
+      if (!res.ok) {
+        setError(
+          data.fallbackEmail
+            ? `No pudimos mandar la solicitud. Escribinos directo a ${data.fallbackEmail}.`
+            : data.error || 'No pudimos mandar la solicitud. Probá de nuevo.'
+        )
+        setEstado('error')
+        return
+      }
+      setEstado('ok')
+    } catch {
+      setError(`No pudimos mandar la solicitud. Escribinos directo a ${CONTACT_EMAIL}.`)
+      setEstado('error')
+    }
   }
 
   const handleChange = (field: keyof typeof form) => (
@@ -29,113 +61,104 @@ export function ColegiosSection({ onBack: _onBack }: Props) {
   ) => setForm((f) => ({ ...f, [field]: e.target.value }))
 
   return (
-    <div className="animate-fade-in bg-[var(--cream)]">
+    <div className="timon-wash animate-fade-in">
       <section className="relative overflow-hidden" style={{ marginTop: '-4rem', paddingTop: '4rem' }}>
-        {/* Mesh blobs — inside relative section, same as EstudianteLanding */}
-        <div className="mesh-stage" aria-hidden>
-          <div className="mesh-blob mesh-blob--ocean-a" />
-          <div className="mesh-blob mesh-blob--terra" />
-          <div className="mesh-blob mesh-blob--ocean-b" />
-        </div>
-        <div className="relative w-full px-5 sm:px-8 lg:px-12 xl:px-[5vw] 2xl:px-[6vw] pt-24 pb-28 sm:pt-32 sm:pb-36 z-10">
+        <div className="relative z-10 mx-auto w-full max-w-[1080px] px-5 pb-24 pt-16 sm:px-8 sm:pb-32 sm:pt-24">
 
-          {/* Hero text — full width */}
           <div ref={heroBlock.ref} className={`reveal ${heroBlock.inView ? 'is-visible' : ''}`}>
-            <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-[var(--hueso)] mb-10 inline-flex items-center gap-3">
-              <span className="w-8 h-px bg-[var(--terra)]/60" />
-              Instituciones educativas
-            </p>
-
+            <p className="eyebrow eyebrow--with-rule mb-6">Instituciones educativas</p>
             <h1
-              className="font-display font-light text-[var(--navy)] mb-20 sm:mb-24"
-              style={{
-                fontSize: 'clamp(1.8rem, 4vw, 4rem)',
-                lineHeight: 1.0,
-                letterSpacing: '-0.04em',
-              }}
+              className="mb-4 max-w-[22ch] font-display font-extrabold text-[var(--navy)]"
+              style={{ fontSize: 'clamp(1.9rem, 4.2vw, 3.4rem)', lineHeight: 1.04, letterSpacing: '-0.04em' }}
             >
-              Que los estudiantes tengan la herramienta para descubrir su vocación y{' '}
-              <span className="text-[var(--ocean)] font-normal not-italic">
-                decidir su futuro con seguridad.
-              </span>
+              Que tus estudiantes decidan su futuro{' '}
+              <span className="serif-accent text-[var(--ocean)]">con seguridad.</span>
             </h1>
+            <p className="mb-12 max-w-[56ch] text-[16px] leading-relaxed text-[var(--hueso)] sm:mb-16 sm:text-[17px]">
+              Un recorrido de orientación vocacional armado con psicólogas y
+              psicopedagogas, con un código propio para tu colegio y un informe por
+              cada estudiante. Contanos cómo trabajan y coordinamos una reunión.
+            </p>
           </div>
 
-          {/* Form — centered */}
           <div
             ref={formBlock.ref}
-            className={`reveal reveal-delay-2 ${formBlock.inView ? 'is-visible' : ''} max-w-[640px] mx-auto`}
+            className={`reveal reveal-delay-2 ${formBlock.inView ? 'is-visible' : ''} glass glass-strong glass-xl mx-auto max-w-[680px] p-6 sm:p-9`}
           >
-            {submitted ? (
-              <div className="py-12 text-center">
+            {estado === 'ok' ? (
+              <div className="py-8 text-center">
                 <p
-                  className="font-display font-light text-[var(--navy)] mb-3"
+                  className="mb-3 font-display font-extrabold text-[var(--navy)]"
                   style={{ fontSize: 'clamp(1.5rem, 2.5vw, 2rem)', letterSpacing: '-0.03em' }}
                 >
                   Recibimos tu solicitud.
                 </p>
-                <p className="text-[var(--navy)]/55 text-[15px]">Te contactamos a la brevedad.</p>
+                <p className="text-[15px] text-[var(--hueso)]">Te escribimos a {form.email} para coordinar.</p>
               </div>
             ) : (
               <form onSubmit={handleSubmit} className="flex flex-col gap-5">
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
                   {(
                     [
-                      { id: 'nombre', label: 'Nombre y Apellido', type: 'text' },
-                      { id: 'institucion', label: 'Institución Educativa', type: 'text' },
-                      { id: 'cargo', label: 'Cargo o Rol', type: 'text' },
-                      { id: 'email', label: 'Email institucional', type: 'email' },
+                      { id: 'nombre', label: 'Nombre y apellido', type: 'text', auto: 'name' },
+                      { id: 'institucion', label: 'Institución educativa', type: 'text', auto: 'organization' },
+                      { id: 'cargo', label: 'Cargo o rol', type: 'text', auto: 'organization-title' },
+                      { id: 'email', label: 'Email institucional', type: 'email', auto: 'email' },
                     ] as const
-                  ).map(({ id, label, type }) => (
+                  ).map(({ id, label, type, auto }) => (
                     <div key={id} className="flex flex-col gap-1.5">
-                      <label
-                        htmlFor={id}
-                        className="font-mono text-[10px] uppercase tracking-[0.14em] text-[var(--navy)]/70"
-                      >
-                        {label}
-                      </label>
+                      <label htmlFor={id} className="mono-label">{label}</label>
                       <input
                         id={id}
                         type={type}
-                        required
+                        autoComplete={auto}
+                        required={id !== 'cargo'}
                         value={form[id]}
                         onChange={handleChange(id)}
-                        className="bg-[var(--cream-elev)] border border-[var(--border-cream)] focus:border-[var(--ocean)] text-[var(--navy)] text-[15px] rounded-xl px-4 py-3 outline-none transition-colors"
+                        className="input-timon"
                       />
                     </div>
                   ))}
                 </div>
 
                 <div className="flex flex-col gap-1.5">
-                  <label
-                    htmlFor="interes"
-                    className="font-mono text-[10px] uppercase tracking-[0.14em] text-[var(--navy)]/70"
-                  >
-                    ¿Qué le gustaría que tratemos en la reunión?
+                  <label htmlFor="interes" className="mono-label">
+                    ¿Qué les gustaría que tratemos en la reunión?
                   </label>
                   <textarea
                     id="interes"
                     rows={3}
                     value={form.interes}
                     onChange={handleChange('interes')}
-                    className="bg-[var(--cream-elev)] border border-[var(--border-cream)] focus:border-[var(--ocean)] text-[var(--navy)] text-[15px] rounded-xl px-4 py-3 outline-none transition-colors resize-none"
+                    className="input-timon h-auto resize-none py-3"
                   />
                 </div>
 
-                <div className="pt-2 flex justify-center">
+                {error && (
+                  <p className="rounded-[var(--r-sm)] border border-red-200 bg-red-50 px-4 py-3 text-[13.5px] text-red-700">
+                    {error}
+                  </p>
+                )}
+
+                <div className="flex justify-center pt-1">
                   <button
                     type="submit"
-                    className="group inline-flex items-center gap-3 px-8 py-[18px] rounded-full bg-[var(--ocean)] text-[var(--cream-elev)] font-medium text-[15px] hover:bg-[var(--ocean-deep)] transition-all cursor-pointer"
-                    style={{ boxShadow: '0 12px 32px rgba(30,91,160,0.20)' }}
+                    disabled={estado === 'enviando'}
+                    className="btn-timon btn-timon--primary group h-[52px] w-full px-8 text-[16px] sm:w-auto"
                   >
-                    Solicitar reunión
-                    <ArrowRight size={16} className="group-hover:translate-x-0.5 transition-transform" />
+                    {estado === 'enviando' ? (
+                      <Loader2 size={18} className="animate-spin" />
+                    ) : (
+                      <>
+                        Solicitar reunión
+                        <ArrowRight size={16} className="transition-transform group-hover:translate-x-0.5" />
+                      </>
+                    )}
                   </button>
                 </div>
               </form>
             )}
           </div>
-
         </div>
       </section>
     </div>

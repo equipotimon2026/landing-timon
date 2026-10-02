@@ -2,18 +2,17 @@
 
 import { useState, useEffect } from 'react'
 import { useInView } from '@/hooks/useInView'
-import { SectionMark } from './SectionMark'
 import { PhoneCarousel } from './PhoneCarousel'
 import { InputMacBook } from './InputMacBook'
 import { ViewToggle, ViewMode } from './ViewToggle'
 
 const C = {
-  creamElev: '#FBF5EA',
-  creamBorder: '#E6DCC9',
-  creamDeep: '#EDE2CF',
+  creamElev: '#FFFFFF',
+  creamBorder: '#E3E8F0',
+  creamDeep: '#F1EEE7',
   navy: '#0F1F36',
-  ocean: '#1E5BA0',
-  hueso: '#6B7B96',
+  ocean: '#2563EB',
+  hueso: '#5A6B85',
 }
 
 
@@ -35,28 +34,26 @@ export function InputSection() {
 
   return (
     <section className="relative border-t border-[var(--border-cream)] bg-[var(--cream)] overflow-hidden">
-      <SectionMark label="02" position="top-left" tone="ocean" opacity={0.55} />
-
-      <div className="relative w-full px-5 sm:px-8 lg:px-12 xl:px-[5vw] 2xl:px-[6vw] pt-16 sm:pt-24 pb-8 sm:pb-12">
-        <div ref={titleReveal.ref} className={`reveal ${titleReveal.inView ? 'is-visible' : ''} max-w-[920px]`}>
-          <p className="eyebrow eyebrow--with-rule mb-7">Cómo es el recorrido</p>
+      <div className="shell relative pt-20 pb-8 sm:pt-28 sm:pb-12">
+        <div ref={titleReveal.ref} className={`reveal ${titleReveal.inView ? 'is-visible' : ''} mx-auto max-w-[46rem] text-center`}>
+          <p className="eyebrow eyebrow--with-rule eyebrow--center mb-7">Cómo es el recorrido</p>
           <h2
-            className="font-display font-light text-[var(--navy)] mb-5"
-            style={{ fontSize: 'clamp(2rem, 5vw, 4rem)', lineHeight: 1.0, letterSpacing: '-0.04em' }}
+            className="font-display font-extrabold text-[var(--navy)] mb-4"
+            style={{ fontSize: 'clamp(2rem, 4.6vw, 3.6rem)', lineHeight: 1.02, letterSpacing: '-0.04em' }}
           >
             ¿Cómo funciona Timon?
           </h2>
-          <p className="text-[1rem] sm:text-[1.125rem] leading-[1.65] text-[var(--navy)]/75 w-full mb-6">
+          <p className="text-[16px] sm:text-[17px] leading-relaxed text-[var(--hueso)] mx-auto max-w-[60ch] mb-6">
             No es un formulario. Son módulos que revelan cómo pensás, qué te mueve y qué te frena.
           </p>
           {!isMobile && <ViewToggle value={view} onChange={setView} options={['phone', 'desktop']} />}
         </div>
       </div>
 
-      <div className="w-full pb-16 sm:pb-24">
+      <div className="w-full pb-20 sm:pb-28">
         {view === 'phone' && <PhoneCarousel />}
         {view === 'desktop' && (
-          <div className="px-5 sm:px-8 lg:px-12 xl:px-[5vw] 2xl:px-[6vw]">
+          <div className="shell">
             <InputMacBook />
           </div>
         )}
