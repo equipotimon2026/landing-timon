@@ -1,6 +1,6 @@
 'use client'
 
-import Image from 'next/image'
+import { WheelMark } from './Logo'
 import { ArrowRight } from 'lucide-react'
 import { useInView } from '@/hooks/useInView'
 import { FREE_STOPS } from '@/lib/pricing'
@@ -14,13 +14,9 @@ export function CierreSection() {
   return (
     <section className="timon-wash relative overflow-hidden border-t border-[var(--border-cream)]">
       <div className="shell prose-shell flex flex-col items-center py-20 text-center sm:py-28">
-        <Image
-          src="/timon/mascota.png"
-          alt=""
-          width={480}
-          height={521}
-          className="timon-bob w-[150px] sm:w-[190px]"
-        />
+        <span aria-hidden className="timon-bob">
+          <WheelMark tone="ocean" size={150} />
+        </span>
         <p className="mono-label mt-6">Cierre</p>
         <h2
           ref={title.ref}
