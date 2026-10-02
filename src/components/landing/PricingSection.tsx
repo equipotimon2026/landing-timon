@@ -1,13 +1,10 @@
 'use client'
 
-import { useState } from 'react'
 import { ArrowRight, Check } from 'lucide-react'
 import { useInView } from '@/hooks/useInView'
 import {
   LIST_PRICE_ARS,
   PSICO_ADDON_ARS,
-  INSTALLMENTS,
-  UPFRONT_DISCOUNT_PCT,
   GROUP_SIZE_THRESHOLD,
   GROUP_DISCOUNT_PCT,
   FREE_STOPS,
@@ -17,17 +14,13 @@ import {
 
 const APP_URL = 'https://app.timonear.com'
 
-type Mode = 'cuotas' | 'unico'
-
 /**
  * Precios, como sección de la home — reunión del 07/09/2026.
  *
- * El problema no era el precio, era el número: "si mostrar 150 lucas asusta,
- * mostremos 12 de 12". Por eso la modalidad de pago es lo primero que se elige
- * y el número grande cambia con ella.
- *
- * Es pago en cuotas, NO suscripción: no se puede dar de baja a mitad de camino
- * y por eso no lo llamamos "por mes" en ningún lado.
+ * Un solo pago (Nico, 02/10/2026: las cuotas se sacan por ahora). El número
+ * es el mismo que cobra la app: el de lista, o el grupal si se juntan
+ * ${GROUP_SIZE_THRESHOLD}. No es suscripción: no se renueva ni hay nada que
+ * dar de baja.
  *
  * Fede (06/09/2026): "en ninguna parte está el precio visible de forma fácil".
  * Por eso dejó de ser una vista aparte y vive acá, en la misma página.
@@ -54,57 +47,16 @@ const MODALITIES = [
 const FEATURES = [
   `Las ${TOTAL_STOPS} paradas completas`,
   'Informe con carreras y universidades sugeridas',
-  'Una charla de 30 minutos con un profesional afín',
   'Acceso de tu familia al informe (nunca a tus respuestas)',
 ]
 
-/** Precio final por persona según modalidad y forma de pago. */
-function priceFor(groupPct: number, mode: Mode) {
-  const afterGroup = Math.round((LIST_PRICE_ARS * (100 - groupPct)) / 100)
-  if (mode === 'cuotas') {
-    return {
-      total: afterGroup,
-      perInstallment: Math.round(afterGroup / INSTALLMENTS / 100) * 100,
-    }
-  }
-  const upfront =
-    Math.round((afterGroup * (100 - UPFRONT_DISCOUNT_PCT)) / 100 / 100) * 100
-  return { total: upfront, perInstallment: null }
+/** Precio por persona según la modalidad: el que cobra la app. */
+function priceFor(groupPct: number) {
+  return Math.round((LIST_PRICE_ARS * (100 - groupPct)) / 100)
 }
 
-function ModeToggle({ mode, onChange }: { mode: Mode; onChange: (m: Mode) => void }) {
-  return (
-    <div className="inline-flex rounded-[var(--r-pill)] border border-[var(--border-cream-strong)] bg-white p-1">
-      {(
-        [
-          ['cuotas', `${INSTALLMENTS} cuotas`],
-          ['unico', 'Un solo pago'],
-        ] as const
-      ).map(([id, label]) => (
-        <button
-          key={id}
-          onClick={() => onChange(id)}
-          aria-pressed={mode === id}
-          className={`cursor-pointer rounded-[var(--r-pill)] px-5 py-2 text-[13px] font-bold transition-all ${
-            mode === id
-              ? 'bg-[var(--ocean)] text-white'
-              : 'text-[var(--hueso)] hover:text-[var(--navy)]'
-          }`}
-        >
-          {label}
-          {id === 'unico' && mode !== id && (
-            <span className="ml-1.5 text-[11px] text-[var(--terra-ink)]">
-              −{UPFRONT_DISCOUNT_PCT}%
-            </span>
-          )}
-        </button>
-      ))}
-    </div>
-  )
-}
-
-function PlanCard({ m, mode }: { m: (typeof MODALITIES)[number]; mode: Mode }) {
-  const p = priceFor(m.discountPct, mode)
+function PlanCard({ m }: { m: (typeof MODALITIES)[number] }) {
+  const precio = priceFor(m.discountPct)
   const hi = m.highlight
 
   return (
@@ -137,55 +89,29 @@ function PlanCard({ m, mode }: { m: (typeof MODALITIES)[number]; mode: Mode }) {
         {m.size}
       </p>
 
-      {/* El número grande: cambia con el toggle */}
       <div className="mt-5">
-        {p.perInstallment !== null ? (
-          <>
-            <div className="flex flex-wrap items-baseline gap-2">
-              <span
-                className="font-display text-[2.6rem] font-extrabold leading-none tracking-[-0.045em]"
-                style={{ color: hi ? '#fff' : 'var(--navy)' }}
-              >
-                {fmtArs(p.perInstallment)}
-              </span>
-              <span
-                className="text-[15px] font-bold"
-                style={{ color: hi ? 'rgba(255,255,255,0.8)' : 'var(--hueso)' }}
-              >
-                × {INSTALLMENTS}
-              </span>
-            </div>
-            <p
-              className="mt-1.5 text-[12.5px]"
-              style={{ color: hi ? 'rgba(255,255,255,0.75)' : 'var(--hueso)' }}
+        <div className="flex flex-wrap items-baseline gap-2.5">
+          <span
+            className="font-display text-[2.6rem] font-extrabold leading-none tracking-[-0.045em]"
+            style={{ color: hi ? '#fff' : 'var(--navy)' }}
+          >
+            {fmtArs(precio)}
+          </span>
+          {m.discountPct > 0 && (
+            <span
+              className="text-[14px] line-through"
+              style={{ color: hi ? 'rgba(255,255,255,0.55)' : 'var(--hueso-soft)' }}
             >
-              {fmtArs(p.total)} en total · sin interés
-            </p>
-          </>
-        ) : (
-          <>
-            <div className="flex flex-wrap items-baseline gap-2.5">
-              <span
-                className="font-display text-[2.6rem] font-extrabold leading-none tracking-[-0.045em]"
-                style={{ color: hi ? '#fff' : 'var(--navy)' }}
-              >
-                {fmtArs(p.total)}
-              </span>
-              <span
-                className="text-[14px] line-through"
-                style={{ color: hi ? 'rgba(255,255,255,0.55)' : 'var(--hueso-soft)' }}
-              >
-                {fmtArs(Math.round((LIST_PRICE_ARS * (100 - m.discountPct)) / 100))}
-              </span>
-            </div>
-            <p
-              className="mt-1.5 text-[12.5px]"
-              style={{ color: hi ? 'rgba(255,255,255,0.75)' : 'var(--hueso)' }}
-            >
-              {UPFRONT_DISCOUNT_PCT}% menos por pagarlo de una
-            </p>
-          </>
-        )}
+              {fmtArs(LIST_PRICE_ARS)}
+            </span>
+          )}
+        </div>
+        <p
+          className="mt-1.5 text-[12.5px]"
+          style={{ color: hi ? 'rgba(255,255,255,0.75)' : 'var(--hueso)' }}
+        >
+          Pago único · por persona
+        </p>
       </div>
 
       {m.note && (
@@ -239,7 +165,6 @@ function PlanCard({ m, mode }: { m: (typeof MODALITIES)[number]; mode: Mode }) {
 
 export function PricingSection() {
   const block = useInView<HTMLDivElement>()
-  const [mode, setMode] = useState<Mode>('cuotas')
 
   return (
     <section id="precios" className="timon-wash relative overflow-hidden border-t border-[var(--border-cream)]">
@@ -255,24 +180,20 @@ export function PricingSection() {
             Un solo pago.
             <br />
             <span className="serif-accent text-[var(--ocean)]">
-              O doce, si te queda mejor.
+              Y es tuyo el recorrido completo.
             </span>
           </h2>
 
           <p className="mx-auto mt-4 max-w-[34rem] text-[15.5px] leading-relaxed text-[var(--hueso)]">
             No es una suscripción: no se renueva y no hay nada que dar de baja.
-            Es el recorrido completo, una sola vez, pagado como te sirva.
+            Pagás una vez, cuando quieras seguir después de las paradas gratis.
           </p>
 
           </div>
 
-          <div className="mt-7 flex justify-center">
-            <ModeToggle mode={mode} onChange={setMode} />
-          </div>
-
           <div className="mt-8 grid gap-5 md:grid-cols-2">
             {MODALITIES.map((m) => (
-              <PlanCard key={m.id} m={m} mode={mode} />
+              <PlanCard key={m.id} m={m} />
             ))}
           </div>
 
