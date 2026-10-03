@@ -9,7 +9,9 @@
  */
 
 /** Precio de lista del recorrido completo, en pesos. */
-export const LIST_PRICE_ARS = 140_000;
+// Tiene que coincidir con app_settings.payment_price_ars de la app, que es lo
+// que se cobra. El 03/10/2026 esto decía 140.000 y se cobraban 145.000.
+export const LIST_PRICE_ARS = 145_000;
 
 /** Reunión con psicopedagogo. Se suma más adelante, dentro del proceso. */
 export const PSICO_ADDON_ARS = 50_000;
