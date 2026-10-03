@@ -1,7 +1,7 @@
 'use client'
 
+import { WheelMark } from './Logo'
 import { useState } from 'react'
-import Image from 'next/image'
 import { ArrowRight } from 'lucide-react'
 import { FREE_STOPS, TOTAL_STOPS } from '@/lib/pricing'
 
@@ -70,14 +70,10 @@ export function HeroEntrada() {
           <div className="timon-bubble mb-3 px-4 py-2.5 lg:hidden">
             <p className="text-[14px] font-bold text-[var(--navy)]">Hola, soy Timon.</p>
           </div>
-          <Image
-            src="/timon/mascota.png"
-            alt="Timon, la brújula que te acompaña en el recorrido"
-            width={480}
-            height={521}
-            priority
-            className="timon-bob w-[200px] sm:w-[240px] lg:hidden"
-          />
+          {/* El timón, no el muñeco brújula de antes (Nico, 02/10/2026). */}
+          <span role="img" aria-label="Timon" className="timon-bob lg:hidden">
+            <WheelMark tone="ocean" size={168} />
+          </span>
 
           <h1
             className="mt-6 font-display font-extrabold tracking-[-0.04em] text-[var(--navy)] lg:mt-0"
@@ -107,14 +103,9 @@ export function HeroEntrada() {
 
           {/* Escritorio: la mascota con su globito */}
           <div className="mt-6 hidden items-end gap-4 lg:flex">
-            <Image
-              src="/timon/mascota.png"
-              alt="Timon, la brújula que te acompaña en el recorrido"
-              width={480}
-              height={521}
-              priority
-              className="timon-bob w-[230px] shrink-0"
-            />
+            <span role="img" aria-label="Timon" className="timon-bob shrink-0">
+              <WheelMark tone="ocean" size={190} />
+            </span>
             <div className="timon-bubble mb-8 max-w-[19rem] px-4 py-3.5">
               <p className="text-[15px] font-semibold leading-snug text-[var(--navy)]">
                 Hola, soy Timon. No te voy a decir qué estudiar. Te voy a ayudar a
