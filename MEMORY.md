@@ -137,3 +137,35 @@ nada. `/api/contact` valida el mail y, si falta `RESEND_API_KEY`, devuelve
 503 con `fallbackEmail` para que el chat y el formulario muestren
 `info@timonear.com` en vez de un error mudo. Localmente no hay clave de
 Resend: el envío real solo se puede verificar en el deploy.
+
+---
+
+## 2026-10-26 — La landing se rehace calcando acquisition.com, y nace /programa
+
+**Qué se decidió.** Reunión con Feli del 23/10/2026: la home deja el estilo
+Duolingo y copia la estructura, tipografía (Poppins), largo de textos y CTAs
+de acquisition.com, con la paleta de Timon (su violeta → océano, su dorado →
+ámbar, su negro → navy). Nuevas rutas:
+- `/` — pregunta gigante + un botón, 4 números del producto, lead magnet,
+  4 recursos gratis, preguntas, fundadores, footer azul con descargo.
+- `/programa` — calco de acquisition.com/workshop con la oferta armada con
+  la ecuación de valor de Hormozi (resultado: carrera + universidad + salida
+  laboral; tiempo: 2 semanas; esfuerzo: <10 min por parada desde casa).
+  Escasez real: cohorte fundadora de 100 (Facu y Feli llaman a cada familia).
+- `/reporte` — lead magnet "Carreras nuevas por industria", calco de
+  acquisition.com/roadmap. El pedido entra por `/api/contact` (tipo `reporte`).
+- `/colegios` — la vista de colegios pasa a ser ruta propia, mismo contenido.
+
+**Por qué.** "La landing actual no describe bien qué es Timon, parece hecha
+con AI". Sin precio visible (asusta al chico, no al padre): se habla en la
+llamada con la familia. Sin "orientación vocacional".
+
+**Pendiente de aprobar o completar.** La garantía (`src/lib/programa.ts`) es
+una propuesta: en la reunión quedó "a definir". Faltan el video explicativo,
+la foto de los fundadores, el PDF real del reporte y testimonios reales (no
+se muestra ninguno hasta tenerlos). La carta de /programa es un borrador
+para que Facu y Feli la reescriban con su voz.
+
+**Qué se descartó.** Mostrar un contador de lugares inventado
+(`LUGARES_RESTANTES` queda en `null` hasta tener el número real) y citar
+testimonios de la psicopedagoga sin permiso.

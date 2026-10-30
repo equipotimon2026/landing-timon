@@ -160,22 +160,22 @@ export default function Home() {
 
         {/* Lead magnet: la tarjeta del "Scaling Roadmap" */}
         <section className="bg-[#EFEFEF] px-4 py-14 sm:px-6">
-          <div className="relative mx-auto flex max-w-[1000px] flex-col items-center gap-8 rounded-sm bg-white px-6 py-10 shadow-[0_12px_40px_rgba(15,31,54,0.06)] sm:flex-row sm:justify-center sm:gap-14">
+          <div className="relative mx-auto flex max-w-[1000px] flex-col items-center gap-8 rounded-sm bg-white px-6 py-10 shadow-[0_12px_40px_rgba(15,31,54,0.06)] md:flex-row md:justify-center md:gap-14">
             <span className="absolute -top-3 right-6 rounded-sm bg-[var(--rosa)] px-3 py-1 text-[11px] font-bold uppercase italic text-white sm:right-10">
               Recién salido
             </span>
             <div className="flex items-end gap-3">
-              <ReportCover className="w-[110px] -rotate-6 opacity-80" />
-              <ReportCover className="w-[150px]" />
-              <ReportCover className="w-[110px] rotate-6 opacity-80" />
+              <ReportCover className="w-[86px] -rotate-6 opacity-80 sm:w-[110px]" />
+              <ReportCover className="w-[120px] sm:w-[150px]" />
+              <ReportCover className="w-[86px] rotate-6 opacity-80 sm:w-[110px]" />
             </div>
-            <div className="flex flex-col items-center text-center sm:items-start sm:text-left">
+            <div className="flex flex-col items-center text-center md:items-start md:text-left">
               <h2 className="text-[20px] font-extrabold uppercase leading-tight sm:text-[24px]">
                 Reporte de carreras nuevas por industria
               </h2>
               <Link
                 href="/reporte"
-                className="mt-5 rounded-full bg-[var(--ocean)] px-6 py-4 text-[14px] font-bold uppercase text-white transition-colors hover:bg-[var(--ocean-deep)] sm:text-[16px]"
+                className="mt-5 whitespace-nowrap rounded-full bg-[var(--ocean)] px-6 py-4 text-[14px] font-bold uppercase text-white transition-colors hover:bg-[var(--ocean-deep)] sm:text-[16px]"
               >
                 Quiero mi reporte gratis
               </Link>
