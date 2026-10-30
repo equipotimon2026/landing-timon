@@ -565,29 +565,12 @@
   color: var(--navy);
 }
 .acq h1, .acq h2, .acq h3 { letter-spacing: -0.01em; }
-.acq-gradient-text {
-  background: linear-gradient(90deg, #BFD3FE 0%, #6E9BF8 45%, #3B7BF0 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-}
 .acq-cta-btn {
   background: linear-gradient(90deg, #4F8DF7 0%, #2563EB 55%, #1D4ED8 100%);
   color: #fff;
   box-shadow: 0 10px 30px rgba(37, 99, 235, 0.35);
 }
 .acq-cta-btn:hover { filter: brightness(1.08); }
-/* Resaltador: marca la frase que importa, como en las páginas de Hormozi. */
-.acq-hl, .acq-hl-dark {
-  color: inherit;
-  font-weight: 600;
-  padding: 0 0.1em;
-  -webkit-box-decoration-break: clone;
-  box-decoration-break: clone;
-}
-.acq-hl { background: linear-gradient(transparent 55%, rgba(37, 99, 235, 0.2) 55%); }
-.acq-hl-dark { background: linear-gradient(transparent 55%, rgba(110, 155, 248, 0.38) 55%); color: #fff; }
-.acq-firma { font-family: var(--font-firma), cursive; }
 
 /* El mapa se descarga con "Guardar como PDF": cada mundo arranca en hoja nueva. */
 @media print {

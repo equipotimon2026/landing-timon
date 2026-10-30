@@ -243,3 +243,11 @@ permiso y poner `ejemplo: false`. La cita de la psicopedagoga es textual y sí s
 **Actualización (26/10/2026):** Nico descartó el bono de la reunión con psicopedagoga.
 Quedan dos bonos: la llamada 1 a 1 con un fundador y el Mapa de los 16 Mundos. La
 reunión con psicopedagoga sigue como adicional pago ($50.000).
+
+**Actualización (26/10/2026):** el #3 del núcleo deja de ser "El Informe para tu Familia"
+y pasa a ser "Charla 1 a 1 con un Estudiante de tu Carrera" (mentoría de pares: hay
+evidencia de que cambia cómo se elige carrera y baja el abandono). El acceso de la
+familia sigue en las preguntas. OJO: el equipo tiene que armar la red de estudiantes
+antes de abrir. La tapa del test pasa a ser una foto generada en ChatGPT
+(`public/test/portada.jpg`); se borraron las clases CSS y la fuente de firma que ya no
+se usaban.

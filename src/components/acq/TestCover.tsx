@@ -1,43 +1,17 @@
 /**
- * Tapa del lead magnet: una vista chica de cómo se ve el resultado del test
- * (tus fuertes en barras). Escala con su ancho (cqw).
- *
- * El padding va en el div de adentro: un % en el contenedor se calcula sobre
- * el padre y, en una tarjeta ancha, deja el área de contenido en 0 (y con
- * ella todos los tamaños en cqw).
+ * Imagen del lead magnet (el test de intereses en un celular), generada en el
+ * ChatGPT de Nico el 26/10/2026. Reemplaza a la tapa dibujada en CSS, que se
+ * veía "muy de IA". `circulo` llena el círculo de "Elegí cómo empezar".
  */
-const BARRAS = [
-  { label: 'Investigar', v: 89 },
-  { label: 'Ayudar', v: 78 },
-  { label: 'Crear', v: 56 },
-  { label: 'Organizar', v: 33 },
-]
-
-export function TestCover({ className = '' }: { className?: string }) {
+export function TestCover({ className = '', circulo = false }: { className?: string; circulo?: boolean }) {
   return (
-    <div
-      style={{ containerType: 'inline-size' }}
-      className={`aspect-[3/4] overflow-hidden rounded-md bg-[var(--navy)] text-white shadow-[0_18px_40px_rgba(15,31,54,0.28)] ${className}`}
-    >
-      <div className="flex h-full flex-col justify-between p-[9cqw]">
-        <p className="text-[6cqw] font-bold uppercase tracking-[0.12em] text-[var(--ocean-light)]">
-          Test de intereses
-        </p>
-        <div>
-          <p className="text-[11cqw] font-extrabold uppercase leading-[1.02]">Tus fuertes</p>
-          <p className="mt-[1.5cqw] text-[6cqw] font-semibold text-white/75">Salud · Exactas · Educación</p>
-        </div>
-        <div className="space-y-[3cqw]">
-          {BARRAS.map((b) => (
-            <div key={b.label}>
-              <p className="text-[5cqw] text-white/70">{b.label}</p>
-              <div className="mt-[1cqw] h-[2.6cqw] rounded-full bg-white/10">
-                <div className="h-full rounded-full bg-[var(--ocean)]" style={{ width: `${b.v}%` }} />
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-    </div>
+    // eslint-disable-next-line @next/next/no-img-element
+    <img
+      src="/test/portada.jpg"
+      alt="El test de intereses de Timon en un celular"
+      className={`object-cover ${
+        circulo ? 'h-full w-full rounded-full' : 'aspect-[3/4] rounded-md shadow-[0_18px_40px_rgba(15,31,54,0.28)]'
+      } ${className}`}
+    />
   )
 }

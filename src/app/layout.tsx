@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { DM_Sans, JetBrains_Mono, Crimson_Pro, Poppins, Homemade_Apple } from 'next/font/google'
+import { DM_Sans, JetBrains_Mono, Crimson_Pro, Poppins } from 'next/font/google'
 import './globals.css'
 
 // Las mismas tres fuentes que la app (canvas "Rediseño Timón estilo Duolingo"):
@@ -28,19 +28,12 @@ const mono = JetBrains_Mono({
 })
 
 // La landing y /programa copian la tipografía de acquisition.com (reunión con
-// Feli del 23/10/2026): Poppins para todo y Homemade Apple para la firma de la
-// carta. DM Sans queda para las vistas viejas (colegios, términos).
+// Feli del 23/10/2026): Poppins para todo. DM Sans queda para las vistas viejas
+// (colegios, términos).
 const poppins = Poppins({
   subsets: ['latin'],
   variable: '--font-poppins',
   weight: ['400', '500', '600', '700', '800'],
-  display: 'swap',
-})
-
-const firma = Homemade_Apple({
-  subsets: ['latin'],
-  variable: '--font-firma',
-  weight: '400',
   display: 'swap',
 })
 
@@ -65,7 +58,7 @@ export default function RootLayout({
   return (
     <html
       lang="es"
-      className={`${sans.variable} ${serif.variable} ${mono.variable} ${poppins.variable} ${firma.variable} h-full antialiased`}
+      className={`${sans.variable} ${serif.variable} ${mono.variable} ${poppins.variable} h-full antialiased`}
       suppressHydrationWarning
     >
       <body

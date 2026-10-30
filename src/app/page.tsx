@@ -32,7 +32,7 @@ const RECURSOS = [
     title: 'Test de intereses',
     href: '/test',
     cta: 'Hacer el test',
-    visual: <TestCover className="w-[96px]" />,
+    visual: <TestCover circulo />,
   },
   {
     tag: 'Cupo limitado',

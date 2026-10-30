@@ -97,12 +97,14 @@ const OBTENES = [
     ),
   },
   {
-    n: '#3: El Informe para tu Familia',
-    foto: 'oferta-familia',
+    // Mentoría de pares: un estudiante universitario de la carrera que más te
+    // interesa. Requiere que el equipo arme la red de estudiantes antes de abrir.
+    n: '#3: Charla 1 a 1 con un Estudiante de tu Carrera',
+    foto: 'oferta-estudiante',
     texto: (
       <>
-        Tu familia suma su mirada y recibe su versión del informe, <strong>sin ver nunca tus
-        respuestas</strong>.
+        Te conectamos con alguien que ya la estudia para que te cuente <strong>cómo es cursarla de
+        verdad</strong>.
       </>
     ),
   },
@@ -127,6 +129,7 @@ const PREGUNTAS: Barra[] = [
       'Tu informe con tus carreras más compatibles, y por qué cada una va con vos.',
       'Las universidades argentinas donde estudiarlas, con costos, ubicación y becas.',
       'Y de qué se trabaja en cada una, y cuánto se gana con experiencia.',
+      'Tu familia también recibe el informe, pero nunca ve tus respuestas.',
     ],
   },
   {
