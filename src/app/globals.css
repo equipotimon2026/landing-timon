@@ -578,3 +578,54 @@
   .mapa-mundo img { max-height: 180px; }
   .mapa-mundo .rounded-2xl { break-inside: avoid; }
 }
+
+/* ── Marca de Timon (presentación timon_presentacion_v2_1, 30/10/2026) ──
+   Navy #1A2640, azul #3B5FD4, texto cálido #4A4438, degradé celeste→durazno,
+   tarjetas blancas con borde beige. Títulos en Jakarta liviana, sin
+   mayúsculas sostenidas; etiquetas en Space Mono espaciada. */
+.marca {
+  --m-navy: #1a2640;
+  --m-azul: #3b5fd4;
+  --m-azul-hover: #2f4fbd;
+  --m-texto: #4a4438;
+  --m-suave: #7a7266;
+  --m-borde: #e6ddd1;
+  --m-rueda: #d9d0c6;
+  font-family: var(--font-jakarta), system-ui, sans-serif;
+  color: var(--m-texto);
+}
+.marca-fondo {
+  background: linear-gradient(135deg, #dde6f0 0%, #e9e7e4 48%, #edd8c8 100%);
+}
+.marca-claro { background: #f8f5f1; }
+.marca-navy { background: var(--m-navy); color: #fff; }
+.marca .etiqueta {
+  font-family: var(--font-spacemono), ui-monospace, monospace;
+  font-size: 11px;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--m-azul);
+}
+.marca .titulo {
+  font-weight: 300;
+  color: var(--m-navy);
+  letter-spacing: -0.025em;
+  line-height: 1.06;
+}
+.marca-navy .titulo { color: #fff; }
+.marca .tarjeta {
+  background: #fff;
+  border: 1px solid var(--m-borde);
+  border-radius: 14px;
+}
+.marca .boton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9999px;
+  background: var(--m-azul);
+  color: #fff;
+  font-weight: 500;
+  transition: background-color 0.15s;
+}
+.marca .boton:hover { background: var(--m-azul-hover); }

@@ -2,7 +2,7 @@ import { ArrowRight, MessageCircle } from 'lucide-react'
 import { SiteFooter, SiteNav } from '@/components/acq/SiteChrome'
 import { Faq, type FaqItem } from '@/components/acq/Faq'
 import { FundadoresFotos } from '@/components/acq/Fundadores'
-import { WheelMark } from '@/components/landing/Logo'
+import { Rueda } from '@/components/landing/Marca'
 import {
   AVALES,
   BONO_PAGO_ANTICIPADO,
@@ -12,15 +12,16 @@ import {
   URL_EMPEZAR,
   URL_PAGAR_AHORA,
   URL_WHATSAPP_PADRE,
-  VIDEO,
   type Aval,
 } from '@/lib/landing'
 
 /**
  * Home para familias (29/10/2026). Brief de Feli del 27/10 + prioridades de
- * Nico: freemium, "cómo funciona Timon" y testimonios que den validez.
+ * Nico: freemium, "cómo funciona Timon" y testimonios que den validez. Desde
+ * el 30/10 con la marca de la presentación (clase `.marca` en globals.css) y
+ * sin video.
  *
- *   hero con un botón → video → bloque de confianza → cómo funciona →
+ *   hero con un botón → bloque de confianza → cómo funciona →
  *   qué te llevás → para vos y tu familia → preguntas → fundadores → cierre
  *
  * Todo lleva a una sola acción: empezar el recorrido gratis. Sin precio, sin
@@ -86,10 +87,7 @@ const FAQS: FaqItem[] = [
 
 function BotonEmpezar({ className = '' }: { className?: string }) {
   return (
-    <a
-      href={URL_EMPEZAR}
-      className={`inline-flex w-full max-w-[400px] items-center justify-center rounded-full bg-[var(--ocean)] px-6 py-4 text-[18px] font-bold uppercase text-white transition-colors hover:bg-[var(--ocean-deep)] sm:text-[20px] ${className}`}
-    >
+    <a href={URL_EMPEZAR} className={`boton px-8 py-4 text-[17px] ${className}`}>
       Empezá gratis
     </a>
   )
@@ -100,7 +98,7 @@ function LinkPagarAhora({ tono = 'oscuro' }: { tono?: 'oscuro' | 'claro' }) {
     <a
       href={URL_PAGAR_AHORA}
       className={`group mt-4 inline-flex items-center gap-1.5 text-[14px] underline-offset-4 hover:underline ${
-        tono === 'oscuro' ? 'text-[var(--hueso)]' : 'text-white/80'
+        tono === 'oscuro' ? 'text-[var(--m-suave)]' : 'text-white/75'
       }`}
     >
       ¿Ya lo decidieron? Pagá ahora y sumá {BONO_PAGO_ANTICIPADO.corto}
@@ -109,28 +107,37 @@ function LinkPagarAhora({ tono = 'oscuro' }: { tono?: 'oscuro' | 'claro' }) {
   )
 }
 
+function Encabezado({ etiqueta, children, centrado = false }: { etiqueta: string; children: React.ReactNode; centrado?: boolean }) {
+  return (
+    <div className={centrado ? 'text-center' : ''}>
+      <p className="etiqueta">{etiqueta}</p>
+      <h2 className="titulo mt-4 text-[34px] sm:text-[46px]">{children}</h2>
+    </div>
+  )
+}
+
 function TarjetaAval({ a }: { a: Aval }) {
   return (
-    <figure className="relative flex flex-col rounded-sm bg-white px-6 py-7 shadow-[0_12px_40px_rgba(15,31,54,0.06)]">
+    <figure className="tarjeta relative flex flex-col px-6 py-7">
       {a.ejemplo && (
         <span className="absolute -right-2 -top-2 rounded bg-[#E11D48] px-2 py-0.5 text-[10px] font-bold uppercase text-white">
           Ejemplo
         </span>
       )}
-      <div className="flex h-14 w-14 items-center justify-center overflow-hidden rounded-full bg-[var(--ocean-wash)]">
+      <div className="flex h-12 w-12 items-center justify-center overflow-hidden rounded-xl bg-[var(--m-azul)]">
         {a.imagen ? (
           // eslint-disable-next-line @next/next/no-img-element
-          <img src={a.imagen} alt="" className="h-10 w-10 object-contain" />
+          <img src={a.imagen} alt="" className="h-9 w-9 rounded-full bg-white object-contain p-0.5" />
         ) : (
-          <span className="text-[22px] font-extrabold text-[var(--ocean)]">{a.quien[0]}</span>
+          <span className="text-[18px] font-medium text-white">{a.quien[0]}</span>
         )}
       </div>
-      <blockquote className="mt-5 flex-1 text-[17px] font-semibold leading-snug">
-        &ldquo;{a.frase}&rdquo;
+      <blockquote className="mt-5 flex-1 text-[18px] font-light leading-snug text-[var(--m-navy)]">
+        {a.textual ? <>&ldquo;{a.frase}&rdquo;</> : a.frase}
       </blockquote>
       <figcaption className="mt-5">
-        <span className="block text-[14px] font-bold">{a.quien}</span>
-        <span className="block text-[13px] text-[var(--hueso)]">{a.rol}</span>
+        <span className="block text-[14px] font-semibold text-[var(--m-navy)]">{a.quien}</span>
+        <span className="block text-[13px] text-[var(--m-suave)]">{a.rol}</span>
       </figcaption>
     </figure>
   )
@@ -151,189 +158,185 @@ export default function Home() {
   const avales = AVALES.filter((a) => MOSTRAR_EJEMPLOS || !a.ejemplo)
 
   return (
-    <div className="acq flex min-h-full flex-col bg-white">
+    <div className="marca flex min-h-full flex-col bg-white">
       <SiteNav />
 
       <main className="flex-1">
-        {/* Hero: la promesa base, una línea para los dos y un solo botón */}
-        <section className="relative overflow-hidden bg-[#EFEFEF]">
-          <div className="pointer-events-none absolute -left-24 top-1/2 hidden -translate-y-1/2 opacity-[0.07] lg:block">
-            <WheelMark tone="navy" size={420} />
-          </div>
-          <div className="pointer-events-none absolute -right-24 top-1/2 hidden -translate-y-1/2 opacity-[0.07] lg:block">
-            <WheelMark tone="navy" size={420} />
-          </div>
-          <div className="relative mx-auto flex max-w-[820px] flex-col items-center px-4 pb-28 pt-14 text-center sm:pb-56 sm:pt-20">
-            <p className="text-[13px] font-semibold uppercase tracking-[0.12em] text-[var(--ocean)]">
-              Hay {CATALOGO.carreras} carreras que podrías estudiar. ¿Cuántas conocés?
-            </p>
-            <h1 className="mt-5 text-[32px] font-extrabold uppercase leading-[1.1] sm:text-[44px]">
-              Sabé qué carreras van con vos, dónde estudiarlas y de qué vas a trabajar
-            </h1>
-            <p className="mt-6 max-w-[580px] text-[16px] leading-[1.55] sm:text-[18px]">
-              Timon es un recorrido que hacés desde tu casa, a tu ritmo. Al final te devuelve tu
-              perfil, las 6 carreras que más van con vos y las universidades donde estudiarlas.
-            </p>
-            <BotonEmpezar className="mt-9" />
-            <LinkPagarAhora />
-          </div>
-        </section>
-
-        {/* Video montado sobre el borde del hero */}
-        <section id="video" className="bg-white px-4 sm:px-6">
-          <div className="mx-auto -mt-20 max-w-[960px] sm:-mt-44">
-            <video
-              src={VIDEO.src}
-              poster={VIDEO.poster}
-              controls
-              playsInline
-              preload="metadata"
-              className="aspect-video w-full rounded-md bg-[var(--navy)] shadow-[0_24px_60px_rgba(15,31,54,0.18)]"
-            >
-              Tu navegador no puede reproducir el video.
-            </video>
+        {/* Hero: como la tapa de la presentación, a la izquierda y con el timón de fondo */}
+        <section className="marca-fondo relative overflow-hidden">
+          <Rueda
+            size={620}
+            color="var(--m-rueda)"
+            className="pointer-events-none absolute -right-48 top-1/2 hidden -translate-y-1/2 opacity-70 lg:block"
+          />
+          <div className="relative mx-auto max-w-[1140px] px-4 py-20 sm:px-6 sm:py-28">
+            <div className="max-w-[660px]">
+              <p className="etiqueta">Hay {CATALOGO.carreras} carreras que podrías estudiar. ¿Cuántas conocés?</p>
+              <h1 className="titulo mt-6 text-[40px] sm:text-[60px]">
+                Sabé qué carreras van con vos, dónde estudiarlas y de qué vas a trabajar.
+              </h1>
+              <span className="mt-8 block h-[2px] w-16 bg-[var(--m-azul)]" />
+              <p className="mt-6 max-w-[520px] text-[17px] leading-[1.6] sm:text-[19px]">
+                Timon es un recorrido que hacés desde tu casa, a tu ritmo. Al final te devuelve tu
+                perfil, las 6 carreras que más van con vos y las universidades donde estudiarlas.
+              </p>
+              <div className="mt-9 flex flex-col items-start">
+                <BotonEmpezar />
+                <LinkPagarAhora />
+              </div>
+            </div>
           </div>
         </section>
 
-        {/* Bloque de confianza, justo después del video */}
-        <section className="bg-white px-4 pb-16 pt-14 sm:px-6">
-          <div className="mx-auto max-w-[1080px]">
-            <h2 className="text-center text-[24px] font-extrabold uppercase leading-tight sm:text-[30px]">
-              Detrás de Timon hay profesionales, <span className="text-[var(--ocean)]">no solo tecnología</span>
-            </h2>
+        {/* Bloque de confianza */}
+        <section className="marca-claro px-4 py-20 sm:px-6">
+          <div className="mx-auto max-w-[1140px]">
+            <Encabezado etiqueta="Quién está detrás">
+              Detrás de Timon hay profesionales,
+              <br className="hidden sm:block" /> no solo tecnología.
+            </Encabezado>
             {avales.length > 0 && (
-              <div
-                className={`mx-auto mt-10 grid gap-6 ${
-                  avales.length >= 3 ? 'md:grid-cols-3' : avales.length === 2 ? 'max-w-[720px] md:grid-cols-2' : 'max-w-[380px]'
-                }`}
-              >
+              <div className={`mt-12 grid gap-4 ${avales.length >= 3 ? 'md:grid-cols-3' : 'md:grid-cols-2'}`}>
                 {avales.map((a) => (
                   <TarjetaAval key={a.quien} a={a} />
                 ))}
               </div>
             )}
 
-            <div className="mt-14 text-center">
-              <p className="text-[30px] font-extrabold leading-none sm:text-[38px]">
-                {CATALOGO.carreras} carreras en {CATALOGO.universidades} universidades
-              </p>
-              <p className="mt-2 text-[12px] font-semibold uppercase tracking-[0.1em] text-[var(--hueso)]">
-                Públicas y privadas, de todo el país
-              </p>
-              <ul className="mx-auto mt-8 flex max-w-[860px] flex-wrap items-center justify-center gap-x-8 gap-y-5">
+            <div className="tarjeta mt-4 flex flex-col items-start gap-6 px-6 py-8 sm:px-8 md:flex-row md:items-center md:justify-between">
+              <div>
+                <p className="text-[48px] font-extralight leading-none tracking-[-0.03em] text-[var(--m-azul)] sm:text-[60px]">
+                  {CATALOGO.carreras} carreras
+                </p>
+                <p className="mt-2 text-[15px]">
+                  en {CATALOGO.universidades} universidades públicas y privadas de todo el país.
+                </p>
+              </div>
+              <ul className="flex max-w-[560px] flex-wrap items-center gap-x-6 gap-y-4">
                 {LOGOS_UNIVERSIDADES.map((l) => (
                   <li key={l.alt}>
                     {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img src={l.src} alt={l.alt} className="h-9 w-auto opacity-70 grayscale sm:h-10" />
+                    <img src={l.src} alt={l.alt} className="h-8 w-auto opacity-60 grayscale sm:h-9" />
                   </li>
                 ))}
               </ul>
-              <p className="mt-4 text-[12px] text-[var(--hueso)]">
-                Algunas de las universidades que vas a encontrar en tu informe.
-              </p>
             </div>
+            <p className="etiqueta mt-4 !text-[10px] !text-[var(--m-suave)]">
+              Algunas de las universidades que vas a encontrar en tu informe
+            </p>
           </div>
         </section>
 
-        {/* Cómo funciona */}
-        <section id="como-funciona" className="scroll-mt-20 bg-[#EFEFEF] px-4 py-16 sm:px-6">
-          <div className="mx-auto max-w-[1080px]">
-            <h2 className="text-center text-[28px] font-extrabold uppercase leading-tight sm:text-[36px]">
-              Cómo funciona
-            </h2>
-            <ol className="mt-10 grid gap-6 md:grid-cols-3">
+        {/* Cómo funciona: tarjetas con el número grande de fondo, como en la presentación */}
+        <section id="como-funciona" className="marca-fondo scroll-mt-16 px-4 py-20 sm:px-6">
+          <div className="mx-auto max-w-[1140px]">
+            <Encabezado etiqueta="Cómo funciona">Tres pasos, a tu ritmo.</Encabezado>
+            <ol className="mt-12 grid gap-4 md:grid-cols-3">
               {PASOS.map((p, i) => (
-                <li key={p.titulo} className="rounded-sm bg-white px-6 py-7">
-                  <span className="flex h-10 w-10 items-center justify-center rounded-full bg-[var(--navy)] text-[16px] font-extrabold text-white">
+                <li key={p.titulo} className="tarjeta relative overflow-hidden px-6 py-8">
+                  <span
+                    aria-hidden="true"
+                    className="pointer-events-none absolute -right-2 -top-5 text-[110px] font-extralight leading-none text-[var(--m-azul)] opacity-[0.08]"
+                  >
+                    {String(i + 1).padStart(2, '0')}
+                  </span>
+                  <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-[var(--m-azul)] text-[15px] font-medium text-white">
                     {i + 1}
                   </span>
-                  <h3 className="mt-5 text-[19px] font-extrabold leading-tight">{p.titulo}</h3>
-                  <p className="mt-2 text-[15px] leading-[1.55] text-[var(--hueso)]">{p.texto}</p>
+                  <h3 className="mt-5 text-[19px] font-semibold text-[var(--m-navy)]">{p.titulo}</h3>
+                  <p className="mt-2 text-[15px] leading-[1.6]">{p.texto}</p>
                 </li>
               ))}
             </ol>
-            <div className="mt-10 flex flex-col items-center text-center">
+            <div className="mt-10">
               <BotonEmpezar />
             </div>
           </div>
         </section>
 
-        {/* Qué te llevás: el resultado, con capturas de la app real */}
-        <section id="resultado" className="scroll-mt-20 bg-white px-4 py-16 sm:px-6">
-          <div className="mx-auto max-w-[1080px]">
-            <h2 className="text-center text-[28px] font-extrabold uppercase leading-tight sm:text-[36px]">
-              Lo que te devuelve <span className="text-[var(--ocean)]">Timon</span>
-            </h2>
-            <div className="mt-12 space-y-14">
+        {/* Lo que te devuelve Timon, con capturas de la app real */}
+        <section id="resultado" className="marca-claro scroll-mt-16 px-4 py-20 sm:px-6">
+          <div className="mx-auto max-w-[1140px]">
+            <Encabezado etiqueta="El resultado">Lo que te devuelve Timon.</Encabezado>
+            <div className="mt-12 space-y-6">
               {RESULTADO.map((r, i) => (
                 <div
                   key={r.titulo}
-                  className={`flex flex-col items-center gap-6 md:gap-12 ${i % 2 ? 'md:flex-row-reverse' : 'md:flex-row'}`}
+                  className={`tarjeta flex flex-col gap-6 overflow-hidden p-4 sm:p-6 md:gap-10 ${i % 2 ? 'md:flex-row-reverse' : 'md:flex-row'} md:items-center`}
                 >
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
                     src={r.imagen}
                     alt={`Captura de Timon: ${r.titulo}`}
                     loading="lazy"
-                    className="w-full rounded-md border border-[var(--border-cream)] shadow-[0_12px_40px_rgba(15,31,54,0.08)] md:w-[56%]"
+                    className="w-full rounded-lg border border-[var(--m-borde)] md:w-[55%]"
                   />
-                  <div className="md:flex-1">
-                    <h3 className="text-[22px] font-extrabold leading-tight sm:text-[26px]">{r.titulo}</h3>
-                    <p className="mt-3 text-[16px] leading-[1.6] text-[var(--hueso)] sm:text-[17px]">{r.texto}</p>
+                  <div className="px-2 pb-2 md:flex-1 md:px-0 md:pb-0">
+                    <p className="etiqueta">{String(i + 1).padStart(2, '0')}</p>
+                    <h3 className="mt-3 text-[24px] font-semibold leading-tight text-[var(--m-navy)] sm:text-[28px]">
+                      {r.titulo}
+                    </h3>
+                    <p className="mt-3 text-[16px] leading-[1.65]">{r.texto}</p>
                   </div>
                 </div>
               ))}
             </div>
-            <p className="mx-auto mt-12 max-w-[560px] text-center text-[13px] text-[var(--hueso)]">
-              Capturas de la app con datos de ejemplo.
-            </p>
+            <p className="mt-6 text-[13px] text-[var(--m-suave)]">Capturas de la app con datos de ejemplo.</p>
           </div>
         </section>
 
-        {/* Para vos y tu familia: una sola comunicación, sin bloques separados */}
-        <section className="bg-[var(--navy)] px-4 py-16 text-white sm:px-6">
-          <div className="mx-auto flex max-w-[760px] flex-col items-center text-center">
-            <h2 className="text-[26px] font-extrabold uppercase leading-tight sm:text-[32px]">
-              Elegir sin conocer las opciones es elegir a ciegas
-            </h2>
-            <p className="mt-5 text-[16px] leading-[1.6] text-white/85 sm:text-[18px]">
-              El mundo cambia rápido y aparecen carreras que hace diez años no existían. Timon te
-              saca de encima la presión de no saber qué hay ni cuál va con tus intereses de
-              verdad, para que elijas por vos y no por lo que eligen tus amigos.
-            </p>
-            <BotonEmpezar className="mt-9 bg-white !text-[var(--navy)] hover:bg-white/90" />
-            <LinkPagarAhora tono="claro" />
-            <a
-              href={URL_WHATSAPP_PADRE}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="mt-8 inline-flex items-center gap-2 rounded-full border border-white/30 px-5 py-2.5 text-[14px] font-semibold text-white transition-colors hover:bg-white/10"
-            >
-              <MessageCircle size={16} />
-              ¿Sos padre o madre? Mandáselo a tu hijo por WhatsApp
-            </a>
+        {/* Para vos y tu familia: el cierre navy de la presentación */}
+        <section className="marca-navy relative overflow-hidden px-4 py-24 sm:px-6">
+          <Rueda
+            size={560}
+            color="#26324d"
+            className="pointer-events-none absolute -right-40 top-1/2 hidden -translate-y-1/2 lg:block"
+          />
+          <div className="relative mx-auto max-w-[1140px]">
+            <div className="max-w-[640px]">
+              <p className="etiqueta !text-[#8ea2e8]">Para vos y tu familia</p>
+              <h2 className="titulo mt-4 text-[34px] sm:text-[48px]">
+                Elegir sin conocer las opciones es elegir a ciegas.
+              </h2>
+              <p className="mt-6 text-[17px] leading-[1.65] text-white/80">
+                El mundo cambia rápido y aparecen carreras que hace diez años no existían. Timon te
+                saca de encima la presión de no saber qué hay ni cuál va con tus intereses de verdad,
+                para que elijas por vos y no por lo que eligen tus amigos.
+              </p>
+              <div className="mt-9 flex flex-col items-start">
+                <BotonEmpezar />
+                <LinkPagarAhora tono="claro" />
+              </div>
+              <a
+                href={URL_WHATSAPP_PADRE}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-8 inline-flex items-center gap-2 rounded-full border border-white/25 px-5 py-2.5 text-[14px] text-white transition-colors hover:bg-white/10"
+              >
+                <MessageCircle size={16} />
+                ¿Sos padre o madre? Mandáselo a tu hijo por WhatsApp
+              </a>
+            </div>
           </div>
         </section>
 
         {/* Preguntas */}
-        <section id="preguntas" className="scroll-mt-20 bg-[var(--cream)] px-4 py-16 sm:px-6">
+        <section id="preguntas" className="marca-claro scroll-mt-16 px-4 py-20 sm:px-6">
           <div className="mx-auto max-w-[860px]">
-            <h2 className="text-center text-[26px] font-bold">Preguntas</h2>
-            <div className="mt-6">
+            <Encabezado etiqueta="Preguntas">Lo que nos preguntan.</Encabezado>
+            <div className="tarjeta mt-10 px-6 sm:px-8 [&_button]:font-medium [&_button]:text-[var(--m-navy)]">
               <Faq items={FAQS} variant="home" />
             </div>
           </div>
         </section>
 
         {/* Fundadores */}
-        <section id="nosotros" className="scroll-mt-20 bg-white px-4 py-20 sm:px-6">
-          <div className="mx-auto max-w-[1000px]">
-            <h2 className="text-center text-[24px] font-extrabold uppercase sm:text-[26px]">
-              Sobre los fundadores
-            </h2>
+        <section id="nosotros" className="marca-fondo scroll-mt-16 px-4 py-20 sm:px-6">
+          <div className="mx-auto max-w-[1140px]">
+            <Encabezado etiqueta="Quiénes somos">Sobre los fundadores.</Encabezado>
             <div className="mt-12 flex flex-col items-center gap-10 md:flex-row md:items-start">
               <FundadoresFotos className="w-full max-w-[420px] shrink-0" />
-              <div className="space-y-5 text-[16px] leading-[1.6] sm:text-[17px] md:pt-2">
+              <div className="space-y-5 text-[17px] leading-[1.65] md:pt-2">
                 <p>
                   Facu, Feli y Nico son los fundadores de Timon. Lo armaron sobre una idea que está
                   en todo el producto: el primer paso no es elegir, es entenderte.
@@ -353,15 +356,13 @@ export default function Home() {
         </section>
 
         {/* Cierre */}
-        <section className="bg-[#EFEFEF] px-4 py-20 sm:px-6">
-          <div className="mx-auto flex max-w-[700px] flex-col items-center text-center">
-            <h2 className="text-[28px] font-extrabold uppercase leading-tight sm:text-[36px]">
+        <section className="marca-claro px-4 py-24 sm:px-6">
+          <div className="mx-auto flex max-w-[760px] flex-col items-center text-center">
+            <Encabezado etiqueta="Empezá hoy" centrado>
               ¿Qué te devolvería Timon a vos?
-            </h2>
-            <p className="mt-4 text-[16px] text-[var(--hueso)] sm:text-[18px]">
-              Hay una sola forma de saberlo. Empezás hoy y lo hacés a tu ritmo.
-            </p>
-            <BotonEmpezar className="mt-8" />
+            </Encabezado>
+            <p className="mt-5 text-[17px]">Hay una sola forma de saberlo. Empezás hoy y lo hacés a tu ritmo.</p>
+            <BotonEmpezar className="mt-9" />
             <LinkPagarAhora />
           </div>
         </section>

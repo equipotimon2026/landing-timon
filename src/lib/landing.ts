@@ -42,31 +42,23 @@ export const MENSAJE_PARA_HIJO =
 export const URL_WHATSAPP_PADRE = `https://wa.me/?text=${encodeURIComponent(MENSAJE_PARA_HIJO)}`
 
 /**
- * Video de las secciones y del proceso. Hoy es el video de lanzamiento v4
- * (29/10, con el review de Feli; la app real con datos ficticios), comprimido
- * a 720p. El viernes 30/10 se filma el definitivo: reemplazar el archivo en
- * /public/video. Ojo: las voces del v4 son del plan free de ElevenLabs, que
- * no tiene licencia comercial.
- */
-export const VIDEO = {
-  src: '/video/timon.mp4',
-  poster: '/video/timon-poster.jpg',
-}
-
-/**
- * Bloque de confianza, justo después del video: tres piezas iguales con cara o
- * logo, una frase corta, nombre y rol.
+ * Bloque de confianza, después del hero: tres piezas iguales con cara o logo,
+ * una frase corta, nombre y rol.
  *
- * `ejemplo: true` = texto provisorio. Se ve solo en desarrollo, con la etiqueta
- * EJEMPLO, y nunca llega a producción. Pendientes del brief antes de publicar:
- * nombre y matrícula de la psicopedagoga, nombre exacto del premio del María
- * Guadalupe con el año y un resultado concreto, y el OK de Legal sobre avales
- * y testimonios.
+ * La del María Guadalupe y la de la UBA resumen lo que contaron (Nico,
+ * 30/10/2026), no son citas textuales: por eso `textual: false` y van sin
+ * comillas. Del brief sigue pendiente el OK de Legal sobre avales y
+ * testimonios, y sumar nombre y matrícula de la psicopedagoga.
+ *
+ * `ejemplo: true` = texto provisorio: se ve solo en desarrollo, con la
+ * etiqueta EJEMPLO, y nunca llega a producción.
  */
 export type Aval = {
   quien: string
   rol: string
   frase: string
+  /** true = cita textual, va entre comillas. */
+  textual: boolean
   /** Logo o foto en /public. `null` muestra la inicial. */
   imagen: string | null
   ejemplo: boolean
@@ -78,23 +70,25 @@ export const AVALES: Aval[] = [
     quien: 'Psicopedagoga',
     rol: 'Evaluó la metodología de Timon',
     frase: 'Es una visión integral, no un simple test.',
+    textual: true,
     imagen: null,
     ejemplo: false,
   },
   {
     quien: 'Colegio María Guadalupe',
-    rol: 'Premio y año a confirmar',
-    frase:
-      'Lo usan nuestros alumnos de 5° y 6° año. [Resultado concreto a confirmar con el colegio.]',
+    rol: 'Lo probaron sus alumnos de 5° y 6° año',
+    frase: 'Los alumnos lo probaron, les gustó y dijeron que está muy bueno.',
+    textual: false,
     imagen: null,
-    ejemplo: true,
+    ejemplo: false,
   },
   {
     quien: 'Universidad de Buenos Aires',
     rol: 'Equipo profesional que revisó la metodología',
-    frase: '[Frase textual a confirmar con la UBA.]',
+    frase: 'Su equipo profesional revisó la metodología de Timon y dijo que está muy buena.',
+    textual: false,
     imagen: '/logos/universities/uba.svg',
-    ejemplo: true,
+    ejemplo: false,
   },
 ]
 

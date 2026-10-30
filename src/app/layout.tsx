@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { DM_Sans, JetBrains_Mono, Crimson_Pro, Poppins } from 'next/font/google'
+import { DM_Sans, JetBrains_Mono, Crimson_Pro, Poppins, Plus_Jakarta_Sans, Space_Mono } from 'next/font/google'
 import './globals.css'
 
 // Las mismas tres fuentes que la app (canvas "Rediseño Timón estilo Duolingo"):
@@ -37,6 +37,23 @@ const poppins = Poppins({
   display: 'swap',
 })
 
+// Marca de Timon (presentación timon_presentacion_v2_1, 30/10/2026): Plus
+// Jakarta Sans liviana para todo y Space Mono en mayúsculas espaciadas para las
+// etiquetas. La usa la home (clase `.marca` en globals.css).
+const jakarta = Plus_Jakarta_Sans({
+  subsets: ['latin'],
+  variable: '--font-jakarta',
+  weight: ['200', '300', '400', '500', '600', '700'],
+  display: 'swap',
+})
+
+const spaceMono = Space_Mono({
+  subsets: ['latin'],
+  variable: '--font-spacemono',
+  weight: ['400', '700'],
+  display: 'swap',
+})
+
 export const metadata: Metadata = {
   title: 'Timon — ¿Ya sabés qué vas a estudiar?',
   description:
@@ -58,7 +75,7 @@ export default function RootLayout({
   return (
     <html
       lang="es"
-      className={`${sans.variable} ${serif.variable} ${mono.variable} ${poppins.variable} h-full antialiased`}
+      className={`${sans.variable} ${serif.variable} ${mono.variable} ${poppins.variable} ${jakarta.variable} ${spaceMono.variable} h-full antialiased`}
       suppressHydrationWarning
     >
       <body
