@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { DM_Sans, JetBrains_Mono, Crimson_Pro } from 'next/font/google'
+import { DM_Sans, JetBrains_Mono, Crimson_Pro, Poppins } from 'next/font/google'
 import './globals.css'
 
 // Las mismas tres fuentes que la app (canvas "Rediseño Timón estilo Duolingo"):
@@ -27,14 +27,24 @@ const mono = JetBrains_Mono({
   display: 'swap',
 })
 
+// La landing y /programa copian la tipografía de acquisition.com (reunión con
+// Feli del 23/10/2026): Poppins para todo. DM Sans queda para las vistas viejas
+// (colegios, términos).
+const poppins = Poppins({
+  subsets: ['latin'],
+  variable: '--font-poppins',
+  weight: ['400', '500', '600', '700', '800'],
+  display: 'swap',
+})
+
 export const metadata: Metadata = {
-  title: 'Timon — El primer paso no es elegir',
+  title: 'Timon — ¿Ya sabés qué vas a estudiar?',
   description:
-    'El primer paso no es elegir. Es entenderte. 13 paradas cortas para saber quién sos antes de decidir qué estudiar — carreras, universidades argentinas y salidas laborales reales.',
+    'Sabé qué carreras van con vos, dónde estudiarlas y de qué vas a trabajar. Un recorrido que hacés desde tu casa, a tu ritmo. Empezás gratis.',
   openGraph: {
-    title: 'Timon — El primer paso no es elegir',
+    title: 'Timon — ¿Ya sabés qué vas a estudiar?',
     description:
-      'El primer paso no es elegir. Es entenderte. 13 paradas cortas para saber quién sos antes de decidir qué estudiar.',
+      'Tu perfil, las 6 carreras que más van con vos y dónde estudiarlas. Empezás gratis y lo hacés a tu ritmo.',
     locale: 'es_AR',
     type: 'website',
   },
@@ -48,7 +58,7 @@ export default function RootLayout({
   return (
     <html
       lang="es"
-      className={`${sans.variable} ${serif.variable} ${mono.variable} h-full antialiased`}
+      className={`${sans.variable} ${serif.variable} ${mono.variable} ${poppins.variable} h-full antialiased`}
       suppressHydrationWarning
     >
       <body
