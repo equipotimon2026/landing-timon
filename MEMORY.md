@@ -239,3 +239,7 @@ permiso y poner `ejemplo: false`. La cita de la psicopedagoga es textual y sí s
   revise las preguntas y el cruce tipo → mundo (`src/lib/test.ts`).
 - "Cohorte" sale de todos los textos (no se entiende): "primeros 100 alumnos".
   El número "15 agentes de IA" de la home pasa a "3 psicopedagogas lo revisaron".
+
+**Actualización (26/10/2026):** Nico descartó el bono de la reunión con psicopedagoga.
+Quedan dos bonos: la llamada 1 a 1 con un fundador y el Mapa de los 16 Mundos. La
+reunión con psicopedagoga sigue como adicional pago ($50.000).

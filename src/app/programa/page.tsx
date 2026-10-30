@@ -280,7 +280,7 @@ export default function ProgramaPage() {
             <h3 className="text-center text-[24px] font-bold sm:text-[32px]">
               Y si estás entre los primeros 100, sumás:
             </h3>
-            <div className="mt-10 grid gap-5 md:grid-cols-3">
+            <div className="mx-auto mt-10 grid max-w-[800px] gap-5 md:grid-cols-2">
               {BONOS.map((b, i) => (
                 <div key={b.id} className="overflow-hidden rounded-xl border-2 border-dashed border-[var(--ocean)] bg-[var(--ocean-wash)]">
                   <div className="flex h-[190px] items-center justify-center bg-[var(--navy)]">

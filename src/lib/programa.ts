@@ -6,8 +6,6 @@
  * tocar las páginas: el cupo, los lugares que quedan y la garantía.
  */
 
-import { PSICO_ADDON_ARS } from './pricing'
-
 export const APP_URL = 'https://app.timonear.com'
 export const CONTACT_EMAIL = 'info@timonear.com'
 
@@ -62,8 +60,8 @@ export const OFERTA = {
 /**
  * Bonos de la cohorte fundadora: cada uno resuelve una objeción. Escasez real:
  * son para los primeros alumnos porque la llamada y la reunión las damos
- * nosotros y no escalan. `propuesta: true` = falta el OK del equipo antes de
- * publicarlo (la reunión con psicopedagoga hoy se cobra aparte: PSICO_ADDON_ARS).
+ * nosotros y no escalan. La reunión con psicopedagoga se descartó como bono
+ * (Nico, 26/10/2026): sigue siendo un adicional pago.
  */
 export const BONOS = [
   {
@@ -72,7 +70,6 @@ export const BONOS = [
     objecion: '"¿Será para mí?"',
     texto: 'Con vos y tu familia: resolvemos dudas y armamos juntos el plan para los 14 días.',
     valor: null as number | null,
-    propuesta: false,
   },
   {
     id: 'mapa',
@@ -80,15 +77,6 @@ export const BONOS = [
     objecion: '"No conozco las carreras"',
     texto: 'Las carreras del catálogo, por dentro: cómo es un día de trabajo y lo que nadie te cuenta.',
     valor: null as number | null,
-    propuesta: false,
-  },
-  {
-    id: 'psicopedagoga',
-    titulo: 'Reunión con una psicopedagoga',
-    objecion: '"¿Me lo va a decir una IA?"',
-    texto: 'Una profesional lee tu informe con vos y te ayuda a bajarlo a una decisión.',
-    valor: PSICO_ADDON_ARS as number | null,
-    propuesta: true,
   },
 ]
 
