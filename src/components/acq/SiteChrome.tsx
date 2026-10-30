@@ -53,14 +53,14 @@ export function SiteNav() {
             <Link
               key={n.href}
               href={n.href}
-              className="hidden text-[14px] text-[#4a4438] transition-colors hover:text-[#1a2640] md:inline"
+              className="hidden text-[14px] font-medium text-[#3f3a31] transition-colors hover:text-[#1a2640] md:inline"
             >
               {n.label}
             </Link>
           ))}
           <a
             href={URL_ENTRAR}
-            className="hidden text-[14px] text-[#4a4438] transition-colors hover:text-[#1a2640] sm:inline"
+            className="hidden text-[14px] font-medium text-[#3f3a31] transition-colors hover:text-[#1a2640] sm:inline"
           >
             Entrar
           </a>

@@ -587,11 +587,12 @@
   --m-navy: #1a2640;
   --m-azul: #3b5fd4;
   --m-azul-hover: #2f4fbd;
-  --m-texto: #4a4438;
-  --m-suave: #7a7266;
+  --m-texto: #3f3a31;
+  --m-suave: #625b50;
   --m-borde: #e6ddd1;
   --m-rueda: #d9d0c6;
   font-family: var(--font-jakarta), system-ui, sans-serif;
+  font-weight: 400;
   color: var(--m-texto);
 }
 .marca-fondo {
@@ -601,15 +602,16 @@
 .marca-navy { background: var(--m-navy); color: #fff; }
 .marca .etiqueta {
   font-family: var(--font-spacemono), ui-monospace, monospace;
-  font-size: 11px;
-  letter-spacing: 0.28em;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.22em;
   text-transform: uppercase;
   color: var(--m-azul);
 }
 .marca .titulo {
-  font-weight: 300;
+  font-weight: 500;
   color: var(--m-navy);
-  letter-spacing: -0.025em;
+  letter-spacing: -0.03em;
   line-height: 1.06;
 }
 .marca-navy .titulo { color: #fff; }
@@ -625,7 +627,7 @@
   border-radius: 9999px;
   background: var(--m-azul);
   color: #fff;
-  font-weight: 500;
+  font-weight: 600;
   transition: background-color 0.15s;
 }
 .marca .boton:hover { background: var(--m-azul-hover); }

@@ -31,7 +31,7 @@ export function MarcaTimon({ tono = 'navy', linea = false, className = '' }: { t
     <span className={`inline-flex flex-col ${className}`}>
       <span className="inline-flex items-center gap-2">
         <Rueda size={22} color={color} />
-        <span className="text-[22px] font-light leading-none tracking-[-0.02em]" style={{ color, fontFamily: 'var(--font-jakarta)' }}>
+        <span className="text-[22px] font-medium leading-none tracking-[-0.02em]" style={{ color, fontFamily: 'var(--font-jakarta)' }}>
           Timon
         </span>
       </span>

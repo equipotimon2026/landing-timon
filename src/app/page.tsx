@@ -193,13 +193,13 @@ export default function Home() {
                         {c.quien}
                         <BadgeCheck size={15} className="shrink-0 text-[var(--m-azul)]" aria-label="Verificado" />
                       </span>
-                      <span className="block text-[12px] leading-snug text-[var(--m-suave)]">{c.rol}</span>
+                      <span className="block text-[13px] leading-snug text-[var(--m-suave)]">{c.rol}</span>
                     </figcaption>
                   </div>
                   <blockquote className="mt-5 flex-1 text-[16px] leading-[1.6] text-[var(--m-navy)]">
                     <Resaltado texto={c.texto} />
                   </blockquote>
-                  <p className="etiqueta mt-5 border-t border-[var(--m-borde)] pt-4 !text-[9.5px] !text-[var(--m-suave)]">
+                  <p className="etiqueta mt-5 border-t border-[var(--m-borde)] pt-4 !text-[10.5px] !text-[var(--m-suave)]">
                     {c.fuente} · Oct 2026
                   </p>
                 </figure>
@@ -209,10 +209,10 @@ export default function Home() {
             <div className="tarjeta mx-auto mt-14 grid max-w-[1080px] grid-cols-2 gap-y-8 px-6 py-8 md:grid-cols-4">
               {NUMEROS_PRUEBA.map((n) => (
                 <div key={n.texto} className="text-center">
-                  <p className="text-[40px] font-extralight leading-none tracking-[-0.03em] text-[var(--m-azul)] sm:text-[48px]">
+                  <p className="text-[40px] font-medium leading-none tracking-[-0.03em] text-[var(--m-azul)] sm:text-[48px]">
                     {n.valor}
                   </p>
-                  <p className="mt-2 text-[13px]">{n.texto}</p>
+                  <p className="mt-2 text-[14px]">{n.texto}</p>
                 </div>
               ))}
             </div>
@@ -228,7 +228,7 @@ export default function Home() {
                 </li>
               ))}
             </ul>
-            <p className="mt-3 text-center text-[12px] text-[var(--m-suave)]">
+            <p className="mt-3 text-center text-[13px] text-[var(--m-suave)]">
               Algunas de las universidades que vas a encontrar en tu informe.
             </p>
           </div>
@@ -274,7 +274,7 @@ export default function Home() {
                 <li key={p.titulo} className="tarjeta relative overflow-hidden px-6 py-7">
                   <span
                     aria-hidden="true"
-                    className="pointer-events-none absolute -right-2 -top-5 text-[110px] font-extralight leading-none text-[var(--m-azul)] opacity-[0.08]"
+                    className="pointer-events-none absolute -right-2 -top-5 text-[110px] font-light leading-none text-[var(--m-azul)] opacity-[0.08]"
                   >
                     {String(i + 1).padStart(2, '0')}
                   </span>
