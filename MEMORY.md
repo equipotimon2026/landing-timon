@@ -200,3 +200,22 @@ ganas de pagar el programa.
 charla gratis con profesional virtual (gasto en Azure OpenAI por cada lead). Los
 relatos "un día de trabajo" son del profesional virtual de la app: se muestran como
 relato de ejemplo, con la aclaración al pie, nunca como testimonio real.
+
+---
+
+## 2026-10-26 (noche) — /programa se rehace sobre acquisition.com/o-vegas
+
+**Qué se decidió.** La referencia correcta es `acquisition.com/o-vegas` (la que ve Nico),
+no `/workshop`, que redirige a variantes A/B (`workshop-4b`). Estructura calcada:
+franja con píldora · hero navy con pregunta en mayúsculas + subtítulo + video montado
+sobre el borde · una línea con negrita + botón · "Lo que dicen" (papel texturado,
+video vertical de alumno, capturas inclinadas con resaltador amarillo) · banda rasgada
+"Lo que te llevás en 2 semanas" · 3 columnas #1/#2/#3 · botón · más capturas ·
+formulario · 4 preguntas en barras navy con renglones cortos · botón · footer mínimo.
+Fotos generadas en el ChatGPT de Nico (originales en ~/Downloads/timon-*.png).
+
+**Capturas simuladas.** Nico pidió simular capturas de mensajes con lo que les
+dijeron alumnos y familias. Se armaron con `ejemplo: true` en `src/app/programa/page.tsx`:
+se ven solo en desarrollo, con la etiqueta EJEMPLO, y no se renderizan en producción
+(`components/acq/Prueba.tsx`). Para publicarlas: reemplazar por el mensaje real con
+permiso y poner `ejemplo: false`. La cita de la psicopedagoga es textual y sí sale.
