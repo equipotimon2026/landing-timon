@@ -32,7 +32,16 @@ export async function POST(req: NextRequest) {
   let subject: string
   let text: string
 
-  if (body.tipo === 'colegio') {
+  if (body.tipo === 'reporte') {
+    // Lead magnet de /reporte: el equipo manda el reporte a mano desde info@.
+    const nombre = String(body.nombre ?? '').trim()
+    const perfil = String(body.perfil ?? '').trim()
+    if (!nombre) {
+      return NextResponse.json({ ok: false, error: 'Faltan campos' }, { status: 400 })
+    }
+    subject = `Reporte de carreras nuevas: ${nombre} (${perfil || 'sin perfil'})`
+    text = [`Nombre: ${nombre}`, `Email: ${email}`, `Perfil: ${perfil || '—'}`].join('\n')
+  } else if (body.tipo === 'colegio') {
     const nombre = String(body.nombre ?? '').trim()
     const institucion = String(body.institucion ?? '').trim()
     const cargo = String(body.cargo ?? '').trim()

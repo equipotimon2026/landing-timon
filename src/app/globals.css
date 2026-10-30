@@ -553,3 +553,28 @@
 .thin-scroll::-webkit-scrollbar { height: 5px; width: 5px; }
 .thin-scroll::-webkit-scrollbar-thumb { background: var(--border-cream-strong); border-radius: 999px; }
 .thin-scroll::-webkit-scrollbar-track { background: transparent; }
+
+/* ─── Landing estilo acquisition.com (reunión del 23/10/2026) ──────────
+   Misma tipografía y ritmo que acquisition.com y su página del workshop,
+   con la paleta de Timon: su violeta pasa a ser el océano, su dorado el
+   ámbar y su negro el navy. */
+.acq {
+  font-family: var(--font-poppins), 'Poppins', -apple-system, sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--navy);
+}
+.acq h1, .acq h2, .acq h3 { letter-spacing: -0.01em; }
+.acq-gradient-text {
+  background: linear-gradient(180deg, #FDE7B0 0%, #F59E0B 55%, #B87404 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.acq-gold-btn {
+  background: linear-gradient(180deg, #FCD679 0%, #F59E0B 100%);
+  color: var(--navy);
+  box-shadow: 0 10px 30px rgba(245, 158, 11, 0.28);
+}
+.acq-gold-btn:hover { filter: brightness(1.05); }
+.acq-firma { font-family: var(--font-firma), cursive; }

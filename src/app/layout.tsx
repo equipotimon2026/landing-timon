@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { DM_Sans, JetBrains_Mono, Crimson_Pro } from 'next/font/google'
+import { DM_Sans, JetBrains_Mono, Crimson_Pro, Poppins, Homemade_Apple } from 'next/font/google'
 import './globals.css'
 
 // Las mismas tres fuentes que la app (canvas "Rediseño Timón estilo Duolingo"):
@@ -27,12 +27,29 @@ const mono = JetBrains_Mono({
   display: 'swap',
 })
 
+// La landing y /programa copian la tipografía de acquisition.com (reunión con
+// Feli del 23/10/2026): Poppins para todo y Homemade Apple para la firma de la
+// carta. DM Sans queda para las vistas viejas (colegios, términos).
+const poppins = Poppins({
+  subsets: ['latin'],
+  variable: '--font-poppins',
+  weight: ['400', '500', '600', '700', '800'],
+  display: 'swap',
+})
+
+const firma = Homemade_Apple({
+  subsets: ['latin'],
+  variable: '--font-firma',
+  weight: '400',
+  display: 'swap',
+})
+
 export const metadata: Metadata = {
-  title: 'Timon — El primer paso no es elegir',
+  title: 'Timon — ¿Ya sabés qué vas a estudiar?',
   description:
-    'El primer paso no es elegir. Es entenderte. 13 paradas cortas para saber quién sos antes de decidir qué estudiar — carreras, universidades argentinas y salidas laborales reales.',
+    'Saber qué estudiar en 2 semanas, desde tu casa. 13 paradas cortas para entenderte y un informe con tus carreras, dónde estudiarlas y de qué vas a trabajar.',
   openGraph: {
-    title: 'Timon — El primer paso no es elegir',
+    title: 'Timon — ¿Ya sabés qué vas a estudiar?',
     description:
       'El primer paso no es elegir. Es entenderte. 13 paradas cortas para saber quién sos antes de decidir qué estudiar.',
     locale: 'es_AR',
@@ -48,7 +65,7 @@ export default function RootLayout({
   return (
     <html
       lang="es"
-      className={`${sans.variable} ${serif.variable} ${mono.variable} h-full antialiased`}
+      className={`${sans.variable} ${serif.variable} ${mono.variable} ${poppins.variable} ${firma.variable} h-full antialiased`}
       suppressHydrationWarning
     >
       <body
