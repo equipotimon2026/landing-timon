@@ -33,7 +33,7 @@ export function AnnouncementBar() {
       <span className="mr-2 rounded-full bg-white px-2 py-0.5 text-[10px] font-extrabold uppercase text-[var(--navy)] sm:text-[11px]">
         Nuevo
       </span>
-      <span className="font-bold">Programa Timon, cohorte fundadora:</span>{' '}
+      <span className="font-bold">Programa Timon, primeros 100 lugares:</span>{' '}
       <span>conocé el programa</span>
       <ArrowRight size={16} className="ml-2 inline transition-transform group-hover:translate-x-1" />
     </Link>
@@ -42,7 +42,7 @@ export function AnnouncementBar() {
 
 const NAV = [
   { href: '/programa', label: 'Programa' },
-  { href: '/mapa', label: 'Mapa gratis' },
+  { href: '/test', label: 'Test gratis' },
   { href: '/colegios', label: 'Para colegios' },
   { href: '/#nosotros', label: 'Nosotros' },
 ]
@@ -94,7 +94,7 @@ const FOOTER_COLS = [
   {
     title: 'Gratis',
     links: [
-      { href: '/mapa', label: 'El Mapa de los 16 Mundos' },
+      { href: '/test', label: 'Test de intereses' },
       { href: `${APP_URL}/entrar?modo=crear`, label: 'Las 3 primeras paradas' },
     ],
   },

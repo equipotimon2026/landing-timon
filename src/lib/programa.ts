@@ -6,6 +6,8 @@
  * tocar las páginas: el cupo, los lugares que quedan y la garantía.
  */
 
+import { PSICO_ADDON_ARS } from './pricing'
+
 export const APP_URL = 'https://app.timonear.com'
 export const CONTACT_EMAIL = 'info@timonear.com'
 
@@ -41,6 +43,53 @@ export const FUNDADORES: { nombre: string; rol: string; foto: string | null }[] 
   { nombre: 'Facu', rol: 'Producto y operaciones', foto: null },
   { nombre: 'Feli', rol: 'Colegios y familias', foto: null },
   { nombre: 'Nico', rol: 'Tecnología', foto: null },
+]
+
+/**
+ * La oferta, armada con $100M Offers de Hormozi (pedido de Nico, 26/10/2026).
+ *
+ * Nombre con MAGIC: razón (elegir bien), a quién (alumnos de 4º a 6º), meta
+ * (tu carrera), intervalo (14 días: 13 paradas, una por día) y formato
+ * (programa). Ecuación de valor: resultado soñado (carrera + universidad +
+ * salida laboral) × probabilidad (psicopedagogas, modelos profesionales,
+ * garantía) ÷ tiempo (14 días) × esfuerzo (10 minutos por día, desde casa).
+ */
+export const OFERTA = {
+  nombre: 'Tu Carrera en 14 Días',
+  promesa: 'Elegí qué estudiar sabiendo quién sos',
+}
+
+/**
+ * Bonos de la cohorte fundadora: cada uno resuelve una objeción. Escasez real:
+ * son para los primeros alumnos porque la llamada y la reunión las damos
+ * nosotros y no escalan. `propuesta: true` = falta el OK del equipo antes de
+ * publicarlo (la reunión con psicopedagoga hoy se cobra aparte: PSICO_ADDON_ARS).
+ */
+export const BONOS = [
+  {
+    id: 'llamada',
+    titulo: 'Llamada 1 a 1 con un fundador',
+    objecion: '"¿Será para mí?"',
+    texto: 'Con vos y tu familia: resolvemos dudas y armamos juntos el plan para los 14 días.',
+    valor: null as number | null,
+    propuesta: false,
+  },
+  {
+    id: 'mapa',
+    titulo: 'El Mapa de los 16 Mundos',
+    objecion: '"No conozco las carreras"',
+    texto: 'Las carreras del catálogo, por dentro: cómo es un día de trabajo y lo que nadie te cuenta.',
+    valor: null as number | null,
+    propuesta: false,
+  },
+  {
+    id: 'psicopedagoga',
+    titulo: 'Reunión con una psicopedagoga',
+    objecion: '"¿Me lo va a decir una IA?"',
+    texto: 'Una profesional lee tu informe con vos y te ayuda a bajarlo a una decisión.',
+    valor: PSICO_ADDON_ARS as number | null,
+    propuesta: true,
+  },
 ]
 
 /** Momentos de entrada: los mismos que entiende app.timonear.com/entrar. */

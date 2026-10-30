@@ -4,12 +4,15 @@ import { CapturasCollage, type Captura } from '@/components/acq/Prueba'
 import { FaqBarras, type Barra } from '@/components/acq/FaqBarras'
 import { ReservaForm } from '@/components/acq/ReservaForm'
 import { Wordmark } from '@/components/acq/SiteChrome'
-import { COHORTE_CUPO, CONTACT_EMAIL, GARANTIA } from '@/lib/programa'
+import { BONOS, COHORTE_CUPO, CONTACT_EMAIL, GARANTIA, OFERTA } from '@/lib/programa'
+import { MapaCover } from '@/components/acq/MapaCover'
+import { fmtArs } from '@/lib/pricing'
 import { FREE_STOPS, TOTAL_STOPS } from '@/lib/pricing'
+import { ShieldCheck } from 'lucide-react'
 
 export const metadata: Metadata = {
-  title: 'Programa Timon · Elegí tu carrera sabiendo quién sos',
-  description: `Un programa de 2 semanas, desde tu casa: ${TOTAL_STOPS} paradas y un informe personalizado con tus carreras, dónde estudiarlas y de qué vas a trabajar.`,
+  title: `${OFERTA.nombre} · Programa Timon`,
+  description: `Un programa de 14 días, desde tu casa: ${TOTAL_STOPS} paradas y un informe personalizado con tus carreras, dónde estudiarlas y de qué vas a trabajar.`,
 }
 
 /**
@@ -74,31 +77,32 @@ const PRUEBA_2: Captura[] = [
 
 const OBTENES = [
   {
-    n: '#1: Tu informe personalizado',
-    foto: 'informe',
+    n: '#1: Tu Mapa Personal de Carreras',
+    foto: 'oferta-informe',
     texto: (
       <>
-        Tus carreras más compatibles, dónde estudiarlas y <strong>de qué vas a trabajar</strong> en
-        cada una.
+        Tus carreras más compatibles, <strong>por qué van con vos</strong>, dónde estudiarlas y cuánto
+        se gana con experiencia.
       </>
     ),
   },
   {
-    n: '#2: Charlas con profesionales',
-    foto: 'profesional',
+    n: '#2: Charlas con Profesionales',
+    foto: 'oferta-profesional',
     texto: (
       <>
-        Hablás con profesionales de distintas áreas para ver <strong>cómo es un día de trabajo</strong>{' '}
+        Hablás con profesionales de 16 áreas para ver <strong>cómo es un día de trabajo real</strong>{' '}
         antes de elegir.
       </>
     ),
   },
   {
-    n: '#3: Tu familia, de tu lado',
-    foto: 'familia',
+    n: '#3: El Informe para tu Familia',
+    foto: 'oferta-familia',
     texto: (
       <>
-        Tu familia suma su mirada y recibe el informe, <strong>sin ver nunca tus respuestas</strong>.
+        Tu familia suma su mirada y recibe su versión del informe, <strong>sin ver nunca tus
+        respuestas</strong>.
       </>
     ),
   },
@@ -106,7 +110,7 @@ const OBTENES = [
 
 const PREGUNTAS: Barra[] = [
   {
-    q: '¿Qué pasa durante las 2 semanas?',
+    q: '¿Qué pasa durante los 14 días?',
     lineas: [
       'No es un test. Es un recorrido. Desde tu casa.',
       'Cero respuestas correctas. Lo que importa es cómo pensás.',
@@ -145,6 +149,7 @@ const PREGUNTAS: Barra[] = [
       'El precio del programa lo hablamos con tu familia en una llamada. Esto nos permite:',
       '1) conocer a cada familia (llamamos nosotros, los fundadores)',
       `2) acompañar de cerca a los primeros ${COHORTE_CUPO} alumnos`,
+      `Los bonos son solo para los primeros ${COHORTE_CUPO} alumnos: cuando se llenan los lugares, se terminan.`,
       GARANTIA.corta,
     ],
   },
@@ -193,7 +198,7 @@ export default function ProgramaPage() {
       <div className="flex justify-center bg-black px-4 py-4">
         <span className="inline-flex items-center gap-1.5 rounded bg-white px-3 py-2 text-[10px] font-extrabold uppercase tracking-[0.04em] text-[var(--navy)] sm:text-[11px]">
           <span className="h-2 w-2 rounded-full bg-[#EF4444]" />
-          <strong className="font-black">Programa</strong> online de 2 semanas | desde tu casa
+          <strong className="font-black">Programa</strong> online de 14 días | desde tu casa
         </span>
       </div>
 
@@ -204,7 +209,7 @@ export default function ProgramaPage() {
             ¿Estás eligiendo tu carrera a ciegas?
           </h1>
           <h2 className="mx-auto mt-6 max-w-[1110px] text-[22px] font-normal leading-[1.3] sm:text-[40px]">
-            Sumate al Programa Timon - Elegí qué estudiar sabiendo quién sos
+            Sumate a &ldquo;{OFERTA.nombre}&rdquo; - {OFERTA.promesa}
           </h2>
           {/* TODO: video explicativo de Timon. */}
           <div className="relative z-10 mx-auto mt-6 -mb-28 flex aspect-video w-full max-w-[660px] flex-col items-center justify-center gap-3 bg-[#0A1222] shadow-[0_20px_60px_rgba(0,0,0,0.35)] sm:-mb-44">
@@ -217,9 +222,9 @@ export default function ProgramaPage() {
 
         <section className="px-4 pb-20 pt-36 text-center sm:pt-56">
           <p className="mx-auto max-w-[950px] text-[18px] leading-[1.35] sm:text-[24px]">
-            Es un programa de 2 semanas, desde tu casa, donde recibís un{' '}
-            <strong>informe personalizado</strong> con tus carreras, dónde estudiarlas y de qué vas a
-            trabajar, armado con psicopedagogas.
+            Un programa de 14 días, desde tu casa y con 10 minutos por día, para que termines sabiendo{' '}
+            <strong>qué estudiar, dónde y de qué vas a trabajar</strong>. Si no te sirve, te devolvemos
+            el 100%.
           </p>
           <Boton className="mt-10" />
         </section>
@@ -251,7 +256,7 @@ export default function ProgramaPage() {
             <Rasgado />
             <div className="bg-[#222] px-4 py-6 text-center">
               <h2 className="text-[26px] font-bold leading-tight text-white sm:text-[41px]">
-                Lo que te llevás en <u className="underline-offset-[6px]">2 semanas</u>:
+                Lo que te llevás en <u className="underline-offset-[6px]">14 días</u>:
               </h2>
             </div>
             <Rasgado abajo />
@@ -268,6 +273,54 @@ export default function ProgramaPage() {
                 <p className="mx-auto mt-6 max-w-[379px] text-[16px] leading-[1.5] tracking-[0.02em]">{o.texto}</p>
               </div>
             ))}
+          </div>
+
+          {/* Bonos: cada uno contra una objeción */}
+          <div className="mx-auto mt-20 max-w-[1186px]">
+            <h3 className="text-center text-[24px] font-bold sm:text-[32px]">
+              Y si estás entre los primeros 100, sumás:
+            </h3>
+            <div className="mt-10 grid gap-5 md:grid-cols-3">
+              {BONOS.map((b, i) => (
+                <div key={b.id} className="overflow-hidden rounded-xl border-2 border-dashed border-[var(--ocean)] bg-[var(--ocean-wash)]">
+                  <div className="flex h-[190px] items-center justify-center bg-[var(--navy)]">
+                    {b.id === 'mapa' ? (
+                      <MapaCover className="w-[118px]" />
+                    ) : (
+                      // eslint-disable-next-line @next/next/no-img-element
+                      <img src={`/programa/bono-${b.id}.jpg`} alt="" className="h-full w-full object-cover" />
+                    )}
+                  </div>
+                  <div className="p-6">
+                    <p className="text-[12px] font-extrabold uppercase tracking-[0.1em] text-[var(--ocean-deep)]">
+                      Bono #{i + 1} · {b.objecion}
+                    </p>
+                    <p className="mt-2 text-[19px] font-bold leading-snug">{b.titulo}</p>
+                    <p className="mt-2 text-[15px] leading-[1.5] text-[var(--hueso)]">{b.texto}</p>
+                    {b.valor !== null && (
+                      <p className="mt-3 text-[14px] font-bold">
+                        Valor: <span className="line-through decoration-2">{fmtArs(b.valor)}</span>{' '}
+                        <span className="text-[var(--ocean-deep)]">incluido</span>
+                      </p>
+                    )}
+                  </div>
+                </div>
+              ))}
+            </div>
+            <p className="mt-6 text-center text-[15px] font-semibold">
+              Los bonos son solo para los primeros {COHORTE_CUPO} alumnos. Cuando se llenan, se terminan.
+            </p>
+          </div>
+
+          {/* Garantía */}
+          <div className="mx-auto mt-14 flex max-w-[860px] flex-col items-center gap-6 rounded-2xl bg-[var(--navy)] p-8 text-center text-white sm:flex-row sm:text-left">
+            <div className="flex h-24 w-24 shrink-0 items-center justify-center rounded-full border-4 border-[var(--ocean-light)]">
+              <ShieldCheck size={44} className="text-[var(--ocean-light)]" />
+            </div>
+            <div>
+              <p className="text-[22px] font-bold">{GARANTIA.nombre}</p>
+              <p className="mt-2 text-[16px] leading-[1.55] text-white/80">{GARANTIA.larga}</p>
+            </div>
           </div>
           <Boton className="mt-14" />
         </section>

@@ -219,3 +219,23 @@ dijeron alumnos y familias. Se armaron con `ejemplo: true` en `src/app/programa/
 se ven solo en desarrollo, con la etiqueta EJEMPLO, y no se renderizan en producción
 (`components/acq/Prueba.tsx`). Para publicarlas: reemplazar por el mensaje real con
 permiso y poner `ejemplo: false`. La cita de la psicopedagoga es textual y sí sale.
+
+---
+
+## 2026-10-26 (cierre) — Oferta Hormozi y nuevo lead magnet: test de intereses
+
+**Qué se decidió.**
+- Oferta con nombre MAGIC: "Tu Carrera en 14 Días" (`OFERTA` en `src/lib/programa.ts`).
+  Núcleo con nombre propio (#1 Tu Mapa Personal de Carreras, #2 Charlas con
+  Profesionales, #3 El Informe para tu Familia), tres bonos que atacan objeciones
+  (llamada 1 a 1 con un fundador, Mapa de los 16 Mundos, reunión con psicopedagoga
+  —esta última `propuesta: true`, hoy se cobra $50.000 aparte—), escasez (los bonos
+  son para los primeros 100) y la garantía antes del botón. Fotos de producto
+  generadas en el ChatGPT de Nico.
+- Lead magnet: `/test`, un test corto de intereses (Holland/RIASEC, 18 actividades)
+  que devuelve tus tres fuertes y tus mundos de carreras, con el mail antes del
+  resultado. Reemplaza al Mapa (que pasa a ser bono) y a un diagnóstico de
+  situación que se probó y se descartó en el día. PENDIENTE: que una psicopedagoga
+  revise las preguntas y el cruce tipo → mundo (`src/lib/test.ts`).
+- "Cohorte" sale de todos los textos (no se entiende): "primeros 100 alumnos".
+  El número "15 agentes de IA" de la home pasa a "3 psicopedagogas lo revisaron".

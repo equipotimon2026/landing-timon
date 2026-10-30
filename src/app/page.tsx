@@ -2,11 +2,10 @@ import Link from 'next/link'
 import { Compass, School } from 'lucide-react'
 import { AnnouncementBar, SiteFooter, SiteNav } from '@/components/acq/SiteChrome'
 import { Faq, type FaqItem } from '@/components/acq/Faq'
-import { MapaCover } from '@/components/acq/MapaCover'
+import { TestCover } from '@/components/acq/TestCover'
 import { FundadoresFotos } from '@/components/acq/Fundadores'
 import { WheelMark } from '@/components/landing/Logo'
 import { COHORTE_CUPO } from '@/lib/programa'
-import { TOTAL_CARRERAS } from '@/lib/mundos'
 import { FREE_STOPS, TOTAL_STOPS } from '@/lib/pricing'
 
 /**
@@ -23,17 +22,17 @@ import { FREE_STOPS, TOTAL_STOPS } from '@/lib/pricing'
 const STATS = [
   { value: String(TOTAL_STOPS), label: 'Paradas cortas' },
   { value: '<10', label: 'Minutos por parada' },
-  { value: '15', label: 'Agentes de IA te analizan' },
-  { value: String(COHORTE_CUPO), label: 'Lugares en la cohorte' },
+  { value: '3', label: 'Psicopedagogas lo revisaron' },
+  { value: String(COHORTE_CUPO), label: 'Lugares para empezar' },
 ]
 
 const RECURSOS = [
   {
     tag: 'Gratis',
-    title: 'El Mapa de los 16 Mundos',
-    href: '/mapa',
-    cta: 'Quiero mi mapa',
-    visual: <MapaCover className="w-[96px]" />,
+    title: 'Test de intereses',
+    href: '/test',
+    cta: 'Hacer el test',
+    visual: <TestCover className="w-[96px]" />,
   },
   {
     tag: 'Cupo limitado',
@@ -76,8 +75,8 @@ const FAQS: FaqItem[] = [
     a: (
       <p>
         Creás tu cuenta y hacés las {FREE_STOPS} primeras paradas gratis. Para seguir, uno de los
-        fundadores habla con tu familia. Como esa llamada la hacemos nosotros, la cohorte
-        fundadora tiene {COHORTE_CUPO} lugares.{' '}
+        fundadores habla con tu familia. Como esa llamada la hacemos nosotros, hay
+        solo {COHORTE_CUPO} lugares para empezar.{' '}
         <Link href="/programa#reservar" className="font-semibold text-[var(--ocean)] underline">
           Reservá el tuyo acá.
         </Link>
@@ -159,20 +158,20 @@ export default function Home() {
             <span className="absolute -top-3 right-6 rounded-sm bg-[var(--rosa)] px-3 py-1 text-[11px] font-bold uppercase italic text-white sm:right-10">
               Gratis
             </span>
-            <MapaCover className="w-[150px] sm:w-[170px]" />
+            <TestCover className="w-[150px] sm:w-[170px]" />
             <div className="flex flex-col items-center text-center md:items-start md:text-left">
               <h2 className="text-[20px] font-extrabold uppercase leading-tight sm:text-[24px]">
-                El Mapa de los 16 Mundos
+                Test de intereses gratis
               </h2>
               <p className="mt-2 max-w-[380px] text-[15px] text-[var(--hueso)]">
-                Las {TOTAL_CARRERAS} carreras, por dentro: cómo es un día de trabajo y las preguntas
-                para saber cuál es tu mundo.
+                En menos de 2 minutos: en qué áreas están tus fuertes y qué mundos de carreras van con
+                vos.
               </p>
               <Link
-                href="/mapa"
+                href="/test"
                 className="mt-5 whitespace-nowrap rounded-full bg-[var(--ocean)] px-6 py-4 text-[14px] font-bold uppercase text-white transition-colors hover:bg-[var(--ocean-deep)] sm:text-[16px]"
               >
-                Quiero mi mapa gratis
+                Hacer el test gratis
               </Link>
             </div>
           </div>
@@ -186,7 +185,7 @@ export default function Home() {
                 <span className="text-[var(--ocean)]">Elegí</span> cómo empezar
               </h2>
               <p className="mt-3 text-[14px] text-[var(--hueso)]">
-                Un mapa gratis para conocer las carreras, el programa para encontrar la tuya y
+                Un test gratis para ver tus fuertes, el programa para encontrar tu carrera y
                 Timon para todo tu colegio:
               </p>
               <hr className="mx-auto mt-8 w-full border-[var(--border-cream-strong)]" />
@@ -247,7 +246,7 @@ export default function Home() {
                 </p>
                 <p>
                   La misión es simple: que nadie elija qué estudiar sin haberse entendido
-                  primero. Por eso, a las familias de la cohorte fundadora las llaman ellos
+                  primero. Por eso, a las familias de los primeros 100 alumnos las llaman ellos
                   mismos, una por una.
                 </p>
               </div>

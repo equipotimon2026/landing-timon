@@ -32,7 +32,21 @@ export async function POST(req: NextRequest) {
   let subject: string
   let text: string
 
-  if (body.tipo === 'mapa') {
+  if (body.tipo === 'test') {
+    // Lead magnet de /test: el resultado se ve en la página; este mail le deja
+    // al equipo el contacto y sus intereses más fuertes.
+    const nombre = String(body.nombre ?? '').trim()
+    if (!nombre) {
+      return NextResponse.json({ ok: false, error: 'Faltan campos' }, { status: 400 })
+    }
+    subject = `Test de intereses: ${nombre}`
+    text = [
+      `Nombre: ${nombre}`,
+      `Email: ${email}`,
+      `Fuertes: ${String(body.perfil ?? '—')}`,
+      `Mundos: ${String(body.mundos ?? '—')}`,
+    ].join('\n')
+  } else if (body.tipo === 'mapa') {
     // Lead magnet de /mapa: el mapa se entrega al instante en /mapa/guia; este
     // mail es solo para que el equipo tenga el contacto.
     const nombre = String(body.nombre ?? '').trim()
