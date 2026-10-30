@@ -1,21 +1,17 @@
-import { ArrowRight, MessageCircle } from 'lucide-react'
+import { ArrowRight, BadgeCheck, MessageCircle } from 'lucide-react'
 import { SiteFooter, SiteNav } from '@/components/acq/SiteChrome'
 import { Faq, type FaqItem } from '@/components/acq/Faq'
 import { FundadoresFotos } from '@/components/acq/Fundadores'
 import { Rueda } from '@/components/landing/Marca'
 import {
-  AVALES,
   BONO_PAGO_ANTICIPADO,
-  CATALOGO,
   LO_QUE_DICEN,
   NUMEROS_PRUEBA,
   PASOS,
   PROGRAMA,
-  RESULTADO,
   URL_EMPEZAR,
   URL_PAGAR_AHORA,
   URL_WHATSAPP_PADRE,
-  type Aval,
 } from '@/lib/landing'
 
 /**
@@ -24,15 +20,13 @@ import {
  * el 30/10 con la marca de la presentación (clase `.marca` en globals.css) y
  * sin video.
  *
- *   hero con un botón → bloque de confianza → cómo funciona →
- *   qué te llevás → para vos y tu familia → preguntas → fundadores → cierre
+ *   hero → lo que dicen → lo que te llevás del programa (#1/#2/#3) + botón →
+ *   cómo funciona → para vos y tu familia → preguntas → fundadores → CTA final
  *
  * Todo lleva a una sola acción: empezar el recorrido gratis. Sin precio, sin
  * plazo y sin otras propuestas (test, programa, comunidad). El detalle de qué
  * se promete y qué falta confirmar está en `lib/landing.ts`.
  */
-
-const MOSTRAR_EJEMPLOS = process.env.NODE_ENV !== 'production'
 
 const FAQS: FaqItem[] = [
   {
@@ -110,33 +104,6 @@ function LinkPagarAhora({ tono = 'oscuro' }: { tono?: 'oscuro' | 'claro' }) {
   )
 }
 
-function TarjetaAval({ a }: { a: Aval }) {
-  return (
-    <figure className="tarjeta relative flex flex-col px-6 py-7">
-      {a.ejemplo && (
-        <span className="absolute -right-2 -top-2 rounded bg-[#E11D48] px-2 py-0.5 text-[10px] font-bold uppercase text-white">
-          Ejemplo
-        </span>
-      )}
-      <div className="flex h-12 w-12 items-center justify-center overflow-hidden rounded-xl bg-[var(--m-azul)]">
-        {a.imagen ? (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img src={a.imagen} alt="" className="h-9 w-9 rounded-full bg-white object-contain p-0.5" />
-        ) : (
-          <span className="text-[18px] font-medium text-white">{a.quien[0]}</span>
-        )}
-      </div>
-      <blockquote className="mt-5 flex-1 text-[18px] font-light leading-snug text-[var(--m-navy)]">
-        {a.textual ? <>&ldquo;{a.frase}&rdquo;</> : a.frase}
-      </blockquote>
-      <figcaption className="mt-5">
-        <span className="block text-[14px] font-semibold text-[var(--m-navy)]">{a.quien}</span>
-        <span className="block text-[13px] text-[var(--m-suave)]">{a.rol}</span>
-      </figcaption>
-    </figure>
-  )
-}
-
 /** Texto con las partes entre ==dobles iguales== en negrita con resaltador. */
 function Resaltado({ texto }: { texto: string }) {
   return (
@@ -154,8 +121,6 @@ function Resaltado({ texto }: { texto: string }) {
   )
 }
 
-const ROTACIONES = ['md:-rotate-2', 'md:rotate-1 md:-translate-y-3', 'md:rotate-2 md:translate-y-2']
-
 const LOGOS_UNIVERSIDADES = [
   { src: '/logos/universities/uba.svg', alt: 'UBA' },
   { src: '/logos/universities/utn.png', alt: 'UTN' },
@@ -168,8 +133,6 @@ const LOGOS_UNIVERSIDADES = [
 ]
 
 export default function Home() {
-  const avales = AVALES.filter((a) => MOSTRAR_EJEMPLOS || !a.ejemplo)
-
   return (
     <div className="marca flex min-h-full flex-col bg-white">
       <SiteNav />
@@ -188,57 +151,117 @@ export default function Home() {
             className="pointer-events-none absolute -right-24 top-1/2 hidden -translate-y-1/2 opacity-60 lg:block"
           />
           <div className="relative mx-auto flex max-w-[820px] flex-col items-center px-4 py-16 text-center sm:py-24">
-            <p className="etiqueta">
-              Hay {CATALOGO.carreras} carreras que podrías estudiar. ¿Cuántas conocés?
-            </p>
-            <h1 className="titulo mt-6 text-[38px] sm:text-[56px]">
-              Sabé qué carreras van con vos, dónde estudiarlas y de qué vas a trabajar
-            </h1>
+            <h1 className="titulo text-[44px] sm:text-[72px]">Sabé qué carreras van con vos</h1>
             <span className="mt-7 block h-[2px] w-16 bg-[var(--m-azul)]" />
-            <p className="mt-6 max-w-[580px] text-[16px] leading-[1.6] sm:text-[18px]">
-              Timon es un recorrido que hacés desde tu casa, a tu ritmo. Al final te devuelve tu
-              perfil, las 6 carreras que más van con vos y las universidades donde estudiarlas.
+            <p className="mt-6 text-[17px] sm:text-[20px]">
+              Dónde estudiarlas y de qué vas a trabajar. A tu ritmo.
             </p>
             <BotonEmpezar className="mt-9" />
             <LinkPagarAhora />
           </div>
         </section>
 
-        {/* Bloque de confianza */}
-        <section className="marca-claro px-4 pb-16 pt-16 sm:px-6">
-          <div className="mx-auto max-w-[1080px]">
-            <h2 className="titulo text-center text-[30px] sm:text-[40px]">
-              Detrás de Timon hay profesionales, <span className="text-[var(--m-azul)]">no solo tecnología</span>
-            </h2>
-            {avales.length > 0 && (
-              <div
-                className={`mx-auto mt-10 grid gap-4 ${
-                  avales.length >= 3 ? 'md:grid-cols-3' : avales.length === 2 ? 'max-w-[720px] md:grid-cols-2' : 'max-w-[380px]'
-                }`}
-              >
-                {avales.map((a) => (
-                  <TarjetaAval key={a.quien} a={a} />
-                ))}
-              </div>
-            )}
-
-            <div className="mt-14 text-center">
-              <p className="text-[38px] font-extralight leading-none tracking-[-0.03em] text-[var(--m-azul)] sm:text-[52px]">
-                {CATALOGO.carreras} carreras en {CATALOGO.universidades} universidades
-              </p>
-              <p className="etiqueta mt-3 !text-[var(--m-suave)]">Públicas y privadas, de todo el país</p>
-              <ul className="mx-auto mt-8 flex max-w-[860px] flex-wrap items-center justify-center gap-x-8 gap-y-5">
-                {LOGOS_UNIVERSIDADES.map((l) => (
-                  <li key={l.alt}>
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img src={l.src} alt={l.alt} className="h-9 w-auto opacity-60 grayscale sm:h-10" />
-                  </li>
-                ))}
-              </ul>
-              <p className="mt-4 text-[12px] text-[var(--m-suave)]">
-                Algunas de las universidades que vas a encontrar en tu informe.
-              </p>
+        {/* Como el workshop de acquisition.com/o-vegas: lo que dicen → lo que te
+            llevás del programa #1/#2/#3 → un botón. Vende el programa, no la app. */}
+        <section className="marca-claro px-4 pb-16 pt-20 sm:px-6">
+          <div className="mx-auto max-w-[1140px]">
+            <h2 className="titulo text-center text-[34px] sm:text-[44px]">Lo que dicen de Timon:</h2>
+            <div className="mx-auto mt-12 grid max-w-[1080px] items-stretch justify-items-center gap-5 md:grid-cols-3 md:gap-4">
+              {LO_QUE_DICEN.map((c) => (
+                <figure
+                  key={c.quien}
+                  className="tarjeta flex h-full w-full max-w-[360px] flex-col p-6 shadow-[0_12px_32px_rgba(26,38,64,0.08)]"
+                >
+                  <div className="flex items-center gap-3">
+                    <span className="flex h-12 w-12 shrink-0 items-center justify-center overflow-hidden rounded-full border border-[var(--m-borde)] bg-white">
+                      {c.imagen ? (
+                        // eslint-disable-next-line @next/next/no-img-element
+                        <img src={c.imagen} alt="" className="h-10 w-10 object-contain" />
+                      ) : (
+                        <span className="text-[18px] font-medium text-[var(--m-azul)]">
+                          {c.quien
+                            .split(' ')
+                            .filter((w) => w.length > 2)
+                            .slice(0, 2)
+                            .map((w) => w[0])
+                            .join('')}
+                        </span>
+                      )}
+                    </span>
+                    <figcaption className="min-w-0">
+                      <span className="flex items-center gap-1 text-[14px] font-semibold text-[var(--m-navy)]">
+                        {c.quien}
+                        <BadgeCheck size={15} className="shrink-0 text-[var(--m-azul)]" aria-label="Verificado" />
+                      </span>
+                      <span className="block text-[12px] leading-snug text-[var(--m-suave)]">{c.rol}</span>
+                    </figcaption>
+                  </div>
+                  <blockquote className="mt-5 flex-1 text-[16px] leading-[1.6] text-[var(--m-navy)]">
+                    <Resaltado texto={c.texto} />
+                  </blockquote>
+                  <p className="etiqueta mt-5 border-t border-[var(--m-borde)] pt-4 !text-[9.5px] !text-[var(--m-suave)]">
+                    {c.fuente} · Oct 2026
+                  </p>
+                </figure>
+              ))}
             </div>
+
+            <div className="tarjeta mx-auto mt-14 grid max-w-[1080px] grid-cols-2 gap-y-8 px-6 py-8 md:grid-cols-4">
+              {NUMEROS_PRUEBA.map((n) => (
+                <div key={n.texto} className="text-center">
+                  <p className="text-[40px] font-extralight leading-none tracking-[-0.03em] text-[var(--m-azul)] sm:text-[48px]">
+                    {n.valor}
+                  </p>
+                  <p className="mt-2 text-[13px]">{n.texto}</p>
+                </div>
+              ))}
+            </div>
+            <p className="mx-auto mt-5 max-w-[640px] text-center text-[15px]">
+              Lo armamos junto a psicopedagogos y psicólogos, <strong className="font-semibold text-[var(--m-navy)]">lo
+              validaron especialistas con matrícula activa</strong> y lo probamos con estudiantes reales.
+            </p>
+            <ul className="mx-auto mt-10 flex max-w-[860px] flex-wrap items-center justify-center gap-x-8 gap-y-5">
+              {LOGOS_UNIVERSIDADES.map((l) => (
+                <li key={l.alt}>
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src={l.src} alt={l.alt} className="h-8 w-auto opacity-55 grayscale sm:h-9" />
+                </li>
+              ))}
+            </ul>
+            <p className="mt-3 text-center text-[12px] text-[var(--m-suave)]">
+              Algunas de las universidades que vas a encontrar en tu informe.
+            </p>
+          </div>
+        </section>
+
+        <section id="resultado" className="marca-navy scroll-mt-16 px-4 py-10 text-center sm:px-6">
+          <h2 className="titulo text-[30px] sm:text-[42px]">Lo que te llevás del programa Timon:</h2>
+        </section>
+
+        <section className="bg-white px-4 pb-20 pt-16 sm:px-6">
+          <div className="mx-auto grid max-w-[1140px] gap-12 md:grid-cols-3 md:gap-6">
+            {PROGRAMA.map((o) => (
+              <div key={o.n} className="text-center">
+                <h3 className="mx-auto max-w-[280px] text-[20px] font-semibold leading-[1.5] text-[var(--m-navy)] md:min-h-[60px]">
+                  {o.n}
+                </h3>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={o.foto}
+                  alt={`Captura de Timon: ${o.n}`}
+                  loading="lazy"
+                  className="mt-5 aspect-[3/2] w-full rounded-[14px] border border-[var(--m-borde)] object-cover object-top shadow-[0_12px_32px_rgba(26,38,64,0.08)]"
+                />
+                <p className="mx-auto mt-5 max-w-[360px] text-[16px] leading-[1.6]">
+                  <Resaltado texto={o.texto} />
+                </p>
+              </div>
+            ))}
+          </div>
+          <p className="mt-8 text-center text-[13px] text-[var(--m-suave)]">Capturas de la app con datos de ejemplo.</p>
+          <div className="mt-10 flex flex-col items-center text-center">
+            <BotonEmpezar />
+            <LinkPagarAhora />
           </div>
         </section>
 
@@ -266,38 +289,6 @@ export default function Home() {
             <div className="mt-10 flex flex-col items-center text-center">
               <BotonEmpezar />
             </div>
-          </div>
-        </section>
-
-        {/* Qué te llevás: el resultado, con capturas de la app real */}
-        <section id="resultado" className="scroll-mt-16 bg-white px-4 py-16 sm:px-6">
-          <div className="mx-auto max-w-[1080px]">
-            <h2 className="titulo text-center text-[34px] sm:text-[44px]">
-              Lo que te devuelve <span className="text-[var(--m-azul)]">Timon</span>
-            </h2>
-            <div className="mt-12 space-y-14">
-              {RESULTADO.map((r, i) => (
-                <div
-                  key={r.titulo}
-                  className={`flex flex-col items-center gap-6 md:gap-12 ${i % 2 ? 'md:flex-row-reverse' : 'md:flex-row'}`}
-                >
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
-                    src={r.imagen}
-                    alt={`Captura de Timon: ${r.titulo}`}
-                    loading="lazy"
-                    className="w-full rounded-[14px] border border-[var(--m-borde)] shadow-[0_12px_40px_rgba(26,38,64,0.08)] md:w-[56%]"
-                  />
-                  <div className="md:flex-1">
-                    <h3 className="text-[22px] font-semibold leading-tight text-[var(--m-navy)] sm:text-[26px]">{r.titulo}</h3>
-                    <p className="mt-3 text-[16px] leading-[1.65] sm:text-[17px]">{r.texto}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-            <p className="mx-auto mt-12 max-w-[560px] text-center text-[13px] text-[var(--m-suave)]">
-              Capturas de la app con datos de ejemplo.
-            </p>
           </div>
         </section>
 
@@ -366,74 +357,37 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Cierre al estilo del workshop de acquisition.com/o-vegas: lo que dicen →
-            lo que te llevás #1/#2/#3 → un botón. Vende el programa, no la app. */}
-        <section className="marca-fondo px-4 pb-6 pt-20 sm:px-6">
-          <div className="mx-auto max-w-[1140px]">
-            <h2 className="titulo text-center text-[34px] sm:text-[44px]">Lo que dicen de Timon:</h2>
-            <div className="mx-auto mt-12 grid max-w-[1080px] items-start justify-items-center gap-5 md:grid-cols-3 md:gap-4">
-              {LO_QUE_DICEN.map((c, i) => (
-                <figure key={c.quien} className={`tarjeta w-full max-w-[360px] p-5 shadow-[0_12px_32px_rgba(26,38,64,0.10)] ${ROTACIONES[i]}`}>
-                  <div className="flex items-center gap-2.5">
-                    <span className="flex h-8 w-8 items-center justify-center rounded-full bg-[var(--m-azul)] text-[13px] font-medium text-white">
-                      {c.quien[0]}
-                    </span>
-                    <figcaption>
-                      <span className="block text-[13px] font-semibold text-[var(--m-navy)]">{c.quien}</span>
-                      <span className="block text-[11px] text-[var(--m-suave)]">{c.rol}</span>
-                    </figcaption>
-                  </div>
-                  <blockquote className="mt-3 text-[15px] leading-[1.55] text-[var(--m-navy)]">
-                    <Resaltado texto={c.texto} />
-                  </blockquote>
-                </figure>
-              ))}
+        {/* CTA final: un bloque propio, como la tapa de la presentación, para
+            que no se lea como parte del footer. */}
+        <section className="bg-white px-4 pb-24 sm:px-6">
+          <div className="marca-fondo relative mx-auto max-w-[1140px] overflow-hidden rounded-[28px] border border-[var(--m-borde)] px-6 py-16 text-center shadow-[0_30px_80px_rgba(26,38,64,0.12)] sm:px-12 sm:py-24">
+            <Rueda
+              size={520}
+              color="var(--m-rueda)"
+              className="pointer-events-none absolute -right-40 top-1/2 hidden -translate-y-1/2 opacity-70 md:block"
+            />
+            <Rueda
+              size={360}
+              color="var(--m-rueda)"
+              className="pointer-events-none absolute -left-32 -top-24 hidden opacity-50 md:block"
+            />
+            <div className="relative mx-auto flex max-w-[720px] flex-col items-center">
+              <p className="etiqueta">Empezá hoy</p>
+              <h2 className="titulo mt-5 text-[40px] sm:text-[60px]">¿Qué te devolvería Timon a vos?</h2>
+              <span className="mt-7 block h-[2px] w-16 bg-[var(--m-azul)]" />
+              <p className="mt-6 text-[17px] sm:text-[20px]">
+                Hay una sola forma de saberlo. Empezás hoy y lo hacés a tu ritmo.
+              </p>
+              <BotonEmpezar className="mt-10 w-full max-w-[420px] !py-5 !text-[20px] shadow-[0_14px_34px_rgba(59,95,212,0.35)]" />
+              <ul className="etiqueta mt-6 flex flex-wrap justify-center gap-x-5 gap-y-2 !text-[10px] !text-[var(--m-suave)]">
+                <li>Gratis para empezar</li>
+                <li aria-hidden="true">·</li>
+                <li>Sin tarjeta</li>
+                <li aria-hidden="true">·</li>
+                <li>A tu ritmo</li>
+              </ul>
+              <LinkPagarAhora />
             </div>
-
-            <div className="tarjeta mx-auto mt-14 grid max-w-[1080px] grid-cols-2 gap-y-8 px-6 py-8 md:grid-cols-4">
-              {NUMEROS_PRUEBA.map((n) => (
-                <div key={n.texto} className="text-center">
-                  <p className="text-[40px] font-extralight leading-none tracking-[-0.03em] text-[var(--m-azul)] sm:text-[48px]">
-                    {n.valor}
-                  </p>
-                  <p className="mt-2 text-[13px]">{n.texto}</p>
-                </div>
-              ))}
-            </div>
-            <p className="mx-auto mt-5 max-w-[640px] text-center text-[15px]">
-              Lo armamos junto a psicopedagogos y psicólogos, <strong className="font-semibold text-[var(--m-navy)]">lo
-              validaron especialistas con matrícula activa</strong> y lo probamos con estudiantes reales.
-            </p>
-          </div>
-        </section>
-
-        <section className="marca-navy px-4 py-10 text-center sm:px-6">
-          <h2 className="titulo text-[30px] sm:text-[42px]">Lo que te llevás del programa Timon:</h2>
-        </section>
-
-        <section className="bg-white px-4 pb-20 pt-16 sm:px-6">
-          <div className="mx-auto grid max-w-[1140px] gap-12 md:grid-cols-3 md:gap-6">
-            {PROGRAMA.map((o) => (
-              <div key={o.n} className="text-center">
-                <h3 className="mx-auto max-w-[280px] text-[20px] font-semibold leading-[1.5] text-[var(--m-navy)] md:min-h-[60px]">
-                  {o.n}
-                </h3>
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={o.foto} alt="" loading="lazy" className="mt-5 aspect-[3/2] w-full rounded-[14px] object-cover" />
-                <p className="mx-auto mt-5 max-w-[360px] text-[16px] leading-[1.6]">
-                  <Resaltado texto={o.texto} />
-                </p>
-              </div>
-            ))}
-          </div>
-
-          <div className="mx-auto mt-20 flex max-w-[700px] flex-col items-center text-center">
-            <h2 className="titulo text-[34px] sm:text-[44px]">¿Qué te devolvería Timon a vos?</h2>
-            <p className="mt-4 text-[16px] sm:text-[18px]">
-              Hay una sola forma de saberlo. Empezás hoy y lo hacés a tu ritmo.
-            </p>
-            <BotonEmpezar className="mt-8 w-full max-w-[400px] !py-5 !text-[19px]" />
-            <LinkPagarAhora />
           </div>
         </section>
       </main>
