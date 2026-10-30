@@ -7,7 +7,10 @@ import {
   AVALES,
   BONO_PAGO_ANTICIPADO,
   CATALOGO,
+  LO_QUE_DICEN,
+  NUMEROS_PRUEBA,
   PASOS,
+  PROGRAMA,
   RESULTADO,
   URL_EMPEZAR,
   URL_PAGAR_AHORA,
@@ -133,6 +136,25 @@ function TarjetaAval({ a }: { a: Aval }) {
     </figure>
   )
 }
+
+/** Texto con las partes entre ==dobles iguales== en negrita con resaltador. */
+function Resaltado({ texto }: { texto: string }) {
+  return (
+    <>
+      {texto.split(/(==[^=]+==)/g).map((parte, i) =>
+        parte.startsWith('==') ? (
+          <mark key={i} className="rounded-[2px] bg-[#fdf3a3] px-0.5 font-medium text-inherit [box-decoration-break:clone]">
+            {parte.slice(2, -2)}
+          </mark>
+        ) : (
+          <span key={i}>{parte}</span>
+        ),
+      )}
+    </>
+  )
+}
+
+const ROTACIONES = ['md:-rotate-2', 'md:rotate-1 md:-translate-y-3', 'md:rotate-2 md:translate-y-2']
 
 const LOGOS_UNIVERSIDADES = [
   { src: '/logos/universities/uba.svg', alt: 'UBA' },
@@ -344,14 +366,73 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Cierre */}
-        <section className="marca-fondo px-4 py-20 sm:px-6">
-          <div className="mx-auto flex max-w-[700px] flex-col items-center text-center">
+        {/* Cierre al estilo del workshop de acquisition.com/o-vegas: lo que dicen →
+            lo que te llevás #1/#2/#3 → un botón. Vende el programa, no la app. */}
+        <section className="marca-fondo px-4 pb-6 pt-20 sm:px-6">
+          <div className="mx-auto max-w-[1140px]">
+            <h2 className="titulo text-center text-[34px] sm:text-[44px]">Lo que dicen de Timon:</h2>
+            <div className="mx-auto mt-12 grid max-w-[1080px] items-start justify-items-center gap-5 md:grid-cols-3 md:gap-4">
+              {LO_QUE_DICEN.map((c, i) => (
+                <figure key={c.quien} className={`tarjeta w-full max-w-[360px] p-5 shadow-[0_12px_32px_rgba(26,38,64,0.10)] ${ROTACIONES[i]}`}>
+                  <div className="flex items-center gap-2.5">
+                    <span className="flex h-8 w-8 items-center justify-center rounded-full bg-[var(--m-azul)] text-[13px] font-medium text-white">
+                      {c.quien[0]}
+                    </span>
+                    <figcaption>
+                      <span className="block text-[13px] font-semibold text-[var(--m-navy)]">{c.quien}</span>
+                      <span className="block text-[11px] text-[var(--m-suave)]">{c.rol}</span>
+                    </figcaption>
+                  </div>
+                  <blockquote className="mt-3 text-[15px] leading-[1.55] text-[var(--m-navy)]">
+                    <Resaltado texto={c.texto} />
+                  </blockquote>
+                </figure>
+              ))}
+            </div>
+
+            <div className="tarjeta mx-auto mt-14 grid max-w-[1080px] grid-cols-2 gap-y-8 px-6 py-8 md:grid-cols-4">
+              {NUMEROS_PRUEBA.map((n) => (
+                <div key={n.texto} className="text-center">
+                  <p className="text-[40px] font-extralight leading-none tracking-[-0.03em] text-[var(--m-azul)] sm:text-[48px]">
+                    {n.valor}
+                  </p>
+                  <p className="mt-2 text-[13px]">{n.texto}</p>
+                </div>
+              ))}
+            </div>
+            <p className="mx-auto mt-5 max-w-[640px] text-center text-[15px]">
+              Lo armamos junto a psicopedagogos y psicólogos, <strong className="font-semibold text-[var(--m-navy)]">lo
+              validaron especialistas con matrícula activa</strong> y lo probamos con estudiantes reales.
+            </p>
+          </div>
+        </section>
+
+        <section className="marca-navy px-4 py-10 text-center sm:px-6">
+          <h2 className="titulo text-[30px] sm:text-[42px]">Lo que te llevás del programa Timon:</h2>
+        </section>
+
+        <section className="bg-white px-4 pb-20 pt-16 sm:px-6">
+          <div className="mx-auto grid max-w-[1140px] gap-12 md:grid-cols-3 md:gap-6">
+            {PROGRAMA.map((o) => (
+              <div key={o.n} className="text-center">
+                <h3 className="mx-auto max-w-[280px] text-[20px] font-semibold leading-[1.5] text-[var(--m-navy)] md:min-h-[60px]">
+                  {o.n}
+                </h3>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src={o.foto} alt="" loading="lazy" className="mt-5 aspect-[3/2] w-full rounded-[14px] object-cover" />
+                <p className="mx-auto mt-5 max-w-[360px] text-[16px] leading-[1.6]">
+                  <Resaltado texto={o.texto} />
+                </p>
+              </div>
+            ))}
+          </div>
+
+          <div className="mx-auto mt-20 flex max-w-[700px] flex-col items-center text-center">
             <h2 className="titulo text-[34px] sm:text-[44px]">¿Qué te devolvería Timon a vos?</h2>
             <p className="mt-4 text-[16px] sm:text-[18px]">
               Hay una sola forma de saberlo. Empezás hoy y lo hacés a tu ritmo.
             </p>
-            <BotonEmpezar className="mt-8" />
+            <BotonEmpezar className="mt-8 w-full max-w-[400px] !py-5 !text-[19px]" />
             <LinkPagarAhora />
           </div>
         </section>

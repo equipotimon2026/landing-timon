@@ -139,3 +139,56 @@ export const PASOS = [
       'Cruzamos tus respuestas con todas las carreras del país. Ves gratis la primera parte de tu perfil, y con el informe completo, tus carreras y dónde estudiarlas.',
   },
 ]
+
+/**
+ * Cierre al estilo del workshop de acquisition.com/o-vegas (pedido de Nico,
+ * 30/10/2026): "lo que dicen" → "lo que te llevás" #1/#2/#3 → un botón. Vende
+ * el programa, no la app. Solo lo que existe hoy: el informe, el módulo de
+ * profesiones (16 áreas, con profesionales virtuales: por eso no dice
+ * "hablás con profesionales") y la revisión con un profesional.
+ *
+ * Las partes resaltadas van entre ==dobles iguales==.
+ */
+export const LO_QUE_DICEN: { quien: string; rol: string; texto: string }[] = [
+  {
+    quien: 'Psicopedagoga',
+    rol: 'Evaluó la metodología de Timon',
+    texto: '==“Es una visión integral, no un simple test.”==',
+  },
+  {
+    quien: 'Colegio María Guadalupe',
+    rol: 'Lo probaron sus alumnos de 5° y 6° año',
+    texto: 'Los alumnos lo probaron, ==les gustó== y dijeron que ==está muy bueno==.',
+  },
+  {
+    quien: 'Universidad de Buenos Aires',
+    rol: 'Equipo profesional',
+    texto: 'Su equipo revisó la metodología de Timon y dijo que ==está muy buena==.',
+  },
+]
+
+/** Los números de la presentación (timon_presentacion_v2_1). */
+export const NUMEROS_PRUEBA = [
+  { valor: '13', texto: 'módulos' },
+  { valor: '10', texto: 'dimensiones de análisis' },
+  { valor: '300', texto: 'carreras en 50 universidades' },
+  { valor: '~10.000', texto: 'combinaciones analizadas' },
+]
+
+export const PROGRAMA = [
+  {
+    n: '#1: Tu Informe Personal',
+    foto: '/programa/oferta-informe.jpg',
+    texto: 'Tu perfil y tus 6 carreras más compatibles, ==por qué van con vos==, dónde estudiarlas y de qué vas a trabajar.',
+  },
+  {
+    n: '#2: Las Profesiones por Dentro',
+    foto: '/programa/oferta-profesional.jpg',
+    texto: 'Recorrés 16 áreas de trabajo para ver ==cómo es un día real== en cada profesión antes de elegir.',
+  },
+  {
+    n: '#3: Tus Próximos Pasos',
+    foto: '/programa/bono-llamada.jpg',
+    texto: 'Si querés, repasás tu resultado con un profesional y salís con ==pasos concretos== para decidir.',
+  },
+]
