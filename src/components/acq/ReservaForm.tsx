@@ -14,7 +14,7 @@ export function ReservaForm() {
   const [email, setEmail] = useState('')
   const [momento, setMomento] = useState('')
 
-  const reservar = (e: React.FormEvent) => {
+  const reservar = (e: React.SyntheticEvent) => {
     e.preventDefault()
     window.location.href = urlRegistro({ email, nombre, momento })
   }
@@ -23,13 +23,15 @@ export function ReservaForm() {
     'h-11 w-full rounded-md border border-[var(--border-cream-strong)] bg-white px-3 text-[14px] outline-none focus:border-[var(--ocean)]'
 
   return (
-    <div className="rounded-2xl bg-white p-6 shadow-[0_18px_50px_rgba(15,31,54,0.10)] sm:p-7">
-      <p className="text-[24px] font-extrabold leading-tight">Reservá tu lugar</p>
-      <p className="mt-2 text-[15px] text-[var(--hueso)]">
-        Creá tu cuenta y empezá hoy con las 3 primeras paradas gratis. Después hablamos con tu
-        familia para confirmar tu lugar.
-      </p>
-      <form onSubmit={reservar} className="mt-6 space-y-3">
+    <div className="rounded-2xl bg-white p-5 sm:p-9">
+      <div className="rounded-xl bg-white p-6 shadow-[0_12px_40px_rgba(15,31,54,0.10)]">
+        <p className="text-[24px] font-extrabold leading-tight">Reservá tu lugar abajo</p>
+        <p className="mt-2 text-[15px] leading-[1.55] text-[#3A3B4D]">
+          Creá tu cuenta, hacé gratis las 3 primeras paradas y coordinamos una llamada corta con tu
+          familia para confirmar tu lugar.
+        </p>
+      </div>
+      <form onSubmit={reservar} className="mt-6 space-y-3 px-1">
         <input
           required
           value={nombre}

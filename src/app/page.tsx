@@ -1,10 +1,12 @@
 import Link from 'next/link'
-import { Compass, Footprints, School } from 'lucide-react'
+import { Compass, School } from 'lucide-react'
 import { AnnouncementBar, SiteFooter, SiteNav } from '@/components/acq/SiteChrome'
 import { Faq, type FaqItem } from '@/components/acq/Faq'
-import { ReportCover } from '@/components/acq/ReportCover'
+import { MapaCover } from '@/components/acq/MapaCover'
+import { FundadoresFotos } from '@/components/acq/Fundadores'
 import { WheelMark } from '@/components/landing/Logo'
-import { COHORTE_CUPO, urlRegistro } from '@/lib/programa'
+import { COHORTE_CUPO } from '@/lib/programa'
+import { TOTAL_CARRERAS } from '@/lib/mundos'
 import { FREE_STOPS, TOTAL_STOPS } from '@/lib/pricing'
 
 /**
@@ -27,25 +29,11 @@ const STATS = [
 
 const RECURSOS = [
   {
-    tag: 'Nuevo',
-    title: 'Reporte de carreras nuevas',
-    href: '/reporte',
-    cta: 'Quiero el reporte',
-    visual: <ReportCover className="w-[120px]" />,
-  },
-  {
-    tag: 'Es gratis',
-    title: `Las ${FREE_STOPS} primeras paradas`,
-    href: urlRegistro(),
-    cta: 'Empezar gratis',
-    visual: <Footprints size={64} strokeWidth={1.6} className="text-[var(--terra)]" />,
-  },
-  {
-    tag: 'Instituciones',
-    title: 'Timon en tu colegio',
-    href: '/colegios',
-    cta: 'Conocer más',
-    visual: <School size={64} strokeWidth={1.6} className="text-[var(--ocean-light)]" />,
+    tag: 'Gratis',
+    title: 'El Mapa de los 16 Mundos',
+    href: '/mapa',
+    cta: 'Quiero mi mapa',
+    visual: <MapaCover className="w-[96px]" />,
   },
   {
     tag: 'Cupo limitado',
@@ -53,6 +41,13 @@ const RECURSOS = [
     href: '/programa',
     cta: 'Ver el programa',
     visual: <Compass size={64} strokeWidth={1.6} className="text-white" />,
+  },
+  {
+    tag: 'Instituciones',
+    title: 'Timon en tu colegio',
+    href: '/colegios',
+    cta: 'Conocer más',
+    visual: <School size={64} strokeWidth={1.6} className="text-[var(--ocean-light)]" />,
   },
 ]
 
@@ -162,22 +157,22 @@ export default function Home() {
         <section className="bg-[#EFEFEF] px-4 py-14 sm:px-6">
           <div className="relative mx-auto flex max-w-[1000px] flex-col items-center gap-8 rounded-sm bg-white px-6 py-10 shadow-[0_12px_40px_rgba(15,31,54,0.06)] md:flex-row md:justify-center md:gap-14">
             <span className="absolute -top-3 right-6 rounded-sm bg-[var(--rosa)] px-3 py-1 text-[11px] font-bold uppercase italic text-white sm:right-10">
-              Recién salido
+              Gratis
             </span>
-            <div className="flex items-end gap-3">
-              <ReportCover className="w-[86px] -rotate-6 opacity-80 sm:w-[110px]" />
-              <ReportCover className="w-[120px] sm:w-[150px]" />
-              <ReportCover className="w-[86px] rotate-6 opacity-80 sm:w-[110px]" />
-            </div>
+            <MapaCover className="w-[150px] sm:w-[170px]" />
             <div className="flex flex-col items-center text-center md:items-start md:text-left">
               <h2 className="text-[20px] font-extrabold uppercase leading-tight sm:text-[24px]">
-                Reporte de carreras nuevas por industria
+                El Mapa de los 16 Mundos
               </h2>
+              <p className="mt-2 max-w-[380px] text-[15px] text-[var(--hueso)]">
+                Las {TOTAL_CARRERAS} carreras, por dentro: cómo es un día de trabajo y las preguntas
+                para saber cuál es tu mundo.
+              </p>
               <Link
-                href="/reporte"
+                href="/mapa"
                 className="mt-5 whitespace-nowrap rounded-full bg-[var(--ocean)] px-6 py-4 text-[14px] font-bold uppercase text-white transition-colors hover:bg-[var(--ocean-deep)] sm:text-[16px]"
               >
-                Quiero mi reporte gratis
+                Quiero mi mapa gratis
               </Link>
             </div>
           </div>
@@ -188,15 +183,15 @@ export default function Home() {
           <div className="mx-auto max-w-[1140px]">
             <div className="mx-auto max-w-[520px] text-center">
               <h2 className="text-[28px] font-extrabold uppercase leading-tight sm:text-[36px]">
-                <span className="text-[var(--ocean)]">Gratis</span> para empezar hoy
+                <span className="text-[var(--ocean)]">Elegí</span> cómo empezar
               </h2>
               <p className="mt-3 text-[14px] text-[var(--hueso)]">
-                Reportes, paradas y herramientas para que llegues a la decisión con
-                información:
+                Un mapa gratis para conocer las carreras, el programa para encontrar la tuya y
+                Timon para todo tu colegio:
               </p>
               <hr className="mx-auto mt-8 w-full border-[var(--border-cream-strong)]" />
             </div>
-            <div className="mt-14 grid grid-cols-1 gap-x-6 gap-y-12 sm:grid-cols-2 lg:grid-cols-4">
+            <div className="mt-14 mx-auto grid max-w-[860px] grid-cols-1 gap-x-6 gap-y-12 sm:grid-cols-3">
               {RECURSOS.map((r) => (
                 <div key={r.title} className="relative flex flex-col items-center text-center">
                   <span className="absolute -top-7 right-6 rounded-sm bg-[var(--rosa)] px-2.5 py-0.5 text-[12px] font-bold text-white">
@@ -237,11 +232,8 @@ export default function Home() {
               Sobre los fundadores
             </h2>
             <div className="mt-12 flex flex-col items-center gap-10 md:flex-row md:items-start">
-              {/* TODO: foto de Facu, Feli y Nico. Hasta tenerla va el timón. */}
-              <div className="flex h-[306px] w-[306px] shrink-0 items-center justify-center border-[6px] border-[var(--navy)] bg-[var(--navy)]">
-                <WheelMark tone="terra" size={150} />
-              </div>
-              <div className="space-y-5 text-[16px] leading-[1.6] sm:text-[17px]">
+              <FundadoresFotos className="w-full max-w-[420px] shrink-0" />
+              <div className="space-y-5 text-[16px] leading-[1.6] sm:text-[17px] md:pt-2">
                 <p>
                   Facu, Feli y Nico son los fundadores de Timon. Lo armaron sobre una idea
                   que está en todo el producto: el primer paso no es elegir, es entenderte.

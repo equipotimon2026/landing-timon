@@ -33,6 +33,16 @@ export const GARANTIA = {
     'Hacé las 13 paradas. Si cuando leés tu informe no tenés al menos una carrera que quieras investigar en serio, nos escribís y te devolvemos el 100% de lo que pagaste. Sin formularios ni vueltas.',
 }
 
+/**
+ * Los tres fundadores. `foto` es la ruta en /public (ej. '/fundadores/facu.jpg');
+ * mientras sea `null` se muestra el recuadro con la inicial.
+ */
+export const FUNDADORES: { nombre: string; rol: string; foto: string | null }[] = [
+  { nombre: 'Facu', rol: 'Producto y operaciones', foto: null },
+  { nombre: 'Feli', rol: 'Colegios y familias', foto: null },
+  { nombre: 'Nico', rol: 'Tecnología', foto: null },
+]
+
 /** Momentos de entrada: los mismos que entiende app.timonear.com/entrar. */
 export const MOMENTOS = [
   { id: 'colegio', label: 'Estoy en el colegio' },

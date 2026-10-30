@@ -42,7 +42,7 @@ export function AnnouncementBar() {
 
 const NAV = [
   { href: '/programa', label: 'Programa' },
-  { href: '/reporte', label: 'Reporte gratis' },
+  { href: '/mapa', label: 'Mapa gratis' },
   { href: '/colegios', label: 'Para colegios' },
   { href: '/#nosotros', label: 'Nosotros' },
 ]
@@ -94,7 +94,7 @@ const FOOTER_COLS = [
   {
     title: 'Gratis',
     links: [
-      { href: '/reporte', label: 'Reporte de carreras nuevas' },
+      { href: '/mapa', label: 'El Mapa de los 16 Mundos' },
       { href: `${APP_URL}/entrar?modo=crear`, label: 'Las 3 primeras paradas' },
     ],
   },

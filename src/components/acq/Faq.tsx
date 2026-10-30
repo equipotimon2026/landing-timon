@@ -41,20 +41,20 @@ export function Faq({ items, variant }: { items: FaqItem[]; variant: 'home' | 'w
   return (
     <div className="space-y-3">
       {items.map((it, i) => (
-        <div key={it.q} className="rounded-xl border border-[var(--border-cream)] bg-white">
+        <div key={it.q} className="rounded-lg border border-[#ECECEC] bg-[#FAFAFA]">
           <button
             onClick={() => setOpen(open === i ? null : i)}
             aria-expanded={open === i}
-            className="flex w-full cursor-pointer items-center justify-between gap-4 px-5 py-4 text-left text-[15px] font-semibold"
+            className="flex w-full cursor-pointer items-center justify-between gap-4 px-6 py-[18px] text-left text-[15px] font-semibold sm:text-[16px]"
           >
             {it.q}
             <ChevronDown
               size={18}
-              className={`shrink-0 text-[var(--hueso)] transition-transform ${open === i ? 'rotate-180' : ''}`}
+              className={`shrink-0 text-[var(--ocean)] transition-transform ${open === i ? 'rotate-180' : ''}`}
             />
           </button>
           {open === i && (
-            <div className="px-5 pb-5 text-[15px] leading-[1.6] text-[var(--hueso)]">{it.a}</div>
+            <div className="px-6 pb-5 text-[15px] leading-[1.65] text-[var(--hueso)]">{it.a}</div>
           )}
         </div>
       ))}

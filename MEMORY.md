@@ -169,3 +169,34 @@ para que Facu y Feli la reescriban con su voz.
 **Qué se descartó.** Mostrar un contador de lugares inventado
 (`LUGARES_RESTANTES` queda en `null` hasta tener el número real) y citar
 testimonios de la psicopedagoga sin permiso.
+
+---
+
+## 2026-10-26 (tarde) — Lead magnet nuevo: El Mapa de los 16 Mundos; /programa calcado de verdad
+
+**Qué se decidió.**
+- El "Reporte de carreras nuevas por industria" se reemplaza por **El Mapa de los 16
+  Mundos** (`/mapa` captura, `/mapa/guia` el mapa). Elegido por Nico entre tres
+  opciones (mapa, test exprés, charla con profesional virtual). Contenido: las 16
+  áreas canónicas del catálogo de la app (`timon/src/lib/demo/areas16.ts`), copiadas
+  a `src/lib/mundos.ts`: sub-mundos, 136 carreras, dónde se trabaja, verdades del
+  oficio y las preguntas de cada área pasadas a segunda persona. Fotos CC0 en
+  `public/mapa`. Se entrega al instante (sin esperar mail), se marca con estrellas
+  (localStorage) y se descarga como PDF con imprimir. Cierra con el puente al
+  programa: "ya sabés qué existe, falta cuál es el tuyo".
+- La sección de recursos de la home queda en tres: el mapa, el programa y Timon en
+  tu colegio.
+- `/programa` se rehízo sobre el workshop-4b de acquisition.com estudiado bloque por
+  bloque (mismo orden, mismo largo de texto, cards con el dolor y no la solución,
+  sin footer). Acento azul océano en lugar del dorado (decisión de Nico).
+- Fundadores: tres lugares de foto (Facu, Feli, Nico) en home y programa; las fotos
+  se cargan en `FUNDADORES` de `src/lib/programa.ts`.
+
+**Por qué.** Nico: el reporte "no se entiende" y quería algo que de verdad le sirva a
+un chico que empieza a ver qué estudiar ("conocer profesiones") y que lo deje con
+ganas de pagar el programa.
+
+**Qué se descartó.** Test exprés (preguntas nuevas sin revisión de psicopedagogas) y
+charla gratis con profesional virtual (gasto en Azure OpenAI por cada lead). Los
+relatos "un día de trabajo" son del profesional virtual de la app: se muestran como
+relato de ejemplo, con la aclaración al pie, nunca como testimonio real.

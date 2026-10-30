@@ -1,9 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { CONTACT_EMAIL } from '@/lib/programa'
-
-type Estado = 'idle' | 'enviando' | 'ok' | 'error'
+import { useRouter } from 'next/navigation'
 
 const PERFILES = [
   { id: 'alumno', label: 'Soy alumno/a' },
@@ -12,42 +10,26 @@ const PERFILES = [
 ]
 
 /**
- * Captura del lead magnet. Manda el pedido a /api/contact (tipo 'reporte'),
- * que lo reenvía a info@ con el mail como reply-to.
+ * Captura del mapa. Manda el contacto a /api/contact (tipo 'mapa') y entrega
+ * el mapa al instante en /mapa/guia: aunque falle el envío, la persona se
+ * lleva lo que vino a buscar (el lead se pierde, el mapa no).
  */
-export function ReporteForm() {
+export function MapaForm() {
+  const router = useRouter()
   const [nombre, setNombre] = useState('')
   const [email, setEmail] = useState('')
   const [perfil, setPerfil] = useState('alumno')
-  const [estado, setEstado] = useState<Estado>('idle')
-  const [fallback, setFallback] = useState<string | null>(null)
+  const [enviando, setEnviando] = useState(false)
 
-  const enviar = async (e: React.FormEvent) => {
+  const enviar = async (e: React.SyntheticEvent) => {
     e.preventDefault()
-    setEstado('enviando')
-    const res = await fetch('/api/contact', {
+    setEnviando(true)
+    await fetch('/api/contact', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ tipo: 'reporte', nombre, email, perfil }),
+      body: JSON.stringify({ tipo: 'mapa', nombre, email, perfil }),
     }).catch(() => null)
-    const data = res ? await res.json().catch(() => ({})) : {}
-    if (res?.ok) {
-      setEstado('ok')
-    } else {
-      setFallback(data.fallbackEmail ?? CONTACT_EMAIL)
-      setEstado('error')
-    }
-  }
-
-  if (estado === 'ok') {
-    return (
-      <div className="rounded-2xl bg-white p-8 text-center shadow-[0_18px_50px_rgba(15,31,54,0.10)]">
-        <p className="text-[22px] font-extrabold">¡Listo, {nombre || 'gracias'}!</p>
-        <p className="mt-2 text-[15px] text-[var(--hueso)]">
-          Te mandamos el reporte a <span className="font-semibold">{email}</span>.
-        </p>
-      </div>
-    )
+    router.push(`/mapa/guia?nombre=${encodeURIComponent(nombre)}`)
   }
 
   const input =
@@ -95,20 +77,11 @@ export function ReporteForm() {
       </div>
       <button
         type="submit"
-        disabled={estado === 'enviando'}
-        className="h-14 w-full cursor-pointer rounded-full bg-[var(--ocean)] text-[16px] font-bold uppercase text-white transition-colors hover:bg-[var(--ocean-deep)] disabled:opacity-60"
+        disabled={enviando}
+        className="h-14 w-full cursor-pointer rounded-full bg-[var(--ocean)] text-[15px] font-bold uppercase text-white transition-colors hover:bg-[var(--ocean-deep)] disabled:opacity-60 sm:text-[16px]"
       >
-        {estado === 'enviando' ? 'Enviando…' : 'Quiero mi reporte gratis'}
+        {enviando ? 'Abriendo tu mapa…' : 'Quiero mi mapa gratis'}
       </button>
-      {estado === 'error' && (
-        <p className="text-center text-[13px] text-[var(--rosa)]">
-          No pudimos registrar tu pedido. Escribinos a{' '}
-          <a href={`mailto:${fallback}`} className="font-semibold underline">
-            {fallback}
-          </a>{' '}
-          y te lo mandamos.
-        </p>
-      )}
     </form>
   )
 }
