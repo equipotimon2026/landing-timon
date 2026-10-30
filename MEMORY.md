@@ -137,3 +137,117 @@ nada. `/api/contact` valida el mail y, si falta `RESEND_API_KEY`, devuelve
 503 con `fallbackEmail` para que el chat y el formulario muestren
 `info@timonear.com` en vez de un error mudo. Localmente no hay clave de
 Resend: el envío real solo se puede verificar en el deploy.
+
+---
+
+## 2026-10-26 — La landing se rehace calcando acquisition.com, y nace /programa
+
+**Qué se decidió.** Reunión con Feli del 23/10/2026: la home deja el estilo
+Duolingo y copia la estructura, tipografía (Poppins), largo de textos y CTAs
+de acquisition.com, con la paleta de Timon (su violeta → océano, su dorado →
+ámbar, su negro → navy). Nuevas rutas:
+- `/` — pregunta gigante + un botón, 4 números del producto, lead magnet,
+  4 recursos gratis, preguntas, fundadores, footer azul con descargo.
+- `/programa` — calco de acquisition.com/workshop con la oferta armada con
+  la ecuación de valor de Hormozi (resultado: carrera + universidad + salida
+  laboral; tiempo: 2 semanas; esfuerzo: <10 min por parada desde casa).
+  Escasez real: cohorte fundadora de 100 (Facu y Feli llaman a cada familia).
+- `/reporte` — lead magnet "Carreras nuevas por industria", calco de
+  acquisition.com/roadmap. El pedido entra por `/api/contact` (tipo `reporte`).
+- `/colegios` — la vista de colegios pasa a ser ruta propia, mismo contenido.
+
+**Por qué.** "La landing actual no describe bien qué es Timon, parece hecha
+con AI". Sin precio visible (asusta al chico, no al padre): se habla en la
+llamada con la familia. Sin "orientación vocacional".
+
+**Pendiente de aprobar o completar.** La garantía (`src/lib/programa.ts`) es
+una propuesta: en la reunión quedó "a definir". Faltan el video explicativo,
+la foto de los fundadores, el PDF real del reporte y testimonios reales (no
+se muestra ninguno hasta tenerlos). La carta de /programa es un borrador
+para que Facu y Feli la reescriban con su voz.
+
+**Qué se descartó.** Mostrar un contador de lugares inventado
+(`LUGARES_RESTANTES` queda en `null` hasta tener el número real) y citar
+testimonios de la psicopedagoga sin permiso.
+
+---
+
+## 2026-10-26 (tarde) — Lead magnet nuevo: El Mapa de los 16 Mundos; /programa calcado de verdad
+
+**Qué se decidió.**
+- El "Reporte de carreras nuevas por industria" se reemplaza por **El Mapa de los 16
+  Mundos** (`/mapa` captura, `/mapa/guia` el mapa). Elegido por Nico entre tres
+  opciones (mapa, test exprés, charla con profesional virtual). Contenido: las 16
+  áreas canónicas del catálogo de la app (`timon/src/lib/demo/areas16.ts`), copiadas
+  a `src/lib/mundos.ts`: sub-mundos, 136 carreras, dónde se trabaja, verdades del
+  oficio y las preguntas de cada área pasadas a segunda persona. Fotos CC0 en
+  `public/mapa`. Se entrega al instante (sin esperar mail), se marca con estrellas
+  (localStorage) y se descarga como PDF con imprimir. Cierra con el puente al
+  programa: "ya sabés qué existe, falta cuál es el tuyo".
+- La sección de recursos de la home queda en tres: el mapa, el programa y Timon en
+  tu colegio.
+- `/programa` se rehízo sobre el workshop-4b de acquisition.com estudiado bloque por
+  bloque (mismo orden, mismo largo de texto, cards con el dolor y no la solución,
+  sin footer). Acento azul océano en lugar del dorado (decisión de Nico).
+- Fundadores: tres lugares de foto (Facu, Feli, Nico) en home y programa; las fotos
+  se cargan en `FUNDADORES` de `src/lib/programa.ts`.
+
+**Por qué.** Nico: el reporte "no se entiende" y quería algo que de verdad le sirva a
+un chico que empieza a ver qué estudiar ("conocer profesiones") y que lo deje con
+ganas de pagar el programa.
+
+**Qué se descartó.** Test exprés (preguntas nuevas sin revisión de psicopedagogas) y
+charla gratis con profesional virtual (gasto en Azure OpenAI por cada lead). Los
+relatos "un día de trabajo" son del profesional virtual de la app: se muestran como
+relato de ejemplo, con la aclaración al pie, nunca como testimonio real.
+
+---
+
+## 2026-10-26 (noche) — /programa se rehace sobre acquisition.com/o-vegas
+
+**Qué se decidió.** La referencia correcta es `acquisition.com/o-vegas` (la que ve Nico),
+no `/workshop`, que redirige a variantes A/B (`workshop-4b`). Estructura calcada:
+franja con píldora · hero navy con pregunta en mayúsculas + subtítulo + video montado
+sobre el borde · una línea con negrita + botón · "Lo que dicen" (papel texturado,
+video vertical de alumno, capturas inclinadas con resaltador amarillo) · banda rasgada
+"Lo que te llevás en 2 semanas" · 3 columnas #1/#2/#3 · botón · más capturas ·
+formulario · 4 preguntas en barras navy con renglones cortos · botón · footer mínimo.
+Fotos generadas en el ChatGPT de Nico (originales en ~/Downloads/timon-*.png).
+
+**Capturas simuladas.** Nico pidió simular capturas de mensajes con lo que les
+dijeron alumnos y familias. Se armaron con `ejemplo: true` en `src/app/programa/page.tsx`:
+se ven solo en desarrollo, con la etiqueta EJEMPLO, y no se renderizan en producción
+(`components/acq/Prueba.tsx`). Para publicarlas: reemplazar por el mensaje real con
+permiso y poner `ejemplo: false`. La cita de la psicopedagoga es textual y sí sale.
+
+---
+
+## 2026-10-26 (cierre) — Oferta Hormozi y nuevo lead magnet: test de intereses
+
+**Qué se decidió.**
+- Oferta con nombre MAGIC: "Tu Carrera en 14 Días" (`OFERTA` en `src/lib/programa.ts`).
+  Núcleo con nombre propio (#1 Tu Mapa Personal de Carreras, #2 Charlas con
+  Profesionales, #3 El Informe para tu Familia), tres bonos que atacan objeciones
+  (llamada 1 a 1 con un fundador, Mapa de los 16 Mundos, reunión con psicopedagoga
+  —esta última `propuesta: true`, hoy se cobra $50.000 aparte—), escasez (los bonos
+  son para los primeros 100) y la garantía antes del botón. Fotos de producto
+  generadas en el ChatGPT de Nico.
+- Lead magnet: `/test`, un test corto de intereses (Holland/RIASEC, 18 actividades)
+  que devuelve tus tres fuertes y tus mundos de carreras, con el mail antes del
+  resultado. Reemplaza al Mapa (que pasa a ser bono) y a un diagnóstico de
+  situación que se probó y se descartó en el día. PENDIENTE: que una psicopedagoga
+  revise las preguntas y el cruce tipo → mundo (`src/lib/test.ts`).
+- "Cohorte" sale de todos los textos (no se entiende): "primeros 100 alumnos".
+  El número "15 agentes de IA" de la home pasa a "3 psicopedagogas lo revisaron".
+
+**Actualización (26/10/2026):** Nico descartó el bono de la reunión con psicopedagoga.
+Quedan dos bonos: la llamada 1 a 1 con un fundador y el Mapa de los 16 Mundos. La
+reunión con psicopedagoga sigue como adicional pago ($50.000).
+
+**Actualización (26/10/2026):** el #3 del núcleo deja de ser "El Informe para tu Familia"
+y pasa a ser "Charla 1 a 1 con un Estudiante de tu Carrera" (mentoría de pares: hay
+evidencia de que cambia cómo se elige carrera y baja el abandono). El acceso de la
+familia sigue en las preguntas. OJO: el equipo tiene que armar la red de estudiantes
+antes de abrir. La tapa del test pasa a ser una foto generada en ChatGPT
+(`public/test/portada.jpg`); se borraron las clases CSS y la fuente de firma que ya no
+se usaban.
