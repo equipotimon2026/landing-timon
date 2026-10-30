@@ -1,7 +1,8 @@
 import Link from 'next/link'
 import { ArrowRight } from 'lucide-react'
 import { WheelMark } from '@/components/landing/Logo'
-import { APP_URL, CONTACT_EMAIL } from '@/lib/programa'
+import { CONTACT_EMAIL } from '@/lib/programa'
+import { URL_EMPEZAR, URL_ENTRAR } from '@/lib/landing'
 
 /**
  * Barra de anuncio + navbar + footer, copiados de acquisition.com: franja de
@@ -40,11 +41,12 @@ export function AnnouncementBar() {
   )
 }
 
+// Desde el 29/10/2026 la home es para familias y todo lleva a empezar gratis:
+// /programa, /test y /mapa salen del menú (las páginas siguen, para redes).
 const NAV = [
-  { href: '/programa', label: 'Programa' },
-  { href: '/test', label: 'Test gratis' },
-  { href: '/colegios', label: 'Para colegios' },
-  { href: '/#nosotros', label: 'Nosotros' },
+  { href: '/#como-funciona', label: 'Cómo funciona' },
+  { href: '/#resultado', label: 'Qué te llevás' },
+  { href: '/#preguntas', label: 'Preguntas' },
 ]
 
 export function SiteNav() {
@@ -65,17 +67,17 @@ export function SiteNav() {
             </Link>
           ))}
           <a
-            href={`${APP_URL}/entrar?modo=entrar`}
+            href={URL_ENTRAR}
             className="hidden text-[14px] font-medium text-white/90 transition-colors hover:text-white sm:inline"
           >
             Entrar
           </a>
-          <Link
-            href="/programa#reservar"
+          <a
+            href={URL_EMPEZAR}
             className="rounded-full bg-[var(--ocean)] px-5 py-2.5 text-[14px] font-semibold text-white transition-colors hover:bg-[var(--ocean-deep)]"
           >
-            Quiero empezar
-          </Link>
+            Empezá gratis
+          </a>
         </nav>
       </div>
     </header>
@@ -84,18 +86,11 @@ export function SiteNav() {
 
 const FOOTER_COLS = [
   {
-    title: 'Programa',
+    title: 'Timon',
     links: [
-      { href: '/programa', label: 'Programa Timon' },
-      { href: '/programa#incluye', label: 'Qué incluye' },
-      { href: '/programa#preguntas', label: 'Preguntas' },
-    ],
-  },
-  {
-    title: 'Gratis',
-    links: [
-      { href: '/test', label: 'Test de intereses' },
-      { href: `${APP_URL}/entrar?modo=crear`, label: 'Las 3 primeras paradas' },
+      { href: '/#como-funciona', label: 'Cómo funciona' },
+      { href: '/#resultado', label: 'Qué te llevás' },
+      { href: '/#preguntas', label: 'Preguntas' },
     ],
   },
   {
@@ -109,8 +104,8 @@ const FOOTER_COLS = [
   {
     title: 'Cuenta',
     links: [
-      { href: `${APP_URL}/entrar?modo=entrar`, label: 'Entrar' },
-      { href: `${APP_URL}/entrar?modo=crear`, label: 'Crear cuenta' },
+      { href: URL_EMPEZAR, label: 'Empezá gratis' },
+      { href: URL_ENTRAR, label: 'Entrar' },
     ],
   },
 ]
@@ -120,7 +115,7 @@ export function SiteFooter() {
     <footer className="bg-[var(--ocean)] text-white">
       <div className="mx-auto max-w-[1140px] px-4 pb-10 pt-12 sm:px-6">
         <Wordmark />
-        <div className="mt-8 grid grid-cols-2 gap-8 sm:grid-cols-4">
+        <div className="mt-8 grid grid-cols-2 gap-8 sm:grid-cols-3">
           {FOOTER_COLS.map((c) => (
             <div key={c.title}>
               <p className="text-[13px] font-bold uppercase tracking-[0.06em]">{c.title}</p>
@@ -141,10 +136,9 @@ export function SiteFooter() {
           <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>
         </div>
         <p className="mt-4 text-[12px] leading-[1.45] text-white/80">
-          Timon es una herramienta de exploración vocacional. Sus respuestas las genera
-          inteligencia artificial a partir de lo que respondés. No es un diagnóstico
-          psicológico ni una evaluación psicométrica, y no reemplaza a un profesional
-          matriculado. Las carreras que aparecen en tu informe son caminos para investigar,
+          Timon es una guía para explorar carreras. Su informe lo genera inteligencia
+          artificial a partir de lo que respondés. No es una evaluación psicológica ni
+          psicométrica, y no reemplaza a un profesional matriculado. Las carreras que aparecen en tu informe son caminos para investigar,
           no una indicación de qué estudiar: la decisión es tuya. Los resultados dependen
           de tus respuestas y de cuánto te comprometas con el proceso. Copyright ©{' '}
           {new Date().getFullYear()} Timon. Hecho en Argentina.

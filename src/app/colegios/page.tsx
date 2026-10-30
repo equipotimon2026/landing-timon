@@ -1,7 +1,7 @@
 'use client'
 
 import { useRouter } from 'next/navigation'
-import { AnnouncementBar, SiteFooter, SiteNav } from '@/components/acq/SiteChrome'
+import { SiteFooter, SiteNav } from '@/components/acq/SiteChrome'
 import { ColegiosSection } from '@/components/landing/ColegiosSection'
 
 /**
@@ -13,7 +13,6 @@ export default function ColegiosPage() {
   return (
     <div className="flex min-h-full flex-col bg-[var(--cream)]">
       <div className="acq">
-        <AnnouncementBar />
         <SiteNav />
       </div>
       <main className="flex-1">

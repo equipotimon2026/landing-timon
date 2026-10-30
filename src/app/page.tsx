@@ -1,85 +1,57 @@
-import Link from 'next/link'
-import { Compass, School } from 'lucide-react'
-import { AnnouncementBar, SiteFooter, SiteNav } from '@/components/acq/SiteChrome'
+import { ArrowRight, MessageCircle } from 'lucide-react'
+import { SiteFooter, SiteNav } from '@/components/acq/SiteChrome'
 import { Faq, type FaqItem } from '@/components/acq/Faq'
-import { TestCover } from '@/components/acq/TestCover'
 import { FundadoresFotos } from '@/components/acq/Fundadores'
 import { WheelMark } from '@/components/landing/Logo'
-import { COHORTE_CUPO } from '@/lib/programa'
-import { FREE_STOPS, TOTAL_STOPS } from '@/lib/pricing'
+import {
+  AVALES,
+  BONO_PAGO_ANTICIPADO,
+  CATALOGO,
+  PASOS,
+  RESULTADO,
+  URL_EMPEZAR,
+  URL_PAGAR_AHORA,
+  URL_WHATSAPP_PADRE,
+  VIDEO,
+  type Aval,
+} from '@/lib/landing'
 
 /**
- * Home calcada de acquisition.com (reunión con Feli del 23/10/2026): mismas
- * secciones, en el mismo orden y con la misma cantidad de texto.
+ * Home para familias (29/10/2026). Brief de Feli del 27/10 + prioridades de
+ * Nico: freemium, "cómo funciona Timon" y testimonios que den validez.
  *
- *   anuncio → navbar → pregunta gigante + un botón → 4 números →
- *   lead magnet → recursos gratis (4 tarjetas) → preguntas → fundadores → footer
+ *   hero con un botón → video → bloque de confianza → cómo funciona →
+ *   qué te llevás → para vos y tu familia → preguntas → fundadores → cierre
  *
- * Sin precios (el precio asusta al chico, no al padre) y sin "orientación
- * vocacional". Todos los números salen del producto, no de métricas de uso.
+ * Todo lleva a una sola acción: empezar el recorrido gratis. Sin precio, sin
+ * plazo y sin otras propuestas (test, programa, comunidad). El detalle de qué
+ * se promete y qué falta confirmar está en `lib/landing.ts`.
  */
 
-const STATS = [
-  { value: String(TOTAL_STOPS), label: 'Paradas cortas' },
-  { value: '<10', label: 'Minutos por parada' },
-  { value: '3', label: 'Psicopedagogas lo revisaron' },
-  { value: String(COHORTE_CUPO), label: 'Lugares para empezar' },
-]
-
-const RECURSOS = [
-  {
-    tag: 'Gratis',
-    title: 'Test de intereses',
-    href: '/test',
-    cta: 'Hacer el test',
-    visual: <TestCover circulo />,
-  },
-  {
-    tag: 'Cupo limitado',
-    title: 'Programa Timon',
-    href: '/programa',
-    cta: 'Ver el programa',
-    visual: <Compass size={64} strokeWidth={1.6} className="text-white" />,
-  },
-  {
-    tag: 'Instituciones',
-    title: 'Timon en tu colegio',
-    href: '/colegios',
-    cta: 'Conocer más',
-    visual: <School size={64} strokeWidth={1.6} className="text-[var(--ocean-light)]" />,
-  },
-]
+const MOSTRAR_EJEMPLOS = process.env.NODE_ENV !== 'production'
 
 const FAQS: FaqItem[] = [
   {
-    q: '¿Qué es el Programa Timon?',
+    q: '¿Es gratis?',
     a: (
       <>
-        <p>No es un test. Es un recorrido. Desde tu casa.</p>
-        <p>Cero respuestas correctas. Lo que importa es cómo pensás, qué te mueve y qué te frena.</p>
         <p>
-          Primero hacés {TOTAL_STOPS} paradas cortas, de menos de 10 minutos cada una, desde el
-          celular o la compu.
+          Empezás gratis y hacés el recorrido completo sin pagar. Al terminar ves la primera
+          parte de tu perfil.
         </p>
-        <p>Es lo mismo que miran los profesionales: intereses, inteligencias y forma de pensar.</p>
-        <p>Después, 15 agentes de inteligencia artificial leen tus respuestas y arman tu informe.</p>
         <p>
-          Te quedás con tus carreras más compatibles, las universidades argentinas donde
-          estudiarlas y de qué vas a trabajar.
+          Para ver el resto (tu perfil completo, tus 6 carreras y dónde estudiarlas) hay un
+          pago único. No es una suscripción.
         </p>
       </>
     ),
   },
   {
-    q: '¿Cómo me anoto?',
+    q: '¿Cuánto tiempo lleva?',
     a: (
       <p>
-        Creás tu cuenta y hacés las {FREE_STOPS} primeras paradas gratis. Para seguir, uno de los
-        fundadores habla con tu familia. Como esa llamada la hacemos nosotros, hay
-        solo {COHORTE_CUPO} lugares para empezar.{' '}
-        <Link href="/programa#reservar" className="font-semibold text-[var(--ocean)] underline">
-          Reservá el tuyo acá.
-        </Link>
+        Hecho de corrido son unas 3 horas, pero no te lo recomendamos: lo que importa es que
+        respondas bien, y de corrido cansa. Lo ideal es hacerlo en 3 o 4 etapas, a tu ritmo.
       </p>
     ),
   },
@@ -87,33 +59,103 @@ const FAQS: FaqItem[] = [
     q: '¿Para quién es?',
     a: (
       <p>
-        Para alumnos de 4º, 5º y 6º año, para quienes terminaron el colegio y no saben qué
-        seguir, y para quienes ya empezaron una carrera y se quieren cambiar. El recorrido se
-        arma distinto según el momento en el que estás.
+        Para chicos y chicas de 5° y 6° año que todavía no saben qué estudiar, que dudan entre
+        varias opciones o que quieren conocer carreras que no tenían en cuenta.
       </p>
     ),
   },
   {
-    q: '¿Quién está detrás?',
+    q: '¿Timon reemplaza a un profesional?',
     a: (
       <p>
-        Los fundadores de Timon. Las preguntas pasaron por la revisión de psicopedagogas, y
-        el análisis lo hace un equipo de agentes de inteligencia artificial que cruza todo lo
-        que respondiste. Timon no decide por vos ni reemplaza a un profesional: te ordena las
-        preguntas para que la decisión sea tuya.
+        No. Timon es una guía: ordena lo que respondés y te muestra qué carreras van con vos,
+        pero la decisión es tuya. Si querés, repasás tu resultado con un profesional.
+      </p>
+    ),
+  },
+  {
+    q: '¿Qué ve mi familia?',
+    a: (
+      <p>
+        Tu familia puede ver tu informe, pero nunca tus respuestas. Lo que contestás en el
+        recorrido queda entre vos y Timon.
       </p>
     ),
   },
 ]
 
+function BotonEmpezar({ className = '' }: { className?: string }) {
+  return (
+    <a
+      href={URL_EMPEZAR}
+      className={`inline-flex w-full max-w-[400px] items-center justify-center rounded-full bg-[var(--ocean)] px-6 py-4 text-[18px] font-bold uppercase text-white transition-colors hover:bg-[var(--ocean-deep)] sm:text-[20px] ${className}`}
+    >
+      Empezá gratis
+    </a>
+  )
+}
+
+function LinkPagarAhora({ tono = 'oscuro' }: { tono?: 'oscuro' | 'claro' }) {
+  return (
+    <a
+      href={URL_PAGAR_AHORA}
+      className={`group mt-4 inline-flex items-center gap-1.5 text-[14px] underline-offset-4 hover:underline ${
+        tono === 'oscuro' ? 'text-[var(--hueso)]' : 'text-white/80'
+      }`}
+    >
+      ¿Ya lo decidieron? Pagá ahora y sumá {BONO_PAGO_ANTICIPADO.corto}
+      <ArrowRight size={14} className="transition-transform group-hover:translate-x-0.5" />
+    </a>
+  )
+}
+
+function TarjetaAval({ a }: { a: Aval }) {
+  return (
+    <figure className="relative flex flex-col rounded-sm bg-white px-6 py-7 shadow-[0_12px_40px_rgba(15,31,54,0.06)]">
+      {a.ejemplo && (
+        <span className="absolute -right-2 -top-2 rounded bg-[#E11D48] px-2 py-0.5 text-[10px] font-bold uppercase text-white">
+          Ejemplo
+        </span>
+      )}
+      <div className="flex h-14 w-14 items-center justify-center overflow-hidden rounded-full bg-[var(--ocean-wash)]">
+        {a.imagen ? (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img src={a.imagen} alt="" className="h-10 w-10 object-contain" />
+        ) : (
+          <span className="text-[22px] font-extrabold text-[var(--ocean)]">{a.quien[0]}</span>
+        )}
+      </div>
+      <blockquote className="mt-5 flex-1 text-[17px] font-semibold leading-snug">
+        &ldquo;{a.frase}&rdquo;
+      </blockquote>
+      <figcaption className="mt-5">
+        <span className="block text-[14px] font-bold">{a.quien}</span>
+        <span className="block text-[13px] text-[var(--hueso)]">{a.rol}</span>
+      </figcaption>
+    </figure>
+  )
+}
+
+const LOGOS_UNIVERSIDADES = [
+  { src: '/logos/universities/uba.svg', alt: 'UBA' },
+  { src: '/logos/universities/utn.png', alt: 'UTN' },
+  { src: '/logos/universities/unlp.png', alt: 'UNLP' },
+  { src: '/logos/universities/unc.svg', alt: 'UNC' },
+  { src: '/logos/universities/itba.png', alt: 'ITBA' },
+  { src: '/logos/universities/uade.svg', alt: 'UADE' },
+  { src: '/logos/universities/uca.png', alt: 'UCA' },
+  { src: '/logos/universities/siglo21.svg', alt: 'Siglo 21' },
+]
+
 export default function Home() {
+  const avales = AVALES.filter((a) => MOSTRAR_EJEMPLOS || !a.ejemplo)
+
   return (
     <div className="acq flex min-h-full flex-col bg-white">
-      <AnnouncementBar />
       <SiteNav />
 
       <main className="flex-1">
-        {/* Hero: una pregunta gigante, una línea de prueba y un solo botón */}
+        {/* Hero: la promesa base, una línea para los dos y un solo botón */}
         <section className="relative overflow-hidden bg-[#EFEFEF]">
           <div className="pointer-events-none absolute -left-24 top-1/2 hidden -translate-y-1/2 opacity-[0.07] lg:block">
             <WheelMark tone="navy" size={420} />
@@ -121,101 +163,160 @@ export default function Home() {
           <div className="pointer-events-none absolute -right-24 top-1/2 hidden -translate-y-1/2 opacity-[0.07] lg:block">
             <WheelMark tone="navy" size={420} />
           </div>
-          <div className="relative mx-auto flex max-w-[760px] flex-col items-center px-4 py-20 text-center sm:py-24">
-            <h1 className="text-[34px] font-extrabold uppercase leading-[1.12] sm:text-[40px]">
-              ¿Ya sabés qué vas a estudiar?
-            </h1>
-            <p className="mt-6 max-w-[560px] text-[16px] leading-[1.5] sm:text-[18px]">
-              Entendete primero: {TOTAL_STOPS} paradas cortas desde tu casa y un informe con tus
-              carreras, dónde estudiarlas y de qué vas a trabajar.
+          <div className="relative mx-auto flex max-w-[820px] flex-col items-center px-4 pb-28 pt-14 text-center sm:pb-56 sm:pt-20">
+            <p className="text-[13px] font-semibold uppercase tracking-[0.12em] text-[var(--ocean)]">
+              Hay {CATALOGO.carreras} carreras que podrías estudiar. ¿Cuántas conocés?
             </p>
-            <Link
-              href="/programa"
-              className="mt-9 w-full max-w-[400px] rounded-full bg-[var(--ocean)] px-6 py-4 text-[18px] font-bold uppercase text-white transition-colors hover:bg-[var(--ocean-deep)] sm:text-[20px]"
+            <h1 className="mt-5 text-[32px] font-extrabold uppercase leading-[1.1] sm:text-[44px]">
+              Sabé qué carreras van con vos, dónde estudiarlas y de qué vas a trabajar
+            </h1>
+            <p className="mt-6 max-w-[580px] text-[16px] leading-[1.55] sm:text-[18px]">
+              Timon es un recorrido que hacés desde tu casa, a tu ritmo. Al final te devuelve tu
+              perfil, las 6 carreras que más van con vos y las universidades donde estudiarlas.
+            </p>
+            <BotonEmpezar className="mt-9" />
+            <LinkPagarAhora />
+          </div>
+        </section>
+
+        {/* Video montado sobre el borde del hero */}
+        <section id="video" className="bg-white px-4 sm:px-6">
+          <div className="mx-auto -mt-20 max-w-[960px] sm:-mt-44">
+            <video
+              src={VIDEO.src}
+              poster={VIDEO.poster}
+              controls
+              playsInline
+              preload="metadata"
+              className="aspect-video w-full rounded-md bg-[var(--navy)] shadow-[0_24px_60px_rgba(15,31,54,0.18)]"
             >
-              Quiero elegir bien
-            </Link>
+              Tu navegador no puede reproducir el video.
+            </video>
           </div>
         </section>
 
-        {/* Cuatro números con filete a la izquierda */}
-        <section className="bg-white">
-          <div className="mx-auto grid max-w-[1140px] grid-cols-2 gap-y-8 px-4 py-12 sm:px-6 md:grid-cols-4">
-            {STATS.map((s) => (
-              <div key={s.label} className="border-l-[3px] border-[var(--ocean)] pl-4">
-                <p className="text-[30px] font-extrabold leading-none sm:text-[38px]">{s.value}</p>
-                <p className="mt-2 text-[10px] font-semibold uppercase tracking-[0.1em] text-[var(--hueso)] sm:text-[11px]">
-                  {s.label}
-                </p>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* Lead magnet: la tarjeta del "Scaling Roadmap" */}
-        <section className="bg-[#EFEFEF] px-4 py-14 sm:px-6">
-          <div className="relative mx-auto flex max-w-[1000px] flex-col items-center gap-8 rounded-sm bg-white px-6 py-10 shadow-[0_12px_40px_rgba(15,31,54,0.06)] md:flex-row md:justify-center md:gap-14">
-            <span className="absolute -top-3 right-6 rounded-sm bg-[var(--rosa)] px-3 py-1 text-[11px] font-bold uppercase italic text-white sm:right-10">
-              Gratis
-            </span>
-            <TestCover className="w-[150px] sm:w-[170px]" />
-            <div className="flex flex-col items-center text-center md:items-start md:text-left">
-              <h2 className="text-[20px] font-extrabold uppercase leading-tight sm:text-[24px]">
-                Test de intereses gratis
-              </h2>
-              <p className="mt-2 max-w-[380px] text-[15px] text-[var(--hueso)]">
-                En menos de 2 minutos: en qué áreas están tus fuertes y qué mundos de carreras van con
-                vos.
-              </p>
-              <Link
-                href="/test"
-                className="mt-5 whitespace-nowrap rounded-full bg-[var(--ocean)] px-6 py-4 text-[14px] font-bold uppercase text-white transition-colors hover:bg-[var(--ocean-deep)] sm:text-[16px]"
+        {/* Bloque de confianza, justo después del video */}
+        <section className="bg-white px-4 pb-16 pt-14 sm:px-6">
+          <div className="mx-auto max-w-[1080px]">
+            <h2 className="text-center text-[24px] font-extrabold uppercase leading-tight sm:text-[30px]">
+              Detrás de Timon hay profesionales, <span className="text-[var(--ocean)]">no solo tecnología</span>
+            </h2>
+            {avales.length > 0 && (
+              <div
+                className={`mx-auto mt-10 grid gap-6 ${
+                  avales.length >= 3 ? 'md:grid-cols-3' : avales.length === 2 ? 'max-w-[720px] md:grid-cols-2' : 'max-w-[380px]'
+                }`}
               >
-                Hacer el test gratis
-              </Link>
+                {avales.map((a) => (
+                  <TarjetaAval key={a.quien} a={a} />
+                ))}
+              </div>
+            )}
+
+            <div className="mt-14 text-center">
+              <p className="text-[30px] font-extrabold leading-none sm:text-[38px]">
+                {CATALOGO.carreras} carreras en {CATALOGO.universidades} universidades
+              </p>
+              <p className="mt-2 text-[12px] font-semibold uppercase tracking-[0.1em] text-[var(--hueso)]">
+                Públicas y privadas, de todo el país
+              </p>
+              <ul className="mx-auto mt-8 flex max-w-[860px] flex-wrap items-center justify-center gap-x-8 gap-y-5">
+                {LOGOS_UNIVERSIDADES.map((l) => (
+                  <li key={l.alt}>
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img src={l.src} alt={l.alt} className="h-9 w-auto opacity-70 grayscale sm:h-10" />
+                  </li>
+                ))}
+              </ul>
+              <p className="mt-4 text-[12px] text-[var(--hueso)]">
+                Algunas de las universidades que vas a encontrar en tu informe.
+              </p>
             </div>
           </div>
         </section>
 
-        {/* Recursos gratis: cuatro tarjetas con etiqueta, tapa y botón */}
-        <section className="bg-white px-4 py-16 sm:px-6">
-          <div className="mx-auto max-w-[1140px]">
-            <div className="mx-auto max-w-[520px] text-center">
-              <h2 className="text-[28px] font-extrabold uppercase leading-tight sm:text-[36px]">
-                <span className="text-[var(--ocean)]">Elegí</span> cómo empezar
-              </h2>
-              <p className="mt-3 text-[14px] text-[var(--hueso)]">
-                Un test gratis para ver tus fuertes, el programa para encontrar tu carrera y
-                Timon para todo tu colegio:
-              </p>
-              <hr className="mx-auto mt-8 w-full border-[var(--border-cream-strong)]" />
-            </div>
-            <div className="mt-14 mx-auto grid max-w-[860px] grid-cols-1 gap-x-6 gap-y-12 sm:grid-cols-3">
-              {RECURSOS.map((r) => (
-                <div key={r.title} className="relative flex flex-col items-center text-center">
-                  <span className="absolute -top-7 right-6 rounded-sm bg-[var(--rosa)] px-2.5 py-0.5 text-[12px] font-bold text-white">
-                    {r.tag}
+        {/* Cómo funciona */}
+        <section id="como-funciona" className="scroll-mt-20 bg-[#EFEFEF] px-4 py-16 sm:px-6">
+          <div className="mx-auto max-w-[1080px]">
+            <h2 className="text-center text-[28px] font-extrabold uppercase leading-tight sm:text-[36px]">
+              Cómo funciona
+            </h2>
+            <ol className="mt-10 grid gap-6 md:grid-cols-3">
+              {PASOS.map((p, i) => (
+                <li key={p.titulo} className="rounded-sm bg-white px-6 py-7">
+                  <span className="flex h-10 w-10 items-center justify-center rounded-full bg-[var(--navy)] text-[16px] font-extrabold text-white">
+                    {i + 1}
                   </span>
-                  <h3 className="min-h-[52px] text-[18px] font-extrabold uppercase leading-tight sm:text-[20px]">
-                    {r.title}
-                  </h3>
-                  <div className="mt-4 flex h-[210px] w-[210px] items-center justify-center rounded-full bg-[var(--navy)]">
-                    {r.visual}
+                  <h3 className="mt-5 text-[19px] font-extrabold leading-tight">{p.titulo}</h3>
+                  <p className="mt-2 text-[15px] leading-[1.55] text-[var(--hueso)]">{p.texto}</p>
+                </li>
+              ))}
+            </ol>
+            <div className="mt-10 flex flex-col items-center text-center">
+              <BotonEmpezar />
+            </div>
+          </div>
+        </section>
+
+        {/* Qué te llevás: el resultado, con capturas de la app real */}
+        <section id="resultado" className="scroll-mt-20 bg-white px-4 py-16 sm:px-6">
+          <div className="mx-auto max-w-[1080px]">
+            <h2 className="text-center text-[28px] font-extrabold uppercase leading-tight sm:text-[36px]">
+              Lo que te devuelve <span className="text-[var(--ocean)]">Timon</span>
+            </h2>
+            <div className="mt-12 space-y-14">
+              {RESULTADO.map((r, i) => (
+                <div
+                  key={r.titulo}
+                  className={`flex flex-col items-center gap-6 md:gap-12 ${i % 2 ? 'md:flex-row-reverse' : 'md:flex-row'}`}
+                >
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={r.imagen}
+                    alt={`Captura de Timon: ${r.titulo}`}
+                    loading="lazy"
+                    className="w-full rounded-md border border-[var(--border-cream)] shadow-[0_12px_40px_rgba(15,31,54,0.08)] md:w-[56%]"
+                  />
+                  <div className="md:flex-1">
+                    <h3 className="text-[22px] font-extrabold leading-tight sm:text-[26px]">{r.titulo}</h3>
+                    <p className="mt-3 text-[16px] leading-[1.6] text-[var(--hueso)] sm:text-[17px]">{r.texto}</p>
                   </div>
-                  <Link
-                    href={r.href}
-                    className="mt-6 w-full max-w-[250px] rounded-full bg-[var(--ocean)] px-5 py-3.5 text-[15px] font-bold text-white transition-colors hover:bg-[var(--ocean-deep)]"
-                  >
-                    {r.cta}
-                  </Link>
                 </div>
               ))}
             </div>
+            <p className="mx-auto mt-12 max-w-[560px] text-center text-[13px] text-[var(--hueso)]">
+              Capturas de la app con datos de ejemplo.
+            </p>
+          </div>
+        </section>
+
+        {/* Para vos y tu familia: una sola comunicación, sin bloques separados */}
+        <section className="bg-[var(--navy)] px-4 py-16 text-white sm:px-6">
+          <div className="mx-auto flex max-w-[760px] flex-col items-center text-center">
+            <h2 className="text-[26px] font-extrabold uppercase leading-tight sm:text-[32px]">
+              Elegir sin conocer las opciones es elegir a ciegas
+            </h2>
+            <p className="mt-5 text-[16px] leading-[1.6] text-white/85 sm:text-[18px]">
+              El mundo cambia rápido y aparecen carreras que hace diez años no existían. Timon te
+              saca de encima la presión de no saber qué hay ni cuál va con tus intereses de
+              verdad, para que elijas por vos y no por lo que eligen tus amigos.
+            </p>
+            <BotonEmpezar className="mt-9 bg-white !text-[var(--navy)] hover:bg-white/90" />
+            <LinkPagarAhora tono="claro" />
+            <a
+              href={URL_WHATSAPP_PADRE}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-8 inline-flex items-center gap-2 rounded-full border border-white/30 px-5 py-2.5 text-[14px] font-semibold text-white transition-colors hover:bg-white/10"
+            >
+              <MessageCircle size={16} />
+              ¿Sos padre o madre? Mandáselo a tu hijo por WhatsApp
+            </a>
           </div>
         </section>
 
         {/* Preguntas */}
-        <section className="bg-[var(--cream)] px-4 py-16 sm:px-6">
+        <section id="preguntas" className="scroll-mt-20 bg-[var(--cream)] px-4 py-16 sm:px-6">
           <div className="mx-auto max-w-[860px]">
             <h2 className="text-center text-[26px] font-bold">Preguntas</h2>
             <div className="mt-6">
@@ -234,23 +335,34 @@ export default function Home() {
               <FundadoresFotos className="w-full max-w-[420px] shrink-0" />
               <div className="space-y-5 text-[16px] leading-[1.6] sm:text-[17px] md:pt-2">
                 <p>
-                  Facu, Feli y Nico son los fundadores de Timon. Lo armaron sobre una idea
-                  que está en todo el producto: el primer paso no es elegir, es entenderte.
-                  Antes de decidir qué estudiar, tenés que saber quién sos.
+                  Facu, Feli y Nico son los fundadores de Timon. Lo armaron sobre una idea que está
+                  en todo el producto: el primer paso no es elegir, es entenderte.
                 </p>
                 <p>
-                  Timon es un recorrido de {TOTAL_STOPS} paradas que pasó por la revisión de
-                  psicopedagogas. Usa los modelos que conocen los profesionales (Holland,
-                  inteligencias múltiples y dominancia cerebral) y un equipo de 15 agentes de
-                  inteligencia artificial que cruza todo lo que respondés.
+                  Timon usa los modelos que conocen los profesionales (intereses, inteligencias
+                  múltiples y forma de pensar), y las preguntas pasaron por la revisión de
+                  psicopedagogas.
                 </p>
                 <p>
-                  La misión es simple: que nadie elija qué estudiar sin haberse entendido
-                  primero. Por eso, a las familias de los primeros 100 alumnos las llaman ellos
-                  mismos, una por una.
+                  Timon es el timón que dirige el barco a donde querés ir: no decide por vos, te
+                  muestra el mapa para que la decisión sea tuya.
                 </p>
               </div>
             </div>
+          </div>
+        </section>
+
+        {/* Cierre */}
+        <section className="bg-[#EFEFEF] px-4 py-20 sm:px-6">
+          <div className="mx-auto flex max-w-[700px] flex-col items-center text-center">
+            <h2 className="text-[28px] font-extrabold uppercase leading-tight sm:text-[36px]">
+              ¿Qué te devolvería Timon a vos?
+            </h2>
+            <p className="mt-4 text-[16px] text-[var(--hueso)] sm:text-[18px]">
+              Hay una sola forma de saberlo. Empezás hoy y lo hacés a tu ritmo.
+            </p>
+            <BotonEmpezar className="mt-8" />
+            <LinkPagarAhora />
           </div>
         </section>
       </main>

@@ -40,11 +40,11 @@ const poppins = Poppins({
 export const metadata: Metadata = {
   title: 'Timon — ¿Ya sabés qué vas a estudiar?',
   description:
-    'Saber qué estudiar en 2 semanas, desde tu casa. 13 paradas cortas para entenderte y un informe con tus carreras, dónde estudiarlas y de qué vas a trabajar.',
+    'Sabé qué carreras van con vos, dónde estudiarlas y de qué vas a trabajar. Un recorrido que hacés desde tu casa, a tu ritmo. Empezás gratis.',
   openGraph: {
     title: 'Timon — ¿Ya sabés qué vas a estudiar?',
     description:
-      'El primer paso no es elegir. Es entenderte. 13 paradas cortas para saber quién sos antes de decidir qué estudiar.',
+      'Tu perfil, las 6 carreras que más van con vos y dónde estudiarlas. Empezás gratis y lo hacés a tu ritmo.',
     locale: 'es_AR',
     type: 'website',
   },
