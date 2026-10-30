@@ -25,10 +25,10 @@ export function ReservaForm() {
   return (
     <div className="rounded-2xl bg-white p-5 sm:p-9">
       <div className="rounded-xl bg-white p-6 shadow-[0_12px_40px_rgba(15,31,54,0.10)]">
-        <p className="text-[24px] font-extrabold leading-tight">Reservá tu lugar abajo</p>
+        <p className="text-[24px] font-extrabold leading-tight">Reservá tu lugar</p>
         <p className="mt-2 text-[15px] leading-[1.55] text-[#3A3B4D]">
-          Creá tu cuenta, hacé gratis las 3 primeras paradas y coordinamos una llamada corta con tu
-          familia para confirmar tu lugar.
+          Creá tu cuenta gratis y coordinamos una llamada corta con tu familia para confirmar tu
+          lugar.
         </p>
       </div>
       <form onSubmit={reservar} className="mt-6 space-y-3 px-1">
@@ -67,9 +67,9 @@ export function ReservaForm() {
         <p className="text-[12px] leading-snug text-[var(--hueso)]">
           Al continuar aceptás los{' '}
           <a href="/terminos" className="underline">
-            términos y condiciones
+            términos
           </a>
-          . Usamos tu mail solo para tu cuenta y para contactar a tu familia.
+          .
         </p>
         <button
           type="submit"

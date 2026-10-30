@@ -32,10 +32,10 @@ export const metadata: Metadata = {
 
 const SINTOMAS = [
   'Te preguntan qué vas a estudiar y contestás lo primero que se te ocurre.',
-  'Hiciste un test online y te tiró una lista de carreras que no te dice nada.',
-  'Te va bien en varias materias, y por eso mismo no sabés por cuál ir.',
-  'Sabés qué te gusta, pero no de qué se trabaja ni cuánto se gana.',
-  'Tenés una carrera en mente, pero la elegiste por un amigo, una serie o tu familia.',
+  'Hiciste un test online y no te dijo nada.',
+  'Te va bien en varias materias y no sabés por cuál ir.',
+  'Sabés qué te gusta, pero no de qué se trabaja.',
+  'Elegiste una carrera por un amigo, una serie o tu familia.',
   'Faltan meses para anotarte y la decisión sigue igual que hace un año.',
 ]
 
@@ -44,25 +44,25 @@ const CUATRO = [
     n: '01',
     title: 'Quién sos',
     body: 'Sabés qué materias te van bien, pero no qué te mueve. Sin eso, cualquier carrera parece posible y ninguna parece tuya.',
-    foto: 'humanidades',
+    foto: 'quien-sos',
   },
   {
     n: '02',
     title: 'Qué estudiar',
     body: 'Tenés una lista de carreras que "podrían ser". Salieron de lo que viste o escuchaste, no de cómo sos vos.',
-    foto: 'tecnologia',
+    foto: 'que-estudiar',
   },
   {
     n: '03',
     title: 'Dónde estudiarla',
     body: 'La misma carrera cambia mucho según la universidad: el plan, el costo, la distancia, las becas. Y eso se mira antes de anotarte, no después.',
-    foto: 'arquitectura',
+    foto: 'donde-estudiar',
   },
   {
     n: '04',
     title: 'De qué vas a trabajar',
     body: 'Sabés el nombre de la carrera, pero no cómo es un día de trabajo, cuánto se gana ni qué parte de ese trabajo puede automatizarse.',
-    foto: 'salud',
+    foto: 'de-que-trabajar',
   },
 ]
 
@@ -74,6 +74,31 @@ const CUBRE = [
   'La mirada de tu familia, que responde por un link sin ver nunca tus respuestas.',
   'Las universidades argentinas con match para vos, con costos, ubicación y becas.',
   `Al final, 15 agentes de inteligencia artificial cruzan todo y te dan tu informe en tres actos.`,
+]
+
+/**
+ * Prueba social. La cita entre comillas es textual (feedback de psicopedagogas,
+ * timon-brain/producto/feedback-psicopedagogas-2026.md). Lo de los alumnos es
+ * lo que el equipo escuchó de quienes hicieron el recorrido (Nico, 26/10/2026),
+ * contado sin comillas ni nombres: cuando haya mensajes textuales con permiso,
+ * reemplazarlos por citas reales.
+ */
+const PRUEBAS = [
+  {
+    texto: 'Es una visión integral, no un simple test.',
+    quien: 'Psicopedagoga',
+    detalle: 'Evaluó Timon antes del lanzamiento',
+  },
+  {
+    texto: 'Llegaron con muchas dudas, o sin saber nada de qué estudiar, y terminaron sabiendo para dónde ir. Es lo que más nos repiten los chicos que hicieron el recorrido.',
+    quien: 'Alumnos de la primera camada',
+    detalle: 'Lo que nos dijeron al terminar',
+  },
+  {
+    texto: 'Lo que más valoraron fue hablar con profesionales: ver cómo es de verdad un día de trabajo antes de elegir la carrera.',
+    quien: 'Alumnos de la primera camada',
+    detalle: 'Lo que nos dijeron al terminar',
+  },
 ]
 
 const MUNDOS_CHIPS = ['Salud', 'Tecnología', 'Negocios', 'Diseño y Arte', 'Ingeniería', 'Derecho']
@@ -109,11 +134,7 @@ const FAQS: FaqItem[] = [
   },
   {
     q: '¿Cuánto cuesta?',
-    a: `Las ${FREE_STOPS} primeras paradas son gratis y no te pedimos datos de pago. El programa completo es un pago único, sin suscripción, y el precio lo hablamos con tu familia en la llamada.`,
-  },
-  {
-    q: '¿Y si no me sirve?',
-    a: GARANTIA.larga,
+    a: `Las ${FREE_STOPS} primeras paradas son gratis y no te pedimos datos de pago. El programa completo es un pago único, sin suscripción, y el precio lo hablamos con tu familia en la llamada. ${GARANTIA.corta}`,
   },
   {
     q: '¿Dónde y cuándo?',
@@ -140,7 +161,7 @@ function CtaButton({ className = '' }: { className?: string }) {
 
 function Foto({ id, className = '' }: { id: string; className?: string }) {
   // eslint-disable-next-line @next/next/no-img-element
-  return <img src={`/mapa/${id}.jpg`} alt="" className={`rounded-xl object-cover ${className}`} />
+  return <img src={`/programa/${id}.jpg`} alt="" className={`rounded-xl object-cover ${className}`} />
 }
 
 /** El saludo real de Timon en la app: ocupa el lugar de la foto del salón. */
@@ -220,9 +241,9 @@ export default function ProgramaPage() {
             {TOTAL_STOPS} paradas · {COHORTE_CUPO} lugares por cohorte
           </p>
           <p className="mx-auto mt-8 max-w-[620px] text-[16px] leading-[1.65] text-white/80 sm:text-[17px]">
-            Ya hiciste tests, escuchaste charlas y te preguntaron mil veces qué vas a estudiar.
-            Tenés gustos, ideas y opiniones de todos lados. El problema es que ninguna te dice cuál
-            es tu carrera. Dos semanas, desde tu casa, para entender quién sos y elegir con eso.
+            Ya hiciste tests, escuchaste charlas y te preguntaron qué vas a estudiar.
+            Tenés gustos, ideas y opiniones de todos lados. El problema es que{' '}
+            <mark className="acq-hl-dark">ninguna te dice cuál es tu carrera</mark>. Dos semanas, desde tu casa, para entender quién sos y elegir con eso.
           </p>
         </section>
 
@@ -245,8 +266,8 @@ export default function ProgramaPage() {
                 ))}
               </ul>
               <p className="mt-8 text-[17px] font-semibold leading-[1.6]">
-                No son seis problemas distintos. Es lo que pasa cuando intentás elegir una carrera
-                antes de entenderte. Se resuelve contestando cuatro preguntas, en orden, y sabiendo
+                No son seis problemas distintos. Es lo que pasa cuando intentás{' '}
+                <mark className="acq-hl">elegir una carrera antes de entenderte</mark>. Se resuelve contestando cuatro preguntas, en orden, y sabiendo
                 cuál te falta. Para eso son estas dos semanas.
               </p>
             </div>
@@ -299,7 +320,7 @@ export default function ProgramaPage() {
               </ul>
             </div>
             <div className="grid grid-cols-2 gap-3">
-              {['negocios', 'comunicacion', 'ecologia', 'ingenieria'].map((id) => (
+              {['en-casa', 'profesional', 'familia', 'informe'].map((id) => (
                 <Foto key={id} id={id} className="aspect-[4/3] w-full" />
               ))}
             </div>
@@ -315,7 +336,7 @@ export default function ProgramaPage() {
             <p className="mt-3 text-[16px] leading-[1.65] text-[var(--hueso)] sm:text-[17px]">
               Vos todavía no te anotaste. Dos semanas de paradas cortas, desde tu casa, para llegar
               a esa decisión sabiendo quién sos, qué carreras van con vos, dónde estudiarlas y de
-              qué vas a trabajar. Antes de anotarte, no después.
+              qué vas a trabajar. <mark className="acq-hl">Antes de anotarte, no después.</mark>
             </p>
             <p className="mt-3 text-[11px] text-[var(--hueso-soft)]">
               Fuente: UCES (2021) y Secretaría de Políticas Universitarias.
@@ -332,12 +353,12 @@ export default function ProgramaPage() {
                 El año que viene vas a tener menos tiempo, no más.
               </h2>
               <p className="mt-3 text-[16px] leading-[1.65] text-[var(--hueso)] sm:text-[17px]">
-                Sexto se llena de pruebas, viaje de egresados y fechas de inscripción. Es un motivo
-                real, y es justo lo que el programa resuelve: diez minutos por día ahora, para no
-                decidir apurado después. Si hoy no tenés diez minutos, en sexto vas a tener menos.
+                Sexto se llena de pruebas, viaje de egresados e inscripciones. Es real, y es justo lo
+                que el programa resuelve:{' '}
+                <mark className="acq-hl">diez minutos por día ahora, para no decidir apurado después</mark>.
               </p>
             </div>
-            <Foto id="deporte" className="aspect-[4/3] w-full" />
+            <Foto id="objecion" className="aspect-[4/3] w-full" />
           </div>
         </section>
 
@@ -387,7 +408,8 @@ export default function ProgramaPage() {
                 lo ve, la lista se achica sola.
               </p>
               <p>
-                Distintos chicos, la misma jugada: primero entenderte, después elegir. Esa es toda
+                Distintos chicos, la misma jugada:{' '}
+                <mark className="acq-hl">primero entenderte, después elegir</mark>. Esa es toda
                 la idea. Y es la razón por la que existe este programa.
               </p>
             </div>
@@ -435,8 +457,7 @@ export default function ProgramaPage() {
                 ya sabés qué estudiar y dónde, todavía no es para vos.
               </p>
               <p className="mt-3 text-[16px] leading-[1.7] text-[var(--hueso)]">
-                El recorrido sirve te guste lo que te guste, y se arma distinto según tu momento:
-                si estás en el colegio, si terminaste o si te querés cambiar de carrera.
+                Sirve te guste lo que te guste: el recorrido cubre 16 mundos de carreras.
               </p>
               <div className="mt-8 grid max-w-[480px] grid-cols-3 gap-3">
                 {MUNDOS_CHIPS.map((m) => (
@@ -453,17 +474,34 @@ export default function ProgramaPage() {
           </div>
         </section>
 
-        {/* Dónde sucede */}
-        <section className="bg-[var(--cream)] px-4 py-16 sm:px-6">
-          <div className="mx-auto grid max-w-[1040px] items-center gap-12 md:grid-cols-2">
-            <div>
-              <h2 className="text-[28px] font-extrabold tracking-[-0.02em] sm:text-[32px]">Dónde sucede</h2>
-              <p className="mt-2 text-[16px] leading-[1.65] text-[var(--hueso)] sm:text-[17px]">
-                Dos semanas, desde tu casa, en el celular o la compu. {TOTAL_STOPS} paradas, una por
-                día, y una llamada con uno de los fundadores.
+        {/* Prueba social: el "See what founders are saying" del workshop */}
+        <section className="bg-[var(--cream-deep)] px-4 py-24 sm:px-6">
+          <div className="mx-auto max-w-[1140px]">
+            <div className="text-center">
+              <Eyebrow>No te lo decimos nosotros</Eyebrow>
+              <h2 className="mt-3 text-[32px] font-semibold leading-tight tracking-[-0.02em] sm:text-[44px]">
+                Lo que nos dicen los que ya lo vieron
+              </h2>
+              <p className="mt-2 text-[15px] text-[var(--hueso)]">
+                Psicopedagogas que evaluaron Timon y alumnos que ya hicieron el recorrido.
               </p>
             </div>
-            <ChatMock />
+            <div className="mt-12 grid gap-5 md:grid-cols-3">
+              {PRUEBAS.map((t) => (
+                <figure key={t.texto} className="flex flex-col rounded-xl border border-[var(--border-cream)] bg-white p-7">
+                  <span className="text-[40px] font-extrabold leading-none text-[var(--ocean)]">“</span>
+                  <blockquote className="mt-1 flex-1 text-[15px] leading-[1.65] text-[var(--hueso)]">{t.texto}</blockquote>
+                  <figcaption className="mt-6 border-t border-[var(--border-cream)] pt-4">
+                    <p className="text-[14px] font-semibold">{t.quien}</p>
+                    <p className="mt-0.5 text-[12px] text-[var(--hueso-soft)]">{t.detalle}</p>
+                  </figcaption>
+                </figure>
+              ))}
+            </div>
+            <p className="mx-auto mt-10 max-w-[760px] text-center text-[12px] leading-[1.5] text-[var(--hueso-soft)]">
+              Las experiencias individuales pueden no ser típicas. Lo que cada alumno se lleva depende
+              de sus respuestas y de cuánto se comprometa con el proceso.
+            </p>
           </div>
         </section>
 
@@ -493,10 +531,7 @@ export default function ProgramaPage() {
             {COHORTE_CUPO} lugares en la cohorte fundadora.
           </p>
           <CtaButton className="mt-10" />
-          <p className="mx-auto mt-16 max-w-[760px] text-[11px] leading-[1.5] text-white/40">
-            {GARANTIA.corta} Timon es una herramienta de exploración vocacional: no es un
-            diagnóstico psicológico ni reemplaza a un profesional matriculado. Los resultados
-            dependen de tus respuestas.{' '}
+          <p className="mt-16 text-[11px] text-white/40">
             <Link href="/terminos" className="underline">
               Términos y condiciones
             </Link>

@@ -577,6 +577,16 @@
   box-shadow: 0 10px 30px rgba(37, 99, 235, 0.35);
 }
 .acq-cta-btn:hover { filter: brightness(1.08); }
+/* Resaltador: marca la frase que importa, como en las páginas de Hormozi. */
+.acq-hl, .acq-hl-dark {
+  color: inherit;
+  font-weight: 600;
+  padding: 0 0.1em;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
+.acq-hl { background: linear-gradient(transparent 55%, rgba(37, 99, 235, 0.2) 55%); }
+.acq-hl-dark { background: linear-gradient(transparent 55%, rgba(110, 155, 248, 0.38) 55%); color: #fff; }
 .acq-firma { font-family: var(--font-firma), cursive; }
 
 /* El mapa se descarga con "Guardar como PDF": cada mundo arranca en hoja nueva. */
