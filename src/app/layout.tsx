@@ -63,6 +63,16 @@ const spaceMono = localFont({
   display: 'swap',
 })
 
+// Las notas a mano de la home (flechas, mapa del hero): Kalam.
+const mano = localFont({
+  src: [
+    { path: '../fonts/kalam-latin-400-normal.woff2', weight: '400', style: 'normal' },
+    { path: '../fonts/kalam-latin-700-normal.woff2', weight: '700', style: 'normal' },
+  ],
+  variable: '--font-mano',
+  display: 'swap',
+})
+
 export const metadata: Metadata = {
   title: 'Timon — ¿Ya sabés qué vas a estudiar?',
   description:
@@ -84,7 +94,7 @@ export default function RootLayout({
   return (
     <html
       lang="es"
-      className={`${sans.variable} ${serif.variable} ${mono.variable} ${poppins.variable} ${jakarta.variable} ${spaceMono.variable} h-full antialiased`}
+      className={`${sans.variable} ${serif.variable} ${mono.variable} ${poppins.variable} ${jakarta.variable} ${spaceMono.variable} ${mano.variable} h-full antialiased`}
       suppressHydrationWarning
     >
       <body

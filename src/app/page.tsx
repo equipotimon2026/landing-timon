@@ -3,6 +3,7 @@ import { SiteFooter, SiteNav } from '@/components/acq/SiteChrome'
 import { Faq, type FaqItem } from '@/components/acq/Faq'
 import { FundadoresFotos } from '@/components/acq/Fundadores'
 import { Rueda } from '@/components/landing/Marca'
+import { Anotado, Flecha, MapaHero, Nota, Resaltado } from '@/components/landing/Lapiz'
 import {
   BONO_PAGO_ANTICIPADO,
   LO_QUE_DICEN,
@@ -104,23 +105,6 @@ function LinkPagarAhora({ tono = 'oscuro' }: { tono?: 'oscuro' | 'claro' }) {
   )
 }
 
-/** Texto con las partes entre ==dobles iguales== en negrita con resaltador. */
-function Resaltado({ texto }: { texto: string }) {
-  return (
-    <>
-      {texto.split(/(==[^=]+==)/g).map((parte, i) =>
-        parte.startsWith('==') ? (
-          <mark key={i} className="rounded-[2px] bg-[#fdf3a3] px-0.5 font-medium text-inherit [box-decoration-break:clone]">
-            {parte.slice(2, -2)}
-          </mark>
-        ) : (
-          <span key={i}>{parte}</span>
-        ),
-      )}
-    </>
-  )
-}
-
 const LOGOS_UNIVERSIDADES = [
   { src: '/logos/universities/uba.svg', alt: 'UBA' },
   { src: '/logos/universities/utn.png', alt: 'UTN' },
@@ -138,26 +122,19 @@ export default function Home() {
       <SiteNav />
 
       <main className="flex-1">
-        {/* Hero: la promesa base, una línea para los dos y un solo botón */}
+        {/* Hero: la promesa y el mapa. Timon "te muestra el mapa": de no saber
+            qué estudiar a tu decisión, pasando por lo que te devuelve. */}
         <section className="marca-fondo relative overflow-hidden">
-          <Rueda
-            size={420}
-            color="var(--m-rueda)"
-            className="pointer-events-none absolute -left-24 top-1/2 hidden -translate-y-1/2 opacity-60 lg:block"
-          />
-          <Rueda
-            size={420}
-            color="var(--m-rueda)"
-            className="pointer-events-none absolute -right-24 top-1/2 hidden -translate-y-1/2 opacity-60 lg:block"
-          />
-          <div className="relative mx-auto flex max-w-[820px] flex-col items-center px-4 py-16 text-center sm:py-24">
-            <h1 className="titulo text-[44px] sm:text-[72px]">Sabé qué carreras van con vos</h1>
-            <span className="mt-7 block h-[2px] w-16 bg-[var(--m-azul)]" />
-            <p className="mt-6 text-[17px] sm:text-[20px]">
+          <div className="relative mx-auto flex max-w-[1100px] flex-col items-center px-4 pb-10 pt-16 text-center sm:pb-14 sm:pt-20">
+            <h1 className="titulo max-w-[820px] text-[44px] sm:text-[72px]">
+              Sabé qué carreras <Anotado tipo="underline" demora={300}>van con vos</Anotado>
+            </h1>
+            <p className="mt-7 text-[17px] sm:text-[20px]">
               Dónde estudiarlas y de qué vas a trabajar. A tu ritmo.
             </p>
             <BotonEmpezar className="mt-9" />
             <LinkPagarAhora />
+            <MapaHero className="mt-10 w-full sm:mt-12" />
           </div>
         </section>
 
@@ -165,7 +142,13 @@ export default function Home() {
             llevás del programa #1/#2/#3 → un botón. Vende el programa, no la app. */}
         <section className="marca-claro px-4 pb-16 pt-20 sm:px-6">
           <div className="mx-auto max-w-[1140px]">
-            <h2 className="titulo text-center text-[34px] sm:text-[44px]">Lo que dicen de Timon:</h2>
+            <div className="relative">
+              <h2 className="titulo text-center text-[34px] sm:text-[44px]">Lo que dicen de Timon:</h2>
+              <div className="pointer-events-none absolute -bottom-12 right-[4%] hidden w-[220px] -rotate-3 lg:block">
+                <Nota>lo dicen ellos, no nosotros</Nota>
+                <Flecha direccion="baja-izquierda" className="ml-6 mt-1 w-[86px]" demora={0.2} />
+              </div>
+            </div>
             <div className="mx-auto mt-12 grid max-w-[1080px] items-stretch justify-items-center gap-5 md:grid-cols-3 md:gap-4">
               {LO_QUE_DICEN.map((c) => (
                 <figure
@@ -240,8 +223,9 @@ export default function Home() {
 
         <section className="bg-white px-4 pb-20 pt-16 sm:px-6">
           <div className="mx-auto grid max-w-[1140px] gap-12 md:grid-cols-3 md:gap-6">
-            {PROGRAMA.map((o) => (
-              <div key={o.n} className="text-center">
+            {PROGRAMA.map((o, i) => (
+              <div key={o.n} className="relative text-center">
+
                 <h3 className="mx-auto max-w-[280px] text-[20px] font-semibold leading-[1.5] text-[var(--m-navy)] md:min-h-[60px]">
                   {o.n}
                 </h3>
@@ -255,6 +239,12 @@ export default function Home() {
                 <p className="mx-auto mt-5 max-w-[360px] text-[16px] leading-[1.6]">
                   <Resaltado texto={o.texto} />
                 </p>
+                {i === 0 && (
+                  <div className="mt-1 flex items-start justify-center gap-1">
+                    <Flecha direccion="sube" className="w-[24px] shrink-0" demora={0.3} />
+                    <Nota className="mt-6 -rotate-2 !text-[19px]">la primera parte la ves gratis</Nota>
+                  </div>
+                )}
               </div>
             ))}
           </div>
@@ -269,15 +259,17 @@ export default function Home() {
         <section id="como-funciona" className="marca-fondo scroll-mt-16 px-4 py-16 sm:px-6">
           <div className="mx-auto max-w-[1080px]">
             <h2 className="titulo text-center text-[34px] sm:text-[44px]">Cómo funciona</h2>
-            <ol className="mt-10 grid gap-4 md:grid-cols-3">
+            <ol className="mt-10 grid gap-4 md:grid-cols-3 md:gap-14">
               {PASOS.map((p, i) => (
-                <li key={p.titulo} className="tarjeta relative overflow-hidden px-6 py-7">
-                  <span
-                    aria-hidden="true"
-                    className="pointer-events-none absolute -right-2 -top-5 text-[110px] font-light leading-none text-[var(--m-azul)] opacity-[0.08]"
-                  >
-                    {String(i + 1).padStart(2, '0')}
-                  </span>
+                <li key={p.titulo} className="tarjeta relative px-6 py-7">
+                  {i > 0 && (
+                    <Flecha
+                      direccion="derecha"
+                      color="var(--m-azul)"
+                      demora={0.35 * i}
+                      className="pointer-events-none absolute -left-[58px] top-6 hidden w-[54px] md:block"
+                    />
+                  )}
                   <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-[var(--m-azul)] text-[15px] font-medium text-white">
                     {i + 1}
                   </span>
@@ -373,19 +365,17 @@ export default function Home() {
             />
             <div className="relative mx-auto flex max-w-[720px] flex-col items-center">
               <p className="etiqueta">Empezá hoy</p>
-              <h2 className="titulo mt-5 text-[40px] sm:text-[60px]">¿Qué te devolvería Timon a vos?</h2>
-              <span className="mt-7 block h-[2px] w-16 bg-[var(--m-azul)]" />
+              <h2 className="titulo mt-5 text-[40px] sm:text-[60px]">
+                ¿Qué te devolvería Timon <Anotado tipo="circle" className="whitespace-nowrap">a vos</Anotado>?
+              </h2>
               <p className="mt-6 text-[17px] sm:text-[20px]">
                 Hay una sola forma de saberlo. Empezás hoy y lo hacés a tu ritmo.
               </p>
               <BotonEmpezar className="mt-10 w-full max-w-[420px] !py-5 !text-[20px] shadow-[0_14px_34px_rgba(59,95,212,0.35)]" />
-              <ul className="etiqueta mt-6 flex flex-wrap justify-center gap-x-5 gap-y-2 !text-[10px] !text-[var(--m-suave)]">
-                <li>Gratis para empezar</li>
-                <li aria-hidden="true">·</li>
-                <li>Sin tarjeta</li>
-                <li aria-hidden="true">·</li>
-                <li>A tu ritmo</li>
-              </ul>
+              <div className="mt-3 flex items-start gap-2 self-center sm:translate-x-24">
+                <Flecha direccion="sube" className="w-[30px] shrink-0" demora={0.2} />
+                <Nota className="mt-7 -rotate-3 text-left">empezar es gratis y sin tarjeta</Nota>
+              </div>
               <LinkPagarAhora />
             </div>
           </div>
