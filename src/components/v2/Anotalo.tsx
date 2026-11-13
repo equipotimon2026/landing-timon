@@ -17,7 +17,7 @@ type Estado =
   | { paso: 'form'; enviando: boolean; error: string | null; fallbackEmail?: string }
   | { paso: 'listo'; token: string | null }
 
-const VACIO = { parentName: '', parentWhatsapp: '', parentEmail: '', childName: '', childYear: '' }
+const VACIO = { parentName: '', parentWhatsapp: '', parentEmail: '', childName: '', childYear: '', empresa: '' }
 
 /**
  * El formulario del padre y la pantalla que lo reemplaza. Mismo contrato que
@@ -81,6 +81,11 @@ export function Anotalo() {
         <Listo token={estado.token} />
       ) : (
         <form onSubmit={enviar} noValidate>
+          {/* Campo trampa para bots: fuera de pantalla y fuera del tab. */}
+          <div aria-hidden className="absolute -left-[9999px] h-px w-px overflow-hidden">
+            <label htmlFor="p-empresa">Empresa</label>
+            <input id="p-empresa" tabIndex={-1} autoComplete="off" value={datos.empresa} onChange={set('empresa')} />
+          </div>
           <div className="grid gap-x-6 gap-y-6 md:grid-cols-2">
             <fieldset className="space-y-4">
               <legend className="mb-3 text-[17px] font-bold">Tus datos</legend>

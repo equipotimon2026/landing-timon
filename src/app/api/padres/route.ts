@@ -10,6 +10,25 @@ const APP_TIMEOUT_MS = 8000
 type Resultado = { ok: true; token?: string } | { ok: false; sinConfig: boolean }
 
 /**
+ * Freno contra bots, sin infraestructura: 5 envíos cada 10 minutos por IP y
+ * por mail. Vive en la memoria de cada instancia, así que es best-effort (en
+ * serverless se reparte entre instancias); alcanza contra un script tonto que
+ * dispara en bucle. Lo de verdad (Turnstile o un límite compartido) queda
+ * para cuando haya tráfico de pauta.
+ */
+const VENTANA_MS = 10 * 60 * 1000
+const MAX_POR_VENTANA = 5
+const golpes = new Map<string, number[]>()
+
+function limitado(clave: string, ahora = Date.now()): boolean {
+  const recientes = (golpes.get(clave) ?? []).filter((t) => ahora - t < VENTANA_MS)
+  recientes.push(ahora)
+  golpes.set(clave, recientes)
+  if (golpes.size > 5000) golpes.clear()
+  return recientes.length > MAX_POR_VENTANA
+}
+
+/**
  * POST /api/padres
  *
  * El formulario de /padres cae acá. Hace dos cosas en paralelo:
@@ -28,6 +47,20 @@ export async function POST(req: NextRequest) {
   }
 
   const campo = (k: string) => String((body as Record<string, unknown>)[k] ?? '').trim()
+
+  // Campo trampa: invisible para personas, los bots lo llenan. Se responde
+  // OK sin hacer nada, para no enseñarle al bot qué lo delató.
+  if (campo('empresa')) {
+    return NextResponse.json({ ok: true })
+  }
+
+  const ip = req.headers.get('x-real-ip') ?? req.headers.get('x-forwarded-for')?.split(',')[0]?.trim() ?? 'sin-ip'
+  if (limitado(`ip:${ip}`) || limitado(`mail:${campo('parentEmail').toLowerCase()}`)) {
+    return NextResponse.json(
+      { ok: false, error: 'Recibimos varios envíos seguidos. Probá de nuevo en unos minutos', fallbackEmail: TO },
+      { status: 429 }
+    )
+  }
   const crudo = {
     parentName: campo('parentName'),
     parentWhatsapp: campo('parentWhatsapp'),
