@@ -1,33 +1,24 @@
 import type { Metadata } from 'next'
+import Image from 'next/image'
 import Link from 'next/link'
-import { Plus } from 'lucide-react'
-import './v2.css'
-import { Suave } from '@/components/v2/Suave'
-import { Header } from '@/components/v2/Header'
-import { Hero } from '@/components/v2/Hero'
-import { Revela } from '@/components/v2/Revela'
-import { Areas } from '@/components/v2/Areas'
-import { Contador } from '@/components/v2/Contador'
-import { Informe } from '@/components/v2/Informe'
-import { Paradas } from '@/components/v2/Paradas'
-import { Anotalo } from '@/components/v2/Anotalo'
-import { Isologo } from '@/components/v2/Isotipo'
+import { ArrowDown, LockKeyhole, Plus } from 'lucide-react'
+import './home.css'
+import { Header } from '@/components/home/Header'
+import { Pila } from '@/components/home/Pila'
+import { Aparece } from '@/components/home/Aparece'
+import { Paradas } from '@/components/home/Paradas'
+import { Areas } from '@/components/home/Areas'
+import { Contador } from '@/components/home/Contador'
+import { Anotalo } from '@/components/home/Anotalo'
+import { Isologo } from '@/components/home/Isotipo'
 import { LO_QUE_DICEN, URL_EMPEZAR } from '@/lib/landing'
 import { CONTACT_EMAIL } from '@/lib/programa'
 
 /**
- * Landing v2 (13/11/2026). Pedidos de Nico: fondo blanco puro, fotos solo en
- * la cinta de la red, poco texto, y la sección "No es un test. Es una red"
- * (la única que le gustó) como ADN de toda la página.
- *
- * Patrones tomados de las referencias:
- *  - Vercel: estructura de líneas finas (carriles y cruces en los cortes).
- *  - Apple: el producto en grande sobre bloques suaves, una frase por vez.
- *  - Stripe: un objeto vivo en el hero (la red generativa).
- *  - La sección de la red, tal cual: cinta de las 16 áreas + contadores.
- *
- * El hilo se lee con los titulares: problema → la red → el informe → desde
- * casa → confianza → anotalo. Sin precios, nada inventado, un solo botón.
+ * Home · dirección B, "producto tech" (elegida por Nico el 13/11/2026 entre
+ * las tres de /explora). Fondo blanco, el informe real como objeto en 3D y un
+ * bento de bloques grises. Las fotos aparecen solo en la cinta de la red.
+ * Hilo: la promesa → el problema → el informe → la red → confianza → anotalo.
  */
 
 export const metadata: Metadata = {
@@ -57,141 +48,265 @@ const FAQS = [
   { q: '¿Reemplaza a un profesional?', a: 'No. Es una guía para decidir con fundamento. Si quieren, repasan el resultado con un profesional.' },
 ]
 
+const ojo = 'text-[15px] font-semibold tracking-[-0.01em] text-[var(--rumbo)] sm:text-[17px]'
+const h2 = 'display text-[clamp(2.5rem,5.6vw,4.6rem)]'
+const tesela = 'tesela overflow-hidden rounded-[28px] bg-[var(--gris)]'
+
+function Acto({ n, titulo }: { n: number; titulo: string }) {
+  return (
+    <>
+      <p className="etiqueta text-[var(--rumbo)]">Acto {n}</p>
+      <p className="titulo mt-1 text-[clamp(1.6rem,2.6vw,2.1rem)]">{titulo}</p>
+    </>
+  )
+}
+
 export default function Home() {
   return (
-    <div className="v2 min-h-screen overflow-x-clip">
-      <Suave>
-        <a href="#contenido" className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded-full focus:bg-white focus:px-4 focus:py-2">
-          Saltar al contenido
-        </a>
-        <Header />
+    <div className="home min-h-screen overflow-x-clip">
+      <a
+        href="#contenido"
+        className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-3 focus:z-50 focus:rounded-full focus:bg-white focus:px-4 focus:py-2"
+      >
+        Saltar al contenido
+      </a>
+      <Header />
 
-        <main id="contenido" className="-mt-20">
-          <Hero />
-
-          <div className="carril">
-            {/* ── El problema ───────────────────────────────────────────── */}
-            <section className="corte px-5 py-28 text-center sm:px-10 lg:py-44">
-              <Revela texto="Nadie conoce todas las opciones a los 17." className="display mx-auto max-w-[16ch] text-[clamp(2.6rem,6.6vw,5.8rem)]" />
-              <p className="mt-10 text-[17px] text-[var(--texto2)]">4 de cada 10 ingresantes deja la carrera en el primer año.</p>
-              <p className="etiqueta mt-3 text-[10.5px] text-[var(--tenue)]">SPU, cohorte 2019 · vía iProfesional</p>
-            </section>
-
-            {/* ── La red (la sección que gustó, tal cual) ───────────────── */}
-            <section id="red" className="corte scroll-mt-24 py-28 lg:py-40">
-              <div className="px-5 text-center sm:px-10">
-                <p className="etiqueta text-[var(--rumbo)]">La red</p>
-                <h2 className="display mx-auto mt-5 max-w-[14ch] text-[clamp(2.6rem,6.4vw,5.6rem)]">No es un test. Es una red.</h2>
-                <p className="mx-auto mt-6 max-w-[40ch] text-[19px] text-[var(--texto2)]">El trabajo real detrás de cada carrera.</p>
-              </div>
-              <div className="mt-16">
-                <Areas />
-              </div>
-              <dl className="mx-auto mt-20 grid max-w-[1080px] grid-cols-2 gap-y-12 px-5 sm:px-10 lg:grid-cols-4">
-                {NUMEROS.map((n) => (
-                  <div key={n.texto} className="flex flex-col-reverse border-l border-[var(--borde2)] pl-5">
-                    <dt className="etiqueta mt-2 text-[var(--tenue)]">{n.texto}</dt>
-                    <dd className="display text-[clamp(2.6rem,5vw,4.2rem)]">
-                      <Contador valor={n.valor} prefijo={n.prefijo} />
-                    </dd>
-                  </div>
-                ))}
-              </dl>
-            </section>
-
-            {/* ── El informe ───────────────────────────────────────────── */}
-            <section id="informe" className="corte scroll-mt-24 pb-20 pt-28 lg:pb-0 lg:pt-40">
-              <div className="px-5 sm:px-10">
-                <p className="etiqueta text-[var(--rumbo)]">El informe</p>
-                <h2 className="display mt-5 max-w-[16ch] text-[clamp(2.6rem,6.4vw,5.6rem)]">Un informe en tres actos.</h2>
-              </div>
-              <div className="mt-16 lg:mt-0">
-                <Informe />
-              </div>
-              <p className="etiqueta mt-16 px-5 text-[10.5px] text-[var(--tenue)] sm:px-10 lg:mt-0 lg:pb-16">
-                Capturas de la app con datos de ejemplo
-              </p>
-            </section>
-
-            {/* ── Desde casa ───────────────────────────────────────────── */}
-            <section className="corte px-5 py-28 sm:px-10 lg:py-40">
-              <div className="text-center">
-                <h2 className="display mx-auto max-w-[14ch] text-[clamp(2.6rem,6.4vw,5.6rem)]">Dos semanas, desde casa.</h2>
-                <p className="mx-auto mt-6 max-w-[42ch] text-[19px] text-[var(--texto2)]">13 paradas de menos de 10 minutos. Y te llega un resumen.</p>
-              </div>
-              <div className="bloque mx-auto mt-16 max-w-[1080px] px-6 py-14 sm:px-12">
-                <Paradas />
-              </div>
-            </section>
-
-            {/* ── Confianza ────────────────────────────────────────────── */}
-            <section className="corte px-5 py-28 sm:px-10 lg:py-40">
-              <h2 className="display max-w-[14ch] text-[clamp(2.6rem,6vw,5.2rem)]">Lo revisaron quienes saben.</h2>
-              <ul className="mt-14 grid gap-5 md:grid-cols-3">
-                {LO_QUE_DICEN.map((c) => (
-                  <li key={c.quien} className="flex flex-col justify-between rounded-[24px] border border-[var(--borde)] p-7 transition-colors hover:border-[var(--borde2)]">
-                    <blockquote className="text-[22px] font-light leading-[1.4] tracking-[-0.015em]">
-                      {c.texto.replace(/==/g, '')}
-                    </blockquote>
-                    <p className="etiqueta mt-8 text-[var(--rumbo)]">{c.quien}</p>
-                  </li>
-                ))}
-              </ul>
-              <p className="mt-16 text-center text-[clamp(1.3rem,2.4vw,1.9rem)] font-light tracking-[-0.02em] text-[var(--texto2)]">
-                Vos ves cómo avanza. Sus respuestas son suyas.
-              </p>
-            </section>
-
-            {/* ── Anotalo ──────────────────────────────────────────────── */}
-            <section id="anotalo" className="corte scroll-mt-24 px-3 py-16 sm:px-6 lg:py-24">
-              <div className="bloque px-5 py-16 sm:px-10 lg:px-16 lg:py-20">
-                <div className="mx-auto max-w-[940px]">
-                  <h2 className="display text-[clamp(2.8rem,7vw,5.8rem)]">Anotalo hoy.</h2>
-                  <p className="mt-5 text-[19px] text-[var(--texto2)]">Después elegís: pagar ahora o que empiece gratis.</p>
-                  <div className="mt-12">
-                    <Anotalo />
-                  </div>
-                </div>
-              </div>
-            </section>
-
-            {/* ── Preguntas ────────────────────────────────────────────── */}
-            <section className="corte px-5 py-28 sm:px-10 lg:py-36">
-              <div className="mx-auto max-w-[820px]">
-                <h2 className="titulo text-center text-[clamp(2rem,4vw,3rem)]">Preguntas</h2>
-                <div className="mt-12 border-b border-[var(--borde)]">
-                  {FAQS.map((f) => (
-                    <details key={f.q} className="border-t border-[var(--borde)]">
-                      <summary className="flex items-center justify-between gap-6 py-6 text-[18px]">
-                        {f.q}
-                        <Plus size={20} className="faq-signo shrink-0 text-[var(--rumbo)] transition-transform duration-300" aria-hidden />
-                      </summary>
-                      <p className="max-w-[60ch] pb-7 text-[16.5px] text-[var(--texto2)]">{f.a}</p>
-                    </details>
-                  ))}
-                </div>
-              </div>
-            </section>
-
-            <footer className="corte px-5 py-14 sm:px-10">
-              <div className="flex flex-col gap-8 md:flex-row md:items-center md:justify-between">
-                <Isologo />
-                <nav aria-label="Pie" className="flex flex-wrap gap-x-8 gap-y-3 text-[15px] text-[var(--texto2)]">
-                  <a href={URL_EMPEZAR} className="hover:text-[var(--rumbo)]">Soy estudiante</a>
-                  <Link href="/colegios" className="hover:text-[var(--rumbo)]">Colegios</Link>
-                  <Link href="/terminos" className="hover:text-[var(--rumbo)]">Términos</Link>
-                  <a href={`mailto:${CONTACT_EMAIL}`} className="hover:text-[var(--rumbo)]">{CONTACT_EMAIL}</a>
-                </nav>
-              </div>
-              <p className="mt-10 max-w-[90ch] text-[12.5px] leading-[1.6] text-[var(--tenue)]">
-                Timon es una guía para explorar carreras. Su informe lo genera inteligencia artificial a partir de lo que se
-                responde. No es una evaluación psicológica ni psicométrica, y no reemplaza a un profesional matriculado. La
-                decisión es de cada uno. Hecho por Facu, Feli y Nico en Argentina. © {new Date().getFullYear()} Timon.
-              </p>
-            </footer>
+      <main id="contenido">
+        {/* ── Hero ─────────────────────────────────────────────────────── */}
+        <section className="px-5 pt-9 text-center sm:pt-20">
+          <Aparece>
+            <p className={ojo}>Para madres y padres</p>
+            <h1 className="display mx-auto mt-4 max-w-[14ch] text-[clamp(2.75rem,6.2vw,5.4rem)]">
+              Que elija su camino conociendo el mundo.
+            </h1>
+            <p className="mx-auto mt-5 max-w-[34ch] text-[17px] leading-[1.5] sm:mt-6 text-[var(--texto2)] sm:text-[21px]">
+              Se conoce, conoce el trabajo real y elige con fundamento. En dos semanas, desde casa.
+            </p>
+            <div className="mt-7 flex flex-col items-center justify-center gap-4 sm:mt-9 sm:flex-row sm:gap-7">
+              <a href="#anotalo" className="btn">
+                Quiero que mi hijo lo haga
+              </a>
+              <a
+                href="#informe"
+                className="inline-flex items-center gap-1.5 text-[16px] font-semibold text-[var(--rumbo)] underline-offset-4 hover:underline"
+              >
+                Ver el informe <ArrowDown size={16} aria-hidden />
+              </a>
+            </div>
+          </Aparece>
+          <div className="-mt-6 sm:-mt-10">
+            <Pila />
           </div>
-        </main>
-      </Suave>
+        </section>
+
+        {/* ── El problema ──────────────────────────────────────────────── */}
+        <section className="px-5 pb-24 pt-16 text-center sm:pb-36 sm:pt-20">
+          <Aparece>
+            <p className="display mx-auto max-w-[17ch] text-[clamp(2.2rem,4.8vw,3.9rem)]">
+              Nadie conoce todas las opciones a los 17.
+            </p>
+            <p className="mx-auto mt-6 max-w-[36ch] text-[18px] text-[var(--texto2)]">
+              <strong className="font-semibold text-[var(--texto)]">4 de cada 10</strong> ingresantes deja la carrera en el
+              primer año.
+            </p>
+            <p className="mt-2 text-[12.5px] text-[var(--tenue)]">SPU, cohorte 2019 · vía iProfesional</p>
+          </Aparece>
+        </section>
+
+        {/* ── El informe: bento ────────────────────────────────────────── */}
+        <section id="informe" className="mx-auto max-w-[1120px] scroll-mt-20 px-5 pb-24 sm:pb-36">
+          <Aparece>
+            <p className={ojo}>El informe</p>
+            <h2 className={`${h2} mt-3 max-w-[14ch]`}>Un informe en tres actos.</h2>
+          </Aparece>
+
+          <div className="mt-12 grid gap-4 md:grid-cols-6">
+            <Aparece className={`${tesela} px-7 pt-8 sm:px-10 sm:pt-10 md:col-span-4`}>
+              <Acto n={1} titulo="Quién es." />
+              <div className="captura -mb-10 mt-8 sm:mr-[16%]">
+                <Image
+                  src="/producto/esencia-card.webp"
+                  alt="Pantalla de la esencia: los rasgos de Sofía, de Análisis a Expresión"
+                  width={1380}
+                  height={1110}
+                  sizes="(min-width: 768px) 560px, 90vw"
+                  className="h-auto w-full"
+                />
+              </div>
+            </Aparece>
+
+            <Aparece
+              retraso={0.08}
+              className="flex min-h-[300px] flex-col justify-between rounded-[28px] bg-[var(--texto)] p-8 text-white sm:p-10 md:col-span-2"
+            >
+              <p className="etiqueta text-[var(--cielo)]">Tiempo</p>
+              <div>
+                <p className="text-[clamp(5rem,9vw,7.5rem)] font-semibold leading-none tracking-[-0.06em]">13</p>
+                <p className="mt-3 max-w-[16ch] text-[19px] leading-snug text-white/70">paradas de menos de 10 minutos.</p>
+                <div className="mt-7">
+                  <Paradas />
+                </div>
+              </div>
+            </Aparece>
+
+            <Aparece className={`${tesela} px-7 pt-8 sm:px-10 sm:pt-10 md:col-span-3`}>
+              <Acto n={2} titulo="Sus caminos." />
+              <div className="captura -mb-6 mt-8">
+                <Image
+                  src="/producto/caminos-card.webp"
+                  alt="Pantalla de los caminos: sus 5 carreras principales, ordenadas por compatibilidad"
+                  width={1620}
+                  height={1020}
+                  sizes="(min-width: 768px) 460px, 90vw"
+                  className="h-auto w-full"
+                />
+              </div>
+            </Aparece>
+
+            <Aparece retraso={0.08} className={`${tesela} px-7 pt-8 sm:px-10 sm:pt-10 md:col-span-3`}>
+              <Acto n={3} titulo="Dónde estudiarlos." />
+              <div className="captura -mb-6 mt-8">
+                <Image
+                  src="/producto/universidades.jpg"
+                  alt="Pantalla de universidades, filtradas por cuota, modalidad y ubicación"
+                  width={1100}
+                  height={721}
+                  sizes="(min-width: 768px) 460px, 90vw"
+                  className="h-auto w-full"
+                />
+              </div>
+            </Aparece>
+
+            <Aparece className="flex min-h-[220px] flex-col justify-between rounded-[28px] bg-[var(--gris)] p-8 sm:p-10 md:col-span-2">
+              <p className="etiqueta text-[var(--rumbo)]">Desde casa</p>
+              <p className="titulo text-[clamp(1.8rem,3vw,2.4rem)]">Dos semanas, a su ritmo.</p>
+            </Aparece>
+
+            <Aparece retraso={0.08} className={`${tesela} p-5 sm:p-8 md:col-span-4`}>
+              <div className="captura">
+                <Image
+                  src="/producto/esencia-frase.webp"
+                  alt="Frase del informe que resume quién es, en sus palabras"
+                  width={1380}
+                  height={710}
+                  sizes="(min-width: 768px) 700px, 90vw"
+                  className="h-auto w-full"
+                />
+              </div>
+            </Aparece>
+
+            <Aparece className="flex flex-col items-start gap-6 rounded-[28px] bg-[var(--gris)] p-8 sm:flex-row sm:items-center sm:justify-between sm:p-10 md:col-span-6">
+              <p className="titulo max-w-[24ch] text-[clamp(1.6rem,3vw,2.3rem)]">
+                Vos ves cómo avanza. <span className="text-[var(--tenue)]">Sus respuestas son suyas.</span>
+              </p>
+              <span className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-white shadow-[0_0_0_1px_rgba(15,31,54,.06)]">
+                <LockKeyhole size={22} className="text-[var(--rumbo)]" aria-hidden />
+              </span>
+            </Aparece>
+          </div>
+          <p className="mt-5 text-[12.5px] text-[var(--tenue)]">Capturas de la app con datos de ejemplo.</p>
+        </section>
+
+        {/* ── La red (va tal cual: cinta de las 16 áreas y contadores) ──── */}
+        <section id="red" className="scroll-mt-20 border-t border-[var(--borde)] py-24 sm:py-36">
+          <Aparece className="px-5 text-center">
+            <p className={ojo}>La red</p>
+            <h2 className={`${h2} mx-auto mt-3 max-w-[14ch]`}>No es un test. Es una red.</h2>
+            <p className="mx-auto mt-6 max-w-[40ch] text-[19px] text-[var(--texto2)]">El trabajo real detrás de cada carrera.</p>
+          </Aparece>
+          <div className="mt-16">
+            <Areas />
+          </div>
+          <dl className="mx-auto mt-20 grid max-w-[1080px] grid-cols-2 gap-y-12 px-5 lg:grid-cols-4">
+            {NUMEROS.map((n) => (
+              <div key={n.texto} className="flex flex-col-reverse border-l border-[var(--gris2)] pl-5">
+                <dt className="mt-2 text-[14px] text-[var(--tenue)]">{n.texto}</dt>
+                <dd className="display text-[clamp(2.6rem,5vw,4.2rem)]">
+                  <Contador valor={n.valor} prefijo={n.prefijo} />
+                </dd>
+              </div>
+            ))}
+          </dl>
+        </section>
+
+        {/* ── Confianza ────────────────────────────────────────────────── */}
+        <section className="mx-auto max-w-[1120px] px-5 pb-24 sm:pb-36">
+          <Aparece>
+            <h2 className={`${h2} max-w-[14ch]`}>Lo revisaron quienes saben.</h2>
+          </Aparece>
+          <ul className="mt-12 grid gap-4 md:grid-cols-3">
+            {LO_QUE_DICEN.map((c) => (
+              <li key={c.quien} className="flex flex-col justify-between rounded-[28px] bg-[var(--gris)] p-8">
+                <blockquote className="text-[21px] font-medium leading-[1.4] tracking-[-0.02em]">
+                  {c.texto.replace(/==/g, '')}
+                </blockquote>
+                <p className="mt-10 text-[14px] leading-snug">
+                  <span className="block font-semibold">{c.quien}</span>
+                  <span className="text-[var(--tenue)]">{c.rol}</span>
+                </p>
+              </li>
+            ))}
+          </ul>
+        </section>
+
+        {/* ── Anotalo ──────────────────────────────────────────────────── */}
+        <section id="anotalo" className="scroll-mt-16 px-3 sm:px-5">
+          <div className="mx-auto max-w-[1200px] rounded-[36px] bg-[var(--gris)] px-3 py-16 sm:px-10 sm:py-24">
+            <div className="mx-auto max-w-[940px]">
+              <Aparece className="px-2 text-center">
+                <h2 className={h2}>Anotalo hoy.</h2>
+                <p className="mx-auto mt-5 max-w-[36ch] text-[19px] text-[var(--texto2)]">
+                  Después elegís: pagar ahora o que empiece gratis.
+                </p>
+              </Aparece>
+              <div className="mt-12">
+                <Anotalo />
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* ── Preguntas ────────────────────────────────────────────────── */}
+        <section
+          id="preguntas"
+          className="mx-auto grid max-w-[1120px] scroll-mt-20 gap-10 px-5 py-24 sm:py-36 md:grid-cols-[1fr_1.6fr]"
+        >
+          <h2 className="display text-[clamp(2.2rem,4vw,3.4rem)]">Preguntas.</h2>
+          <div className="border-b border-[var(--borde)]">
+            {FAQS.map((f) => (
+              <details key={f.q} className="group border-t border-[var(--borde)]">
+                <summary className="flex items-center justify-between gap-6 py-6 text-[18px] font-medium tracking-[-0.01em]">
+                  {f.q}
+                  <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[var(--gris)] transition-colors group-hover:bg-[var(--gris2)]">
+                    <Plus size={16} className="faq-signo transition-transform duration-300" aria-hidden />
+                  </span>
+                </summary>
+                <p className="max-w-[56ch] pb-7 text-[16.5px] text-[var(--texto2)]">{f.a}</p>
+              </details>
+            ))}
+          </div>
+        </section>
+      </main>
+
+      <footer className="border-t border-[var(--borde)]">
+        <div className="mx-auto max-w-[1120px] px-5 py-12">
+          <div className="flex flex-col gap-8 md:flex-row md:items-center md:justify-between">
+            <Isologo />
+            <nav aria-label="Pie" className="flex flex-wrap gap-x-7 gap-y-3 text-[14px] text-[var(--texto2)]">
+              <a href={URL_EMPEZAR} className="hover:text-[var(--texto)]">Soy estudiante</a>
+              <Link href="/colegios" className="hover:text-[var(--texto)]">Colegios</Link>
+              <Link href="/terminos" className="hover:text-[var(--texto)]">Términos</Link>
+              <a href={`mailto:${CONTACT_EMAIL}`} className="hover:text-[var(--texto)]">{CONTACT_EMAIL}</a>
+            </nav>
+          </div>
+          <p className="mt-10 max-w-[90ch] text-[12.5px] leading-[1.6] text-[var(--tenue)]">
+            Timon es una guía para explorar carreras. Su informe lo genera inteligencia artificial a partir de lo que se
+            responde. No es una evaluación psicológica ni psicométrica, y no reemplaza a un profesional matriculado. La
+            decisión es de cada uno. Hecho por Facu, Feli y Nico en Argentina. © {new Date().getFullYear()} Timon.
+          </p>
+        </div>
+      </footer>
     </div>
   )
 }

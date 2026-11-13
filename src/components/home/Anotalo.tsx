@@ -75,7 +75,7 @@ export function Anotalo() {
   return (
     <div
       ref={caja}
-      className="scroll-mt-24 rounded-[26px] bg-white p-5 text-[var(--tinta)] shadow-[0_30px_80px_-36px_rgba(15,31,54,0.35)] sm:p-9"
+      className="scroll-mt-24 rounded-[26px] bg-white p-5 text-[var(--tinta)] shadow-[0_0_0_1px_rgba(15,31,54,0.05),0_30px_70px_-40px_rgba(15,31,54,0.3)] sm:p-9"
     >
       {estado.paso === 'listo' ? (
         <Listo token={estado.token} />

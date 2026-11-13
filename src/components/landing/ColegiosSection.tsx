@@ -16,8 +16,8 @@ const CONTACT_EMAIL = 'info@timonear.com'
  * sin enviar nada.
  */
 export function ColegiosSection({ onBack: _onBack }: Props) {
-  const heroBlock = useInView<HTMLDivElement>()
-  const formBlock = useInView<HTMLDivElement>()
+  const { ref: heroRef, inView: heroVisible } = useInView<HTMLDivElement>()
+  const { ref: formRef, inView: formVisible } = useInView<HTMLDivElement>()
 
   const [form, setForm] = useState({
     nombre: '',
@@ -65,7 +65,7 @@ export function ColegiosSection({ onBack: _onBack }: Props) {
       <section className="relative overflow-hidden" style={{ marginTop: '-4rem', paddingTop: '4rem' }}>
         <div className="relative z-10 mx-auto w-full max-w-[1080px] px-5 pb-24 pt-16 sm:px-8 sm:pb-32 sm:pt-24">
 
-          <div ref={heroBlock.ref} className={`reveal ${heroBlock.inView ? 'is-visible' : ''}`}>
+          <div ref={heroRef} className={`reveal ${heroVisible ? 'is-visible' : ''}`}>
             <p className="eyebrow eyebrow--with-rule mb-6">Instituciones educativas</p>
             <h1
               className="mb-4 max-w-[22ch] font-display font-extrabold text-[var(--navy)]"
@@ -82,8 +82,8 @@ export function ColegiosSection({ onBack: _onBack }: Props) {
           </div>
 
           <div
-            ref={formBlock.ref}
-            className={`reveal reveal-delay-2 ${formBlock.inView ? 'is-visible' : ''} glass glass-strong glass-xl mx-auto max-w-[680px] p-6 sm:p-9`}
+            ref={formRef}
+            className={`reveal reveal-delay-2 ${formVisible ? 'is-visible' : ''} glass glass-strong glass-xl mx-auto max-w-[680px] p-6 sm:p-9`}
           >
             {estado === 'ok' ? (
               <div className="py-8 text-center">

@@ -1,0 +1,143 @@
+/* Home · dirección B "producto tech" (13/11/2026). Blanco puro, bloques
+ * grises, el informe como objeto en 3D. Referencias: Apple iPhone, Framer,
+ * Linear en claro. Fotos solo en la cinta de la red.
+ */
+.home {
+  --fondo: #ffffff;
+  --texto: #0f1f36;
+  --texto2: #45536b;
+  --tenue: #7a869a;
+  --gris: #f5f6f8;
+  --gris2: #eceef2;
+  --borde: #e8eaef;
+  --rumbo: #1e5ba0;
+  --rumbo-hondo: #184c86;
+  --cielo: #4f84c2;
+  /* nombres que usa el formulario */
+  --papel: #f5f6f8;
+  --mar: #e9f0f8;
+  --tinta: #0f1f36;
+  --tinta2: #2a3a55;
+  --grafito: #66748b;
+  --linea: #e8eaef;
+  font-family: var(--font-jakarta), system-ui, sans-serif;
+  background: var(--fondo);
+  color: var(--texto);
+  font-size: 17px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+.home .display {
+  font-weight: 600;
+  letter-spacing: -0.045em;
+  line-height: 0.98;
+  text-wrap: balance;
+}
+.home .titulo {
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  line-height: 1.08;
+  text-wrap: balance;
+}
+.home .etiqueta {
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+}
+
+.home :focus-visible {
+  outline: 2px solid var(--rumbo);
+  outline-offset: 3px;
+  border-radius: 10px;
+}
+
+.home .btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  min-height: 50px;
+  padding: 0 1.6rem;
+  border-radius: 999px;
+  background: var(--rumbo);
+  color: #fff;
+  font-weight: 600;
+  font-size: 16px;
+  letter-spacing: -0.01em;
+  transition: background-color 0.2s, transform 0.2s;
+}
+.home .btn:hover {
+  background: var(--rumbo-hondo);
+}
+.home .btn:active {
+  transform: scale(0.98);
+}
+
+/* Captura del producto dentro de un bloque: borde de 1px y sombra en capas. */
+.home .captura {
+  overflow: hidden;
+  border-radius: 14px;
+  background: #fff;
+  box-shadow:
+    0 0 0 1px rgba(15, 31, 54, 0.06),
+    0 2px 6px -2px rgba(15, 31, 54, 0.06),
+    0 30px 60px -30px rgba(15, 31, 54, 0.32);
+  transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .home .tesela:hover .captura {
+    transform: translateY(-8px);
+  }
+}
+
+/* Cinta de la red (patrón Marquee, en CSS). */
+.home .marquesina {
+  display: flex;
+  width: max-content;
+  gap: 16px;
+  animation: home-marquesina var(--dur, 60s) linear infinite;
+}
+.home .marquesina[data-reverse] {
+  animation-direction: reverse;
+}
+.home .marquesina-caja:hover .marquesina {
+  animation-play-state: paused;
+}
+@keyframes home-marquesina {
+  to {
+    transform: translateX(calc(-50% - 8px));
+  }
+}
+
+.home details > summary {
+  list-style: none;
+  cursor: pointer;
+}
+.home details > summary::-webkit-details-marker {
+  display: none;
+}
+.home details[open] .faq-signo {
+  transform: rotate(45deg);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .home .aparece {
+    transition:
+      opacity 0.9s cubic-bezier(0.22, 1, 0.36, 1),
+      transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .home .aparece:not([data-visto]) {
+    opacity: 0;
+    transform: translateY(28px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .home .marquesina {
+    animation: none;
+  }
+  .home .marquesina-caja {
+    overflow-x: auto;
+  }
+}
