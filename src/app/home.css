@@ -26,12 +26,20 @@
   font-size: 17px;
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+.home p {
+  text-wrap: pretty;
+}
+.home ::selection {
+  background: rgba(30, 91, 160, 0.16);
 }
 
 .home .display {
   font-weight: 600;
-  letter-spacing: -0.045em;
+  letter-spacing: -0.048em;
   line-height: 0.98;
+  font-feature-settings: 'kern', 'ss01';
   text-wrap: balance;
 }
 .home .titulo {
@@ -65,10 +73,22 @@
   font-weight: 600;
   font-size: 16px;
   letter-spacing: -0.01em;
-  transition: background-color 0.2s, transform 0.2s;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.18),
+    0 1px 2px rgba(15, 31, 54, 0.12),
+    0 10px 24px -12px rgba(30, 91, 160, 0.7);
+  transition:
+    background-color 0.25s,
+    transform 0.25s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.25s;
 }
 .home .btn:hover {
   background: var(--rumbo-hondo);
+  transform: translateY(-1px);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.2),
+    0 2px 4px rgba(15, 31, 54, 0.12),
+    0 16px 32px -14px rgba(30, 91, 160, 0.75);
 }
 .home .btn:active {
   transform: scale(0.98);
@@ -119,6 +139,52 @@
 }
 .home details[open] .faq-signo {
   transform: rotate(45deg);
+}
+/* El FAQ se abre con transición donde el navegador lo soporta. */
+@supports (interpolate-size: allow-keywords) {
+  @media (prefers-reduced-motion: no-preference) {
+    .home {
+      interpolate-size: allow-keywords;
+    }
+    .home details::details-content {
+      block-size: 0;
+      overflow: hidden;
+      transition:
+        block-size 0.4s cubic-bezier(0.22, 1, 0.36, 1),
+        content-visibility 0.4s allow-discrete;
+    }
+    .home details[open]::details-content {
+      block-size: auto;
+    }
+  }
+}
+
+/* Dibujos a mano: los trazos se dibujan en orden y la nota aparece al final. */
+.home .dibujo .nota {
+  transform: rotate(var(--giro, -3deg));
+}
+@media (prefers-reduced-motion: no-preference) {
+  .home .dibujo path {
+    stroke-dasharray: 1;
+    stroke-dashoffset: 1;
+    transition: stroke-dashoffset 0.9s cubic-bezier(0.65, 0, 0.35, 1);
+    transition-delay: calc(var(--d, 0s) + var(--p, 0) * 0.45s);
+  }
+  .home .dibujo[data-visto] path {
+    stroke-dashoffset: 0;
+  }
+  .home .dibujo .nota {
+    opacity: 0;
+    transform: translateY(4px) rotate(var(--giro, -3deg));
+    transition:
+      opacity 0.6s ease,
+      transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+    transition-delay: calc(var(--d, 0s) + 0.5s);
+  }
+  .home .dibujo[data-visto] .nota {
+    opacity: 1;
+    transform: rotate(var(--giro, -3deg));
+  }
 }
 
 @media (prefers-reduced-motion: no-preference) {

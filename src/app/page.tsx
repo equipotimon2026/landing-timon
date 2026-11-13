@@ -1,12 +1,13 @@
 import type { Metadata } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
-import { ArrowDown, LockKeyhole, Plus } from 'lucide-react'
+import { ArrowDown, ArrowRight, LockKeyhole, Plus } from 'lucide-react'
 import './home.css'
 import { Header } from '@/components/home/Header'
 import { Pila } from '@/components/home/Pila'
 import { Aparece } from '@/components/home/Aparece'
 import { Paradas } from '@/components/home/Paradas'
+import { Dibujo, Nota, Trazo } from '@/components/home/Dibujo'
 import { Areas } from '@/components/home/Areas'
 import { Contador } from '@/components/home/Contador'
 import { Anotalo } from '@/components/home/Anotalo'
@@ -78,24 +79,51 @@ export default function Home() {
           <Aparece>
             <p className={ojo}>Para madres y padres</p>
             <h1 className="display mx-auto mt-4 max-w-[14ch] text-[clamp(2.75rem,6.2vw,5.4rem)]">
-              Que elija su camino conociendo el mundo.
+              Que elija su camino conociendo{' '}
+              <span className="relative inline-block whitespace-nowrap">
+                el mundo
+                <Dibujo retraso={0.9} className="absolute -bottom-[0.2em] left-[-3%] h-[0.3em] w-[106%]">
+                  <svg viewBox="0 0 300 24" preserveAspectRatio="none" className="h-full w-full overflow-visible">
+                    <Trazo d="M4 15 C 70 6, 150 4, 214 8 S 284 15, 296 10" ancho={4} />
+                    <Trazo d="M40 20 C 110 15, 200 14, 262 18" ancho={2.5} orden={1} />
+                  </svg>
+                </Dibujo>
+              </span>
+              .
             </h1>
             <p className="mx-auto mt-5 max-w-[34ch] text-[17px] leading-[1.5] sm:mt-6 text-[var(--texto2)] sm:text-[21px]">
               Se conoce, conoce el trabajo real y elige con fundamento. En dos semanas, desde casa.
             </p>
             <div className="mt-7 flex flex-col items-center justify-center gap-4 sm:mt-9 sm:flex-row sm:gap-7">
-              <a href="#anotalo" className="btn">
-                Quiero que mi hijo lo haga
-              </a>
+              <span className="relative">
+                <Dibujo retraso={1.6} className="absolute right-[calc(100%+10px)] top-1/2 hidden h-[86px] w-[230px] -translate-y-[62%] lg:block">
+                  <Nota className="left-0 top-0 [--giro:-4deg]">puede empezar gratis</Nota>
+                  <svg viewBox="0 0 230 86" className="absolute inset-0 h-full w-full overflow-visible">
+                    <Trazo d="M92 32 C 120 70, 170 76, 214 58" color="ocean" ancho={2.2} />
+                    <Trazo d="M199 50 L216 57 L204 71" color="ocean" ancho={2.2} orden={1.6} />
+                  </svg>
+                </Dibujo>
+                <a href="#anotalo" className="btn group">
+                  Quiero que mi hijo lo haga
+                  <ArrowRight size={18} aria-hidden className="transition-transform duration-300 group-hover:translate-x-0.5" />
+                </a>
+              </span>
               <a
                 href="#informe"
-                className="inline-flex items-center gap-1.5 text-[16px] font-semibold text-[var(--rumbo)] underline-offset-4 hover:underline"
+                className="group inline-flex items-center gap-1.5 text-[16px] font-semibold text-[var(--rumbo)] underline-offset-[6px] hover:underline"
               >
-                Ver el informe <ArrowDown size={16} aria-hidden />
+                Ver el informe <ArrowDown size={16} aria-hidden className="transition-transform duration-300 group-hover:translate-y-0.5" />
               </a>
             </div>
           </Aparece>
-          <div className="-mt-6 sm:-mt-10">
+          <div className="relative -mt-6 sm:-mt-10">
+            <Dibujo retraso={2.2} className="absolute right-[7%] top-[6%] z-10 hidden h-[130px] w-[220px] md:block xl:right-[12%]">
+              <Nota className="right-0 top-0 [--giro:4deg]">su informe, tal cual lo ve</Nota>
+              <svg viewBox="0 0 220 130" className="absolute inset-0 h-full w-full overflow-visible">
+                <Trazo d="M150 34 C 136 78, 98 104, 30 112" color="ocean" ancho={2.2} />
+                <Trazo d="M46 99 L28 112 L47 124" color="ocean" ancho={2.2} orden={1.6} />
+              </svg>
+            </Dibujo>
             <Pila />
           </div>
         </section>
@@ -107,7 +135,14 @@ export default function Home() {
               Nadie conoce todas las opciones a los 17.
             </p>
             <p className="mx-auto mt-6 max-w-[36ch] text-[18px] text-[var(--texto2)]">
-              <strong className="font-semibold text-[var(--texto)]">4 de cada 10</strong> ingresantes deja la carrera en el
+              <strong className="relative mr-2 inline-block whitespace-nowrap font-semibold text-[var(--texto)]">
+                4 de cada 10
+                <Dibujo retraso={0.5} className="absolute -inset-x-4 -inset-y-2.5">
+                  <svg viewBox="0 0 200 60" preserveAspectRatio="none" className="h-full w-full overflow-visible">
+                    <Trazo d="M152 7 C 104 0, 34 4, 12 24 C -4 42, 52 58, 118 56 C 172 54, 199 40, 190 22 C 182 8, 146 3, 112 6" ancho={2.5} />
+                  </svg>
+                </Dibujo>
+              </strong> ingresantes deja la carrera en el
               primer año.
             </p>
             <p className="mt-2 text-[12.5px] text-[var(--tenue)]">SPU, cohorte 2019 · vía iProfesional</p>
@@ -238,9 +273,12 @@ export default function Home() {
           <ul className="mt-12 grid gap-4 md:grid-cols-3">
             {LO_QUE_DICEN.map((c) => (
               <li key={c.quien} className="flex flex-col justify-between rounded-[28px] bg-[var(--gris)] p-8">
-                <blockquote className="text-[21px] font-medium leading-[1.4] tracking-[-0.02em]">
-                  {c.texto.replace(/==/g, '')}
-                </blockquote>
+                <div>
+                  <span aria-hidden className="block h-7 font-[family-name:var(--font-serif)] text-[64px] leading-[0.9] text-[#c97f5e]">“</span>
+                  <blockquote className="mt-3 text-[21px] font-medium leading-[1.4] tracking-[-0.02em]">
+                    {c.texto.replace(/==/g, '').replace(/[“”]/g, '')}
+                  </blockquote>
+                </div>
                 <p className="mt-10 text-[14px] leading-snug">
                   <span className="block font-semibold">{c.quien}</span>
                   <span className="text-[var(--tenue)]">{c.rol}</span>
