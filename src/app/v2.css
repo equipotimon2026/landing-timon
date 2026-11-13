@@ -1,64 +1,80 @@
-/* Landing v2 (13/11/2026): la carta de navegación.
+/* Landing v2: tokens EXACTOS del Brand Kit de Timon ("Brand - Timon.html",
+ * sistema en producción, v1 2026). Paleta Crema + Navy, sin morados.
  *
- * Todo vive bajo `.v2` para no tocar las otras páginas (/programa, /mapa,
- * /test siguen con su estilo). Tokens:
- *   tinta   #14203A  texto y bandas oscuras (el navy de la marca, más hondo)
- *   papel   #F2F5F9  fondo: papel de carta, frío, no crema
- *   mar     #DDE7F4  bandas suaves y superficies
- *   rumbo   #3B5FD4  el azul de la marca, solo para acciones y la ruta
- *   faro    #FFD45C  marca de lápiz, muy poco
- *   grafito #586277  texto secundario
+ *   papel  = Cream        #F5EDE0  fondo principal
+ *   elev   = Cream Elev   #FBF5EA  superficies elevadas
+ *   mar    = Cream Deep   #EDE2CF  fondos secundarios
+ *   tinta  = Navy         #0F1F36  texto y marca
+ *   tinta2 = Navy Mid     #1A2D4D
+ *   rumbo  = Ocean        #1E5BA0  CTAs y links (acento primario)
+ *   rumbo-hondo = Ocean Deep #1B5390
+ *   cielo  = Ocean Light  #4F84C2  sobre navy
+ *   faro   = Terra        #C97F5E  acento cálido (secundario)
+ *   grafito= Hueso        #6B7B96  texto secundario
+ *   linea  = Border Cream #E6DCC9
+ *
+ * Tipografía: Plus Jakarta Sans (titulares 300, tracking -0.03em; cuerpo 400
+ * 17/1.65) y JetBrains Mono 500 en mayúscula con 0.16em para etiquetas.
  */
 .v2 {
-  --tinta: #14203a;
-  --papel: #f2f5f9;
-  --mar: #dde7f4;
-  --rumbo: #3b5fd4;
-  --rumbo-hondo: #2b48a9;
-  --faro: #ffd45c;
-  --grafito: #586277;
-  --linea: rgba(20, 32, 58, 0.12);
+  --papel: #f5ede0;
+  --elev: #fbf5ea;
+  --mar: #ede2cf;
+  --tinta: #0f1f36;
+  --tinta2: #1a2d4d;
+  --rumbo: #1e5ba0;
+  --rumbo-hondo: #1b5390;
+  --cielo: #4f84c2;
+  --faro: #c97f5e;
+  --faro-suave: #e2a88b;
+  --grafito: #6b7b96;
+  --linea: #e6dcc9;
+  --linea-fuerte: #d8ccb4;
   font-family: var(--font-jakarta), system-ui, sans-serif;
   background: var(--papel);
   color: var(--tinta);
   font-size: 17px;
-  line-height: 1.6;
+  line-height: 1.65;
+  position: relative;
+  isolation: isolate;
 }
 
-.v2 .mano {
-  font-family: var(--font-mano), cursive;
-  font-weight: 700;
-  line-height: 1.15;
+/* Grano de papel, apenas perceptible: le saca lo "digital" al crema. */
+.v2::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  pointer-events: none;
+  opacity: 0.05;
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
-/* Titulares: la tipografía es la protagonista. */
 .v2 .display {
-  font-weight: 800;
-  letter-spacing: -0.032em;
-  line-height: 0.98;
+  font-weight: 300;
+  letter-spacing: -0.035em;
+  line-height: 1;
   text-wrap: balance;
 }
 .v2 .titulo {
-  font-weight: 800;
-  letter-spacing: -0.028em;
-  line-height: 1.04;
+  font-weight: 300;
+  letter-spacing: -0.03em;
+  line-height: 1.05;
   text-wrap: balance;
 }
-
-/* Cuadrícula de carta náutica de fondo, muy tenue. */
-.v2 .carta-fondo {
-  background-image:
-    linear-gradient(var(--linea) 1px, transparent 1px),
-    linear-gradient(90deg, var(--linea) 1px, transparent 1px);
-  background-size: 56px 56px;
-  background-position: -1px -1px;
-  mask-image: radial-gradient(ellipse at 70% 40%, #000 30%, transparent 75%);
+.v2 .etiqueta {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-weight: 500;
+  font-size: 12px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
 }
 
 .v2 :focus-visible {
-  outline: 3px solid var(--rumbo);
+  outline: 2px solid var(--rumbo);
   outline-offset: 3px;
-  border-radius: 6px;
+  border-radius: 8px;
 }
 
 .v2 .btn {
@@ -66,83 +82,53 @@
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
-  min-height: 56px;
+  min-height: 54px;
   padding: 0 1.75rem;
   border-radius: 999px;
   background: var(--rumbo);
   color: #fff;
-  font-weight: 700;
-  font-size: 17px;
-  letter-spacing: -0.01em;
-  transition: background-color 0.2s, transform 0.2s;
+  font-weight: 600;
+  font-size: 16px;
+  letter-spacing: -0.005em;
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.25) inset, 0 10px 30px -12px rgba(30, 91, 160, 0.6);
+  transition: background-color 0.25s, transform 0.25s, box-shadow 0.25s;
 }
 .v2 .btn:hover {
   background: var(--rumbo-hondo);
+  transform: translateY(-1px);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.25) inset, 0 16px 36px -14px rgba(30, 91, 160, 0.7);
 }
 .v2 .btn:active {
-  transform: translateY(1px);
+  transform: translateY(0);
 }
 
-/* ── La carta del hero: el único movimiento que no dispara el usuario. ── */
-.v2 .tile {
-  filter: grayscale(1) contrast(0.9) brightness(1.08);
-  opacity: 0.5;
-  transition: filter 0.6s, opacity 0.6s;
-}
-.v2 .tile-on {
-  animation: v2-encender 0.7s ease-out both;
-  animation-delay: var(--d, 0s);
-}
-.v2 .ruta-trazo {
-  stroke-dasharray: 1;
-  stroke-dashoffset: 1;
-  animation: v2-trazar 2.6s cubic-bezier(0.65, 0, 0.35, 1) 0.35s forwards;
-}
-.v2 .aparece {
-  opacity: 0;
-  animation: v2-aparecer 0.5s ease-out forwards;
-  animation-delay: var(--d, 0s);
+/* Ventana de app para los mockups del producto. */
+.v2 .ventana {
+  border-radius: 18px;
+  background: var(--elev);
+  box-shadow:
+    0 0 0 1px rgba(15, 31, 54, 0.06),
+    0 2px 4px rgba(15, 31, 54, 0.04),
+    0 30px 80px -30px rgba(15, 31, 54, 0.35);
+  overflow: hidden;
 }
 
-@keyframes v2-trazar {
-  to {
-    stroke-dashoffset: 0;
-  }
+/* Marquesina de las 16 áreas (patrón Marquee de Magic UI, en CSS). */
+.v2 .marquesina {
+  display: flex;
+  width: max-content;
+  gap: 16px;
+  animation: v2-marquesina var(--dur, 60s) linear infinite;
 }
-@keyframes v2-encender {
-  from {
-    filter: grayscale(1) contrast(0.9) brightness(1.08);
-    opacity: 0.5;
-  }
-  to {
-    filter: none;
-    opacity: 1;
-  }
+.v2 .marquesina[data-reverse] {
+  animation-direction: reverse;
 }
-@keyframes v2-aparecer {
-  from {
-    opacity: 0;
-    transform: translateY(4px);
-  }
-  to {
-    opacity: 1;
-    transform: none;
-  }
+.v2 .marquesina-caja:hover .marquesina {
+  animation-play-state: paused;
 }
-
-@media (prefers-reduced-motion: reduce) {
-  .v2 .ruta-trazo {
-    animation: none;
-    stroke-dashoffset: 0;
-  }
-  .v2 .tile-on,
-  .v2 .aparece {
-    animation: none;
-    filter: none;
-    opacity: 1;
-  }
-  .v2 * {
-    scroll-behavior: auto !important;
+@keyframes v2-marquesina {
+  to {
+    transform: translateX(calc(-50% - 8px));
   }
 }
 
@@ -155,4 +141,13 @@
 }
 .v2 details[open] .faq-signo {
   transform: rotate(45deg);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .v2 .marquesina {
+    animation: none;
+  }
+  .v2 .marquesina-caja {
+    overflow-x: auto;
+  }
 }

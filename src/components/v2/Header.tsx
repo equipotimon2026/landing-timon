@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from 'react'
 import Link from 'next/link'
 import { ChevronDown } from 'lucide-react'
-import { MarcaTimon } from '@/components/landing/Marca'
+import { Isologo } from './Isotipo'
 import { URL_EMPEZAR, URL_ENTRAR } from '@/lib/landing'
 
 const QUIEN = [
@@ -38,18 +38,18 @@ export function Header() {
   }, [abierto])
 
   return (
-    <header className="sticky top-0 z-40 border-b border-[var(--linea)] bg-[rgba(242,245,249,0.86)] backdrop-blur-md">
-      <div className="mx-auto flex h-16 max-w-[1240px] items-center gap-4 px-4 sm:h-[72px] sm:px-8">
+    <header className="sticky top-3 z-40 px-3 sm:top-4 sm:px-6">
+      <div className="mx-auto flex h-14 max-w-[1180px] items-center gap-4 rounded-full border border-[var(--linea)] bg-[rgba(251,245,234,0.78)] pl-5 pr-2 shadow-[0_10px_30px_-18px_rgba(15,31,54,0.35)] backdrop-blur-xl sm:h-16 sm:pl-6">
         <Link href="/" aria-label="Timon, inicio" className="shrink-0">
-          <MarcaTimon />
+          <Isologo />
         </Link>
 
         <nav className="ml-auto flex items-center gap-1 text-[15px] font-medium sm:gap-2" aria-label="Principal">
-          <a href="#red" className="hidden rounded-full px-3 py-2 hover:bg-[var(--mar)] lg:block">
+          <a href="#red" className="hidden rounded-full px-3 py-2 text-[var(--tinta2)] transition-colors hover:bg-[var(--mar)] lg:block">
             La red
           </a>
-          <a href="#recorrido" className="hidden rounded-full px-3 py-2 hover:bg-[var(--mar)] lg:block">
-            Cómo funciona
+          <a href="#informe" className="hidden rounded-full px-3 py-2 text-[var(--tinta2)] transition-colors hover:bg-[var(--mar)] lg:block">
+            El informe
           </a>
           <div ref={caja} className="relative">
             <button
@@ -91,7 +91,7 @@ export function Header() {
           </div>
           <a
             href="#anotalo"
-            className="ml-1 inline-flex h-11 items-center rounded-full bg-[var(--rumbo)] px-4 text-[14.5px] font-bold text-white transition-colors hover:bg-[var(--rumbo-hondo)] sm:px-5"
+            className="ml-1 inline-flex h-10 items-center rounded-full bg-[var(--rumbo)] px-4 text-[14px] font-semibold text-white transition-colors hover:bg-[var(--rumbo-hondo)] sm:h-11 sm:px-5"
           >
             <span className="sm:hidden">Anotalo</span>
             <span className="hidden sm:inline">Quiero que mi hijo lo haga</span>

@@ -69,13 +69,13 @@ export function Anotalo() {
   }
 
   const input =
-    'h-[52px] w-full rounded-xl border border-[var(--linea)] bg-[var(--papel)] px-4 text-[16px] outline-none transition-colors placeholder:text-[#9AA3B5] focus:border-[var(--rumbo)] focus:bg-white'
-  const label = 'mb-1.5 block text-[14px] font-semibold'
+    'h-[52px] w-full rounded-xl border border-[var(--linea)] bg-[var(--papel)] px-4 text-[16px] text-[var(--tinta)] outline-none transition-[border-color,background-color,box-shadow] duration-200 placeholder:text-[#A9B3C4] hover:border-[var(--linea-fuerte)] focus:border-[var(--rumbo)] focus:bg-white focus:shadow-[0_0_0_4px_rgba(30,91,160,0.12)]'
+  const label = 'mb-1.5 block text-[14px] font-medium text-[var(--tinta2)]'
 
   return (
     <div
       ref={caja}
-      className="scroll-mt-24 rounded-[26px] bg-white p-5 text-[var(--tinta)] shadow-[0_40px_100px_-40px_rgba(0,0,0,0.55)] sm:p-9"
+      className="scroll-mt-24 rounded-[26px] bg-[var(--elev)] p-5 text-[var(--tinta)] shadow-[0_40px_100px_-40px_rgba(0,0,0,0.55)] sm:p-9"
     >
       {estado.paso === 'listo' ? (
         <Listo token={estado.token} />
@@ -88,7 +88,7 @@ export function Anotalo() {
           </div>
           <div className="grid gap-x-6 gap-y-6 md:grid-cols-2">
             <fieldset className="space-y-4">
-              <legend className="mb-3 text-[17px] font-bold">Tus datos</legend>
+              <legend className="etiqueta mb-4 text-[var(--grafito)]">Tus datos</legend>
               <div>
                 <label htmlFor="p-nombre" className={label}>Nombre</label>
                 <input id="p-nombre" required maxLength={LIMITES.nombre} autoComplete="name" value={datos.parentName} onChange={set('parentName')} className={input} />
@@ -103,7 +103,7 @@ export function Anotalo() {
               </div>
             </fieldset>
             <fieldset className="space-y-4 border-t border-[var(--linea)] pt-6 md:border-l md:border-t-0 md:pl-6 md:pt-0">
-              <legend className="mb-3 text-[17px] font-bold">Tu hijo o hija</legend>
+              <legend className="etiqueta mb-4 text-[var(--grafito)]">Tu hijo o hija</legend>
               <div>
                 <label htmlFor="p-hijo" className={label}>Nombre</label>
                 <input id="p-hijo" required maxLength={LIMITES.nombre} autoComplete="off" value={datos.childName} onChange={set('childName')} className={input} />
@@ -117,9 +117,6 @@ export function Anotalo() {
                   ))}
                 </select>
               </div>
-              <p className="mano pt-1 text-[18px] text-[var(--grafito)]">
-                nada más: el resto lo hace él
-              </p>
             </fieldset>
           </div>
 
@@ -205,12 +202,12 @@ function Listo({ token }: { token: string | null }) {
 
   return (
     <div role="status">
-      <p className="titulo text-[28px] sm:text-[34px]">Listo, ya está la cuenta de tu familia</p>
+      <p className="titulo text-[30px] sm:text-[38px]">Listo, ya está la cuenta de tu familia</p>
       <p className="mt-2 text-[17px] text-[var(--grafito)]">Elegí cómo sigue.</p>
 
       <div className="mt-7 grid gap-4 md:grid-cols-2">
         <div className="flex flex-col rounded-[20px] bg-[var(--tinta)] p-6 text-white">
-          <p className="text-[20px] font-bold">Pagar ahora</p>
+          <p className="text-[21px] font-medium tracking-[-0.01em]">Pagar ahora</p>
           <p className="mt-2 flex-1 text-[15px] leading-[1.55] text-white/75">
             Tu hijo entra con la cuenta ya desbloqueada y ve el informe completo al terminar.
           </p>
@@ -220,7 +217,7 @@ function Listo({ token }: { token: string | null }) {
         </div>
 
         <div className="flex flex-col rounded-[20px] border border-[var(--linea)] p-6">
-          <p className="text-[20px] font-bold">Empezar gratis</p>
+          <p className="text-[21px] font-medium tracking-[-0.01em]">Empezar gratis</p>
           <p className="mt-2 text-[15px] leading-[1.55] text-[var(--grafito)]">
             Mandale este link a tu hijo. Con él crea su cuenta, ya unida a la tuya.
           </p>
