@@ -1,0 +1,158 @@
+/* Landing v2 (13/11/2026): la carta de navegación.
+ *
+ * Todo vive bajo `.v2` para no tocar las otras páginas (/programa, /mapa,
+ * /test siguen con su estilo). Tokens:
+ *   tinta   #14203A  texto y bandas oscuras (el navy de la marca, más hondo)
+ *   papel   #F2F5F9  fondo: papel de carta, frío, no crema
+ *   mar     #DDE7F4  bandas suaves y superficies
+ *   rumbo   #3B5FD4  el azul de la marca, solo para acciones y la ruta
+ *   faro    #FFD45C  marca de lápiz, muy poco
+ *   grafito #586277  texto secundario
+ */
+.v2 {
+  --tinta: #14203a;
+  --papel: #f2f5f9;
+  --mar: #dde7f4;
+  --rumbo: #3b5fd4;
+  --rumbo-hondo: #2b48a9;
+  --faro: #ffd45c;
+  --grafito: #586277;
+  --linea: rgba(20, 32, 58, 0.12);
+  font-family: var(--font-jakarta), system-ui, sans-serif;
+  background: var(--papel);
+  color: var(--tinta);
+  font-size: 17px;
+  line-height: 1.6;
+}
+
+.v2 .mano {
+  font-family: var(--font-mano), cursive;
+  font-weight: 700;
+  line-height: 1.15;
+}
+
+/* Titulares: la tipografía es la protagonista. */
+.v2 .display {
+  font-weight: 800;
+  letter-spacing: -0.032em;
+  line-height: 0.98;
+  text-wrap: balance;
+}
+.v2 .titulo {
+  font-weight: 800;
+  letter-spacing: -0.028em;
+  line-height: 1.04;
+  text-wrap: balance;
+}
+
+/* Cuadrícula de carta náutica de fondo, muy tenue. */
+.v2 .carta-fondo {
+  background-image:
+    linear-gradient(var(--linea) 1px, transparent 1px),
+    linear-gradient(90deg, var(--linea) 1px, transparent 1px);
+  background-size: 56px 56px;
+  background-position: -1px -1px;
+  mask-image: radial-gradient(ellipse at 70% 40%, #000 30%, transparent 75%);
+}
+
+.v2 :focus-visible {
+  outline: 3px solid var(--rumbo);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+.v2 .btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  min-height: 56px;
+  padding: 0 1.75rem;
+  border-radius: 999px;
+  background: var(--rumbo);
+  color: #fff;
+  font-weight: 700;
+  font-size: 17px;
+  letter-spacing: -0.01em;
+  transition: background-color 0.2s, transform 0.2s;
+}
+.v2 .btn:hover {
+  background: var(--rumbo-hondo);
+}
+.v2 .btn:active {
+  transform: translateY(1px);
+}
+
+/* ── La carta del hero: el único movimiento que no dispara el usuario. ── */
+.v2 .tile {
+  filter: grayscale(1) contrast(0.9) brightness(1.08);
+  opacity: 0.5;
+  transition: filter 0.6s, opacity 0.6s;
+}
+.v2 .tile-on {
+  animation: v2-encender 0.7s ease-out both;
+  animation-delay: var(--d, 0s);
+}
+.v2 .ruta-trazo {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: v2-trazar 2.6s cubic-bezier(0.65, 0, 0.35, 1) 0.35s forwards;
+}
+.v2 .aparece {
+  opacity: 0;
+  animation: v2-aparecer 0.5s ease-out forwards;
+  animation-delay: var(--d, 0s);
+}
+
+@keyframes v2-trazar {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+@keyframes v2-encender {
+  from {
+    filter: grayscale(1) contrast(0.9) brightness(1.08);
+    opacity: 0.5;
+  }
+  to {
+    filter: none;
+    opacity: 1;
+  }
+}
+@keyframes v2-aparecer {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .v2 .ruta-trazo {
+    animation: none;
+    stroke-dashoffset: 0;
+  }
+  .v2 .tile-on,
+  .v2 .aparece {
+    animation: none;
+    filter: none;
+    opacity: 1;
+  }
+  .v2 * {
+    scroll-behavior: auto !important;
+  }
+}
+
+.v2 details > summary {
+  list-style: none;
+  cursor: pointer;
+}
+.v2 details > summary::-webkit-details-marker {
+  display: none;
+}
+.v2 details[open] .faq-signo {
+  transform: rotate(45deg);
+}
