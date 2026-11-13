@@ -10,8 +10,9 @@ const APP_TIMEOUT_MS = 8000
 type Resultado = { ok: true; token?: string } | { ok: false; sinConfig: boolean }
 
 /**
- * Freno contra bots, sin infraestructura: 5 envíos cada 10 minutos por IP y
- * por mail. Vive en la memoria de cada instancia, así que es best-effort (en
+ * Freno contra bots, sin infraestructura: 5 envíos cada 10 minutos por IP.
+ * Por mail no: con un mail ajeno, cualquiera podría bloquearle el envío al
+ * padre real. Vive en la memoria de cada instancia, así que es best-effort (en
  * serverless se reparte entre instancias); alcanza contra un script tonto que
  * dispara en bucle. Lo de verdad (Turnstile o un límite compartido) queda
  * para cuando haya tráfico de pauta.
@@ -55,7 +56,7 @@ export async function POST(req: NextRequest) {
   }
 
   const ip = req.headers.get('x-real-ip') ?? req.headers.get('x-forwarded-for')?.split(',')[0]?.trim() ?? 'sin-ip'
-  if (limitado(`ip:${ip}`) || limitado(`mail:${campo('parentEmail').toLowerCase()}`)) {
+  if (limitado(`ip:${ip}`)) {
     return NextResponse.json(
       { ok: false, error: 'Recibimos varios envíos seguidos. Probá de nuevo en unos minutos', fallbackEmail: TO },
       { status: 429 }
