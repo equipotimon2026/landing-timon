@@ -32,7 +32,7 @@ export function Isotipo({ size = 28, className = '', trazo = 3 }: { size?: numbe
 /** Isologo: isotipo + wordmark "Timon" en Jakarta, como en la navbar del producto. */
 export function Isologo({ tono = 'tinta' }: { tono?: 'tinta' | 'crema' }) {
   return (
-    <span className={`inline-flex items-center gap-2 ${tono === 'tinta' ? 'text-[var(--tinta)]' : 'text-[var(--papel)]'}`}>
+    <span className={`inline-flex items-center gap-2 ${tono === 'tinta' ? 'text-[#0f1f36]' : 'text-[#f5ede0]'}`}>
       <Isotipo size={26} />
       <span className="text-[21px] font-medium tracking-[-0.02em]">Timon</span>
     </span>

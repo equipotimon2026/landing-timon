@@ -18,30 +18,38 @@ const ACTOS = [
   { n: 'Acto 3', titulo: 'Dónde estudiarlos.', apoyo: 'Universidades según dónde vive y su presupuesto.' },
 ]
 
+function Marco({ children, className = '' }: { children: React.ReactNode; className?: string }) {
+  return (
+    <div className={`objeto ${className}`}>
+      <div className="objeto-in">{children}</div>
+    </div>
+  )
+}
+
 function Pantalla({ i }: { i: number }) {
   if (i === 0) {
     return (
       <div className="relative">
-        <div className="ventana">
+        <Marco>
           <Image src="/producto/esencia-card.webp" alt="El informe: la esencia del perfil, con sus rasgos principales" width={1380} height={1110} sizes="(min-width: 1024px) 620px, 100vw" className="h-auto w-full" />
-        </div>
-        <div className="ventana absolute -bottom-10 -right-4 w-[72%] sm:-right-10">
+        </Marco>
+        <Marco className="absolute -bottom-10 -right-4 w-[72%] sm:-right-10">
           <Image src="/producto/esencia-frase.webp" alt="El informe: quién es en una frase" width={1380} height={710} sizes="(min-width: 1024px) 460px, 70vw" className="h-auto w-full" />
-        </div>
+        </Marco>
       </div>
     )
   }
   if (i === 1) {
     return (
-      <div className="ventana">
+      <Marco>
         <Image src="/producto/caminos-card.webp" alt="El informe: los caminos principales, ordenados por compatibilidad" width={1620} height={1020} sizes="(min-width: 1024px) 640px, 100vw" className="h-auto w-full" />
-      </div>
+      </Marco>
     )
   }
   return (
-    <div className="ventana">
+    <Marco>
       <Image src="/producto/universidades.jpg" alt="El informe: dónde estudiar, con universidades filtradas" width={1100} height={721} sizes="(min-width: 1024px) 640px, 100vw" className="h-auto w-full" />
-    </div>
+    </Marco>
   )
 }
 
@@ -65,7 +73,7 @@ export function Informe() {
                 <li key={a.n} className={`transition-opacity duration-500 ${i === activo ? 'opacity-100' : 'opacity-25'}`}>
                   <p className="etiqueta text-[var(--rumbo)]">{a.n}</p>
                   <h3 className="titulo mt-2 text-[clamp(2.4rem,4.2vw,3.8rem)]">{a.titulo}</h3>
-                  <p className={`mt-2 text-[17px] text-[var(--grafito)] transition-all duration-500 ${i === activo ? 'max-h-10 opacity-100' : 'max-h-0 opacity-0'}`}>
+                  <p className={`mt-2 text-[17px] text-[var(--texto2)] transition-all duration-500 ${i === activo ? 'max-h-10 opacity-100' : 'max-h-0 opacity-0'}`}>
                     {a.apoyo}
                   </p>
                 </li>
@@ -75,9 +83,10 @@ export function Informe() {
               <AnimatePresence mode="wait" initial={false}>
                 <motion.div
                   key={activo}
-                  initial={quieto ? false : { opacity: 0, y: 40, scale: 0.98 }}
-                  animate={{ opacity: 1, y: 0, scale: 1 }}
-                  exit={quieto ? undefined : { opacity: 0, y: -30, scale: 0.98 }}
+                  style={{ transformPerspective: 1400 }}
+                  initial={quieto ? false : { opacity: 0, y: 50, rotateX: 14, scale: 0.96 }}
+                  animate={{ opacity: 1, y: 0, rotateX: 0, scale: 1 }}
+                  exit={quieto ? undefined : { opacity: 0, y: -40, rotateX: -8, scale: 0.97 }}
                   transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
                 >
                   <Pantalla i={activo} />
@@ -94,7 +103,7 @@ export function Informe() {
           <div key={a.n}>
             <p className="etiqueta text-[var(--rumbo)]">{a.n}</p>
             <h3 className="titulo mt-2 text-[2.4rem]">{a.titulo}</h3>
-            <p className="mt-2 text-[16px] text-[var(--grafito)]">{a.apoyo}</p>
+            <p className="mt-2 text-[16px] text-[var(--texto2)]">{a.apoyo}</p>
             <div className={`mt-7 ${i === 0 ? 'pb-10' : ''}`}>
               <Pantalla i={i} />
             </div>

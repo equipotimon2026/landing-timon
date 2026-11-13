@@ -69,13 +69,13 @@ export function Anotalo() {
   }
 
   const input =
-    'h-[52px] w-full rounded-xl border border-[var(--linea)] bg-[var(--papel)] px-4 text-[16px] text-[var(--tinta)] outline-none transition-[border-color,background-color,box-shadow] duration-200 placeholder:text-[#A9B3C4] hover:border-[var(--linea-fuerte)] focus:border-[var(--rumbo)] focus:bg-white focus:shadow-[0_0_0_4px_rgba(30,91,160,0.12)]'
+    'h-[52px] w-full rounded-xl border border-[#e3e7ee] bg-[#f7f8fa] px-4 text-[16px] text-[var(--tinta)] outline-none transition-[border-color,background-color,box-shadow] duration-200 placeholder:text-[#A9B3C4] hover:border-[#cfd6e0] focus:border-[var(--rumbo)] focus:bg-white focus:shadow-[0_0_0_4px_rgba(30,91,160,0.12)]'
   const label = 'mb-1.5 block text-[14px] font-medium text-[var(--tinta2)]'
 
   return (
     <div
       ref={caja}
-      className="scroll-mt-24 rounded-[26px] bg-[var(--elev)] p-5 text-[var(--tinta)] shadow-[0_40px_100px_-40px_rgba(0,0,0,0.55)] sm:p-9"
+      className="scroll-mt-24 rounded-[26px] bg-white p-5 text-[var(--tinta)] shadow-[0_30px_80px_-36px_rgba(15,31,54,0.35)] sm:p-9"
     >
       {estado.paso === 'listo' ? (
         <Listo token={estado.token} />
@@ -102,7 +102,7 @@ export function Anotalo() {
                 <input id="p-mail" required type="email" maxLength={LIMITES.email} autoComplete="email" value={datos.parentEmail} onChange={set('parentEmail')} className={input} />
               </div>
             </fieldset>
-            <fieldset className="space-y-4 border-t border-[var(--linea)] pt-6 md:border-l md:border-t-0 md:pl-6 md:pt-0">
+            <fieldset className="space-y-4 max-md:mt-2 md:border-l md:border-[var(--linea)] md:pl-6">
               <legend className="etiqueta mb-4 text-[var(--grafito)]">Tu hijo o hija</legend>
               <div>
                 <label htmlFor="p-hijo" className={label}>Nombre</label>

@@ -33,7 +33,7 @@ function Fila({ items, reverse }: { items: [string, string][]; reverse?: boolean
           >
             <Image src={`/mapa/${id}.jpg`} alt="" fill sizes="230px" className="object-cover" />
             <div className="absolute inset-0 bg-gradient-to-t from-[rgba(15,31,54,0.75)] via-[rgba(15,31,54,0.05)] to-transparent" />
-            <span className="absolute bottom-4 left-4 right-4 text-[15px] font-medium leading-tight text-[var(--papel)] sm:text-[17px]">
+            <span className="absolute bottom-4 left-4 right-4 text-[15px] font-medium leading-tight text-white sm:text-[17px]">
               {nombre}
             </span>
           </li>
