@@ -7,7 +7,7 @@ import { Isotipo } from '@/components/home/Isotipo'
 import { URL_ENTRAR } from '@/lib/landing'
 
 const LINKS = [
-  { href: '#modulos', texto: 'El programa' },
+  { href: '#modulos', texto: 'La red' },
   { href: '#como-funciona', texto: 'Cómo funciona' },
   { href: '#historia', texto: 'Quiénes somos' },
   { href: '#preguntas', texto: 'Preguntas' },

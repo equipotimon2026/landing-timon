@@ -16,8 +16,8 @@ export function Modulos() {
   return (
     <section id="modulos" className="mx-auto max-w-[1440px] scroll-mt-20 px-5 pb-20 lg:px-16 lg:pb-28">
       <h2 className="max-w-[24ch] text-[clamp(2rem,3.4vw,3rem)] font-medium leading-[1.08] tracking-[-0.04em] text-[var(--navy)]">
-        Todo el recorrido, en un solo lugar.{' '}
-        <span className="text-[var(--tenue)]">Para que decida con lo que vio, no con lo que le contaron.</span>
+        Timon está conectado con quienes viven cada carrera.{' '}
+        <span className="text-[var(--tenue)]">Tu hijo entra a esa red. Así es como entra.</span>
       </h2>
       <div className="mt-7 flex flex-wrap gap-2">
         <a href="#anotalo" className="inline-flex h-11 items-center rounded-[6px] bg-[var(--primario)] px-5 text-[15px] font-semibold text-white hover:bg-[var(--primario-hondo)]">

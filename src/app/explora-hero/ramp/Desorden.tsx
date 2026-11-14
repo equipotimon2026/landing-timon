@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { motion, useReducedMotion, useScroll, useTransform, type MotionValue } from 'motion/react'
 import { Recorte } from '../app-a/Recorte'
-import { CORTES } from './datos'
+import { CORTES, DONDE_SALUD } from './datos'
 
 /** Lo que hoy junta una familia para decidir, desparramado. */
 const PIEZAS = [
@@ -31,6 +31,32 @@ function Pieza({ p, avance, i, escala }: { p: (typeof PIEZAS)[number]; avance: M
   )
 }
 
+const CAJA = 'overflow-hidden rounded-[12px] bg-white ring-1 ring-[rgba(15,31,54,0.08)] shadow-[0_30px_60px_-34px_rgba(15,31,54,0.45)]'
+
+/** La red, con piezas reales de la app: un profesional, una universidad y dónde se trabaja. */
+function Red() {
+  return (
+    <>
+      <figure className={CAJA}>
+        <Recorte corte={CORTES.valentina} alt="La profesional del área Educación y Humanidades" sizes="300px" />
+        <figcaption className="px-3 py-2 text-left text-[13px] font-semibold text-[var(--primario)]">Profesionales</figcaption>
+      </figure>
+      <figure className={`${CAJA} max-sm:hidden`}>
+        <Recorte corte={CORTES.uba} alt="Una universidad en el comparador de Timon" sizes="300px" />
+        <figcaption className="px-3 py-2 text-left text-[13px] font-semibold text-[var(--primario)]">Universidades</figcaption>
+      </figure>
+      {/* [CONFIRMAR] empresas: hoy es "dónde se trabaja" por área, sin empresas con nombre. */}
+      <figure className={`${CAJA} max-sm:hidden`}>
+        <div className="p-4 text-left">
+          <p className="text-[11.5px] font-semibold text-[var(--tenue)]">Dónde se trabaja · {DONDE_SALUD.area}</p>
+          <p className="mt-1 text-[13.5px] leading-snug text-[var(--navy)]">{DONDE_SALUD.lugares}</p>
+        </div>
+        <figcaption className="px-3 py-2 text-left text-[13px] font-semibold text-[var(--primario)]">Empresas</figcaption>
+      </figure>
+    </>
+  )
+}
+
 /**
  * La sección de Ramp "sistemas que nunca se hablaron → ahora cantan juntos":
  * queda fija mientras se hace scroll y las piezas sueltas se juntan en una
@@ -55,7 +81,7 @@ export function Desorden() {
   if (quieto) {
     return (
       <section className="mx-auto max-w-[1440px] px-5 py-24 text-center lg:px-16">
-        <h2 className="text-[clamp(2rem,3.4vw,3rem)] font-medium tracking-[-0.04em] text-[var(--navy)]">Con Timon, en un solo lugar.</h2>
+        <h2 className="text-[clamp(2rem,3.4vw,3rem)] font-medium tracking-[-0.04em] text-[var(--navy)]">Con Timon, conectado con quienes lo viven.</h2>
         <div className="mx-auto mt-10 max-w-[560px] overflow-hidden rounded-[12px] ring-1 ring-[var(--borde)]">
           <Recorte corte={CORTES.esencia} alt="El informe de Timon" sizes="560px" />
         </div>
@@ -68,12 +94,12 @@ export function Desorden() {
       <div className="sticky top-16 flex h-[calc(100svh-64px)] flex-col items-center overflow-hidden px-5 pt-14 text-center">
         <div className="relative h-[110px] w-full max-w-[900px]">
           <motion.div style={{ opacity: antes }} className="absolute inset-0">
-            <h2 className="text-[clamp(2rem,3.4vw,3rem)] font-medium tracking-[-0.04em] text-[var(--navy)]">Hoy, todo está desparramado.</h2>
+            <h2 className="text-[clamp(2rem,3.4vw,3rem)] font-medium tracking-[-0.04em] text-[var(--navy)]">Solo, es muy difícil seguirle el ritmo.</h2>
             <p className="mt-3 text-[16px] text-[var(--tenue)]">Así se ve elegir carrera con lo que hay a mano.</p>
           </motion.div>
           <motion.div style={{ opacity: despues }} className="absolute inset-0">
-            <h2 className="text-[clamp(2rem,3.4vw,3rem)] font-medium tracking-[-0.04em] text-[var(--navy)]">Con Timon, en un solo lugar.</h2>
-            <p className="mt-3 text-[16px] text-[var(--tenue)]">Quién es, qué carreras van con él y dónde estudiarlas, en su informe.</p>
+            <h2 className="text-[clamp(2rem,3.4vw,3rem)] font-medium tracking-[-0.04em] text-[var(--navy)]">Con Timon, conectado con quienes lo viven.</h2>
+            <p className="mt-3 text-[16px] text-[var(--tenue)]">Profesionales de cada área, universidades y los lugares donde se trabaja, en un solo recorrido.</p>
           </motion.div>
         </div>
         <ul className="relative w-full flex-1">
@@ -82,9 +108,9 @@ export function Desorden() {
           ))}
           <motion.li
             style={{ opacity: despues, y: informeY }}
-            className="absolute left-1/2 top-[8%] w-[min(560px,88vw)] -translate-x-1/2 overflow-hidden rounded-[12px] bg-white ring-1 ring-[rgba(15,31,54,0.08)] shadow-[0_30px_60px_-34px_rgba(15,31,54,0.45)]"
+            className="absolute left-1/2 top-[6%] grid w-[min(900px,90vw)] -translate-x-1/2 items-start gap-3 sm:grid-cols-3"
           >
-            <Recorte corte={CORTES.esencia} alt="El informe de Timon: los rasgos de un alumno" sizes="560px" />
+            <Red />
           </motion.li>
         </ul>
       </div>

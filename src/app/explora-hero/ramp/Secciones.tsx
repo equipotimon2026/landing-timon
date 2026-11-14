@@ -204,7 +204,7 @@ export function Cierre({ children }: { children: React.ReactNode }) {
       <section id="anotalo" className="scroll-mt-20 rounded-b-[28px] bg-white px-5 pb-20 pt-6 lg:rounded-b-[40px] lg:pb-28">
         <div className="mx-auto max-w-[960px]">
           <h2 className={`text-center ${H2}`}>
-            Que conozca el mundo real. <span className="text-[var(--primario)]">Y elija bien.</span>
+            Que tu hijo no elija solo. <span className="text-[var(--primario)]">Que elija conectado.</span>
           </h2>
           <p className="mx-auto mt-4 max-w-[46ch] text-center text-[17px] text-[var(--tenue)]">
             Dejanos tus datos y los de tu hijo. Te escribimos para contarte cómo sigue.

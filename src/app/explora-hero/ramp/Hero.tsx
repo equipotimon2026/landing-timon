@@ -1,5 +1,6 @@
 'use client'
 
+import { Cifras } from './Cifras'
 import { Escenario } from './Escenario'
 
 /**
@@ -10,14 +11,14 @@ import { Escenario } from './Escenario'
 export function Hero({ alEnviar }: { alEnviar: (email: string) => void }) {
   return (
     <section className="mx-auto max-w-[1440px] px-5 pt-12 sm:pt-16 lg:px-16 lg:pt-[72px]">
-      <p className="text-[13px] text-[var(--tenue)]">
-        Revisado por un equipo profesional de la UBA y evaluado por una psicopedagoga
-      </p>
-      <h1 className="mt-5 text-[clamp(2.6rem,5vw,4.4rem)] font-medium leading-[1.02] tracking-[-0.045em] text-[var(--navy)]">
-        Que conozca el mundo real. <span className="text-[var(--primario)]">Y elija bien.</span>
+      <h1 className="text-[clamp(2.3rem,4.2vw,3.75rem)] font-medium leading-[1.04] tracking-[-0.045em] text-[var(--navy)]">
+        {/* Opciones de titular en docs/referencias-hero/ramp.md. */}
+        El mundo cambia rápido. <br className="hidden md:block" />
+        <span className="text-[var(--primario)]">Que tu hijo esté conectado con quienes lo viven.</span>
       </h1>
-      <p className="mt-4 max-w-[60ch] text-[18px] leading-snug text-[var(--tenue)] sm:text-[19.5px]">
-        Profesionales, empresas y universidades, para que tu hijo decida su futuro sabiendo qué elige.
+      <p className="mt-4 max-w-[62ch] text-[18px] leading-snug text-[var(--tenue)] sm:text-[19.5px]">
+        {/* [CONFIRMAR] "empresas" y "mientras estudia": no existen todavía en la app. */}
+        Timon lo conecta con profesionales, universidades y empresas para que elija su carrera y siga conectado mientras estudia.
       </p>
       <form
         className="mt-8 flex max-w-[500px] flex-col gap-2 rounded-[10px] border border-[var(--borde)] bg-white p-1.5 focus-within:border-[var(--primario)] sm:flex-row sm:items-center"
@@ -45,8 +46,13 @@ export function Hero({ alEnviar }: { alEnviar: (email: string) => void }) {
           Quiero anotar a mi hijo
         </button>
       </form>
+      {/* [PSICÓLOGOS: nombres/matrícula] Lo documentado: tres psicopedagogas evaluaron el producto y un equipo de la UBA revisó la metodología. */}
+      <p className="mt-4 text-[14px] text-[var(--tenue)]">Evaluado por psicopedagogas y revisado por un equipo profesional de la UBA.</p>
       <div className="mt-11">
         <Escenario />
+      </div>
+      <div className="mt-3 overflow-hidden rounded-[12px] border border-[var(--borde)] [&>div]:border-t-0">
+        <Cifras />
       </div>
     </section>
   )

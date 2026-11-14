@@ -33,7 +33,43 @@ export const CORTES = {
   comparador: mac('comparador', 600, 430, 960, 520),
   filtros: mac('comparador', 600, 440, 960, 200),
   indice: mac('informe', 180, 100, 340, 480),
+  diego: mac('investigacion', 1061, 331, 294, 220),
+  ramiro: mac('investigacion', 445, 331, 294, 220),
 }
+
+/**
+ * Lugares de trabajo de un área, tal como los cuenta el módulo de
+ * profesionales de la app (lib/mundos.ts, campo "donde"). Es lo más cerca de
+ * "empresas" que hoy muestra el producto: no hay empresas con nombre.
+ * [CONFIRMAR] si "empresas" de la red existe como tal.
+ */
+export const DONDE_SALUD = {
+  area: 'Salud',
+  lugares: 'Hospitales públicos y privados, clínicas y sanatorios, laboratorios.',
+}
+
+/**
+ * El mundo que cambia. Dos cifras del World Economic Forum, Future of Jobs
+ * Report 2025 (enero de 2025): verificar la cita textual antes de publicar.
+ * La tercera queda para completar con un dato argentino con fuente.
+ */
+export const CAMBIO = [
+  {
+    cifra: '39 %',
+    texto: 'de las habilidades que hoy pide el trabajo va a cambiar o quedar vieja de acá a 2030.',
+    fuente: 'World Economic Forum, Future of Jobs Report 2025',
+  },
+  {
+    cifra: '170 M',
+    texto: 'de puestos nuevos se van a crear en el mundo hasta 2030, y 92 millones van a desaparecer.',
+    fuente: 'World Economic Forum, Future of Jobs Report 2025',
+  },
+  {
+    cifra: '[DATO]',
+    texto: '[DATO: fuente] Cuántos chicos en Argentina abandonan o cambian la carrera que eligieron.',
+    fuente: '[DATO: fuente]',
+  },
+]
 
 /** La tira de números bajo el escenario (lib/landing.ts y la home). */
 export const NUMEROS = [
@@ -67,38 +103,68 @@ export const CITA_PSICOPEDAGOGA = {
   rol: 'Evaluó la metodología de Timon',
 }
 
-/** Los módulos que existen hoy en la app. Comunidad no existe: no se muestra. */
+/**
+ * La red y cómo entra tu hijo: los módulos que existen hoy en la app, contados
+ * como el medio para llegar a la red. Comunidad no existe: no se muestra.
+ */
 export const MODULOS = [
   {
-    id: 'test',
-    titulo: 'Se conoce',
-    gris: 'en 13 paradas cortas, desde el celular.',
-    corte: CORTES.camino,
-    grande: true,
-  },
-  {
     id: 'profesionales',
-    titulo: 'Charla con profesionales',
-    gris: 'de 16 áreas y ve cómo es el trabajo por dentro.',
+    titulo: 'Profesionales de 16 áreas.',
+    gris: 'Les pregunta lo que quiera y ve cómo es el trabajo por dentro.',
     corte: CORTES.areas,
     grande: true,
   },
   {
+    id: 'universidades',
+    titulo: 'Universidades.',
+    gris: 'Las compara por cuota, modalidad y zona, y ve cuáles van con su perfil.',
+    corte: CORTES.comparador,
+    grande: true,
+  },
+  {
+    id: 'test',
+    titulo: 'Su perfil.',
+    gris: 'Trece paradas cortas para saber por dónde entrar a la red.',
+    corte: CORTES.camino,
+  },
+  {
     id: 'informe',
-    titulo: 'Su informe',
-    gris: 'con quién es, sus carreras y dónde estudiarlas.',
+    titulo: 'Su informe.',
+    gris: 'Quién es, qué carreras van con él y dónde estudiarlas.',
     corte: CORTES.esencia,
   },
   {
-    id: 'comparador',
-    titulo: 'Compara universidades',
-    gris: 'por cuota, modalidad y zona.',
-    corte: CORTES.filtros,
-  },
-  {
     id: 'mirada',
-    titulo: 'Otra mirada',
-    gris: 'de alguien que lo conoce bien, sumada a su perfil.',
+    titulo: 'Otra mirada.',
+    gris: 'Alguien que lo conoce bien suma lo que ve de él.',
     corte: CORTES.otraMirada,
   },
 ]
+
+/**
+ * El recorrido guiado del hero. La charla usa el relato real del profesional
+ * virtual de Salud en la app (lib/mundos.ts, campo "dia").
+ */
+export const PASOS_HERO = {
+  charla:
+    'Consultorio a la mañana: pacientes de a uno, escuchar, revisar, pedir estudios, ajustar tratamientos. Algunos días hago guardia en el hospital, donde todo es más impredecible y se trabaja contra reloj.',
+  pasos: [
+    { corto: 'Cuenta qué le gusta', titulo: 'Tu hijo cuenta qué le gusta.', bajada: 'Elige las áreas que le atraen entre 16.' },
+    {
+      corto: 'Habla con profesionales',
+      titulo: 'Habla con profesionales que viven esa carrera.',
+      bajada: 'Les pregunta lo que quiera, como en una charla.',
+    },
+    {
+      corto: 'Conoce universidades y empresas',
+      titulo: 'Conoce universidades y empresas.',
+      bajada: 'Compara dónde estudiar y ve dónde se trabaja.',
+    },
+    {
+      corto: 'Se lleva su informe',
+      titulo: 'Se lleva su informe y queda conectado.',
+      bajada: 'Quién es, qué carreras van con él y su red.',
+    },
+  ],
+}

@@ -33,10 +33,20 @@
   --escenario: #f4f6fe;
 }
 
-/* Cómo funciona (App A) dentro de esta página: el hilo, los números y el
- * bloque final van en el color principal en lugar de terra y navy. */
-.ramp .pasos-primario {
-  --terra: var(--primario);
-  --terra-hondo: var(--primario-hondo);
-  --bloque: var(--primario);
+
+/* Tiempo de cada paso del hero (la raya bajo el número). */
+.ramp .esc-tiempo {
+  animation-name: esc-tiempo;
+  animation-timing-function: linear;
+  animation-fill-mode: both;
+}
+@keyframes esc-tiempo {
+  from {
+    transform: scaleX(0);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ramp .esc-tiempo {
+    animation: none;
+  }
 }

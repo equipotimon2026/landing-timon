@@ -54,3 +54,9 @@ textos ni imágenes de Ramp.
 En 390 el orden es el mismo. Todo queda en una columna, el bento pasa a tarjetas apiladas y el menú se reduce a la hamburguesa.
 
 ![Scroll 390](ramp-scroll-390.jpg)
+
+## Titular del hero: opciones (relato de la red, 14/11/2026)
+
+1. **El mundo cambia rápido. Que tu hijo esté conectado con quienes lo viven.** (la que está puesta)
+2. **Las carreras están cambiando. Que tu hijo hable con los que ya están adentro.**
+3. **Para elegir bien hoy, tu hijo necesita estar cerca de quienes viven el trabajo.**
