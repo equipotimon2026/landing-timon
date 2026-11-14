@@ -1,373 +1,276 @@
-import { ArrowRight, MessageCircle } from 'lucide-react'
-import { SiteFooter, SiteNav } from '@/components/acq/SiteChrome'
-import { Faq, type FaqItem } from '@/components/acq/Faq'
-import { FundadoresFotos } from '@/components/acq/Fundadores'
-import { WheelMark } from '@/components/landing/Logo'
-import {
-  AVALES,
-  BONO_PAGO_ANTICIPADO,
-  CATALOGO,
-  PASOS,
-  RESULTADO,
-  URL_EMPEZAR,
-  URL_PAGAR_AHORA,
-  URL_WHATSAPP_PADRE,
-  VIDEO,
-  type Aval,
-} from '@/lib/landing'
+import type { Metadata } from 'next'
+import Link from 'next/link'
+import { Plus } from 'lucide-react'
+import './home.css'
+import { Header } from '@/components/home/Header'
+import { Hero } from '@/components/home/Hero'
+import { Dolor } from '@/components/home/Dolor'
+import { Recorrido } from '@/components/home/Recorrido'
+import { Red } from '@/components/home/Red'
+import { ParaVos } from '@/components/home/ParaVos'
+import { Cta, CtaFija } from '@/components/home/Cta'
+import { ScrollSuave } from '@/components/home/ScrollSuave'
+import { Aparece } from '@/components/home/Aparece'
+import { Dibujo, Nota, Trazo } from '@/components/home/Dibujo'
+import { Areas } from '@/components/home/Areas'
+import { Contador } from '@/components/home/Contador'
+import { Anotalo } from '@/components/home/Anotalo'
+import { Isologo } from '@/components/home/Isotipo'
+import { LO_QUE_DICEN, URL_EMPEZAR } from '@/lib/landing'
+import { CONTACT_EMAIL } from '@/lib/programa'
 
 /**
- * Home para familias (29/10/2026). Brief de Feli del 27/10 + prioridades de
- * Nico: freemium, "cómo funciona Timon" y testimonios que den validez.
- *
- *   hero con un botón → video → bloque de confianza → cómo funciona →
- *   qué te llevás → para vos y tu familia → preguntas → fundadores → cierre
- *
- * Todo lleva a una sola acción: empezar el recorrido gratis. Sin precio, sin
- * plazo y sin otras propuestas (test, programa, comunidad). El detalle de qué
- * se promete y qué falta confirmar está en `lib/landing.ts`.
+ * Home · Programa Timon (14/11/2026). Vende el programa al padre o la madre.
+ * Hilo: elegir es difícil → Timon lo acompaña con el mundo real → elige con
+ * claridad. Dolor → la red → cómo funciona → qué recibís → prueba →
+ * formulario → objeciones. Poco texto: cada sección se entiende por el
+ * visual. El CTA se repite en cuatro momentos y siempre lleva al formulario
+ * (/api/padres). No se muestra precio. Textos y fuentes: docs/wording-v2.md.
  */
 
-const MOSTRAR_EJEMPLOS = process.env.NODE_ENV !== 'production'
+export const metadata: Metadata = {
+  title: 'Programa Timon: para que tu hijo elija carrera con claridad',
+  description:
+    'Elegir carrera es difícil. Con profesionales, universidades y empresas, tu hijo o hija entiende sus opciones y decide con claridad. Dos semanas, desde casa.',
+  openGraph: {
+    title: 'Programa Timon: para que tu hijo elija carrera con claridad',
+    description: '16 áreas de trabajo, 300 carreras y 50 universidades para que tu hijo o hija decida sabiendo qué elige.',
+    locale: 'es_AR',
+    type: 'website',
+  },
+}
 
-const FAQS: FaqItem[] = [
-  {
-    q: '¿Es gratis?',
-    a: (
-      <>
-        <p>
-          Empezás gratis y hacés el recorrido completo sin pagar. Al terminar ves la primera
-          parte de tu perfil.
-        </p>
-        <p>
-          Para ver el resto (tu perfil completo, tus 6 carreras y dónde estudiarlas) hay un
-          pago único. No es una suscripción.
-        </p>
-      </>
-    ),
-  },
-  {
-    q: '¿Cuánto tiempo lleva?',
-    a: (
-      <p>
-        Hecho de corrido son unas 3 horas, pero no te lo recomendamos: lo que importa es que
-        respondas bien, y de corrido cansa. Lo ideal es hacerlo en 3 o 4 etapas, a tu ritmo.
-      </p>
-    ),
-  },
-  {
-    q: '¿Para quién es?',
-    a: (
-      <p>
-        Para chicos y chicas de 5° y 6° año que todavía no saben qué estudiar, que dudan entre
-        varias opciones o que quieren conocer carreras que no tenían en cuenta.
-      </p>
-    ),
-  },
-  {
-    q: '¿Timon reemplaza a un profesional?',
-    a: (
-      <p>
-        No. Timon es una guía: ordena lo que respondés y te muestra qué carreras van con vos,
-        pero la decisión es tuya. Si querés, repasás tu resultado con un profesional.
-      </p>
-    ),
-  },
-  {
-    q: '¿Qué ve mi familia?',
-    a: (
-      <p>
-        Tu familia puede ver tu informe, pero nunca tus respuestas. Lo que contestás en el
-        recorrido queda entre vos y Timon.
-      </p>
-    ),
-  },
+const NUMEROS = [
+  { valor: 16, texto: 'áreas de trabajo' },
+  { valor: 300, texto: 'carreras' },
+  { valor: 50, texto: 'universidades' },
+  { valor: 10000, texto: 'combinaciones analizadas', prefijo: '+' },
 ]
 
-function BotonEmpezar({ className = '' }: { className?: string }) {
-  return (
-    <a
-      href={URL_EMPEZAR}
-      className={`inline-flex w-full max-w-[400px] items-center justify-center rounded-full bg-[var(--ocean)] px-6 py-4 text-[18px] font-bold uppercase text-white transition-colors hover:bg-[var(--ocean-deep)] sm:text-[20px] ${className}`}
-    >
-      Empezá gratis
-    </a>
-  )
-}
+/** Las objeciones de un padre, en sus palabras. Respuestas cortas y sin promesas que el equipo no definió. */
+const FAQS = [
+  {
+    q: '¿Es otro test vocacional?',
+    a: 'Arranca con unas paradas para conocerse, pero eso es solo el principio. Después investiga cómo se trabaja en cada área, recibe su informe y compara universidades.',
+  },
+  {
+    q: '¿Mi hijo lo va a usar?',
+    a: 'Cada parada dura menos de 10 minutos y se hace desde el celular. Lo probaron alumnos de 5° y 6° año del Colegio María Guadalupe y les gustó. Además, vos ves si avanza.',
+  },
+  { q: '¿Cuánto cuesta?', a: 'Empezar es gratis. El precio depende del plan, y te lo contamos cuando te escribimos.' },
+  {
+    q: '¿Quién está detrás?',
+    a: 'Somos Facu, Feli y Nico, de Argentina. Una psicopedagoga evaluó la metodología y un equipo profesional de la UBA la revisó.',
+  },
+  { q: '¿Puedo ver sus respuestas?', a: 'No. Lo que responde es suyo. Vos ves cómo avanza y el informe final.' },
+]
 
-function LinkPagarAhora({ tono = 'oscuro' }: { tono?: 'oscuro' | 'claro' }) {
-  return (
-    <a
-      href={URL_PAGAR_AHORA}
-      className={`group mt-4 inline-flex items-center gap-1.5 text-[14px] underline-offset-4 hover:underline ${
-        tono === 'oscuro' ? 'text-[var(--hueso)]' : 'text-white/80'
-      }`}
-    >
-      ¿Ya lo decidieron? Pagá ahora y sumá {BONO_PAGO_ANTICIPADO.corto}
-      <ArrowRight size={14} className="transition-transform group-hover:translate-x-0.5" />
-    </a>
-  )
-}
+const h2 = 'display text-[clamp(2.5rem,5.4vw,4.6rem)]'
 
-function TarjetaAval({ a }: { a: Aval }) {
-  return (
-    <figure className="relative flex flex-col rounded-sm bg-white px-6 py-7 shadow-[0_12px_40px_rgba(15,31,54,0.06)]">
-      {a.ejemplo && (
-        <span className="absolute -right-2 -top-2 rounded bg-[#E11D48] px-2 py-0.5 text-[10px] font-bold uppercase text-white">
-          Ejemplo
-        </span>
-      )}
-      <div className="flex h-14 w-14 items-center justify-center overflow-hidden rounded-full bg-[var(--ocean-wash)]">
-        {a.imagen ? (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img src={a.imagen} alt="" className="h-10 w-10 object-contain" />
-        ) : (
-          <span className="text-[22px] font-extrabold text-[var(--ocean)]">{a.quien[0]}</span>
-        )}
-      </div>
-      <blockquote className="mt-5 flex-1 text-[17px] font-semibold leading-snug">
-        &ldquo;{a.frase}&rdquo;
-      </blockquote>
-      <figcaption className="mt-5">
-        <span className="block text-[14px] font-bold">{a.quien}</span>
-        <span className="block text-[13px] text-[var(--hueso)]">{a.rol}</span>
-      </figcaption>
-    </figure>
-  )
-}
-
-const LOGOS_UNIVERSIDADES = [
-  { src: '/logos/universities/uba.svg', alt: 'UBA' },
-  { src: '/logos/universities/utn.png', alt: 'UTN' },
-  { src: '/logos/universities/unlp.png', alt: 'UNLP' },
-  { src: '/logos/universities/unc.svg', alt: 'UNC' },
-  { src: '/logos/universities/itba.png', alt: 'ITBA' },
-  { src: '/logos/universities/uade.svg', alt: 'UADE' },
-  { src: '/logos/universities/uca.png', alt: 'UCA' },
-  { src: '/logos/universities/siglo21.svg', alt: 'Siglo 21' },
+const TONOS_CITA = [
+  { caja: 'bg-[var(--crema)]', comilla: 'text-[var(--terra)]' },
+  { caja: 'bg-[var(--cielo)]', comilla: 'text-[var(--ocean)]' },
+  { caja: 'bg-[var(--durazno)]', comilla: 'text-[var(--terra-hondo)]' },
 ]
 
 export default function Home() {
-  const avales = AVALES.filter((a) => MOSTRAR_EJEMPLOS || !a.ejemplo)
-
   return (
-    <div className="acq flex min-h-full flex-col bg-white">
-      <SiteNav />
+    <div className="home min-h-screen overflow-x-clip">
+      <ScrollSuave />
+      <a
+        href="#contenido"
+        className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-3 focus:z-50 focus:rounded-full focus:bg-white focus:px-4 focus:py-2"
+      >
+        Saltar al contenido
+      </a>
+      <Header />
 
-      <main className="flex-1">
-        {/* Hero: la promesa base, una línea para los dos y un solo botón */}
-        <section className="relative overflow-hidden bg-[#EFEFEF]">
-          <div className="pointer-events-none absolute -left-24 top-1/2 hidden -translate-y-1/2 opacity-[0.07] lg:block">
-            <WheelMark tone="navy" size={420} />
-          </div>
-          <div className="pointer-events-none absolute -right-24 top-1/2 hidden -translate-y-1/2 opacity-[0.07] lg:block">
-            <WheelMark tone="navy" size={420} />
-          </div>
-          <div className="relative mx-auto flex max-w-[820px] flex-col items-center px-4 pb-28 pt-14 text-center sm:pb-56 sm:pt-20">
-            <p className="text-[13px] font-semibold uppercase tracking-[0.12em] text-[var(--ocean)]">
-              Hay {CATALOGO.carreras} carreras que podrías estudiar. ¿Cuántas conocés?
-            </p>
-            <h1 className="mt-5 text-[32px] font-extrabold uppercase leading-[1.1] sm:text-[44px]">
-              Sabé qué carreras van con vos, dónde estudiarlas y de qué vas a trabajar
-            </h1>
-            <p className="mt-6 max-w-[580px] text-[16px] leading-[1.55] sm:text-[18px]">
-              Timon es un recorrido que hacés desde tu casa, a tu ritmo. Al final te devuelve tu
-              perfil, las 6 carreras que más van con vos y las universidades donde estudiarlas.
-            </p>
-            <BotonEmpezar className="mt-9" />
-            <LinkPagarAhora />
+      <main id="contenido">
+        <Hero />
+
+        {/* ── 1. Dolor (crema) ─────────────────────────────────────────── */}
+        <section className="px-3 sm:px-5">
+          <div className="relative mx-auto max-w-[1240px] overflow-hidden rounded-[40px] bg-[var(--crema)] px-4 py-16 sm:px-10 sm:py-24">
+            <span aria-hidden className="blob blob-vivo -right-16 -top-24 h-72 w-72 bg-[var(--durazno)]" />
+            <div className="relative">
+              <Aparece className="px-2 text-center">
+                <h2 className={`${h2} mx-auto max-w-[15ch]`}>
+                  A los 17, elegir carrera es <strong className="text-[var(--terra-hondo)]">difícil de verdad</strong>.
+                </h2>
+              </Aparece>
+              <Aparece className="mt-10 sm:mt-14">
+                <Dolor />
+              </Aparece>
+            </div>
           </div>
         </section>
 
-        {/* Video montado sobre el borde del hero */}
-        <section id="video" className="bg-white px-4 sm:px-6">
-          <div className="mx-auto -mt-20 max-w-[960px] sm:-mt-44">
-            <video
-              src={VIDEO.src}
-              poster={VIDEO.poster}
-              controls
-              playsInline
-              preload="metadata"
-              className="aspect-video w-full rounded-md bg-[var(--navy)] shadow-[0_24px_60px_rgba(15,31,54,0.18)]"
-            >
-              Tu navegador no puede reproducir el video.
-            </video>
-          </div>
-        </section>
-
-        {/* Bloque de confianza, justo después del video */}
-        <section className="bg-white px-4 pb-16 pt-14 sm:px-6">
-          <div className="mx-auto max-w-[1080px]">
-            <h2 className="text-center text-[24px] font-extrabold uppercase leading-tight sm:text-[30px]">
-              Detrás de Timon hay profesionales, <span className="text-[var(--ocean)]">no solo tecnología</span>
+        {/* ── 2. Resultado: la red (navy) ──────────────────────────────── */}
+        <section id="red" className="scroll-mt-16 bg-[var(--navy)] py-24 text-white sm:py-32 mt-16 sm:mt-24">
+          <Aparece className="px-5 text-center">
+            <h2 className={`${h2} mx-auto max-w-[15ch]`}>
+              Que sepa cómo es trabajar de eso <strong className="text-[var(--crema)]">antes de anotarse</strong>.
             </h2>
-            {avales.length > 0 && (
-              <div
-                className={`mx-auto mt-10 grid gap-6 ${
-                  avales.length >= 3 ? 'md:grid-cols-3' : avales.length === 2 ? 'max-w-[720px] md:grid-cols-2' : 'max-w-[380px]'
-                }`}
-              >
-                {avales.map((a) => (
-                  <TarjetaAval key={a.quien} a={a} />
-                ))}
+            <p className="mx-auto mt-5 max-w-[38ch] text-[19px] text-white/70">
+              Así no decide por un folleto o por lo que le contó un amigo.
+            </p>
+          </Aparece>
+          <div className="mt-14 sm:mt-16">
+            <Red />
+          </div>
+          <div className="mt-16 sm:mt-20">
+            <Areas />
+          </div>
+          <dl className="mx-auto mt-16 grid max-w-[1080px] grid-cols-2 gap-y-12 px-5 lg:grid-cols-4">
+            {NUMEROS.map((n) => (
+              <div key={n.texto} className="flex flex-col-reverse border-l-2 border-[var(--terra)] pl-5">
+                <dt className="mt-2 text-[14px] text-white/60">{n.texto}</dt>
+                <dd className="display text-[clamp(2.6rem,5vw,4.2rem)]">
+                  <Contador valor={n.valor} prefijo={n.prefijo} />
+                </dd>
               </div>
-            )}
-
-            <div className="mt-14 text-center">
-              <p className="text-[30px] font-extrabold leading-none sm:text-[38px]">
-                {CATALOGO.carreras} carreras en {CATALOGO.universidades} universidades
-              </p>
-              <p className="mt-2 text-[12px] font-semibold uppercase tracking-[0.1em] text-[var(--hueso)]">
-                Públicas y privadas, de todo el país
-              </p>
-              <ul className="mx-auto mt-8 flex max-w-[860px] flex-wrap items-center justify-center gap-x-8 gap-y-5">
-                {LOGOS_UNIVERSIDADES.map((l) => (
-                  <li key={l.alt}>
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img src={l.src} alt={l.alt} className="h-9 w-auto opacity-70 grayscale sm:h-10" />
-                  </li>
-                ))}
-              </ul>
-              <p className="mt-4 text-[12px] text-[var(--hueso)]">
-                Algunas de las universidades que vas a encontrar en tu informe.
-              </p>
-            </div>
+            ))}
+          </dl>
+          <div className="mt-16">
+            <Cta tono="terra" claro />
           </div>
         </section>
 
-        {/* Cómo funciona */}
-        <section id="como-funciona" className="scroll-mt-20 bg-[#EFEFEF] px-4 py-16 sm:px-6">
-          <div className="mx-auto max-w-[1080px]">
-            <h2 className="text-center text-[28px] font-extrabold uppercase leading-tight sm:text-[36px]">
-              Cómo funciona
+        {/* ── 3. Cómo funciona: escena fija con GSAP ───────────────────── */}
+        <section id="app" className="scroll-mt-16 pt-24 sm:pt-32 lg:pt-28">
+          <Aparece className="mx-auto max-w-[1240px] px-5 text-center">
+            <h2 className={`${h2} mx-auto max-w-[16ch]`}>
+              Esto es lo que hace <strong>tu hijo en Timon</strong>.
             </h2>
-            <ol className="mt-10 grid gap-6 md:grid-cols-3">
-              {PASOS.map((p, i) => (
-                <li key={p.titulo} className="rounded-sm bg-white px-6 py-7">
-                  <span className="flex h-10 w-10 items-center justify-center rounded-full bg-[var(--navy)] text-[16px] font-extrabold text-white">
-                    {i + 1}
-                  </span>
-                  <h3 className="mt-5 text-[19px] font-extrabold leading-tight">{p.titulo}</h3>
-                  <p className="mt-2 text-[15px] leading-[1.55] text-[var(--hueso)]">{p.texto}</p>
-                </li>
-              ))}
-            </ol>
-            <div className="mt-10 flex flex-col items-center text-center">
-              <BotonEmpezar />
-            </div>
+          </Aparece>
+          <Recorrido />
+          <p className="mx-auto mt-8 max-w-[1240px] px-5 text-center text-[12.5px] text-[var(--tenue)] lg:mt-0">
+            Capturas de la app con datos de ejemplo.
+          </p>
+        </section>
+
+        {/* ── 4. Qué recibís vos ───────────────────────────────────────── */}
+        <section id="para-vos" className="mx-auto max-w-[1180px] scroll-mt-16 px-5 py-24 sm:py-32">
+          <Aparece>
+            <h2 className={`${h2} max-w-[16ch]`}>
+              Vos sabés en qué anda <strong>sin tener que preguntarle</strong>.
+            </h2>
+          </Aparece>
+          <Aparece className="mt-12">
+            <ParaVos />
+          </Aparece>
+          <div className="mt-12">
+            <Cta />
           </div>
         </section>
 
-        {/* Qué te llevás: el resultado, con capturas de la app real */}
-        <section id="resultado" className="scroll-mt-20 bg-white px-4 py-16 sm:px-6">
-          <div className="mx-auto max-w-[1080px]">
-            <h2 className="text-center text-[28px] font-extrabold uppercase leading-tight sm:text-[36px]">
-              Lo que te devuelve <span className="text-[var(--ocean)]">Timon</span>
+        {/* ── 5. Prueba: lo revisaron (citas reales de src/lib/landing.ts) ─ */}
+        <section className="mx-auto max-w-[1180px] px-5 pb-24 sm:pb-32">
+          <Aparece>
+            <h2 className={`${h2} max-w-[14ch]`}>
+              Se lo mostramos a gente <strong>que sabe del tema</strong>.
             </h2>
-            <div className="mt-12 space-y-14">
-              {RESULTADO.map((r, i) => (
-                <div
-                  key={r.titulo}
-                  className={`flex flex-col items-center gap-6 md:gap-12 ${i % 2 ? 'md:flex-row-reverse' : 'md:flex-row'}`}
-                >
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
-                    src={r.imagen}
-                    alt={`Captura de Timon: ${r.titulo}`}
-                    loading="lazy"
-                    className="w-full rounded-md border border-[var(--border-cream)] shadow-[0_12px_40px_rgba(15,31,54,0.08)] md:w-[56%]"
-                  />
-                  <div className="md:flex-1">
-                    <h3 className="text-[22px] font-extrabold leading-tight sm:text-[26px]">{r.titulo}</h3>
-                    <p className="mt-3 text-[16px] leading-[1.6] text-[var(--hueso)] sm:text-[17px]">{r.texto}</p>
+          </Aparece>
+          <ul className="mt-12 grid gap-4 md:grid-cols-3">
+            {LO_QUE_DICEN.map((c, i) => {
+              const tono = TONOS_CITA[i % TONOS_CITA.length]
+              return (
+                <li key={c.quien} className={`tesela flex flex-col justify-between rounded-[30px] p-8 ${tono.caja}`}>
+                  <div>
+                    <span aria-hidden className={`block h-7 font-[family-name:var(--font-serif)] text-[64px] leading-[0.9] ${tono.comilla}`}>
+                      “
+                    </span>
+                    <blockquote className="mt-3 text-[21px] font-medium leading-[1.4] tracking-[-0.02em]">
+                      {c.texto.replace(/==/g, '').replace(/[“”]/g, '')}
+                    </blockquote>
                   </div>
-                </div>
-              ))}
-            </div>
-            <p className="mx-auto mt-12 max-w-[560px] text-center text-[13px] text-[var(--hueso)]">
-              Capturas de la app con datos de ejemplo.
-            </p>
-          </div>
+                  <p className="mt-10 text-[14px] leading-snug">
+                    <span className="block font-semibold">{c.quien}</span>
+                    <span className="text-[var(--texto2)]">{c.rol}</span>
+                  </p>
+                </li>
+              )
+            })}
+          </ul>
         </section>
 
-        {/* Para vos y tu familia: una sola comunicación, sin bloques separados */}
-        <section className="bg-[var(--navy)] px-4 py-16 text-white sm:px-6">
-          <div className="mx-auto flex max-w-[760px] flex-col items-center text-center">
-            <h2 className="text-[26px] font-extrabold uppercase leading-tight sm:text-[32px]">
-              Elegir sin conocer las opciones es elegir a ciegas
-            </h2>
-            <p className="mt-5 text-[16px] leading-[1.6] text-white/85 sm:text-[18px]">
-              El mundo cambia rápido y aparecen carreras que hace diez años no existían. Timon te
-              saca de encima la presión de no saber qué hay ni cuál va con tus intereses de
-              verdad, para que elijas por vos y no por lo que eligen tus amigos.
-            </p>
-            <BotonEmpezar className="mt-9 bg-white !text-[var(--navy)] hover:bg-white/90" />
-            <LinkPagarAhora tono="claro" />
-            <a
-              href={URL_WHATSAPP_PADRE}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="mt-8 inline-flex items-center gap-2 rounded-full border border-white/30 px-5 py-2.5 text-[14px] font-semibold text-white transition-colors hover:bg-white/10"
-            >
-              <MessageCircle size={16} />
-              ¿Sos padre o madre? Mandáselo a tu hijo por WhatsApp
-            </a>
-          </div>
-        </section>
-
-        {/* Preguntas */}
-        <section id="preguntas" className="scroll-mt-20 bg-[var(--cream)] px-4 py-16 sm:px-6">
-          <div className="mx-auto max-w-[860px]">
-            <h2 className="text-center text-[26px] font-bold">Preguntas</h2>
-            <div className="mt-6">
-              <Faq items={FAQS} variant="home" />
-            </div>
-          </div>
-        </section>
-
-        {/* Fundadores */}
-        <section id="nosotros" className="scroll-mt-20 bg-white px-4 py-20 sm:px-6">
-          <div className="mx-auto max-w-[1000px]">
-            <h2 className="text-center text-[24px] font-extrabold uppercase sm:text-[26px]">
-              Sobre los fundadores
-            </h2>
-            <div className="mt-12 flex flex-col items-center gap-10 md:flex-row md:items-start">
-              <FundadoresFotos className="w-full max-w-[420px] shrink-0" />
-              <div className="space-y-5 text-[16px] leading-[1.6] sm:text-[17px] md:pt-2">
-                <p>
-                  Facu, Feli y Nico son los fundadores de Timon. Lo armaron sobre una idea que está
-                  en todo el producto: el primer paso no es elegir, es entenderte.
+        {/* ── 6. Formulario (ocean) ────────────────────────────────────── */}
+        <section id="anotalo" className="scroll-mt-16 px-3 sm:px-5">
+          <div className="relative mx-auto max-w-[1240px] overflow-hidden rounded-[40px] bg-[var(--ocean)] px-3 py-16 sm:px-10 sm:py-24">
+            <span aria-hidden className="blob blob-vivo -left-24 -top-24 h-80 w-80 bg-white/10" />
+            <span aria-hidden className="blob blob-vivo -bottom-28 -right-16 h-96 w-96 bg-[var(--terra)] [animation-delay:-4s]" />
+            <div className="relative mx-auto max-w-[940px]">
+              <Aparece className="px-2 text-center text-white">
+                <h2 className={h2}>
+                  Contanos de <strong>tu hijo o hija</strong>.
+                </h2>
+                <p className="mx-auto mt-5 max-w-[34ch] text-[19px] text-white/80">
+                  Te escribimos por WhatsApp en menos de 24 h. Sin compromiso.
                 </p>
-                <p>
-                  Timon usa los modelos que conocen los profesionales (intereses, inteligencias
-                  múltiples y forma de pensar), y las preguntas pasaron por la revisión de
-                  psicopedagogas.
-                </p>
-                <p>
-                  Timon es el timón que dirige el barco a donde querés ir: no decide por vos, te
-                  muestra el mapa para que la decisión sea tuya.
-                </p>
+                <Dibujo retraso={0.6} className="relative mx-auto mt-2 hidden h-[60px] w-[220px] sm:block">
+                  <Nota className="left-0 top-1 text-[var(--crema)] [--giro:-4deg]">te lleva 1 minuto</Nota>
+                  <svg viewBox="0 0 220 60" className="absolute inset-0 h-full w-full overflow-visible">
+                    <Trazo d="M150 18 C 176 22, 190 34, 186 54" color="crema" ancho={2.2} />
+                    <Trazo d="M176 46 L186 56 L196 45" color="crema" ancho={2.2} orden={1.6} />
+                  </svg>
+                </Dibujo>
+              </Aparece>
+              <div className="mt-8 sm:mt-4">
+                <Anotalo />
               </div>
             </div>
           </div>
         </section>
 
-        {/* Cierre */}
-        <section className="bg-[#EFEFEF] px-4 py-20 sm:px-6">
-          <div className="mx-auto flex max-w-[700px] flex-col items-center text-center">
-            <h2 className="text-[28px] font-extrabold uppercase leading-tight sm:text-[36px]">
-              ¿Qué te devolvería Timon a vos?
+        {/* ── 7. Objeciones ────────────────────────────────────────────── */}
+        <section
+          id="preguntas"
+          className="mx-auto grid max-w-[1180px] scroll-mt-16 gap-10 px-5 py-24 sm:py-32 md:grid-cols-[1fr_1.6fr]"
+        >
+          <div>
+            <h2 className="display text-[clamp(2.2rem,4vw,3.4rem)]">
+              Lo que <strong>suelen preguntarnos</strong>.
             </h2>
-            <p className="mt-4 text-[16px] text-[var(--hueso)] sm:text-[18px]">
-              Hay una sola forma de saberlo. Empezás hoy y lo hacés a tu ritmo.
-            </p>
-            <BotonEmpezar className="mt-8" />
-            <LinkPagarAhora />
+            <div className="mt-8">
+              <Cta tono="terra" alineado="izquierda" />
+            </div>
+          </div>
+          <div className="border-b border-[var(--borde)]">
+            {FAQS.map((f) => (
+              <details key={f.q} className="group border-t border-[var(--borde)]">
+                <summary className="flex items-center justify-between gap-6 py-6 text-[18px] font-medium tracking-[-0.01em]">
+                  {f.q}
+                  <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[var(--crema)] text-[var(--terra-hondo)] transition-colors group-hover:bg-[var(--terra)] group-hover:text-white">
+                    <Plus size={16} className="faq-signo transition-transform duration-300" aria-hidden />
+                  </span>
+                </summary>
+                <p className="max-w-[56ch] pb-7 text-[16.5px] text-[var(--texto2)]">{f.a}</p>
+              </details>
+            ))}
           </div>
         </section>
       </main>
 
-      <SiteFooter />
+      <footer className="bg-[var(--navy)] pb-20 text-white md:pb-0">
+        <div className="mx-auto max-w-[1180px] px-5 py-14">
+          <div className="flex flex-col gap-8 md:flex-row md:items-center md:justify-between">
+            <Isologo tono="crema" />
+            <nav aria-label="Pie" className="flex flex-wrap gap-x-7 gap-y-3 text-[14px] text-white/70">
+              <a href={URL_EMPEZAR} className="hover:text-white">Soy estudiante</a>
+              <Link href="/colegios" className="hover:text-white">Colegios</Link>
+              <Link href="/terminos" className="hover:text-white">Términos</Link>
+              <a href={`mailto:${CONTACT_EMAIL}`} className="hover:text-white">{CONTACT_EMAIL}</a>
+            </nav>
+          </div>
+          <p className="mt-10 max-w-[90ch] text-[12.5px] leading-[1.6] text-white/50">
+            Timon es una guía para explorar carreras. Su informe lo genera inteligencia artificial a partir de lo que se
+            responde. No es una evaluación psicológica ni psicométrica, y no reemplaza a un profesional matriculado. La
+            decisión es de cada uno. Hecho por Facu, Feli y Nico en Argentina. © {new Date().getFullYear()} Timon.
+          </p>
+        </div>
+      </footer>
+
+      <CtaFija />
     </div>
   )
 }

@@ -1,39 +1,75 @@
 import type { Metadata } from 'next'
-import { DM_Sans, JetBrains_Mono, Crimson_Pro, Poppins } from 'next/font/google'
+import localFont from 'next/font/local'
 import './globals.css'
 
-// Las mismas tres fuentes que la app (canvas "Rediseño Timón estilo Duolingo"):
-// DM Sans para todo, Crimson Pro itálica para las líneas de acento y JetBrains
-// Mono para las micro-etiquetas. Los dos deploys tienen que verse iguales.
-const sans = DM_Sans({
-  subsets: ['latin'],
+// Las fuentes viven en src/fonts (subset latin, de Fontsource; licencia OFL).
+// Con next/font/google el build bajaba cada familia de Google Fonts, y esa
+// descarga fallaba de forma intermitente en Vercel (deploy de main, 30/10/2026).
+
+// Las mismas tres fuentes que la app: DM Sans para todo, Crimson Pro itálica
+// para las líneas de acento y JetBrains Mono para las micro-etiquetas.
+const sans = localFont({
+  src: '../fonts/dm-sans-latin-wght-normal.woff2',
   variable: '--font-sans',
-  weight: ['400', '500', '600', '700', '800'],
+  weight: '100 1000',
   display: 'swap',
 })
 
-const serif = Crimson_Pro({
-  subsets: ['latin'],
+const serif = localFont({
+  src: [
+    { path: '../fonts/crimson-pro-latin-wght-normal.woff2', weight: '200 900', style: 'normal' },
+    { path: '../fonts/crimson-pro-latin-wght-italic.woff2', weight: '200 900', style: 'italic' },
+  ],
   variable: '--font-serif',
-  weight: ['400', '600', '700'],
-  style: ['normal', 'italic'],
   display: 'swap',
 })
 
-const mono = JetBrains_Mono({
-  subsets: ['latin'],
+const mono = localFont({
+  src: '../fonts/jetbrains-mono-latin-wght-normal.woff2',
   variable: '--font-mono',
-  weight: ['400', '500', '700'],
+  weight: '100 800',
   display: 'swap',
 })
 
-// La landing y /programa copian la tipografía de acquisition.com (reunión con
-// Feli del 23/10/2026): Poppins para todo. DM Sans queda para las vistas viejas
-// (colegios, términos).
-const poppins = Poppins({
-  subsets: ['latin'],
+// /programa, /test y /mapa copian la tipografía de acquisition.com: Poppins.
+const poppins = localFont({
+  src: [
+    { path: '../fonts/poppins-latin-400-normal.woff2', weight: '400', style: 'normal' },
+    { path: '../fonts/poppins-latin-500-normal.woff2', weight: '500', style: 'normal' },
+    { path: '../fonts/poppins-latin-600-normal.woff2', weight: '600', style: 'normal' },
+    { path: '../fonts/poppins-latin-700-normal.woff2', weight: '700', style: 'normal' },
+    { path: '../fonts/poppins-latin-800-normal.woff2', weight: '800', style: 'normal' },
+  ],
   variable: '--font-poppins',
-  weight: ['400', '500', '600', '700', '800'],
+  display: 'swap',
+})
+
+// Marca de Timon (presentación timon_presentacion_v2_1): Plus Jakarta Sans para
+// todo y Space Mono en mayúsculas espaciadas para las etiquetas. La usa la home
+// (clase `.marca` en globals.css).
+const jakarta = localFont({
+  src: '../fonts/plus-jakarta-sans-latin-wght-normal.woff2',
+  variable: '--font-jakarta',
+  weight: '200 800',
+  display: 'swap',
+})
+
+const spaceMono = localFont({
+  src: [
+    { path: '../fonts/space-mono-latin-400-normal.woff2', weight: '400', style: 'normal' },
+    { path: '../fonts/space-mono-latin-700-normal.woff2', weight: '700', style: 'normal' },
+  ],
+  variable: '--font-spacemono',
+  display: 'swap',
+})
+
+// Las notas a mano de la home (flechas, mapa del hero): Kalam.
+const mano = localFont({
+  src: [
+    { path: '../fonts/kalam-latin-400-normal.woff2', weight: '400', style: 'normal' },
+    { path: '../fonts/kalam-latin-700-normal.woff2', weight: '700', style: 'normal' },
+  ],
+  variable: '--font-mano',
   display: 'swap',
 })
 
@@ -58,7 +94,7 @@ export default function RootLayout({
   return (
     <html
       lang="es"
-      className={`${sans.variable} ${serif.variable} ${mono.variable} ${poppins.variable} h-full antialiased`}
+      className={`${sans.variable} ${serif.variable} ${mono.variable} ${poppins.variable} ${jakarta.variable} ${spaceMono.variable} ${mano.variable} h-full antialiased`}
       suppressHydrationWarning
     >
       <body

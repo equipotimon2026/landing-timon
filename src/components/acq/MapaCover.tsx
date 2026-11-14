@@ -21,7 +21,7 @@ export function MapaCover({ className = '' }: { className?: string }) {
       <div className="flex flex-1 flex-col justify-between px-[9%] py-[7%]">
         <div className="flex items-center gap-[3cqw]">
           <WheelMark tone="cream" size={14} />
-          <span className="text-[5.5cqw] font-bold uppercase tracking-[0.14em] text-[var(--ocean-light)]">
+          <span className="text-[6cqw] font-bold text-[var(--ocean-light)]">
             Timon
           </span>
         </div>
