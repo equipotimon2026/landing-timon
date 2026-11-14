@@ -16,7 +16,7 @@ export function Prueba() {
             Lo probaron alumnos de 5° y 6° año{' '}
             <span className="text-[var(--tenue)]">del Colegio María Guadalupe, y les gustó.</span>
           </p>
-          <a href="#testimonios" className="mt-6 inline-flex items-center gap-1.5 text-[15px] text-[var(--navy)] hover:text-[var(--ocean)]">
+          <a href="#testimonios" className="mt-6 inline-flex items-center gap-1.5 text-[15px] text-[var(--navy)] hover:text-[var(--primario)]">
             Qué dijeron de Timon <ArrowRight size={15} aria-hidden />
           </a>
         </div>
@@ -36,7 +36,7 @@ export function Prueba() {
             </ul>
           </div>
 
-          <figure className="flex min-h-[220px] flex-col justify-between rounded-[14px] bg-[var(--navy)] p-6 text-white">
+          <figure className="flex min-h-[220px] flex-col justify-between rounded-[14px] bg-[var(--primario)] p-6 text-white">
             <blockquote className="text-[22px] font-light leading-[1.2] tracking-[-0.03em]">“{CITA_PSICOPEDAGOGA.texto}”</blockquote>
             <figcaption className="mt-6 text-[13.5px] text-white/70">
               <span className="block font-semibold text-white">{CITA_PSICOPEDAGOGA.quien}</span>

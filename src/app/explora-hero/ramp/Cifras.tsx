@@ -28,7 +28,7 @@ function Numero({ valor, prefijo = '', listo }: { valor: string; prefijo?: strin
   const texto = formato(valor)
   let i = 0
   return (
-    <span className="inline-flex rounded-[5px] bg-[var(--escenario)] px-1.5 py-[1px] text-[13px] font-semibold tabular-nums text-[var(--navy)]">
+    <span className="inline-flex rounded-[5px] bg-[var(--primario-tinte)] px-1.5 py-[1px] text-[13px] font-semibold tabular-nums text-[var(--primario-hondo)]">
       <span className="sr-only">
         {prefijo}
         {texto}
@@ -71,7 +71,7 @@ export function Cifras() {
       style={{ opacity: listo ? 1 : 0 }}
     >
       <p className="flex shrink-0 items-center gap-2 pl-4 pr-5 text-[13px] font-semibold text-[var(--navy)] sm:pl-5">
-        <Isotipo size={15} className="text-[var(--ocean)]" />
+        <Isotipo size={15} className="text-[var(--primario)]" />
         Timon, en números
       </p>
       <div className="relative flex min-w-0 flex-1 overflow-hidden">

@@ -241,7 +241,7 @@ export function PasosA() {
                   className="mt-10 h-5 w-5 rounded-full bg-[var(--terra)] ring-[6px] ring-[rgba(201,127,94,0.22)] lg:mt-14"
                 />
               </div>
-              <div className="relative overflow-hidden rounded-[32px] bg-[var(--navy)] px-6 py-10 text-white lg:rounded-[40px] lg:px-16 lg:py-16">
+              <div className="relative overflow-hidden rounded-[32px] bg-[var(--bloque,var(--navy))] px-6 py-10 text-white lg:rounded-[40px] lg:px-16 lg:py-16">
                 <h3 className="display max-w-[18ch] text-[clamp(2rem,3.6vw,3.2rem)]">
                   {RECORRIDO.finalTitulo}
                 </h3>
@@ -249,7 +249,7 @@ export function PasosA() {
                   {RECORRIDO.finalItems.map((t, i) => (
                     <li
                       key={t}
-                      className="flex items-baseline gap-4 bg-[var(--navy)] px-1 py-5 lg:px-8 lg:py-8"
+                      className="flex items-baseline gap-4 bg-[var(--bloque,var(--navy))] px-1 py-5 lg:px-8 lg:py-8"
                     >
                       <span
                         aria-hidden

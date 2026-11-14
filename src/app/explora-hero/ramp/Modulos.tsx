@@ -20,10 +20,10 @@ export function Modulos() {
         <span className="text-[var(--tenue)]">Para que decida con lo que vio, no con lo que le contaron.</span>
       </h2>
       <div className="mt-7 flex flex-wrap gap-2">
-        <a href="#anotalo" className="inline-flex h-11 items-center rounded-[6px] bg-[var(--terra)] px-5 text-[15px] font-semibold text-white hover:bg-[var(--terra-hondo)]">
+        <a href="#anotalo" className="inline-flex h-11 items-center rounded-[6px] bg-[var(--primario)] px-5 text-[15px] font-semibold text-white hover:bg-[var(--primario-hondo)]">
           Quiero anotar a mi hijo
         </a>
-        <a href="/test" className="inline-flex h-11 items-center rounded-[6px] bg-[var(--crema)] px-5 text-[15px] font-semibold text-[var(--navy)] hover:bg-[var(--gris2)]">
+        <a href="/test" className="inline-flex h-11 items-center rounded-[6px] bg-[var(--primario-tinte)] px-5 text-[15px] font-semibold text-[var(--primario-hondo)] hover:bg-[var(--primario-suave)]">
           Probar el test gratis
         </a>
       </div>
@@ -47,7 +47,7 @@ export function Modulos() {
               <ArrowUpRight
                 size={18}
                 aria-hidden
-                className="shrink-0 text-[var(--tenue)] transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-[var(--navy)]"
+                className="shrink-0 text-[var(--tenue)] transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-[var(--primario)]"
               />
             </div>
             <div className={`relative mt-auto ${m.grande ? 'ml-6 lg:ml-10' : 'mx-6'} translate-y-6 transition-transform duration-500 group-hover:translate-y-3`}>

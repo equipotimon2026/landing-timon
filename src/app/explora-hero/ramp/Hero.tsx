@@ -14,13 +14,13 @@ export function Hero({ alEnviar }: { alEnviar: (email: string) => void }) {
         Revisado por un equipo profesional de la UBA y evaluado por una psicopedagoga
       </p>
       <h1 className="mt-5 text-[clamp(2.6rem,5vw,4.4rem)] font-medium leading-[1.02] tracking-[-0.045em] text-[var(--navy)]">
-        Que conozca el mundo real. <span className="text-[var(--terra-hondo)]">Y elija bien.</span>
+        Que conozca el mundo real. <span className="text-[var(--primario)]">Y elija bien.</span>
       </h1>
       <p className="mt-4 max-w-[60ch] text-[18px] leading-snug text-[var(--tenue)] sm:text-[19.5px]">
         Profesionales, empresas y universidades, para que tu hijo decida su futuro sabiendo qué elige.
       </p>
       <form
-        className="mt-8 flex max-w-[500px] flex-col gap-2 rounded-[10px] border border-[var(--borde)] bg-white p-1.5 sm:flex-row sm:items-center"
+        className="mt-8 flex max-w-[500px] flex-col gap-2 rounded-[10px] border border-[var(--borde)] bg-white p-1.5 focus-within:border-[var(--primario)] sm:flex-row sm:items-center"
         onSubmit={(e) => {
           e.preventDefault()
           const email = new FormData(e.currentTarget).get('email')
@@ -40,7 +40,7 @@ export function Hero({ alEnviar }: { alEnviar: (email: string) => void }) {
         />
         <button
           type="submit"
-          className="h-12 shrink-0 rounded-[6px] bg-[var(--terra)] px-5 text-[16px] font-semibold text-white transition-colors hover:bg-[var(--terra-hondo)]"
+          className="h-12 shrink-0 rounded-[6px] bg-[var(--primario)] px-5 text-[16px] font-semibold text-white transition-colors hover:bg-[var(--primario-hondo)]"
         >
           Quiero anotar a mi hijo
         </button>

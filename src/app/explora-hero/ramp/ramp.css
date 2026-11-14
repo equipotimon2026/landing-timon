@@ -1,6 +1,5 @@
 /* /explora-hero/ramp. Tokens propios de esta página, sobre los de home.css. */
 .ramp {
-  --escenario: #f7f2ea;
   background: #fff;
 }
 
@@ -20,4 +19,24 @@
   .ramp .cifras-pista {
     animation: none;
   }
+}
+
+/* Color principal de la marca: #4361EE, el del isotipo y los botones de la
+ * app (repo timon: src/app/icon.svg, paywall-screen.tsx, journey-header.tsx).
+ * El hover (#3651D4) y el tinte (#EEF2FF) también salen de la app. Navy queda
+ * para el texto y terra solo como acento. */
+.ramp {
+  --primario: #4361ee;
+  --primario-hondo: #3651d4;
+  --primario-tinte: #eef2ff;
+  --primario-suave: #dfe5fd;
+  --escenario: #f4f6fe;
+}
+
+/* Cómo funciona (App A) dentro de esta página: el hilo, los números y el
+ * bloque final van en el color principal en lugar de terra y navy. */
+.ramp .pasos-primario {
+  --terra: var(--primario);
+  --terra-hondo: var(--primario-hondo);
+  --bloque: var(--primario);
 }

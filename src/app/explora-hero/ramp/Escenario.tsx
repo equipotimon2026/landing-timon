@@ -73,7 +73,7 @@ function Esquinas({ visible, abiertas = true }: { visible: boolean; abiertas?: b
         <motion.span
           key={i}
           aria-hidden
-          className="absolute z-10 h-[5px] w-[5px] bg-[var(--navy)]"
+          className="absolute z-10 h-[5px] w-[5px] bg-[var(--primario)]"
           style={pos}
           initial={false}
           animate={{ opacity: visible ? 1 : 0, scale: visible ? 1 : 0.4 }}
@@ -117,7 +117,7 @@ function Pieza({
       <p className="mb-2 inline-flex items-center gap-2 whitespace-nowrap rounded-[6px] bg-white px-2.5 py-1 text-[12px] font-semibold tracking-[-0.005em] text-[var(--navy)] ring-1 ring-[rgba(15,31,54,0.08)]">
         <span
           aria-hidden
-          className={`h-[6px] w-[6px] rounded-full transition-colors duration-500 ${lista ? 'bg-[var(--ocean)]' : 'bg-[var(--borde)]'}`}
+          className={`h-[6px] w-[6px] rounded-full transition-colors duration-500 ${lista ? 'bg-[var(--primario)]' : 'bg-[var(--borde)]'}`}
         />
         {etiqueta}
       </p>

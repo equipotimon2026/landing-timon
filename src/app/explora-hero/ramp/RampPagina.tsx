@@ -2,15 +2,21 @@
 
 import { useState } from 'react'
 import { Anotalo } from '@/components/home/Anotalo'
+import { PasosA } from '../app-a/PasosA'
 import { Cabecera } from './Cabecera'
+import { Desorden } from './Desorden'
 import { Hero } from './Hero'
 import { Modulos } from './Modulos'
 import { Prueba } from './Prueba'
+import { Banner, Cierre, Historia, Momento, Preguntas, Testimonios } from './Secciones'
 
 /**
- * /explora-hero/ramp: la home de Timon con el formato de ramp.com. El mail
- * del hero viaja al formulario de padres (#anotalo), que se monta de nuevo
- * con ese mail ya cargado.
+ * /explora-hero/ramp: la home de Timon con el formato de ramp.com
+ * (docs/referencias-hero/ramp.md). Orden de Ramp: hero → prueba → bento →
+ * banda interactiva → el problema contado con scroll → cómo funciona (App A)
+ * → banner → equipo → testimonios → preguntas → cierre sobre el footer.
+ * El mail del hero viaja al formulario de padres, que se monta de nuevo con
+ * ese mail ya cargado.
  */
 export function RampPagina() {
   const [email, setEmail] = useState('')
@@ -26,14 +32,18 @@ export function RampPagina() {
         <Hero alEnviar={alEnviar} />
         <Prueba />
         <Modulos />
-        <section className="bg-[var(--arena)] px-5 py-20 lg:px-16 lg:py-28">
-          <div className="mx-auto max-w-[920px]">
-            <h2 className="mb-10 text-[clamp(2rem,3.4vw,3rem)] font-medium leading-[1.08] tracking-[-0.04em] text-[var(--navy)]">
-              Anotalo. <span className="text-[var(--tenue)]">Te escribimos para contarte cómo sigue.</span>
-            </h2>
-            <Anotalo key={email} emailInicial={email} />
-          </div>
-        </section>
+        <Momento />
+        <Desorden />
+        <div id="como-funciona" className="pasos-primario scroll-mt-16">
+          <PasosA />
+        </div>
+        <Banner />
+        <Historia />
+        <Testimonios />
+        <Preguntas />
+        <Cierre>
+          <Anotalo key={email} emailInicial={email} />
+        </Cierre>
       </main>
     </div>
   )
