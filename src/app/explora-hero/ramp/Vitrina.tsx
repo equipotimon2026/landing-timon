@@ -344,107 +344,109 @@ export function Vitrina() {
   const [frenada, setFrenada] = useState(false);
   const Vista = VISTAS[activa];
   return (
-    <section
-      id="red"
-      className="mx-auto max-w-[1440px] scroll-mt-20 px-5 pb-20 pt-6 lg:px-16 lg:pb-28 lg:pt-10"
-    >
-      <div className="max-w-[760px]">
-        <h2 className="text-balance text-[clamp(2rem,3.4vw,3rem)] font-medium leading-[1.1] tracking-[-0.02em] text-[var(--navy)]">
-          Solo, es muy difícil seguirle el ritmo.{" "}
-          <span className="text-[var(--primario)]">
-            Con Timon, está conectado con quienes lo viven.
-          </span>
-        </h2>
-      </div>
-
-      <div
-        className="mt-12 grid gap-8 lg:grid-cols-[minmax(0,1fr)_280px] lg:gap-12"
-        onMouseEnter={() => setFrenada(true)}
-        onMouseLeave={() => setFrenada(false)}
+    <div className="bg-[var(--primario-tinte)]">
+      <section
+        id="red"
+        className="mx-auto max-w-[1440px] scroll-mt-20 px-5 py-20 lg:px-16 lg:py-28"
       >
-        <div>
-          <div
-            role="tablist"
-            aria-label="La red de Timon"
-            className="-mx-5 flex gap-2 overflow-x-auto px-5 pb-1 sm:mx-0 sm:px-0"
-          >
-            {PESTANAS.map((p, i) => (
-              <button
-                key={p.id}
-                role="tab"
-                type="button"
-                aria-selected={i === activa}
-                onClick={() => setActiva(i)}
-                className={`relative shrink-0 overflow-hidden rounded-[10px] px-4 py-2.5 text-[14.5px] font-semibold transition-colors ${
-                  i === activa
-                    ? "bg-white text-[var(--navy)] ring-1 ring-[var(--borde)] shadow-[0_8px_20px_-14px_rgba(15,31,54,0.4)]"
-                    : "text-[var(--tenue)] hover:text-[var(--navy)]"
-                }`}
-              >
-                {p.titulo}
-                {i === activa && (
-                  <span
-                    key={activa}
-                    className="esc-tiempo absolute inset-x-0 bottom-0 h-[2px] origin-left bg-[var(--primario)]"
-                    style={{
-                      animationDuration: `${DURACION}ms`,
-                      animationPlayState:
-                        frenada || quieto ? "paused" : "running",
-                    }}
-                    onAnimationEnd={() =>
-                      setActiva((n) => (n + 1) % VISTAS.length)
-                    }
-                  />
-                )}
-              </button>
-            ))}
-          </div>
-
-          <div className="relative mt-5">
-            <span
-              aria-hidden
-              className="absolute inset-x-6 -bottom-3 top-3 rounded-[18px] bg-[var(--primario-tinte)] ring-1 ring-[var(--borde)]"
-            />
-            <span
-              aria-hidden
-              className="absolute inset-x-12 -bottom-6 top-6 -z-10 rounded-[18px] bg-[var(--escenario)] ring-1 ring-[var(--borde)]"
-            />
-            <div className="relative h-[480px] overflow-hidden rounded-[18px] bg-white ring-1 ring-[rgba(15,31,54,0.08)] shadow-[0_40px_80px_-50px_rgba(15,31,54,0.5)] md:h-[540px]">
-              <AnimatePresence mode="wait">
-                <motion.div
-                  key={activa}
-                  className="h-full"
-                  initial={{ opacity: 0, y: 14 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -10 }}
-                  transition={{ duration: 0.35, ease: SALIDA }}
-                >
-                  <Vista />
-                </motion.div>
-              </AnimatePresence>
-            </div>
-          </div>
+        <div className="max-w-[760px]">
+          <h2 className="text-balance text-[clamp(2rem,3.4vw,3rem)] font-medium leading-[1.1] tracking-[-0.02em] text-[var(--navy)]">
+            Con Timon, tu hijo está conectado{" "}
+            <span className="text-[var(--primario)]">
+              con quienes lo viven.
+            </span>
+          </h2>
         </div>
 
-        <ul className="grid gap-6 sm:grid-cols-3 lg:grid-cols-1 lg:content-center">
-          {PESTANAS.map((p, i) => (
-            <li
-              key={p.id}
-              className={`transition-opacity duration-300 ${i === activa ? "opacity-100" : "opacity-60"}`}
+        <div
+          className="mt-12 grid gap-8 lg:grid-cols-[minmax(0,1fr)_280px] lg:gap-12"
+          onMouseEnter={() => setFrenada(true)}
+          onMouseLeave={() => setFrenada(false)}
+        >
+          <div>
+            <div
+              role="tablist"
+              aria-label="La red de Timon"
+              className="-mx-5 flex gap-2 overflow-x-auto px-5 pb-1 sm:mx-0 sm:px-0"
             >
-              <span className="flex h-9 w-9 items-center justify-center rounded-[10px] bg-[var(--primario-tinte)] text-[var(--primario)]">
-                <p.icono size={18} />
-              </span>
-              <p className="mt-3 text-[16px] font-semibold text-[var(--navy)]">
-                {p.titulo}
-              </p>
-              <p className="mt-1 text-[14.5px] text-[var(--texto2)]">
-                {p.texto}
-              </p>
-            </li>
-          ))}
-        </ul>
-      </div>
-    </section>
+              {PESTANAS.map((p, i) => (
+                <button
+                  key={p.id}
+                  role="tab"
+                  type="button"
+                  aria-selected={i === activa}
+                  onClick={() => setActiva(i)}
+                  className={`relative shrink-0 overflow-hidden rounded-[10px] px-4 py-2.5 text-[14.5px] font-semibold transition-colors ${
+                    i === activa
+                      ? "bg-white text-[var(--navy)] ring-1 ring-[var(--borde)] shadow-[0_8px_20px_-14px_rgba(15,31,54,0.4)]"
+                      : "text-[var(--tenue)] hover:text-[var(--navy)]"
+                  }`}
+                >
+                  {p.titulo}
+                  {i === activa && (
+                    <span
+                      key={activa}
+                      className="esc-tiempo absolute inset-x-0 bottom-0 h-[2px] origin-left bg-[var(--primario)]"
+                      style={{
+                        animationDuration: `${DURACION}ms`,
+                        animationPlayState:
+                          frenada || quieto ? "paused" : "running",
+                      }}
+                      onAnimationEnd={() =>
+                        setActiva((n) => (n + 1) % VISTAS.length)
+                      }
+                    />
+                  )}
+                </button>
+              ))}
+            </div>
+
+            <div className="relative mt-5">
+              <span
+                aria-hidden
+                className="absolute inset-x-6 -bottom-3 top-3 rounded-[18px] bg-white/70 ring-1 ring-[var(--borde)]"
+              />
+              <span
+                aria-hidden
+                className="absolute inset-x-12 -bottom-6 top-6 rounded-[18px] bg-white/40 ring-1 ring-[var(--borde)]"
+              />
+              <div className="relative h-[480px] overflow-hidden rounded-[18px] bg-white ring-1 ring-[rgba(15,31,54,0.08)] shadow-[0_40px_80px_-50px_rgba(15,31,54,0.5)] md:h-[540px]">
+                <AnimatePresence mode="wait">
+                  <motion.div
+                    key={activa}
+                    className="h-full"
+                    initial={{ opacity: 0, y: 14 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -10 }}
+                    transition={{ duration: 0.35, ease: SALIDA }}
+                  >
+                    <Vista />
+                  </motion.div>
+                </AnimatePresence>
+              </div>
+            </div>
+          </div>
+
+          <ul className="grid gap-6 sm:grid-cols-3 lg:grid-cols-1 lg:content-center">
+            {PESTANAS.map((p, i) => (
+              <li
+                key={p.id}
+                className={`transition-opacity duration-300 ${i === activa ? "opacity-100" : "opacity-60"}`}
+              >
+                <span className="flex h-9 w-9 items-center justify-center rounded-[10px] bg-[var(--primario-tinte)] text-[var(--primario)]">
+                  <p.icono size={18} />
+                </span>
+                <p className="mt-3 text-[16px] font-semibold text-[var(--navy)]">
+                  {p.titulo}
+                </p>
+                <p className="mt-1 text-[14.5px] text-[var(--texto2)]">
+                  {p.texto}
+                </p>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+    </div>
   );
 }

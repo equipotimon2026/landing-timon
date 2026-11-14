@@ -1,13 +1,10 @@
 "use client";
 
-import { useState } from "react";
 import { ArrowRight, Plus } from "lucide-react";
 import { motion } from "motion/react";
 import { Isotipo } from "@/components/home/Isotipo";
-import { CONTACT_EMAIL, FUNDADORES } from "@/lib/programa";
+import { CONTACT_EMAIL } from "@/lib/programa";
 import { URL_ENTRAR } from "@/lib/landing";
-import { CITAS_EJEMPLO, HISTORIA_EJEMPLO } from "./contenido-ejemplo";
-import { CITA_PSICOPEDAGOGA } from "./datos";
 import { Circulo } from "./Lapiz";
 
 const SALIDA = [0.16, 1, 0.3, 1] as const;
@@ -20,80 +17,6 @@ const aparece = (i = 0) => ({
   viewport: { once: true, margin: "0px 0px -12% 0px" },
   transition: { duration: 0.8, delay: i * 0.08, ease: SALIDA },
 });
-
-/** Respuestas por momento: salen de lo que ya dice la home, sin promesas nuevas. */
-const MOMENTOS = [
-  {
-    id: "colegio",
-    label: "Está en 4°, 5° o 6° año",
-    texto:
-      "Lo hace en dos semanas, un rato por día y desde el celular, antes de tener que anotarse en una carrera.",
-  },
-  {
-    id: "termine",
-    label: "Terminó y no sabe qué seguir",
-    texto:
-      "Ordena sus opciones: ve qué áreas le atraen, qué carreras van con él y dónde estudiarlas.",
-  },
-  {
-    id: "cambio",
-    label: "Se quiere cambiar de carrera",
-    texto:
-      "Antes de cambiar, ve cómo es el trabajo por dentro y compara carreras y universidades con su perfil.",
-  },
-];
-
-/** La banda gris de Ramp ("recomendaciones para tu negocio"), con el momento de tu hijo. */
-export function Momento() {
-  const [elegido, setElegido] = useState<string>("colegio");
-  const actual = MOMENTOS.find((m) => m.id === elegido) ?? MOMENTOS[0];
-  return (
-    <section className="bg-[var(--primario-tinte)] px-5 py-20 lg:py-28">
-      <div className="mx-auto max-w-[640px] text-center">
-        <h2 className={H2}>
-          ¿En qué momento está tu hijo?{" "}
-          <span className="text-[var(--tenue)]">
-            Te contamos cómo lo ayuda Timon.
-          </span>
-        </h2>
-        <div
-          role="radiogroup"
-          aria-label="Momento de tu hijo"
-          className="mt-9 grid gap-2 sm:grid-cols-3"
-        >
-          {MOMENTOS.map((m) => (
-            <button
-              key={m.id}
-              type="button"
-              role="radio"
-              aria-checked={m.id === elegido}
-              onClick={() => setElegido(m.id)}
-              className={`min-h-[52px] rounded-[8px] border px-3 py-2 text-[14.5px] font-medium leading-snug transition-colors ${
-                m.id === elegido
-                  ? "border-[var(--primario)] bg-white text-[var(--primario-hondo)] ring-1 ring-[var(--primario)]"
-                  : "border-[var(--borde)] bg-white/60 text-[var(--texto2)] hover:border-[var(--tenue)]"
-              }`}
-            >
-              {m.label}
-            </button>
-          ))}
-        </div>
-        <p
-          aria-live="polite"
-          className="mx-auto mt-6 min-h-[3.2em] max-w-[50ch] text-[17px] text-[var(--texto2)]"
-        >
-          {actual.texto}
-        </p>
-        <a
-          href="#anotalo"
-          className="mt-6 flex h-12 w-full items-center justify-center rounded-[8px] bg-[var(--primario)] text-[15.5px] font-semibold text-white hover:bg-[var(--primario-hondo)]"
-        >
-          Quiero anotar a mi hijo
-        </a>
-      </div>
-    </section>
-  );
-}
 
 /** Banner horizontal de Ramp ("ver qué pueden automatizar los agentes"). */
 export function Banner() {
@@ -119,102 +42,6 @@ export function Banner() {
           Hacer el test <ArrowRight size={16} aria-hidden />
         </a>
       </motion.div>
-    </section>
-  );
-}
-
-/**
- * "Escalá el equipo", la sección de Ramp con titular centrado y columnas,
- * usada para la historia de Timon. El texto es un BORRADOR DE EJEMPLO
- * (contenido-ejemplo.ts): solo usa lo que se sabe de los fundadores.
- */
-export function Historia() {
-  return (
-    <section
-      id="historia"
-      className="mx-auto max-w-[1440px] scroll-mt-20 px-5 py-20 lg:px-16 lg:py-28"
-    >
-      <motion.div {...aparece()} className="mx-auto max-w-[760px] text-center">
-        <h2 className={H2}>
-          Hecho en Argentina.{" "}
-          <span className="text-[var(--tenue)]">Por Facu, Feli y Nico.</span>
-        </h2>
-        {HISTORIA_EJEMPLO.parrafos.map((t) => (
-          <p
-            key={t}
-            className="mx-auto mt-5 max-w-[56ch] text-[17px] text-[var(--texto2)]"
-          >
-            {t}
-          </p>
-        ))}
-      </motion.div>
-      <ul className="mx-auto mt-14 grid max-w-[1000px] gap-3 sm:grid-cols-3">
-        {FUNDADORES.map((f, i) => (
-          <motion.li
-            key={f.nombre}
-            {...aparece(i)}
-            className="rounded-[14px] bg-[var(--escenario)] p-6"
-          >
-            <span
-              aria-hidden
-              className="flex h-14 w-14 items-center justify-center rounded-[10px] bg-white text-[24px] font-light text-[var(--primario)] ring-1 ring-[var(--borde)]"
-            >
-              {f.nombre[0]}
-            </span>
-            <p className="mt-8 text-[18px] font-semibold tracking-[-0.02em] text-[var(--navy)]">
-              {f.nombre}
-            </p>
-            <p className="text-[15px] text-[var(--tenue)]">{f.rol}</p>
-          </motion.li>
-        ))}
-      </ul>
-    </section>
-  );
-}
-
-/**
- * El muro de testimonios de Ramp. La cita de la psicopedagoga es real y
- * textual (MEMORY.md); las otras dos son DE EJEMPLO (contenido-ejemplo.ts),
- * con roles genéricos, para la vista previa local.
- */
-const CITAS = [
-  {
-    texto: CITA_PSICOPEDAGOGA.texto,
-    quien: CITA_PSICOPEDAGOGA.quien,
-    rol: CITA_PSICOPEDAGOGA.rol,
-  },
-  ...CITAS_EJEMPLO,
-];
-
-export function Testimonios() {
-  return (
-    <section
-      id="testimonios"
-      className="mx-auto max-w-[1440px] scroll-mt-20 px-5 py-20 lg:px-16 lg:py-28"
-    >
-      <motion.div {...aparece()} className="text-center">
-        <p className="text-[14px] text-[var(--tenue)]">Lo que dicen de Timon</p>
-        <h2 className={`mt-3 ${H2}`}>No es un simple test.</h2>
-      </motion.div>
-      <ul className="mt-12 grid gap-3 md:grid-cols-3">
-        {CITAS.map((c, i) => (
-          <motion.li
-            key={i}
-            {...aparece(i)}
-            className="flex flex-col justify-between rounded-[14px] border border-[var(--borde)] bg-white p-6"
-          >
-            <p className="text-[17px] leading-[1.5] text-[var(--navy)]">
-              “{c.texto}”
-            </p>
-            <div className="mt-8 border-t border-[var(--borde)] pt-4">
-              <p className="text-[15px] font-semibold text-[var(--navy)]">
-                {c.quien}
-              </p>
-              <p className="text-[14px] text-[var(--tenue)]">{c.rol}</p>
-            </div>
-          </motion.li>
-        ))}
-      </ul>
     </section>
   );
 }

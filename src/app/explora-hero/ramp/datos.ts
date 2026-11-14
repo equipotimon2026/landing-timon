@@ -55,26 +55,6 @@ export const DONDE_SALUD = {
     "Hospitales públicos y privados, clínicas y sanatorios, laboratorios.",
 };
 
-/**
- * El mundo que cambia. Dos cifras del World Economic Forum, Future of Jobs
- * Report 2025 (enero de 2025): verificar la cita textual antes de publicar.
- * No hay un tercer dato argentino verificado: quedan dos.
- */
-export const CAMBIO = [
-  {
-    cifra: "39 %",
-    texto:
-      "de las habilidades que hoy pide el trabajo va a cambiar o quedar vieja de acá a 2030.",
-    fuente: "World Economic Forum, Future of Jobs Report 2025",
-  },
-  {
-    cifra: "170 M",
-    texto:
-      "de puestos nuevos se van a crear en el mundo hasta 2030, y 92 millones van a desaparecer.",
-    fuente: "World Economic Forum, Future of Jobs Report 2025",
-  },
-];
-
 /** La tira de números bajo el escenario (lib/landing.ts y la home). */
 export const NUMEROS = [
   { etiqueta: "Áreas de trabajo", valor: "16" },

@@ -50,3 +50,16 @@
     animation: none;
   }
 }
+
+/* Marquesinas de texto (áreas). */
+.ramp .marquesina {
+  animation: ramp-pasa 60s linear infinite;
+}
+.ramp .marquesina-inversa {
+  animation-direction: reverse;
+}
+@media (prefers-reduced-motion: reduce) {
+  .ramp .marquesina {
+    animation: none;
+  }
+}
