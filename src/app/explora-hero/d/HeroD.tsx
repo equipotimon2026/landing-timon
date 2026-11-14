@@ -14,7 +14,18 @@ const LINEAS = [
   <>su futuro.</>,
 ]
 
-const FILAS: { etiqueta: string; valor: (a: AreaHero) => React.ReactNode }[] = [
+/**
+ * Respaldo, con lo que ya dice la home: 16 áreas del catálogo, "300 carreras
+ * en 50 universidades" (lib/landing.ts) y la revisión de la metodología
+ * (docs/wording-v2.md, FAQ "¿Quién está detrás?").
+ */
+const RESPALDO = [
+  { cifra: '16', texto: 'áreas de trabajo, vistas por dentro' },
+  { cifra: '300', texto: 'carreras en 50 universidades' },
+  { cifra: 'UBA', texto: 'un equipo profesional revisó la metodología' },
+]
+
+const FILAS:{ etiqueta: string; valor: (a: AreaHero) => React.ReactNode }[] = [
   {
     etiqueta: 'Lo que se pregunta',
     valor: (a) => (
@@ -70,13 +81,24 @@ export function HeroD({ areas }: { areas: AreaHero[] }) {
             En Timon tu hijo charla con profesionales de 16 áreas, ve dónde se trabaja de verdad y compara universidades.
             Dos semanas, desde casa, para que elija sabiendo qué elige.
           </p>
-          <div className="hd-sube mt-10 flex flex-col items-start gap-3" style={{ animationDelay: '660ms' }}>
-            <a href="#anotalo" className="btn group">
+          <div className="hd-sube mt-9 flex flex-col items-start gap-3 sm:flex-row sm:items-center sm:gap-6" style={{ animationDelay: '660ms' }}>
+            <a href="#anotalo" className="btn group shrink-0">
               {CTA_TEXTO}
               <ArrowRight size={18} aria-hidden className="transition-transform duration-300 group-hover:translate-x-1" />
             </a>
-            <p className="text-[14px] text-[var(--tenue)]">{CTA_MICRO}</p>
+            <p className="max-w-[22ch] text-[14px] leading-snug text-[var(--tenue)]">{CTA_MICRO}</p>
           </div>
+
+          <dl className="hd-sube mt-12 grid max-w-[640px] gap-y-3 border-t border-[var(--borde)] pt-5 sm:grid-cols-3 sm:gap-x-6" style={{ animationDelay: '760ms' }}>
+            {RESPALDO.map((r) => (
+              <div key={r.cifra} className="grid grid-cols-[4.5rem_minmax(0,1fr)] items-baseline gap-x-3 sm:flex sm:flex-col sm:gap-1.5">
+                <dt className="order-2 text-[13.5px] leading-snug text-[var(--tenue)]">{r.texto}</dt>
+                <dd className="order-1 text-[clamp(1.6rem,2.4vw,2.1rem)] font-light leading-none tracking-[-0.04em] text-[var(--navy)]">
+                  {r.cifra}
+                </dd>
+              </div>
+            ))}
+          </dl>
         </div>
 
         <div
