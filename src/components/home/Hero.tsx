@@ -2,12 +2,18 @@
 
 import Image from 'next/image'
 import { ArrowDown, ArrowRight } from 'lucide-react'
-import { MotionConfig, motion, useMotionValue, useSpring, useTransform } from 'motion/react'
+import { motion, useMotionValue, useReducedMotion, useSpring, useTransform, type Transition } from 'motion/react'
 import { MacBook, IPhone } from './Dispositivos'
 import { Dibujo, Nota, Trazo } from './Dibujo'
 
 const SUAVE = [0.22, 1, 0.36, 1] as const
 const RESORTE = { stiffness: 60, damping: 18, mass: 0.7 }
+
+/** Con menos movimiento, todo llega a su lugar sin animarse. */
+function useT() {
+  const quieto = useReducedMotion()
+  return (t: Transition): Transition => (quieto ? { duration: 0 } : t)
+}
 
 const TITULO_ANTES = ['Antes', 'de', 'elegir', 'carrera,', 'que', 'conozca']
 
@@ -25,12 +31,13 @@ function Sticker({
   giro: number
   retraso: number
 }) {
+  const T = useT()
   return (
     <motion.span
       className={`absolute z-20 ${donde}`}
       initial={{ opacity: 0, scale: 0.4, rotate: giro * 3 }}
       animate={{ opacity: 1, scale: 1, rotate: 0 }}
-      transition={{ type: 'spring', stiffness: 380, damping: 16, delay: retraso }}
+      transition={T({ type: 'spring', stiffness: 380, damping: 16, delay: retraso })}
     >
       <span className={`sticker ${className}`} style={{ '--giro': `${giro}deg` } as React.CSSProperties}>
         {children}
@@ -45,9 +52,13 @@ function Sticker({
  * sobre formas orgánicas de la marca. Entrada coreografiada: palabras,
  * fondo, MacBook, iPhone, stickers y el dibujo a mano, en ese orden. Con el
  * mouse, cada capa se mueve un poco distinto (profundidad). Con menos
- * movimiento, MotionConfig apaga los desplazamientos.
+ * movimiento, todo aparece en su lugar al instante y el mouse no mueve nada.
+ * (MotionConfig reducedMotion="user" rompía la hidratación: el servidor
+ * renderiza el estado inicial con transform y el cliente sin él.)
  */
 export function Hero() {
+  const T = useT()
+  const quieto = useReducedMotion()
   const mx = useMotionValue(0)
   const my = useMotionValue(0)
   const sx = useSpring(mx, RESORTE)
@@ -61,11 +72,10 @@ export function Hero() {
   const telY = useTransform(sy, (v) => v * 16)
 
   return (
-    <MotionConfig reducedMotion="user">
       <section
-        className="relative overflow-hidden px-5 pb-16 pt-10 sm:pb-24 sm:pt-16 lg:pb-28 lg:pt-14"
+        className="relative overflow-hidden px-5 pb-16 pt-7 sm:pb-24 sm:pt-16 lg:pb-28 lg:pt-14"
         onPointerMove={(e) => {
-          if (e.pointerType !== 'mouse') return
+          if (quieto || e.pointerType !== 'mouse') return
           const r = e.currentTarget.getBoundingClientRect()
           mx.set(((e.clientX - r.left) / r.width) * 2 - 1)
           my.set(((e.clientY - r.top) / r.height) * 2 - 1)
@@ -75,27 +85,27 @@ export function Hero() {
           my.set(0)
         }}
       >
-        <div className="mx-auto grid max-w-[1280px] items-center gap-12 lg:grid-cols-[minmax(0,5fr)_minmax(0,6fr)] lg:gap-6">
+        <div className="mx-auto grid max-w-[1280px] items-center gap-6 sm:gap-12 lg:grid-cols-[minmax(0,5fr)_minmax(0,6fr)] lg:gap-6">
           {/* ── Texto ─────────────────────────────────────────────────── */}
           <div className="relative z-10 text-center lg:text-left">
             <motion.p
               className="etiqueta inline-flex items-center gap-2 rounded-full bg-[var(--crema)] px-3.5 py-2 text-[var(--terra-hondo)]"
               initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, ease: SUAVE }}
+              transition={T({ duration: 0.6, ease: SUAVE })}
             >
               <span className="h-2 w-2 rounded-full bg-[var(--terra)]" aria-hidden />
               Para madres y padres
             </motion.p>
 
-            <h1 className="display mx-auto mt-6 max-w-[13ch] text-[clamp(2.9rem,6.3vw,6rem)] lg:mx-0">
+            <h1 className="display mx-auto mt-5 max-w-[13ch] text-[clamp(2.6rem,6.3vw,6rem)] lg:mx-0">
               {TITULO_ANTES.map((p, i) => (
                 <motion.span
                   key={p}
                   className="inline-block"
                   initial={{ opacity: 0, y: 34 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.8, ease: SUAVE, delay: 0.08 + i * 0.06 }}
+                  transition={T({ duration: 0.8, ease: SUAVE, delay: 0.08 + i * 0.06 })}
                 >
                   {p}&nbsp;
                 </motion.span>
@@ -104,7 +114,7 @@ export function Hero() {
                 className="relative inline-block whitespace-nowrap font-semibold text-[var(--ocean)]"
                 initial={{ opacity: 0, y: 34 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, ease: SUAVE, delay: 0.08 + TITULO_ANTES.length * 0.06 }}
+                transition={T({ duration: 0.8, ease: SUAVE, delay: 0.08 + TITULO_ANTES.length * 0.06 })}
               >
                 el mundo.
                 <Dibujo retraso={1.05} className="absolute -bottom-[0.16em] left-[-2%] h-[0.3em] w-[96%]">
@@ -117,20 +127,20 @@ export function Hero() {
             </h1>
 
             <motion.p
-              className="mx-auto mt-7 max-w-[36ch] text-[18px] leading-[1.55] text-[var(--texto2)] sm:text-[20px] lg:mx-0"
+              className="mx-auto mt-5 max-w-[36ch] text-[16.5px] leading-[1.55] sm:mt-7 text-[var(--texto2)] sm:text-[20px] lg:mx-0"
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, ease: SUAVE, delay: 0.6 }}
+              transition={T({ duration: 0.8, ease: SUAVE, delay: 0.6 })}
             >
               Timon le muestra a tu hijo o hija cómo es el trabajo de verdad, con una red de profesionales,
               universidades, empresas y eventos. Y lo acompaña a elegir.
             </motion.p>
 
             <motion.div
-              className="mt-9 flex flex-col items-center gap-5 sm:flex-row sm:justify-center lg:justify-start"
+              className="mt-7 flex flex-col items-center gap-4 sm:mt-9 sm:flex-row sm:gap-5 sm:justify-center lg:justify-start"
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, ease: SUAVE, delay: 0.75 }}
+              transition={T({ duration: 0.8, ease: SUAVE, delay: 0.75 })}
             >
               <a href="#anotalo" className="btn group">
                 Quiero que lo haga
@@ -143,10 +153,10 @@ export function Hero() {
             </motion.div>
 
             <motion.p
-              className="mt-6 text-[14px] text-[var(--tenue)]"
+              className="mt-6 hidden text-[14px] text-[var(--tenue)] sm:block"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              transition={{ duration: 0.8, delay: 1 }}
+              transition={T({ duration: 0.8, delay: 1 })}
             >
               Empieza gratis · Desde casa · A su ritmo
             </motion.p>
@@ -159,19 +169,19 @@ export function Hero() {
                 className="blob blob-vivo left-[8%] top-[2%] h-[86%] w-[84%] bg-[var(--cielo)]"
                 initial={{ opacity: 0, scale: 0.6 }}
                 animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 1.2, ease: SUAVE, delay: 0.15 }}
+                transition={T({ duration: 1.2, ease: SUAVE, delay: 0.15 })}
               />
               <motion.span
                 className="blob blob-vivo right-[-4%] top-[-6%] h-[42%] w-[38%] bg-[var(--durazno)] [animation-delay:-5s]"
                 initial={{ opacity: 0, scale: 0.4 }}
                 animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 1.2, ease: SUAVE, delay: 0.3 }}
+                transition={T({ duration: 1.2, ease: SUAVE, delay: 0.3 })}
               />
               <motion.span
                 className="absolute bottom-[4%] left-[-3%] h-[22%] w-[22%] rounded-full bg-[var(--crema)]"
                 initial={{ opacity: 0, scale: 0.4 }}
                 animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 1.1, ease: SUAVE, delay: 0.4 }}
+                transition={T({ duration: 1.1, ease: SUAVE, delay: 0.4 })}
               />
               {/* Constelación de la red: puntos y líneas de la marca. */}
               <svg viewBox="0 0 100 100" className="absolute right-[2%] bottom-[6%] h-[26%] w-[26%] text-[var(--ocean)] opacity-40">
@@ -195,14 +205,14 @@ export function Hero() {
                 style={{ x: macX, rotateY: macRotY, rotateX: macRotX, transformStyle: 'preserve-3d' }}
                 initial={{ opacity: 0, y: 90, scale: 0.92 }}
                 animate={{ opacity: 1, y: 0, scale: 1 }}
-                transition={{ duration: 1.2, ease: SUAVE, delay: 0.35 }}
+                transition={T({ duration: 1.2, ease: SUAVE, delay: 0.35 })}
               >
                 <MacBook className="drop-shadow-[0_50px_60px_rgba(15,31,54,0.28)]">
                   <Image
                     src="/app/mac-informe.webp"
                     alt="El informe de Timon en una MacBook: la esencia de Sofía, con sus rasgos de Análisis a Expresión"
                     fill
-                    priority
+                    preload
                     sizes="(min-width: 1024px) 640px, 90vw"
                     className="object-cover object-top"
                   />
@@ -214,7 +224,7 @@ export function Hero() {
                 style={{ x: telX, y: telY }}
                 initial={{ opacity: 0, x: -50, y: 80, rotate: -14 }}
                 animate={{ opacity: 1, x: 0, y: 0, rotate: -5 }}
-                transition={{ duration: 1.1, ease: SUAVE, delay: 0.6 }}
+                transition={T({ duration: 1.1, ease: SUAVE, delay: 0.6 })}
               >
                 <IPhone>
                   <Image
@@ -248,6 +258,5 @@ export function Hero() {
           </div>
         </div>
       </section>
-    </MotionConfig>
   )
 }
