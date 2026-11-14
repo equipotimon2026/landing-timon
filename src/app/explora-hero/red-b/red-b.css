@@ -1,0 +1,41 @@
+/* Red B · el diagrama sobre navy. */
+
+.rb-fondo {
+  background-color: #0b1729;
+  background-image:
+    radial-gradient(60% 45% at 50% 30%, rgba(30, 91, 160, 0.32), rgba(30, 91, 160, 0) 70%),
+    radial-gradient(rgba(223, 234, 246, 0.11) 1px, transparent 1.3px);
+  background-size:
+    100% 100%,
+    22px 22px;
+}
+
+.rb-cometa {
+  stroke-dashoffset: var(--desde);
+  animation: rb-viaje var(--dur) cubic-bezier(0.55, 0, 0.35, 1) var(--delay) infinite both;
+}
+@keyframes rb-viaje {
+  0% {
+    stroke-dashoffset: var(--desde);
+  }
+  60%,
+  100% {
+    stroke-dashoffset: var(--hasta);
+  }
+}
+
+.rb-fila {
+  transition: background-color 0.25s ease;
+}
+@media (hover: hover) {
+  .rb-fila:hover {
+    background-color: rgba(223, 234, 246, 0.05);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rb-cometa {
+    animation: none;
+    display: none;
+  }
+}

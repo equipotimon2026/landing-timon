@@ -1,0 +1,34 @@
+/* Hero A · el abanico de futuros. Bloque navy con una trama de puntos que se
+ * desvanece; el abanico de tarjetas cruza el borde hacia la sección clara.
+ * Todo el movimiento vive detrás de prefers-reduced-motion: no-preference. */
+
+.abanico-trama {
+  background-image: radial-gradient(rgba(223, 234, 246, 0.16) 1px, transparent 1.2px);
+  background-size: 22px 22px;
+  mask-image: radial-gradient(ellipse 70% 60% at 50% 38%, #000 10%, transparent 75%);
+}
+
+.abanico-palabra {
+  background: linear-gradient(95deg, #e39470 0%, #f3c3a6 55%, #f7e3d7 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .abanico-entra {
+    animation: abanico-entra 1s cubic-bezier(0.22, 1, 0.36, 1) both;
+    animation-delay: var(--retraso, 0s);
+  }
+}
+
+@keyframes abanico-entra {
+  from {
+    opacity: 0;
+    transform: translateY(22px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}

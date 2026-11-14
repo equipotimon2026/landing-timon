@@ -1,0 +1,49 @@
+/* La barra que se llena en el interés activo mientras la demo rota sola.
+ * Cuando termina la animación, el componente pasa al interés siguiente. */
+.barra {
+  transform-origin: left center;
+  animation: llenar 5.2s linear forwards;
+}
+.pausada {
+  animation-play-state: paused;
+}
+@keyframes llenar {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+/* Fila de intereses en celular: se desliza de costado, con el borde que se esfuma. */
+.fila {
+  scrollbar-width: none;
+  mask-image: linear-gradient(to right, transparent 0, #000 16px, #000 calc(100% - 28px), transparent 100%);
+}
+.fila::-webkit-scrollbar {
+  display: none;
+}
+@media (min-width: 768px) {
+  .fila {
+    mask-image: none;
+  }
+}
+
+.flecha {
+  animation: bajar 2.2s cubic-bezier(0.22, 1, 0.36, 1) infinite;
+}
+@keyframes bajar {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(5px);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .flecha {
+    animation: none;
+  }
+}
