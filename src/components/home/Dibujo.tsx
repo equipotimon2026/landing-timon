@@ -33,7 +33,9 @@ export function Dibujo({
   )
 }
 
-/** Trazo de marcador: redondeado, sin relleno, en terra u ocean. */
+const COLORES = { terra: '#c97f5e', ocean: '#1e5ba0', crema: '#f5ede0' }
+
+/** Trazo de marcador: redondeado, sin relleno, en los colores de la marca. */
 export function Trazo({
   d,
   orden = 0,
@@ -43,14 +45,14 @@ export function Trazo({
   d: string
   orden?: number
   ancho?: number
-  color?: 'terra' | 'ocean'
+  color?: keyof typeof COLORES
 }) {
   return (
     <path
       d={d}
       pathLength={1}
       fill="none"
-      stroke={color === 'terra' ? '#c97f5e' : '#1e5ba0'}
+      stroke={COLORES[color]}
       strokeWidth={ancho}
       strokeLinecap="round"
       strokeLinejoin="round"

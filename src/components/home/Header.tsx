@@ -3,18 +3,18 @@ import { Isotipo } from './Isotipo'
 import { URL_ENTRAR } from '@/lib/landing'
 
 const LINKS = [
-  { href: '#informe', texto: 'El informe' },
+  { href: '#app', texto: 'La app' },
   { href: '#red', texto: 'La red' },
   { href: '#preguntas', texto: 'Preguntas' },
 ]
 
-/** Barra fina y translúcida, como la de Apple: marca, tres anclas y un solo botón. */
+/** Barra fina y translúcida: marca, tres anclas, Entrar y un solo botón (terra). */
 export function Header() {
   return (
-    <header className="sticky top-0 z-40 border-b border-[var(--borde)]/70 bg-white/75 backdrop-blur-xl backdrop-saturate-150">
+    <header className="sticky top-0 z-40 border-b border-[var(--borde)]/70 bg-white/80 backdrop-blur-xl backdrop-saturate-150">
       <div className="mx-auto flex h-14 max-w-[1120px] items-center gap-6 px-5">
         <Link href="/" aria-label="Timon, inicio" className="inline-flex items-center gap-2 text-[17px] font-semibold tracking-[-0.02em]">
-          <Isotipo size={20} />
+          <Isotipo size={22} className="text-[var(--ocean)]" />
           Timon
         </Link>
         <nav aria-label="Principal" className="ml-auto flex items-center gap-1 text-[14px]">
@@ -35,7 +35,7 @@ export function Header() {
           </a>
           <a
             href="#anotalo"
-            className="ml-2 inline-flex h-9 items-center rounded-full bg-[var(--rumbo)] px-4 text-[14px] font-semibold text-white transition-colors hover:bg-[var(--rumbo-hondo)]"
+            className="ml-2 inline-flex h-10 items-center rounded-full bg-[var(--terra)] px-5 text-[14px] font-semibold text-white shadow-[0_3px_0_var(--terra-hondo)] transition-[background-color,transform,box-shadow] hover:bg-[#bd7252] active:translate-y-[3px] active:shadow-none"
           >
             Anotalo
           </a>

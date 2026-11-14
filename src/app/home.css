@@ -1,25 +1,39 @@
-/* Home · dirección B "producto tech" (13/11/2026). Blanco puro, bloques
- * grises, el informe como objeto en 3D. Referencias: Apple iPhone, Framer,
- * Linear en claro. Fotos solo en la cinta de la red.
+/* Home · dirección B con la marca de Timon (14/11/2026). Blanco de base en el
+ * hero y en el ritmo general; bloques de sección en navy, ocean, terra y
+ * crema, alternados. Plus Jakarta 300 en titulares, JetBrains Mono en las
+ * etiquetas, Kalam en las notas a mano. Referencias: Duolingo, Headspace,
+ * Pitch, Loom y Mercury.
  */
 .home {
+  /* Marca */
+  --navy: #0f1f36;
+  --ocean: #1e5ba0;
+  --terra: #c97f5e;
+  --crema: #f5ede0;
+  /* Tintes de la marca, para fondos de bloques y stickers */
+  --ocean-claro: #4f84c2;
+  --cielo: #dfeaf6;
+  --terra-hondo: #a8603f;
+  --durazno: #f7e3d7;
+  --arena: #fbf7f0;
+
   --fondo: #ffffff;
-  --texto: #0f1f36;
-  --texto2: #45536b;
-  --tenue: #7a869a;
-  --gris: #f5f6f8;
-  --gris2: #eceef2;
-  --borde: #e8eaef;
-  --rumbo: #1e5ba0;
+  --texto: var(--navy);
+  --texto2: #3f4d63;
+  --tenue: #6f7b8f;
+  --gris: var(--arena);
+  --gris2: #efe6d6;
+  --borde: #ebe4d8;
+  --rumbo: var(--ocean);
   --rumbo-hondo: #184c86;
-  --cielo: #4f84c2;
   /* nombres que usa el formulario */
-  --papel: #f5f6f8;
-  --mar: #e9f0f8;
-  --tinta: #0f1f36;
+  --papel: var(--arena);
+  --mar: var(--cielo);
+  --tinta: var(--navy);
   --tinta2: #2a3a55;
   --grafito: #66748b;
-  --linea: #e8eaef;
+  --linea: #ebe4d8;
+
   font-family: var(--font-jakarta), system-ui, sans-serif;
   background: var(--fondo);
   color: var(--texto);
@@ -32,82 +46,253 @@
   text-wrap: pretty;
 }
 .home ::selection {
-  background: rgba(30, 91, 160, 0.16);
+  background: rgba(201, 127, 94, 0.28);
 }
 
+/* Titulares: Plus Jakarta 300, como pide el Brand Kit. */
 .home .display {
-  font-weight: 600;
-  letter-spacing: -0.048em;
-  line-height: 0.98;
-  font-feature-settings: 'kern', 'ss01';
+  font-weight: 300;
+  letter-spacing: -0.045em;
+  line-height: 1;
   text-wrap: balance;
+}
+.home .display strong,
+.home .display b {
+  font-weight: 600;
 }
 .home .titulo {
-  font-weight: 600;
+  font-weight: 400;
   letter-spacing: -0.03em;
-  line-height: 1.08;
+  line-height: 1.1;
   text-wrap: balance;
 }
+/* Etiquetas: JetBrains Mono en mayúsculas espaciadas. */
 .home .etiqueta {
-  font-size: 13px;
-  font-weight: 600;
-  letter-spacing: 0.01em;
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
 }
 
 .home :focus-visible {
-  outline: 2px solid var(--rumbo);
+  outline: 2px solid var(--terra);
   outline-offset: 3px;
   border-radius: 10px;
 }
 
+/* ── Botones ──────────────────────────────────────────────────────────── */
 .home .btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
-  min-height: 50px;
-  padding: 0 1.6rem;
+  min-height: 54px;
+  padding: 0 1.7rem;
   border-radius: 999px;
-  background: var(--rumbo);
+  background: var(--ocean);
   color: #fff;
   font-weight: 600;
-  font-size: 16px;
+  font-size: 16.5px;
   letter-spacing: -0.01em;
+  /* Botón con "piso", como los de Duolingo: se hunde al apretarlo. */
   box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.18),
-    0 1px 2px rgba(15, 31, 54, 0.12),
-    0 10px 24px -12px rgba(30, 91, 160, 0.7);
+    inset 0 1px 0 rgba(255, 255, 255, 0.2),
+    0 4px 0 #123f73,
+    0 14px 28px -14px rgba(30, 91, 160, 0.8);
   transition:
-    background-color 0.25s,
-    transform 0.25s cubic-bezier(0.22, 1, 0.36, 1),
-    box-shadow 0.25s;
+    background-color 0.2s,
+    transform 0.2s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.2s;
 }
 .home .btn:hover {
   background: var(--rumbo-hondo);
   transform: translateY(-1px);
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.2),
-    0 2px 4px rgba(15, 31, 54, 0.12),
-    0 16px 32px -14px rgba(30, 91, 160, 0.75);
 }
 .home .btn:active {
-  transform: scale(0.98);
+  transform: translateY(4px);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.2),
+    0 0 0 #123f73,
+    0 6px 14px -10px rgba(30, 91, 160, 0.8);
+}
+.home .btn-terra {
+  background: var(--terra);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.22),
+    0 4px 0 var(--terra-hondo),
+    0 14px 28px -14px rgba(168, 96, 63, 0.8);
+}
+.home .btn-terra:hover {
+  background: #bd7252;
+}
+.home .btn-terra:active {
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.22),
+    0 0 0 var(--terra-hondo),
+    0 6px 14px -10px rgba(168, 96, 63, 0.8);
+}
+.home .link-flecha {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-weight: 600;
+  text-underline-offset: 6px;
+}
+.home .link-flecha:hover {
+  text-decoration: underline;
 }
 
-/* Captura del producto dentro de un bloque: borde de 1px y sombra en capas. */
+/* ── Stickers: chips de color que se mueven un poco al pasar el mouse ──── */
+.home .sticker {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  border-radius: 999px;
+  padding: 0.5rem 0.95rem;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+  box-shadow:
+    0 0 0 1px rgba(15, 31, 54, 0.06),
+    0 10px 24px -14px rgba(15, 31, 54, 0.45);
+  transform: rotate(var(--giro, 0deg));
+  transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .home .sticker:hover {
+    transform: rotate(calc(var(--giro, 0deg) * -1)) scale(1.08);
+  }
+}
+
+/* ── Marcos de dispositivos (CSS puro; escalan con su ancho) ────────────
+ * Las medidas en cqw se resuelven contra el contenedor .mac / .iphone, por
+ * eso el cuerpo de cada marco es un hijo y no el contenedor mismo. */
+.home .mac {
+  container-type: inline-size;
+  position: relative;
+}
+.home .mac-tapa {
+  position: relative;
+  border-radius: 2.4cqw 2.4cqw 0.6cqw 0.6cqw;
+  padding: 1.7cqw 1.7cqw 2.6cqw;
+  background: linear-gradient(180deg, #23262c, #0c0d10);
+  box-shadow:
+    inset 0 0 0 0.12cqw #44474e,
+    0 0 0 0.1cqw #0a0b0d;
+}
+.home .mac-camara {
+  position: absolute;
+  left: 50%;
+  top: 0.6cqw;
+  width: 0.6cqw;
+  height: 0.6cqw;
+  border-radius: 50%;
+  background: #2a2e36;
+  transform: translateX(-50%);
+}
+.home .mac-pantalla {
+  position: relative;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  border-radius: 0.5cqw;
+  background: #faf9f6;
+}
+.home .mac-base {
+  position: relative;
+  left: -7%;
+  width: 114%;
+  height: 2.4cqw;
+  border-radius: 0 0 2.4cqw 2.4cqw / 0 0 1.6cqw 1.6cqw;
+  background: linear-gradient(180deg, #e9ebee 0%, #c9cdd3 55%, #9ea3ab 100%);
+  box-shadow: inset 0 0.15cqw 0 #fff;
+}
+.home .mac-base::before {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 0;
+  width: 15%;
+  height: 45%;
+  border-radius: 0 0 1.2cqw 1.2cqw;
+  background: linear-gradient(180deg, #b9bdc4, #d6d9de);
+  transform: translateX(-50%);
+}
+
+.home .iphone {
+  container-type: inline-size;
+  position: relative;
+}
+.home .iphone-cuerpo {
+  border-radius: 16cqw;
+  padding: 3.4cqw;
+  background: linear-gradient(145deg, #2b2e34, #0d0e11 60%);
+  box-shadow:
+    inset 0 0 0 0.6cqw #3b3e45,
+    inset 0 0 0 1.4cqw #111215,
+    0 40px 70px -30px rgba(15, 31, 54, 0.55);
+}
+.home .iphone-pantalla {
+  position: relative;
+  aspect-ratio: 393 / 852;
+  overflow: hidden;
+  border-radius: 12.6cqw;
+  background: #faf9f6;
+}
+.home .iphone-isla {
+  position: absolute;
+  left: 50%;
+  top: 2.8cqw;
+  z-index: 2;
+  width: 31cqw;
+  height: 9cqw;
+  border-radius: 999px;
+  background: #050506;
+  transform: translateX(-50%);
+}
+
+/* Captura del producto dentro de un bloque. */
 .home .captura {
   overflow: hidden;
-  border-radius: 14px;
+  border-radius: 16px;
   background: #fff;
   box-shadow:
     0 0 0 1px rgba(15, 31, 54, 0.06),
     0 2px 6px -2px rgba(15, 31, 54, 0.06),
-    0 30px 60px -30px rgba(15, 31, 54, 0.32);
+    0 30px 60px -30px rgba(15, 31, 54, 0.4);
   transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
 }
 @media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .home .tesela {
+    transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+  .home .tesela:hover {
+    transform: translateY(-4px) rotate(-0.4deg);
+  }
   .home .tesela:hover .captura {
-    transform: translateY(-8px);
+    transform: translateY(-6px);
+  }
+}
+
+/* Forma orgánica de fondo (blob) que respira despacio. */
+.home .blob {
+  position: absolute;
+  border-radius: 46% 54% 60% 40% / 52% 40% 60% 48%;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .home .blob-vivo {
+    animation: home-blob 14s ease-in-out infinite alternate;
+  }
+}
+@keyframes home-blob {
+  50% {
+    border-radius: 58% 42% 44% 56% / 44% 58% 42% 56%;
+    transform: rotate(8deg) scale(1.04);
+  }
+  100% {
+    border-radius: 40% 60% 54% 46% / 60% 46% 54% 40%;
+    transform: rotate(-6deg) scale(0.98);
   }
 }
 
@@ -140,7 +325,6 @@
 .home details[open] .faq-signo {
   transform: rotate(45deg);
 }
-/* El FAQ se abre con transición donde el navegador lo soporta. */
 @supports (interpolate-size: allow-keywords) {
   @media (prefers-reduced-motion: no-preference) {
     .home {
@@ -196,6 +380,46 @@
   .home .aparece:not([data-visto]) {
     opacity: 0;
     transform: translateY(28px);
+  }
+}
+
+/* Recorrido de la app: las pantallas cambian con un fundido y un leve zoom. */
+.home .pantalla {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+}
+.home .pantalla[data-activa] {
+  opacity: 1;
+}
+.home .callout {
+  opacity: 0;
+  transform: rotate(var(--giro, 0deg));
+}
+.home .callout[data-activa] {
+  opacity: 1;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .home .pantalla {
+    transform: scale(1.03);
+    transition:
+      opacity 0.6s ease,
+      transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .home .pantalla[data-activa] {
+    transform: none;
+  }
+  .home .callout {
+    transform: translateY(10px) scale(0.9) rotate(var(--giro, 0deg));
+    transition:
+      opacity 0.4s ease 0.25s,
+      transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) 0.25s;
+  }
+  .home .callout[data-activa] {
+    transform: rotate(var(--giro, 0deg));
+  }
+  .home .escenario-fondo {
+    transition: background-color 0.8s ease;
   }
 }
 
