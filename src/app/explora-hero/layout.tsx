@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 import '../home.css'
-import { Header } from '@/components/home/Header'
+import { HeaderExplora } from './HeaderExplora'
 
 /**
  * Exploración de conceptos de hero y de la sección de la red (rama
@@ -15,7 +15,7 @@ export const metadata: Metadata = {
 export default function ExploraLayout({ children }: { children: React.ReactNode }) {
   return (
     <div className="home min-h-screen overflow-x-clip bg-white">
-      <Header oscuro />
+      <HeaderExplora />
       <main>{children}</main>
     </div>
   )

@@ -1,0 +1,85 @@
+/* Hero D. Sin degradés, brillos ni sombras: el movimiento es solo de entrada
+ * y el cambio de área. Con menos movimiento todo se ve quieto y la ficha no
+ * avanza sola (la raya del tiempo no se anima y su animationend no llega). */
+
+.hero-d .hd-linea {
+  display: block;
+  overflow: hidden;
+  /* Deja lugar a los descendentes de la "j" y la "g" dentro del recorte. */
+  padding-bottom: 0.08em;
+  margin-bottom: -0.08em;
+}
+.hero-d .hd-linea > span {
+  display: inline-block;
+}
+
+.hero-d .display strong {
+  color: var(--terra-hondo);
+  font-weight: 500;
+}
+
+.hero-d .hd-pila {
+  display: grid;
+}
+.hero-d .hd-capa {
+  grid-area: 1 / 1;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(6px);
+  transition:
+    opacity 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.6s cubic-bezier(0.22, 1, 0.36, 1),
+    visibility 0s linear 0.45s;
+}
+.hero-d .hd-capa[data-activa='true'] {
+  opacity: 1;
+  visibility: visible;
+  transform: none;
+  transition:
+    opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+    visibility 0s;
+}
+
+.hero-d .hd-cita {
+  quotes: '“' '”';
+}
+
+.hero-d .hd-tiempo {
+  transform-origin: left center;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .hero-d .hd-linea > span {
+    animation: hd-subir 1s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+  .hero-d .hd-sube {
+    animation: hd-aparecer 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+  .hero-d .hd-tiempo {
+    animation: hd-tiempo 6.5s linear both;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-d .hd-capa {
+    transform: none;
+  }
+}
+
+@keyframes hd-subir {
+  from {
+    transform: translateY(105%);
+  }
+}
+@keyframes hd-aparecer {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+}
+@keyframes hd-tiempo {
+  from {
+    transform: scaleX(0);
+  }
+}

@@ -8,7 +8,6 @@ import {
   useScroll,
   useSpring,
 } from "motion/react";
-import { Dibujo, Nota } from "@/components/home/Dibujo";
 import { urlRegistro } from "@/lib/programa";
 import { PASOS, RECORRIDO, type Paso } from "../app-datos";
 import { Recorte } from "./Recorte";
@@ -29,34 +28,11 @@ const FONDOS = [
  * tarjeta de Valentina por la izquierda; el 3 agranda los dos rasgos más
  * fuertes; el 4 aísla "Muy alineada", lejos del nombre de la universidad.
  */
-const ZOOM: Record<
-  number,
-  { caja: string; nota: string; giro: string; celu: string }
-> = {
-  1: {
-    caja: "bottom-[-6%] left-[-6%] w-[44%]",
-    nota: "left-[6%] top-[-40px]",
-    giro: "-3deg",
-    celu: "w-[64%]",
-  },
-  2: {
-    caja: "bottom-[-12%] right-[-8%] w-[46%]",
-    nota: "right-[2%] top-[calc(100%+10px)]",
-    giro: "3deg",
-    celu: "w-[56%]",
-  },
-  3: {
-    caja: "bottom-[-10%] left-[-9%] w-[26%]",
-    nota: "left-[0] top-[calc(100%+12px)]",
-    giro: "-3deg",
-    celu: "w-[40%]",
-  },
-  4: {
-    caja: "bottom-[-14%] right-[-5%] w-[30%]",
-    nota: "right-[0] top-[-40px]",
-    giro: "3deg",
-    celu: "w-[48%]",
-  },
+const ZOOM: Record<number, { caja: string; celu: string }> = {
+  1: { caja: "bottom-[-6%] left-[-6%] w-[44%]", celu: "w-[64%]" },
+  2: { caja: "bottom-[-12%] right-[-8%] w-[46%]", celu: "w-[56%]" },
+  3: { caja: "bottom-[-10%] left-[-9%] w-[26%]", celu: "w-[40%]" },
+  4: { caja: "bottom-[-14%] right-[-5%] w-[30%]", celu: "w-[48%]" },
 };
 
 const TARJETA =
@@ -111,16 +87,6 @@ function Escena({ paso, espejo }: { paso: Paso; espejo: boolean }) {
         >
           <Recorte corte={paso.detalle} alt="" sizes="520px" />
         </div>
-        <div
-          className={`absolute ${z.nota}`}
-          style={{ "--giro": z.giro } as React.CSSProperties}
-        >
-          <Dibujo retraso={1.1}>
-            <Nota className="!static text-[22px] !text-[var(--terra-hondo)] [text-shadow:0_0_4px_#fff,0_0_10px_#fff,0_0_18px_#fff]">
-              {paso.nota}
-            </Nota>
-          </Dibujo>
-        </div>
       </motion.div>
       <motion.div
         {...entra(14, 0.45, 0.94)}
@@ -174,10 +140,10 @@ function Bloque({ paso, i }: { paso: Paso; i: number }) {
         <div className={espejo ? "lg:order-2 lg:pl-4" : ""}>
           <motion.p
             {...texto(0)}
-            className="font-[family-name:var(--font-mano)] text-[22px] leading-none text-[var(--terra-hondo)] lg:text-[25px]"
+            className="text-[16px] font-semibold leading-none tracking-[-0.01em] text-[var(--terra-hondo)]"
           >
             <span className="sr-only">Paso {paso.n} de 4: </span>
-            {paso.nombre.toLowerCase()}
+            {paso.nombre}
           </motion.p>
           <motion.h3
             {...texto(1)}
@@ -237,7 +203,7 @@ export function PasosA() {
   return (
     <MotionConfig reducedMotion="user">
       <section
-        id="como-funciona"
+        id="app"
         className="overflow-x-clip bg-white pb-20 pt-10 lg:pb-28"
       >
         <div className="mx-auto max-w-[1240px] px-5 lg:px-10">
@@ -261,12 +227,6 @@ export function PasosA() {
               className="absolute bottom-0 left-[23px] top-2 w-[2px] origin-top bg-[var(--terra)] lg:left-[43px]"
               style={{ scaleY: avance }}
             />
-            <span
-              aria-hidden
-              className="absolute -top-9 left-[2px] -rotate-3 font-[family-name:var(--font-mano)] text-[19px] leading-none text-[var(--terra-hondo)] lg:-top-10 lg:left-[20px] lg:text-[22px]"
-            >
-              día 1
-            </span>
             <ol ref={hilo} className="relative">
               {PASOS.map((p, i) => (
                 <Bloque key={p.n} paso={p} i={i} />
@@ -280,28 +240,22 @@ export function PasosA() {
                   aria-hidden
                   className="mt-10 h-5 w-5 rounded-full bg-[var(--terra)] ring-[6px] ring-[rgba(201,127,94,0.22)] lg:mt-14"
                 />
-                <span
-                  aria-hidden
-                  className="absolute left-1/2 top-[76px] -translate-x-1/2 -rotate-6 whitespace-nowrap font-[family-name:var(--font-mano)] text-[17px] leading-none text-[var(--terra-hondo)] lg:top-[96px] lg:text-[22px]"
-                >
-                  día 14
-                </span>
               </div>
               <div className="relative overflow-hidden rounded-[32px] bg-[var(--navy)] px-6 py-10 text-white lg:rounded-[40px] lg:px-16 lg:py-16">
                 <h3 className="display max-w-[18ch] text-[clamp(2rem,3.6vw,3.2rem)]">
                   {RECORRIDO.finalTitulo}
                 </h3>
                 <ul className="mt-10 grid gap-px overflow-hidden rounded-[20px] bg-white/12 lg:grid-cols-3">
-                  {RECORRIDO.finalItems.map((t) => (
+                  {RECORRIDO.finalItems.map((t, i) => (
                     <li
                       key={t}
                       className="flex items-baseline gap-4 bg-[var(--navy)] px-1 py-5 lg:px-8 lg:py-8"
                     >
                       <span
                         aria-hidden
-                        className="font-[family-name:var(--font-mano)] text-[24px] leading-none text-[var(--terra)]"
+                        className="text-[17px] font-semibold tabular-nums leading-none text-[var(--terra)]"
                       >
-                        ✓
+                        {i + 1}
                       </span>
                       <span className="text-[21px] font-semibold tracking-[-0.02em] lg:text-[23px]">
                         {t}

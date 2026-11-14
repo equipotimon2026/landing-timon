@@ -4,6 +4,7 @@ const CONCEPTOS = [
   { href: '/explora-hero/a', titulo: 'Hero A: el abanico de futuros' },
   { href: '/explora-hero/b', titulo: 'Hero B: el camino' },
   { href: '/explora-hero/c', titulo: 'Hero C: probalo' },
+  { href: '/explora-hero/d', titulo: 'Hero D: el mundo real, en texto' },
   { href: '/explora-hero/red-a', titulo: 'Red A' },
   { href: '/explora-hero/red-b', titulo: 'Red B' },
   { href: '/explora-hero/app-a', titulo: 'Cómo funciona A: bloques con hilo' },
