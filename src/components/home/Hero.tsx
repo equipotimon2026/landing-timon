@@ -62,9 +62,8 @@ function useHero3D(seccion: React.RefObject<HTMLElement | null>, quieto: boolean
 
 /**
  * El hero: un titular, una línea, un botón y un solo protagonista, la MacBook
- * con el informe real. La sección mide casi dos pantallas y la escena queda
- * fija: al bajar, el texto se va y la MacBook se abre hasta mostrar el informe
- * de frente. Con WebGL la MacBook es 3D (hero3d/Escena); si el equipo no lo
+ * con el informe real, abierta y a la vista desde la primera pantalla. La
+ * escena queda fija un rato: al bajar, el texto se va y la MacBook se acerca. Con WebGL la MacBook es 3D (hero3d/Escena); si el equipo no lo
  * banca o el usuario pidió menos movimiento, queda la versión en DOM.
  */
 export function Hero() {
@@ -74,6 +73,24 @@ export function Hero() {
   const { montar, activo } = useHero3D(seccion, quieto)
   const [listo, setListo] = useState(false)
   const onListo = useCallback(() => setListo(true), [])
+  // Fracción del alto de la escena donde termina el texto: la MacBook 3D se ubica debajo.
+  const escena = useRef<HTMLDivElement>(null)
+  const texto = useRef<HTMLDivElement>(null)
+  const tope = useRef(0.5)
+  useEffect(() => {
+    const e = escena.current
+    const t = texto.current
+    if (!e || !t) return
+    const medir = () => {
+      const alto = e.clientHeight || 1
+      tope.current = Math.min((t.offsetTop + t.offsetHeight + 64) / alto, 0.7)
+    }
+    medir()
+    const ro = new ResizeObserver(medir)
+    ro.observe(e)
+    ro.observe(t)
+    return () => ro.disconnect()
+  }, [])
 
   const mx = useMotionValue(0)
   const my = useMotionValue(0)
@@ -81,15 +98,15 @@ export function Hero() {
   const sy = useSpring(my, RESORTE)
 
   const { scrollYProgress } = useScroll({ target: seccion, offset: ['start start', 'end end'] })
-  const textoOpacidad = useTransform(scrollYProgress, [0, 0.3], [1, quieto ? 1 : 0])
-  const textoY = useTransform(scrollYProgress, [0, 0.3], [0, quieto ? 0 : -60])
-  const macEscala = useTransform(scrollYProgress, [0, 0.8], [1, quieto ? 1 : 1.06])
-  const macY = useTransform(scrollYProgress, [0, 0.8], ['0%', quieto ? '0%' : '-52%'])
+  const textoOpacidad = useTransform(scrollYProgress, [0, 0.5], [1, quieto ? 1 : 0])
+  const textoY = useTransform(scrollYProgress, [0, 0.5], [0, quieto ? 0 : -40])
+  const macEscala = useTransform(scrollYProgress, [0, 1], [1, quieto ? 1 : 1.08])
+  const macY = useTransform(scrollYProgress, [0, 1], ['0%', quieto ? '0%' : '-14%'])
 
   return (
     <section
       ref={seccion}
-      className={quieto ? 'relative' : 'relative h-[185svh]'}
+      className={quieto ? 'relative' : 'relative h-[145svh]'}
       onPointerMove={(e) => {
         if (quieto || e.pointerType !== 'mouse') return
         mx.set((e.clientX / window.innerWidth) * 2 - 1)
@@ -100,7 +117,7 @@ export function Hero() {
         my.set(0)
       }}
     >
-      <div className="sticky top-14 flex h-[calc(100svh-3.5rem)] min-h-[600px] flex-col overflow-hidden">
+      <div ref={escena} className="sticky top-14 flex h-[calc(100svh-3.5rem)] min-h-[600px] flex-col overflow-hidden">
         {/* Una sola luz detrás del producto; el resto es blanco. */}
         <div
           aria-hidden
@@ -112,16 +129,17 @@ export function Hero() {
             aria-hidden
             className={`absolute inset-0 transition-opacity duration-700 ${listo ? 'opacity-100' : 'opacity-0'}`}
           >
-            <Escena3D mx={sx} my={sy} progreso={scrollYProgress} activo={activo} onListo={onListo} />
+            <Escena3D mx={sx} my={sy} progreso={scrollYProgress} tope={tope} activo={activo} onListo={onListo} />
           </div>
         )}
 
         <motion.div
-          className="relative z-10 mx-auto w-full max-w-[1100px] px-5 pt-[7svh] text-center sm:pt-[8svh]"
+          ref={texto}
+          className="relative z-10 mx-auto w-full max-w-[1100px] px-5 pt-[4svh] text-center sm:pt-[6svh]"
           style={{ opacity: textoOpacidad, y: textoY }}
         >
           <motion.h1
-            className="display mx-auto max-w-[18ch] text-[clamp(2.4rem,5.6vw,5.2rem)]"
+            className="display mx-auto max-w-[20ch] text-[clamp(2.15rem,4.9vw,4.4rem)]"
             initial={{ opacity: 0, y: 28 }}
             animate={{ opacity: 1, y: 0 }}
             transition={T({ duration: 1, ease: SUAVE })}
@@ -129,7 +147,7 @@ export function Hero() {
             Antes de elegir, que vea hacia dónde va <span className="font-semibold text-[var(--ocean)]">el&nbsp;mundo</span>.
           </motion.h1>
           <motion.p
-            className="mx-auto mt-5 max-w-[42ch] text-[17px] leading-[1.5] text-[var(--texto2)] sm:mt-6 sm:text-[20px]"
+            className="mx-auto mt-4 max-w-[52ch] text-[16px] leading-[1.5] text-[var(--texto2)] sm:mt-5 sm:text-[19px]"
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={T({ duration: 0.9, ease: SUAVE, delay: 0.25 })}
@@ -137,7 +155,7 @@ export function Hero() {
             Profesionales, universidades y empresas lo ayudan a entender qué hay ahí afuera y a elegir con criterio.
           </motion.p>
           <motion.div
-            className="mt-7 sm:mt-9"
+            className="mt-6 sm:mt-7"
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={T({ duration: 0.9, ease: SUAVE, delay: 0.4 })}
@@ -152,7 +170,7 @@ export function Hero() {
         {/* El protagonista. */}
         <div className="relative flex-1 pointer-events-none">
           <motion.div
-            className="absolute inset-x-0 top-[5svh] mx-auto w-[min(90vw,860px)] origin-top"
+            className="absolute inset-x-0 top-[3svh] mx-auto w-[min(92vw,820px)] origin-top"
             style={{ scale: macEscala, y: macY }}
             initial={{ opacity: 0 }}
             animate={{ opacity: listo ? 0 : 1 }}
