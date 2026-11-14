@@ -273,3 +273,21 @@ ilustración del avance del padre.
 **Qué se descartó.** Lottie/Rive: no hay assets de marca; las ilustraciones de cada etapa
 son SVG animados con motion (`components/home/Iconos.tsx`). Aceternity y Magic UI no se
 instalaron: se reescribieron los patrones (beams, spotlight, ticker, marquee) adaptados.
+
+## 2026-11-14 (tarde) — Hero con un solo protagonista en 3D, sin píldoras, copy v3
+
+**Qué se decidió.** Nico vio la v2 y pidió: sacar píldoras/eyebrows y todo patrón
+"de IA" de la página, reescribir la copy y un hero con un solo punto focal. El hero
+queda con titular ("Antes de elegir, que vea hacia dónde va el mundo."), una línea,
+un botón y una MacBook en 3D (three + R3F + drei) que se abre con el scroll y
+muestra el informe. Hilo de la copy: la decisión es difícil → Timon la acompaña con
+el mundo real → tu hijo elige con claridad. Opciones de titular y tabla antes/después
+en `docs/wording-v2.md`; detalle técnico del 3D en `docs/hero-3d.md`.
+
+**Qué se descartó.** iPhone, stickers, brújula, constelación y nota a mano en el hero
+(se probó con todo y estaba cargado). GLB de terceros: la MacBook se modela en código,
+sin licencias ni Draco. `next.config.ts` suma `allowedDevOrigins` para abrir el dev
+server desde la Mac por la red local.
+
+**Pendiente de Nico:** Timon vs Timón; CTA "Quiero anotar a mi hijo" (¿neutro?); los
+pendientes previos de `docs/wording-v2.md`.

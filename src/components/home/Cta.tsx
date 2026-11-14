@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react'
 import { ArrowRight } from 'lucide-react'
 
-export const CTA_TEXTO = 'Quiero que mi hijo elija bien'
+export const CTA_TEXTO = 'Quiero anotar a mi hijo'
 export const CTA_MICRO = 'Te escribimos en menos de 24 h. Sin compromiso.'
 
 /** El botón principal con su microcopia. Siempre lleva al formulario. */

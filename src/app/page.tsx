@@ -20,20 +20,21 @@ import { LO_QUE_DICEN, URL_EMPEZAR } from '@/lib/landing'
 import { CONTACT_EMAIL } from '@/lib/programa'
 
 /**
- * Home · Programa Timon (14/11/2026). Vende el programa al padre o la madre:
- * dolor → resultado (la red) → cómo funciona → qué recibís → prueba →
+ * Home · Programa Timon (14/11/2026). Vende el programa al padre o la madre.
+ * Hilo: elegir es difícil → Timon lo acompaña con el mundo real → elige con
+ * claridad. Dolor → la red → cómo funciona → qué recibís → prueba →
  * formulario → objeciones. Poco texto: cada sección se entiende por el
  * visual. El CTA se repite en cuatro momentos y siempre lleva al formulario
  * (/api/padres). No se muestra precio. Textos y fuentes: docs/wording-v2.md.
  */
 
 export const metadata: Metadata = {
-  title: 'Programa Timon: antes de elegir carrera, que conozca el mundo',
+  title: 'Programa Timon: para que tu hijo elija carrera con claridad',
   description:
-    'Una red de profesionales, universidades, empresas y eventos para que tu hijo o hija elija carrera con los pies en la tierra. Dos semanas, desde casa.',
+    'Elegir carrera es difícil. Con profesionales, universidades y empresas, tu hijo o hija entiende sus opciones y decide con claridad. Dos semanas, desde casa.',
   openGraph: {
-    title: 'Programa Timon: antes de elegir carrera, que conozca el mundo',
-    description: 'No es un test. Es una red: 16 áreas de trabajo, 300 carreras y 50 universidades.',
+    title: 'Programa Timon: para que tu hijo elija carrera con claridad',
+    description: '16 áreas de trabajo, 300 carreras y 50 universidades para que tu hijo o hija decida sabiendo qué elige.',
     locale: 'es_AR',
     type: 'website',
   },
@@ -50,18 +51,18 @@ const NUMEROS = [
 const FAQS = [
   {
     q: '¿Es otro test vocacional?',
-    a: 'No. Los tests son solo el arranque. Después investiga el trabajo real con la red, recibe su informe y compara universidades.',
+    a: 'Arranca con unas paradas para conocerse, pero eso es solo el principio. Después investiga cómo se trabaja en cada área, recibe su informe y compara universidades.',
   },
   {
     q: '¿Mi hijo lo va a usar?',
-    a: 'Son paradas de menos de 10 minutos, desde el celular. Lo probaron alumnos de 5° y 6° año del Colegio María Guadalupe y les gustó. Y vos ves cómo avanza.',
+    a: 'Cada parada dura menos de 10 minutos y se hace desde el celular. Lo probaron alumnos de 5° y 6° año del Colegio María Guadalupe y les gustó. Además, vos ves si avanza.',
   },
-  { q: '¿Cuánto cuesta?', a: 'Depende del plan. Empezar es gratis, y el resto lo vemos juntos en la llamada.' },
+  { q: '¿Cuánto cuesta?', a: 'Empezar es gratis. El precio depende del plan, y te lo contamos cuando te escribimos.' },
   {
     q: '¿Quién está detrás?',
-    a: 'Facu, Feli y Nico, un equipo argentino. Una psicopedagoga evaluó la metodología y un equipo profesional de la UBA la revisó.',
+    a: 'Somos Facu, Feli y Nico, de Argentina. Una psicopedagoga evaluó la metodología y un equipo profesional de la UBA la revisó.',
   },
-  { q: '¿Vas a ver sus respuestas?', a: 'No. Ves cómo avanza y su informe final. Lo que responde es suyo.' },
+  { q: '¿Puedo ver sus respuestas?', a: 'No. Lo que responde es suyo. Vos ves cómo avanza y el informe final.' },
 ]
 
 const h2 = 'display text-[clamp(2.5rem,5.4vw,4.6rem)]'
@@ -93,8 +94,8 @@ export default function Home() {
             <span aria-hidden className="blob blob-vivo -right-16 -top-24 h-72 w-72 bg-[var(--durazno)]" />
             <div className="relative">
               <Aparece className="px-2 text-center">
-                <h2 className={`${h2} mx-auto max-w-[14ch]`}>
-                  Elegir a ciegas <strong className="text-[var(--terra-hondo)]">sale caro</strong>.
+                <h2 className={`${h2} mx-auto max-w-[15ch]`}>
+                  A los 17, elegir carrera es <strong className="text-[var(--terra-hondo)]">difícil de verdad</strong>.
                 </h2>
               </Aparece>
               <Aparece className="mt-10 sm:mt-14">
@@ -107,11 +108,12 @@ export default function Home() {
         {/* ── 2. Resultado: la red (navy) ──────────────────────────────── */}
         <section id="red" className="scroll-mt-16 bg-[var(--navy)] py-24 text-white sm:py-32 mt-16 sm:mt-24">
           <Aparece className="px-5 text-center">
-            <p className="etiqueta text-[var(--terra)]">El Programa Timon</p>
-            <h2 className={`${h2} mx-auto mt-4 max-w-[15ch]`}>
-              No es un test. <strong className="text-[var(--crema)]">Es una red.</strong>
+            <h2 className={`${h2} mx-auto max-w-[15ch]`}>
+              Que sepa cómo es trabajar de eso <strong className="text-[var(--crema)]">antes de anotarse</strong>.
             </h2>
-            <p className="mx-auto mt-5 max-w-[34ch] text-[19px] text-white/70">Para que elija conociendo el mundo real.</p>
+            <p className="mx-auto mt-5 max-w-[38ch] text-[19px] text-white/70">
+              Así no decide por un folleto o por lo que le contó un amigo.
+            </p>
           </Aparece>
           <div className="mt-14 sm:mt-16">
             <Red />
@@ -137,9 +139,8 @@ export default function Home() {
         {/* ── 3. Cómo funciona: escena fija con GSAP ───────────────────── */}
         <section id="app" className="scroll-mt-16 pt-24 sm:pt-32 lg:pt-28">
           <Aparece className="mx-auto max-w-[1240px] px-5 text-center">
-            <p className="etiqueta text-[var(--ocean)]">Cómo funciona</p>
-            <h2 className={`${h2} mx-auto mt-4 max-w-[16ch]`}>
-              Cuatro pasos. <strong>Pantallas reales.</strong>
+            <h2 className={`${h2} mx-auto max-w-[16ch]`}>
+              Esto es lo que hace <strong>tu hijo en Timon</strong>.
             </h2>
           </Aparece>
           <Recorrido />
@@ -151,9 +152,8 @@ export default function Home() {
         {/* ── 4. Qué recibís vos ───────────────────────────────────────── */}
         <section id="para-vos" className="mx-auto max-w-[1180px] scroll-mt-16 px-5 py-24 sm:py-32">
           <Aparece>
-            <p className="etiqueta text-[var(--terra-hondo)]">Para vos</p>
-            <h2 className={`${h2} mt-4 max-w-[14ch]`}>
-              Fácil para tu hijo. <strong>Tranquilo para vos.</strong>
+            <h2 className={`${h2} max-w-[16ch]`}>
+              Vos sabés en qué anda <strong>sin tener que preguntarle</strong>.
             </h2>
           </Aparece>
           <Aparece className="mt-12">
@@ -168,7 +168,7 @@ export default function Home() {
         <section className="mx-auto max-w-[1180px] px-5 pb-24 sm:pb-32">
           <Aparece>
             <h2 className={`${h2} max-w-[14ch]`}>
-              Lo revisaron <strong>quienes saben</strong>.
+              Se lo mostramos a gente <strong>que sabe del tema</strong>.
             </h2>
           </Aparece>
           <ul className="mt-12 grid gap-4 md:grid-cols-3">
@@ -202,10 +202,10 @@ export default function Home() {
             <div className="relative mx-auto max-w-[940px]">
               <Aparece className="px-2 text-center text-white">
                 <h2 className={h2}>
-                  Que elija <strong>bien</strong>.
+                  Contanos de <strong>tu hijo o hija</strong>.
                 </h2>
                 <p className="mx-auto mt-5 max-w-[34ch] text-[19px] text-white/80">
-                  Dejanos tus datos. Te escribimos en menos de 24 h, sin compromiso.
+                  Te escribimos por WhatsApp en menos de 24 h. Sin compromiso.
                 </p>
                 <Dibujo retraso={0.6} className="relative mx-auto mt-2 hidden h-[60px] w-[220px] sm:block">
                   <Nota className="left-0 top-1 text-[var(--crema)] [--giro:-4deg]">te lleva 1 minuto</Nota>
@@ -229,7 +229,7 @@ export default function Home() {
         >
           <div>
             <h2 className="display text-[clamp(2.2rem,4vw,3.4rem)]">
-              <strong>Preguntas</strong> de madres y padres.
+              Lo que <strong>suelen preguntarnos</strong>.
             </h2>
             <div className="mt-8">
               <Cta tono="terra" alineado="izquierda" />

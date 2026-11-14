@@ -47,7 +47,7 @@ export function Dolor() {
 
       <div className="grid gap-4">
         <div className="tesela flex flex-col justify-between gap-6 rounded-[30px] bg-[var(--terra)] p-7 text-white sm:p-9">
-          <p className="etiqueta text-white/75">Una cuota privada</p>
+          <p className="text-[17px] text-white/85">Una universidad privada cuesta</p>
           <p className="display text-[clamp(2.2rem,4.2vw,3.4rem)] leading-none">
             <strong>$300 mil</strong> a <strong>$1,3 M</strong>
           </p>
@@ -58,7 +58,7 @@ export function Dolor() {
             <p className="display text-[clamp(2.6rem,5vw,4rem)] leading-none">
               <strong>1 año</strong>
             </p>
-            <p className="mt-2 text-[17px] text-white/75">y esa plata, si elige mal.</p>
+            <p className="mt-2 text-[17px] text-white/75">más esas cuotas, si después se cambia de carrera.</p>
           </div>
           <svg viewBox="0 0 64 64" className="h-16 w-16 shrink-0" aria-hidden>
             <rect x="8" y="12" width="48" height="44" rx="8" fill="none" stroke="#f5ede0" strokeWidth="4" />

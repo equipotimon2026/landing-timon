@@ -1,7 +1,7 @@
 'use client'
 
 import { motion, useReducedMotion } from 'motion/react'
-import { House, LockKeyhole } from 'lucide-react'
+import { Check, House, LockKeyhole } from 'lucide-react'
 import { FUNDADORES } from '@/lib/programa'
 
 /**
@@ -39,7 +39,7 @@ export function ParaVos() {
     <div className="grid gap-4 md:grid-cols-6">
       {/* Avance: cómo lo ve el padre (ilustración) */}
       <Tarjeta className="bg-[var(--ocean)] p-7 text-white sm:p-9 md:col-span-4">
-        <p className="titulo text-[clamp(1.7rem,2.8vw,2.3rem)]">Vos ves cómo avanza.</p>
+        <p className="titulo text-[clamp(1.7rem,2.8vw,2.3rem)]">Así ves su avance.</p>
         <div className="mt-7 rounded-[22px] bg-white p-5 text-[var(--navy)] shadow-[0_30px_60px_-30px_rgba(0,0,0,0.5)] sm:p-6">
           <div className="flex items-center justify-between gap-4">
             <div className="flex items-center gap-3">
@@ -49,7 +49,7 @@ export function ParaVos() {
                 <p className="text-[13px] text-[var(--tenue)]">9 de 13 paradas</p>
               </div>
             </div>
-            <span className="etiqueta rounded-full bg-[var(--cielo)] px-3 py-1.5 text-[var(--ocean)]">En camino</span>
+            <span className="text-[14px] font-medium text-[var(--ocean)]">En camino</span>
           </div>
           <div className="mt-5 h-2.5 overflow-hidden rounded-full bg-[var(--arena)]">
             <motion.div
@@ -60,24 +60,24 @@ export function ParaVos() {
               transition={t(1.4, 0.2)}
             />
           </div>
-          <ul className="mt-5 grid grid-cols-2 gap-2 sm:grid-cols-4">
+          <ul className="mt-5 grid grid-cols-2 gap-x-4 gap-y-2 sm:grid-cols-4">
             {ETAPAS.map((e, i) => (
               <motion.li
                 key={e}
-                className="flex items-center gap-2 rounded-xl bg-[var(--arena)] px-3 py-2 text-[13.5px] font-medium"
+                className="flex items-center gap-1.5 text-[14px] font-medium"
                 initial={{ opacity: 0.4 }}
-                whileInView={{ opacity: i < 2 ? 1 : 0.55 }}
+                whileInView={{ opacity: i < 2 ? 1 : 0.5 }}
                 viewport={vista}
                 transition={t(0.4, 0.5 + i * 0.2)}
               >
-                <span className={`h-2 w-2 rounded-full ${i < 2 ? 'bg-[#2fa36b]' : i === 2 ? 'bg-[var(--terra)]' : 'bg-[#cfd6e0]'}`} />
+                {i < 2 && <Check size={15} strokeWidth={2.6} className="text-[#2fa36b]" aria-label="hecho" />}
                 {e}
               </motion.li>
             ))}
           </ul>
         </div>
         <p className="mt-4 flex items-center gap-2 text-[14px] text-white/75">
-          <LockKeyhole size={14} aria-hidden /> Sus respuestas son suyas: ves el avance y el informe final.
+          <LockKeyhole size={14} aria-hidden /> Lo que responde es suyo. Vos ves el avance y el informe final.
         </p>
       </Tarjeta>
 
@@ -98,7 +98,7 @@ export function ParaVos() {
             />
           ))}
         </ol>
-        <p className="text-[16px] text-white/85">a su ritmo, un rato por día.</p>
+        <p className="text-[16px] text-white/85">Un rato por día, cuando le quede cómodo.</p>
       </Tarjeta>
 
       {/* Desde casa */}
@@ -106,7 +106,7 @@ export function ParaVos() {
         <House size={40} className="text-[var(--terra)]" aria-hidden />
         <div>
           <p className="titulo text-[clamp(1.7rem,2.6vw,2.1rem)]">Desde casa.</p>
-          <p className="mt-1 text-[16px] text-[var(--texto2)]">En el celular o en la compu.</p>
+          <p className="mt-1 text-[16px] text-[var(--texto2)]">Con el celular o la compu, sin moverse.</p>
         </div>
       </Tarjeta>
 
@@ -125,19 +125,16 @@ export function ParaVos() {
           ))}
         </div>
         <div>
-          <p className="titulo text-[clamp(1.7rem,2.6vw,2.1rem)]">Con personas, no solo pantallas.</p>
-          <p className="mt-1 text-[16px] text-[var(--texto2)]">El equipo los acompaña.</p>
+          <p className="titulo text-[clamp(1.7rem,2.6vw,2.1rem)]">Del otro lado hay personas.</p>
+          <p className="mt-1 text-[16px] text-[var(--texto2)]">El equipo de Timon los acompaña.</p>
         </div>
       </Tarjeta>
 
       {/* Empezar es gratis */}
       <Tarjeta className="flex flex-col justify-between gap-6 bg-[var(--navy)] p-7 text-white sm:p-9 md:col-span-2">
-        <span className="sticker self-start bg-[var(--terra)] text-white" style={{ '--giro': '-4deg' } as React.CSSProperties}>
-          sin tarjeta
-        </span>
-        <div>
+        <div className="mt-auto">
           <p className="titulo text-[clamp(1.7rem,2.6vw,2.1rem)]">Empezar es gratis.</p>
-          <p className="mt-1 text-[16px] text-white/70">Y después ven juntos si sigue.</p>
+          <p className="mt-1 text-[16px] text-white/70">No pide tarjeta. Después deciden juntos si sigue.</p>
         </div>
       </Tarjeta>
     </div>

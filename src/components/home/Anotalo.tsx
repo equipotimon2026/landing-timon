@@ -88,7 +88,7 @@ export function Anotalo() {
           </div>
           <div className="grid gap-x-6 gap-y-6 md:grid-cols-2">
             <fieldset className="space-y-4">
-              <legend className="etiqueta mb-4 text-[var(--grafito)]">Tus datos</legend>
+              <legend className="mb-4 text-[15px] font-semibold text-[var(--tinta)]">Tus datos</legend>
               <div>
                 <label htmlFor="p-nombre" className={label}>Nombre</label>
                 <input id="p-nombre" required maxLength={LIMITES.nombre} autoComplete="name" value={datos.parentName} onChange={set('parentName')} className={input} />
@@ -103,7 +103,7 @@ export function Anotalo() {
               </div>
             </fieldset>
             <fieldset className="space-y-4 max-md:mt-2 md:border-l md:border-[var(--linea)] md:pl-6">
-              <legend className="etiqueta mb-4 text-[var(--grafito)]">Tu hijo o hija</legend>
+              <legend className="mb-4 text-[15px] font-semibold text-[var(--tinta)]">Tu hijo o hija</legend>
               <div>
                 <label htmlFor="p-hijo" className={label}>Nombre</label>
                 <input id="p-hijo" required maxLength={LIMITES.nombre} autoComplete="off" value={datos.childName} onChange={set('childName')} className={input} />

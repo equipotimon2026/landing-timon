@@ -14,65 +14,49 @@ import { IconoBrujula, IconoInforme, IconoTest, IconoUniversidad } from './Icono
 const PASOS = [
   {
     id: 'paso-test',
-    etiqueta: 'Se conoce',
-    titulo: '13 paradas cortas para conocerse.',
-    linea: 'Menos de 10 minutos cada una.',
+    nombre: 'Se conoce',
+    titulo: 'Empieza con 13 paradas sobre sí mismo.',
+    linea: 'Menos de 10 minutos cada una. El avance se guarda solo.',
     Icono: IconoTest,
     mac: '/app/mac-test.webp',
     tel: '/app/iphone-test.webp',
     alt: 'El mapa de tests de Timon: módulos completados y el que sigue',
-    callouts: [
-      { texto: 'parada por parada', donde: 'left-[2%] top-[34%]', giro: -4, color: 'bg-[var(--terra)] text-white' },
-      { texto: 'se guarda solo ✓', donde: 'right-[6%] top-[6%]', giro: 3, color: 'bg-white text-[var(--navy)]' },
-    ],
     fondo: '#f5ede0',
     acento: '#c97f5e',
   },
   {
     id: 'paso-investigacion',
-    etiqueta: 'Investiga',
-    titulo: 'Pregunta cómo es el trabajo real.',
-    linea: 'Charla con profesionales virtuales de 16 áreas.',
+    nombre: 'Investiga',
+    titulo: 'Pregunta sobre 16 áreas de trabajo.',
+    linea: 'Charla con profesionales virtuales y se queda con lo que le atrae.',
     Icono: IconoBrujula,
     mac: '/app/mac-investigacion.webp',
     tel: '/app/iphone-investigacion.webp',
     alt: 'Las áreas de trabajo con fotos, para elegir y charlar con profesionales',
-    callouts: [
-      { texto: '16 áreas para recorrer', donde: 'left-[4%] top-[10%]', giro: -3, color: 'bg-[var(--ocean)] text-white' },
-      { texto: 'elige lo que le atrae', donde: 'right-[4%] bottom-[30%]', giro: 4, color: 'bg-white text-[var(--navy)]' },
-    ],
     fondo: '#dfeaf6',
     acento: '#1e5ba0',
   },
   {
     id: 'paso-informe',
-    etiqueta: 'Se descubre',
-    titulo: 'Un informe que habla de quién es.',
-    linea: 'Sus rasgos y las carreras que van con su perfil.',
+    nombre: 'Se descubre',
+    titulo: 'Le llega un informe con sus rasgos.',
+    linea: 'Del más fuerte al más suave, y las carreras que van con ese perfil.',
     Icono: IconoInforme,
     mac: '/app/mac-informe.webp',
     tel: '/app/iphone-informe.webp',
     alt: 'La esencia en el informe: rasgos de Análisis a Expresión, con su puntaje',
-    callouts: [
-      { texto: 'del rasgo más fuerte al más suave', donde: 'right-[2%] top-[16%]', giro: 3, color: 'bg-[var(--terra)] text-white' },
-      { texto: 'en sus palabras', donde: 'left-[6%] bottom-[30%]', giro: -4, color: 'bg-white text-[var(--navy)]' },
-    ],
     fondo: '#f7e3d7',
     acento: '#a8603f',
   },
   {
     id: 'paso-comparador',
-    etiqueta: 'Compara',
-    titulo: 'Universidades, comparadas en serio.',
-    linea: 'Por cuota, modalidad y zona.',
+    nombre: 'Compara',
+    titulo: 'Al final, compara universidades.',
+    linea: 'Por cuota, modalidad y zona, y ve cuánto se acerca cada una a su perfil.',
     Icono: IconoUniversidad,
     mac: '/app/mac-comparador.webp',
     tel: '/app/iphone-comparador.webp',
     alt: 'El comparador de universidades con filtros de cuota, modalidad y ubicación',
-    callouts: [
-      { texto: 'cuota · modalidad · zona', donde: 'right-[4%] top-[28%]', giro: -3, color: 'bg-[var(--ocean)] text-white' },
-      { texto: 'qué tan alineada está', donde: 'left-[3%] bottom-[22%]', giro: 4, color: 'bg-white text-[var(--navy)]' },
-    ],
     fondo: '#0f1f36',
     acento: '#4f84c2',
   },
@@ -172,10 +156,7 @@ export function Recorrido() {
             {PASOS.map((p, i) => (
               <div key={p.id} id={p.id} className="pantalla flex flex-col justify-center" data-activa={i === activa ? '' : undefined} aria-hidden={i !== activa}>
                 <p.Icono activo={i === activa} className="h-20 w-20" />
-                <p className="etiqueta mt-6" style={{ color: p.acento }}>
-                  {String(i + 1).padStart(2, '0')} · {p.etiqueta}
-                </p>
-                <h3 className="titulo mt-3 max-w-[14ch] text-[clamp(2.2rem,3.4vw,3.2rem)]">{p.titulo}</h3>
+                <h3 className="titulo mt-6 max-w-[14ch] text-[clamp(2.2rem,3.4vw,3.2rem)]">{p.titulo}</h3>
                 <p className={`mt-4 text-[18px] ${oscuro ? 'text-white/70' : 'text-[var(--texto2)]'}`}>{p.linea}</p>
               </div>
             ))}
@@ -193,19 +174,6 @@ export function Recorrido() {
                 <Pantallas activa={activa} tipo="tel" sizes="200px" />
               </IPhone>
             </div>
-            {PASOS.map((p, i) =>
-              p.callouts.map((c) => (
-                <span
-                  key={c.texto}
-                  aria-hidden={i !== activa}
-                  data-activa={i === activa ? '' : undefined}
-                  className={`callout sticker absolute z-10 ${c.donde} ${c.color}`}
-                  style={{ '--giro': `${c.giro}deg` } as React.CSSProperties}
-                >
-                  {c.texto}
-                </span>
-              )),
-            )}
           </div>
         </div>
 
@@ -226,7 +194,7 @@ export function Recorrido() {
                 }`}
                 style={i === activa ? { background: p.acento } : undefined}
               >
-                {p.etiqueta}
+                {p.nombre}
               </button>
             ))}
           </div>
@@ -244,22 +212,14 @@ export function Recorrido() {
             <div className="flex items-center gap-4">
               <p.Icono activo className="h-14 w-14 shrink-0" />
               <div>
-                <p className="etiqueta" style={{ color: p.acento }}>
-                  {String(i + 1).padStart(2, '0')} · {p.etiqueta}
-                </p>
-                <h3 className="titulo mt-1 text-[24px]">{p.titulo}</h3>
+                <h3 className="titulo text-[24px]">{p.titulo}</h3>
+                <p className={`mt-1 text-[15px] ${i === PASOS.length - 1 ? 'text-white/70' : 'text-[var(--texto2)]'}`}>{p.linea}</p>
               </div>
             </div>
             <div className="relative mt-6">
               <IPhone className="mx-auto w-[60%] max-w-[240px] translate-y-[12%]">
                 <Image src={p.tel} alt={p.alt} fill sizes="240px" className="object-cover object-top" />
               </IPhone>
-              <span
-                className={`sticker absolute right-0 top-[18%] ${p.callouts[0].color}`}
-                style={{ '--giro': `${p.callouts[0].giro}deg` } as React.CSSProperties}
-              >
-                {p.callouts[0].texto}
-              </span>
             </div>
           </li>
         ))}
