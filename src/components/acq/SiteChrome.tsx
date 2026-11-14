@@ -20,9 +20,6 @@ export function AnnouncementBar() {
       href="/programa"
       className="group block bg-[var(--ocean)] px-4 py-3 text-center text-[13px] text-white sm:text-[15px]"
     >
-      <span className="mr-2 rounded-full bg-white px-2 py-0.5 text-[10px] font-extrabold uppercase text-[var(--navy)] sm:text-[11px]">
-        Nuevo
-      </span>
       <span className="font-bold">Programa Timon, primeros 100 lugares:</span>{' '}
       <span>conocé el programa</span>
       <ArrowRight size={16} className="ml-2 inline transition-transform group-hover:translate-x-1" />
@@ -110,7 +107,7 @@ export function SiteFooter() {
         <div className="mt-8 grid grid-cols-2 gap-8 sm:grid-cols-3">
           {FOOTER_COLS.map((c) => (
             <div key={c.title}>
-              <p className="text-[11px] uppercase tracking-[0.28em] text-[#8ea2e8]" style={{ fontFamily: 'var(--font-spacemono)' }}>{c.title}</p>
+              <p className="text-[14px] font-semibold text-[#8ea2e8]">{c.title}</p>
               <ul className="mt-3 space-y-2.5">
                 {c.links.map((l) => (
                   <li key={l.label}>

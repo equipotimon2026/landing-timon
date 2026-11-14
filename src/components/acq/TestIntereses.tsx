@@ -130,7 +130,7 @@ function Resultado({ nombre, respuestas }: { nombre: string; respuestas: number[
   return (
     <div className="space-y-5">
       <div className="rounded-2xl bg-[var(--navy)] p-6 text-white sm:p-8">
-        <p className="text-[12px] font-semibold uppercase tracking-[0.12em] text-[var(--ocean-light)]">
+        <p className="text-[15px] text-white/70">
           Tu resultado{nombre ? `, ${nombre}` : ''}
         </p>
         <p className="mt-3 text-[26px] font-extrabold leading-tight sm:text-[32px]">
@@ -155,9 +155,7 @@ function Resultado({ nombre, respuestas }: { nombre: string; respuestas: number[
       </div>
 
       <div className="rounded-2xl bg-white p-6 shadow-[0_18px_50px_rgba(15,31,54,0.08)] sm:p-8">
-        <p className="text-[12px] font-extrabold uppercase tracking-[0.1em] text-[var(--ocean-deep)]">
-          Tus mundos de carreras
-        </p>
+        <h3 className="text-[20px] font-bold">Tus mundos de carreras</h3>
         <div className="mt-4 grid grid-cols-2 gap-3">
           {r.mundos.map((m) => (
             <div key={m.id} className="overflow-hidden rounded-xl border border-[var(--border-cream)]">

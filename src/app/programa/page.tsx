@@ -199,10 +199,9 @@ export default function ProgramaPage() {
     <div className="acq flex min-h-full flex-col bg-white">
       {/* Franja */}
       <div className="flex justify-center bg-black px-4 py-4">
-        <span className="inline-flex items-center gap-1.5 rounded bg-white px-3 py-2 text-[10px] font-extrabold uppercase tracking-[0.04em] text-[var(--navy)] sm:text-[11px]">
-          <span className="h-2 w-2 rounded-full bg-[#EF4444]" />
-          <strong className="font-black">Programa</strong> online de 14 días | desde tu casa
-        </span>
+        <p className="text-[14px] text-white/90 sm:text-[15px]">
+          <strong className="font-bold text-white">Programa online de 14 días</strong>, desde tu casa
+        </p>
       </div>
 
       <main className="flex-1">
@@ -295,8 +294,8 @@ export default function ProgramaPage() {
                     )}
                   </div>
                   <div className="p-6">
-                    <p className="text-[12px] font-extrabold uppercase tracking-[0.1em] text-[var(--ocean-deep)]">
-                      Bono #{i + 1} · {b.objecion}
+                    <p className="text-[14px] font-semibold text-[var(--ocean-deep)]">
+                      Bono {i + 1}: {b.objecion}
                     </p>
                     <p className="mt-2 text-[19px] font-bold leading-snug">{b.titulo}</p>
                     <p className="mt-2 text-[15px] leading-[1.5] text-[var(--hueso)]">{b.texto}</p>
