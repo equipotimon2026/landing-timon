@@ -431,3 +431,38 @@
     overflow-x: auto;
   }
 }
+
+/* Beams de la red: un pulso de luz que recorre cada línea. */
+.home .beam {
+  stroke-dasharray: 0.16 1;
+  stroke-dashoffset: 0.16;
+  animation: home-beam 3.4s cubic-bezier(0.45, 0, 0.25, 1) infinite;
+}
+@keyframes home-beam {
+  to {
+    stroke-dashoffset: -1;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .home .beam {
+    animation: none;
+    stroke-dasharray: none;
+    opacity: 0.45;
+  }
+}
+
+/* Spotlight de las tarjetas (patrón Aceternity): brillo que sigue al mouse. */
+.home .spotlight::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(420px circle at var(--x, 50%) var(--y, -40%), rgba(255, 255, 255, 0.22), transparent 60%);
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+@media (hover: hover) {
+  .home .spotlight:hover::after {
+    opacity: 1;
+  }
+}

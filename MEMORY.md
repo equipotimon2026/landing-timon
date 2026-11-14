@@ -251,3 +251,25 @@ familia sigue en las preguntas. OJO: el equipo tiene que armar la red de estudia
 antes de abrir. La tapa del test pasa a ser una foto generada en ChatGPT
 (`public/test/portada.jpg`); se borraron las clases CSS y la fuente de firma que ya no
 se usaban.
+
+---
+
+## 2026-11-14 — Home v2: Programa Timon, marca y venta (rama landing-v2)
+
+**Qué se decidió.** La home pasa a vender el **Programa Timon** al padre o la madre.
+Orden: hero → dolor (4 de cada 10, cuota privada, 1 año) → la red (beams: tu hijo →
+Timon → profesionales, universidades, empresas, eventos) → cómo funciona (escena fija con
+GSAP ScrollTrigger: se conoce, investiga, se descubre, compara, con capturas reales de
+/demo-nuevo-timon en marcos de MacBook y iPhone) → para vos (bento) → citas reales →
+formulario → objeciones. Sin precio. CTA "Quiero que mi hijo elija bien" en cuatro
+momentos más una barra fija en celular. Marca: navy, ocean, terra y crema en bloques
+alternados; Plus Jakarta 300 en titulares y JetBrains Mono en etiquetas. Lenis para el
+scroll suave (no en táctil ni con menos movimiento); GSAP y Lenis se cargan en diferido.
+
+**Pendiente de confirmar** (detalle en `docs/wording-v2.md`): fuente de "$300 mil a
+$1,3 M", el "te escribimos en menos de 24 h", si empresas y eventos ya existen, y la
+ilustración del avance del padre.
+
+**Qué se descartó.** Lottie/Rive: no hay assets de marca; las ilustraciones de cada etapa
+son SVG animados con motion (`components/home/Iconos.tsx`). Aceternity y Magic UI no se
+instalaron: se reescribieron los patrones (beams, spotlight, ticker, marquee) adaptados.

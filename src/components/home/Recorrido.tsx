@@ -3,95 +3,81 @@
 import { useEffect, useRef, useState } from 'react'
 import Image from 'next/image'
 import { MacBook, IPhone } from './Dispositivos'
-
-type Paso = {
-  id: string
-  n: string
-  etiqueta: string
-  titulo: string
-  texto: string
-  mac: string
-  tel: string
-  alt: string
-  callouts: { texto: string; donde: string; giro: number; color: string }[]
-  fondo: string
-  acento: string
-}
+import { IconoBrujula, IconoInforme, IconoTest, IconoUniversidad } from './Iconos'
 
 /**
- * Las cuatro partes de la app, en el orden en que las vive el chico. Las
+ * Las cuatro etapas del Programa, en el orden en que las vive el chico. Las
  * pantallas son de la demo real (datos ficticios de "Sofía"), capturadas de
- * /demo-nuevo-timon el 14/11/2026.
+ * /demo-nuevo-timon el 14/11/2026. Una frase por etapa: el resto lo cuenta
+ * la pantalla.
  */
-const PASOS: Paso[] = [
+const PASOS = [
   {
     id: 'paso-test',
-    n: '01',
     etiqueta: 'Se conoce',
-    titulo: 'Unos tests cortos para conocerse.',
-    texto: '13 paradas de menos de 10 minutos. No hay respuestas buenas ni malas, y el avance se guarda solo.',
+    titulo: '13 paradas cortas para conocerse.',
+    linea: 'Menos de 10 minutos cada una.',
+    Icono: IconoTest,
     mac: '/app/mac-test.webp',
     tel: '/app/iphone-test.webp',
     alt: 'El mapa de tests de Timon: módulos completados y el que sigue',
     callouts: [
       { texto: 'parada por parada', donde: 'left-[2%] top-[34%]', giro: -4, color: 'bg-[var(--terra)] text-white' },
-      { texto: 'se guarda solo ✓', donde: 'right-[6%] top-[8%]', giro: 3, color: 'bg-white text-[var(--navy)]' },
+      { texto: 'se guarda solo ✓', donde: 'right-[6%] top-[6%]', giro: 3, color: 'bg-white text-[var(--navy)]' },
     ],
     fondo: '#f5ede0',
-    acento: 'var(--terra)',
+    acento: '#c97f5e',
   },
   {
     id: 'paso-investigacion',
-    n: '02',
     etiqueta: 'Investiga',
-    titulo: 'Recorre las áreas y pregunta cómo es el trabajo.',
-    texto:
-      'Elige las áreas que le llaman la atención y charla con profesionales virtuales de cada una sobre su día a día.',
+    titulo: 'Pregunta cómo es el trabajo real.',
+    linea: 'Charla con profesionales virtuales de 16 áreas.',
+    Icono: IconoBrujula,
     mac: '/app/mac-investigacion.webp',
     tel: '/app/iphone-investigacion.webp',
     alt: 'Las áreas de trabajo con fotos, para elegir y charlar con profesionales',
     callouts: [
-      { texto: '16 áreas para recorrer', donde: 'left-[4%] top-[12%]', giro: -3, color: 'bg-[var(--ocean)] text-white' },
+      { texto: '16 áreas para recorrer', donde: 'left-[4%] top-[10%]', giro: -3, color: 'bg-[var(--ocean)] text-white' },
       { texto: 'elige lo que le atrae', donde: 'right-[4%] bottom-[30%]', giro: 4, color: 'bg-white text-[var(--navy)]' },
     ],
     fondo: '#dfeaf6',
-    acento: 'var(--ocean)',
+    acento: '#1e5ba0',
   },
   {
     id: 'paso-informe',
-    n: '03',
     etiqueta: 'Se descubre',
     titulo: 'Un informe que habla de quién es.',
-    texto: 'Sus rasgos, lo que lo mueve y las carreras que van con su perfil, ordenadas por compatibilidad.',
+    linea: 'Sus rasgos y las carreras que van con su perfil.',
+    Icono: IconoInforme,
     mac: '/app/mac-informe.webp',
     tel: '/app/iphone-informe.webp',
     alt: 'La esencia en el informe: rasgos de Análisis a Expresión, con su puntaje',
     callouts: [
-      { texto: 'del rasgo más fuerte al más suave', donde: 'right-[2%] top-[18%]', giro: 3, color: 'bg-[var(--terra)] text-white' },
+      { texto: 'del rasgo más fuerte al más suave', donde: 'right-[2%] top-[16%]', giro: 3, color: 'bg-[var(--terra)] text-white' },
       { texto: 'en sus palabras', donde: 'left-[6%] bottom-[30%]', giro: -4, color: 'bg-white text-[var(--navy)]' },
     ],
     fondo: '#f7e3d7',
-    acento: 'var(--terra-hondo)',
+    acento: '#a8603f',
   },
   {
     id: 'paso-comparador',
-    n: '04',
     etiqueta: 'Compara',
-    titulo: 'Dónde estudiar, comparado en serio.',
-    texto: 'Universidades para cada carrera, con filtros por cuota, modalidad y zona. Pública o privada, de un vistazo.',
+    titulo: 'Universidades, comparadas en serio.',
+    linea: 'Por cuota, modalidad y zona.',
+    Icono: IconoUniversidad,
     mac: '/app/mac-comparador.webp',
     tel: '/app/iphone-comparador.webp',
     alt: 'El comparador de universidades con filtros de cuota, modalidad y ubicación',
     callouts: [
-      { texto: 'cuota · modalidad · zona', donde: 'right-[4%] top-[30%]', giro: -3, color: 'bg-[var(--ocean)] text-white' },
+      { texto: 'cuota · modalidad · zona', donde: 'right-[4%] top-[28%]', giro: -3, color: 'bg-[var(--ocean)] text-white' },
       { texto: 'qué tan alineada está', donde: 'left-[3%] bottom-[22%]', giro: 4, color: 'bg-white text-[var(--navy)]' },
     ],
     fondo: '#0f1f36',
-    acento: 'var(--ocean-claro)',
+    acento: '#4f84c2',
   },
 ]
 
-/** Pantalla dentro de un marco, con las cuatro capturas apiladas y un fundido entre ellas. */
 function Pantallas({ activa, tipo, sizes }: { activa: number; tipo: 'mac' | 'tel'; sizes: string }) {
   return (
     <>
@@ -105,72 +91,171 @@ function Pantallas({ activa, tipo, sizes }: { activa: number; tipo: 'mac' | 'tel
 }
 
 /**
- * "La app por dentro": a la izquierda los cuatro pasos, a la derecha un
- * escenario fijo (MacBook + iPhone) que cambia de pantalla, de color y de
- * notas según el paso que está en el centro de la pantalla. En celular cada
- * paso trae su propio iPhone. Con menos movimiento, los cambios son
- * instantáneos (home.css).
+ * "Cómo funciona": en escritorio, una escena fija (GSAP ScrollTrigger, pin +
+ * scrub) que avanza por las cuatro etapas mientras se scrollea: cambia la
+ * pantalla, el color, la ilustración y la frase. GSAP se carga en diferido.
+ * En celular y tablet, una tarjeta por etapa con su iPhone, sin pin. Con
+ * menos movimiento, la escena se fija igual pero los cambios son
+ * instantáneos (home.css) y no hay giros de los dispositivos.
  */
 export function Recorrido() {
   const [activa, setActiva] = useState(0)
-  const refs = useRef<(HTMLElement | null)[]>([])
+  const escena = useRef<HTMLDivElement>(null)
+  const barra = useRef<HTMLSpanElement>(null)
+  const mac = useRef<HTMLDivElement>(null)
+  const tel = useRef<HTMLDivElement>(null)
+  const st = useRef<{ start: number; end: number } | null>(null)
 
   useEffect(() => {
-    const obs = new IntersectionObserver(
-      (entradas) => {
-        for (const e of entradas) {
-          if (e.isIntersecting) setActiva(Number((e.target as HTMLElement).dataset.i))
+    let limpiar: (() => void) | undefined
+    let cancelado = false
+    ;(async () => {
+      const [{ gsap }, { ScrollTrigger }] = await Promise.all([import('gsap'), import('gsap/ScrollTrigger')])
+      if (cancelado || !escena.current) return
+      gsap.registerPlugin(ScrollTrigger)
+      const mm = gsap.matchMedia()
+      mm.add({ escritorio: '(min-width: 1024px)', quieto: '(prefers-reduced-motion: reduce)' }, (ctx) => {
+        const { escritorio, quieto } = ctx.conditions as { escritorio: boolean; quieto: boolean }
+        if (!escritorio) return
+        const tl = gsap.timeline({
+          scrollTrigger: {
+            trigger: escena.current,
+            start: 'top top',
+            end: () => `+=${window.innerHeight * 3}`,
+            pin: true,
+            scrub: quieto ? true : 0.6,
+            onUpdate: (self) => setActiva(Math.min(PASOS.length - 1, Math.floor(self.progress * PASOS.length))),
+            onRefresh: (self) => {
+              st.current = { start: self.start, end: self.end }
+            },
+          },
+        })
+        tl.fromTo(barra.current, { scaleX: 0 }, { scaleX: 1, ease: 'none' }, 0)
+        if (!quieto) {
+          tl.fromTo(mac.current, { rotateY: -8, rotateX: 4 }, { rotateY: 6, rotateX: 0, ease: 'none' }, 0)
+          tl.fromTo(tel.current, { y: 40, rotate: 6 }, { y: -30, rotate: -2, ease: 'none' }, 0)
         }
-      },
-      { rootMargin: '-45% 0px -45% 0px' },
-    )
-    refs.current.forEach((el) => el && obs.observe(el))
-    return () => obs.disconnect()
+      })
+      limpiar = () => mm.revert()
+    })()
+    return () => {
+      cancelado = true
+      limpiar?.()
+    }
   }, [])
 
+  /** Lleva el scroll al medio de la etapa i dentro de la escena fija. */
+  const irA = (i: number) => {
+    const r = st.current
+    const destino = r ? r.start + ((i + 0.5) / PASOS.length) * (r.end - r.start) : 0
+    window.scrollTo({ top: destino, behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' })
+  }
+
   const paso = PASOS[activa]
+  const oscuro = activa === PASOS.length - 1
 
   return (
-    <div className="mx-auto mt-14 grid max-w-[1240px] gap-10 px-5 lg:mt-6 lg:grid-cols-[minmax(0,4fr)_minmax(0,7fr)] lg:gap-14">
-      {/* ── Pasos ──────────────────────────────────────────────────── */}
-      <ol className="relative">
+    <>
+      {/* ── Escritorio: escena fija ──────────────────────────────────── */}
+      <div ref={escena} className="relative hidden h-screen lg:block">
+        <div
+          className="escenario-fondo absolute inset-x-5 bottom-6 top-20 overflow-hidden rounded-[44px]"
+          style={{ backgroundColor: paso.fondo }}
+        >
+          <span aria-hidden className="blob blob-vivo -right-[8%] -top-[18%] h-[60%] w-[40%] bg-white/25" />
+          <span aria-hidden className="blob blob-vivo -bottom-[22%] left-[30%] h-[50%] w-[34%] bg-white/15 [animation-delay:-6s]" />
+        </div>
+
+        <div className="relative mx-auto grid h-full max-w-[1320px] grid-cols-[minmax(0,5fr)_minmax(0,8fr)] items-center gap-10 px-16 pb-6 pt-20">
+          {/* Frase de la etapa */}
+          <div className={`relative h-[340px] transition-colors duration-500 ${oscuro ? 'text-white' : 'text-[var(--navy)]'}`}>
+            {PASOS.map((p, i) => (
+              <div key={p.id} id={p.id} className="pantalla flex flex-col justify-center" data-activa={i === activa ? '' : undefined} aria-hidden={i !== activa}>
+                <p.Icono activo={i === activa} className="h-20 w-20" />
+                <p className="etiqueta mt-6" style={{ color: p.acento }}>
+                  {String(i + 1).padStart(2, '0')} · {p.etiqueta}
+                </p>
+                <h3 className="titulo mt-3 max-w-[14ch] text-[clamp(2.2rem,3.4vw,3.2rem)]">{p.titulo}</h3>
+                <p className={`mt-4 text-[18px] ${oscuro ? 'text-white/70' : 'text-[var(--texto2)]'}`}>{p.linea}</p>
+              </div>
+            ))}
+          </div>
+
+          {/* Dispositivos */}
+          <div className="relative" style={{ perspective: 1600 }}>
+            <div ref={mac} style={{ transformStyle: 'preserve-3d' }}>
+              <MacBook className="w-[90%] drop-shadow-[0_40px_50px_rgba(15,31,54,0.3)]">
+                <Pantallas activa={activa} tipo="mac" sizes="760px" />
+              </MacBook>
+            </div>
+            <div ref={tel} className="absolute -bottom-[8%] right-0 w-[23%]">
+              <IPhone>
+                <Pantallas activa={activa} tipo="tel" sizes="200px" />
+              </IPhone>
+            </div>
+            {PASOS.map((p, i) =>
+              p.callouts.map((c) => (
+                <span
+                  key={c.texto}
+                  aria-hidden={i !== activa}
+                  data-activa={i === activa ? '' : undefined}
+                  className={`callout sticker absolute z-10 ${c.donde} ${c.color}`}
+                  style={{ '--giro': `${c.giro}deg` } as React.CSSProperties}
+                >
+                  {c.texto}
+                </span>
+              )),
+            )}
+          </div>
+        </div>
+
+        {/* Progreso: barra que se llena con el scroll y botones para saltar de etapa */}
+        <nav aria-label="Etapas del programa" className="absolute bottom-12 left-1/2 w-[min(560px,80%)] -translate-x-1/2">
+          <div className="relative h-1.5 overflow-hidden rounded-full bg-white/60">
+            <span ref={barra} className="absolute inset-0 origin-left rounded-full" style={{ background: paso.acento, transform: 'scaleX(0)' }} />
+          </div>
+          <div className="mt-3 flex justify-between">
+            {PASOS.map((p, i) => (
+              <button
+                key={p.id}
+                type="button"
+                onClick={() => irA(i)}
+                aria-current={i === activa ? 'step' : undefined}
+                className={`whitespace-nowrap rounded-full px-3 py-1 text-[13px] font-semibold transition-colors ${
+                  i === activa ? 'text-white' : oscuro ? 'text-white/60 hover:text-white' : 'text-[var(--texto2)] hover:text-[var(--navy)]'
+                }`}
+                style={i === activa ? { background: p.acento } : undefined}
+              >
+                {p.etiqueta}
+              </button>
+            ))}
+          </div>
+        </nav>
+      </div>
+
+      {/* ── Celular y tablet: una tarjeta por etapa ──────────────────── */}
+      <ol className="mx-auto mt-10 grid max-w-[720px] gap-5 px-5 lg:hidden">
         {PASOS.map((p, i) => (
           <li
             key={p.id}
-            id={p.id}
-            data-i={i}
-            ref={(el) => {
-              refs.current[i] = el
-            }}
-            className="flex scroll-mt-24 flex-col justify-center py-10 lg:min-h-[78vh] lg:py-0"
+            className={`relative overflow-hidden rounded-[32px] px-6 pt-7 ${i === PASOS.length - 1 ? 'text-white' : ''}`}
+            style={{ background: p.fondo }}
           >
-            <div
-              className="transition-opacity duration-500 lg:opacity-[var(--o)]"
-              style={{ '--o': i === activa ? 1 : 0.35 } as React.CSSProperties}
-            >
-              <p className="etiqueta flex items-center gap-3" style={{ color: p.acento }}>
-                <span
-                  className="flex h-9 w-9 items-center justify-center rounded-full text-[13px] font-semibold tracking-normal text-white"
-                  style={{ background: p.acento }}
-                >
-                  {p.n}
-                </span>
-                {p.etiqueta}
-              </p>
-              <h3 className="titulo mt-5 max-w-[16ch] text-[clamp(1.9rem,3.2vw,2.7rem)]">{p.titulo}</h3>
-              <p className="mt-4 max-w-[38ch] text-[17.5px] text-[var(--texto2)]">{p.texto}</p>
+            <div className="flex items-center gap-4">
+              <p.Icono activo className="h-14 w-14 shrink-0" />
+              <div>
+                <p className="etiqueta" style={{ color: p.acento }}>
+                  {String(i + 1).padStart(2, '0')} · {p.etiqueta}
+                </p>
+                <h3 className="titulo mt-1 text-[24px]">{p.titulo}</h3>
+              </div>
             </div>
-
-            {/* En celular y tablet, cada paso con su iPhone. */}
-            <div
-              className="relative mt-8 overflow-hidden rounded-[32px] px-6 pb-0 pt-10 lg:hidden"
-              style={{ background: p.fondo }}
-            >
-              <IPhone className="mx-auto w-[64%] max-w-[260px] translate-y-[14%]">
-                <Image src={p.tel} alt={p.alt} fill sizes="260px" className="object-cover object-top" />
+            <div className="relative mt-6">
+              <IPhone className="mx-auto w-[60%] max-w-[240px] translate-y-[12%]">
+                <Image src={p.tel} alt={p.alt} fill sizes="240px" className="object-cover object-top" />
               </IPhone>
               <span
-                className={`sticker absolute left-4 top-4 ${p.callouts[0].color}`}
+                className={`sticker absolute right-0 top-[18%] ${p.callouts[0].color}`}
                 style={{ '--giro': `${p.callouts[0].giro}deg` } as React.CSSProperties}
               >
                 {p.callouts[0].texto}
@@ -179,61 +264,6 @@ export function Recorrido() {
           </li>
         ))}
       </ol>
-
-      {/* ── Escenario fijo (escritorio) ─────────────────────────────── */}
-      <div className="relative hidden lg:block">
-        <div className="sticky top-[12vh] h-[76vh]">
-          <div
-            className="escenario-fondo absolute inset-0 overflow-hidden rounded-[40px]"
-            style={{ backgroundColor: paso.fondo }}
-          >
-            <span aria-hidden className="blob blob-vivo -right-[10%] -top-[16%] h-[60%] w-[50%] bg-white/25" />
-            <span aria-hidden className="blob blob-vivo -bottom-[20%] -left-[8%] h-[50%] w-[40%] bg-white/20 [animation-delay:-6s]" />
-          </div>
-
-          <div className="relative flex h-full items-center justify-center px-[7%]">
-            <div className="relative w-full">
-              <MacBook className="w-[88%] drop-shadow-[0_40px_50px_rgba(15,31,54,0.25)]">
-                <Pantallas activa={activa} tipo="mac" sizes="720px" />
-              </MacBook>
-              <div className="absolute -bottom-[6%] right-0 w-[24%] rotate-[4deg]">
-                <IPhone>
-                  <Pantallas activa={activa} tipo="tel" sizes="200px" />
-                </IPhone>
-              </div>
-
-              {PASOS.map((p, i) =>
-                p.callouts.map((c) => (
-                  <span
-                    key={c.texto}
-                    aria-hidden={i !== activa}
-                    data-activa={i === activa ? '' : undefined}
-                    className={`callout sticker absolute z-10 ${c.donde} ${c.color}`}
-                    style={{ '--giro': `${c.giro}deg` } as React.CSSProperties}
-                  >
-                    {c.texto}
-                  </span>
-                )),
-              )}
-            </div>
-          </div>
-
-          {/* Índice de pasos: también son anclas a cada paso. */}
-          <nav aria-label="Partes de la app" className="absolute bottom-5 left-1/2 flex -translate-x-1/2 gap-1.5 rounded-full bg-white/80 p-1.5 shadow-[0_8px_24px_-12px_rgba(15,31,54,0.35)] backdrop-blur">
-            {PASOS.map((p, i) => (
-              <a
-                key={p.id}
-                href={`#${p.id}`}
-                aria-current={i === activa ? 'step' : undefined}
-                className="whitespace-nowrap rounded-full px-3.5 py-1.5 text-[13px] font-semibold transition-colors"
-                style={i === activa ? { background: p.acento, color: '#fff' } : { color: 'var(--texto2)' }}
-              >
-                {p.etiqueta}
-              </a>
-            ))}
-          </nav>
-        </div>
-      </div>
-    </div>
+    </>
   )
 }

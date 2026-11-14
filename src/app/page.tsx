@@ -1,14 +1,16 @@
 import type { Metadata } from 'next'
-import Image from 'next/image'
 import Link from 'next/link'
-import { ArrowRight, LockKeyhole, Plus } from 'lucide-react'
+import { Plus } from 'lucide-react'
 import './home.css'
 import { Header } from '@/components/home/Header'
 import { Hero } from '@/components/home/Hero'
+import { Dolor } from '@/components/home/Dolor'
 import { Recorrido } from '@/components/home/Recorrido'
 import { Red } from '@/components/home/Red'
+import { ParaVos } from '@/components/home/ParaVos'
+import { Cta, CtaFija } from '@/components/home/Cta'
+import { ScrollSuave } from '@/components/home/ScrollSuave'
 import { Aparece } from '@/components/home/Aparece'
-import { Paradas } from '@/components/home/Paradas'
 import { Dibujo, Nota, Trazo } from '@/components/home/Dibujo'
 import { Areas } from '@/components/home/Areas'
 import { Contador } from '@/components/home/Contador'
@@ -18,21 +20,19 @@ import { LO_QUE_DICEN, URL_EMPEZAR } from '@/lib/landing'
 import { CONTACT_EMAIL } from '@/lib/programa'
 
 /**
- * Home · dirección B con la marca de Timon (14/11/2026). Blanco de base en el
- * hero; después bloques de color de la marca, alternados. El producto real
- * (capturas de la demo) en marcos de MacBook y de iPhone. La red es el valor
- * central. Textos en rioplatense, para el padre o la madre: ver
- * docs/wording-v2.md.
- * Hilo: la promesa → el problema → la app por dentro → la red → lo que tenés
- * que saber → quienes lo revisaron → anotalo → preguntas.
+ * Home · Programa Timon (14/11/2026). Vende el programa al padre o la madre:
+ * dolor → resultado (la red) → cómo funciona → qué recibís → prueba →
+ * formulario → objeciones. Poco texto: cada sección se entiende por el
+ * visual. El CTA se repite en cuatro momentos y siempre lleva al formulario
+ * (/api/padres). No se muestra precio. Textos y fuentes: docs/wording-v2.md.
  */
 
 export const metadata: Metadata = {
-  title: 'Timon: antes de elegir carrera, que conozca el mundo',
+  title: 'Programa Timon: antes de elegir carrera, que conozca el mundo',
   description:
-    'Timon le muestra a tu hijo o hija cómo es el trabajo de verdad, con una red de profesionales, universidades, empresas y eventos. Empieza gratis, desde casa.',
+    'Una red de profesionales, universidades, empresas y eventos para que tu hijo o hija elija carrera con los pies en la tierra. Dos semanas, desde casa.',
   openGraph: {
-    title: 'Timon: antes de elegir carrera, que conozca el mundo',
+    title: 'Programa Timon: antes de elegir carrera, que conozca el mundo',
     description: 'No es un test. Es una red: 16 áreas de trabajo, 300 carreras y 50 universidades.',
     locale: 'es_AR',
     type: 'website',
@@ -46,23 +46,26 @@ const NUMEROS = [
   { valor: 10000, texto: 'combinaciones analizadas', prefijo: '+' },
 ]
 
+/** Las objeciones de un padre, en sus palabras. Respuestas cortas y sin promesas que el equipo no definió. */
 const FAQS = [
   {
-    q: '¿Es un test vocacional?',
-    a: 'No. Arranca con unos tests cortos para que se conozca, y después le muestra el trabajo real, las carreras y dónde estudiarlas.',
+    q: '¿Es otro test vocacional?',
+    a: 'No. Los tests son solo el arranque. Después investiga el trabajo real con la red, recibe su informe y compara universidades.',
   },
-  { q: '¿Cuánto cuesta?', a: 'Empieza gratis. El informe completo es un pago único, no una suscripción.' },
-  { q: '¿Cuánto tiempo lleva?', a: '13 paradas de menos de 10 minutos. Lo ideal es hacerlas en dos semanas, a su ritmo.' },
-  { q: '¿Vas a ver sus respuestas?', a: 'No. Ves cómo avanza y su informe final. Lo que responde es suyo.' },
   {
-    q: '¿Reemplaza a un profesional?',
-    a: 'No. Es una guía para elegir con fundamento. Si quieren, después repasan el resultado con un profesional.',
+    q: '¿Mi hijo lo va a usar?',
+    a: 'Son paradas de menos de 10 minutos, desde el celular. Lo probaron alumnos de 5° y 6° año del Colegio María Guadalupe y les gustó. Y vos ves cómo avanza.',
   },
+  { q: '¿Cuánto cuesta?', a: 'Depende del plan. Empezar es gratis, y el resto lo vemos juntos en la llamada.' },
+  {
+    q: '¿Quién está detrás?',
+    a: 'Facu, Feli y Nico, un equipo argentino. Una psicopedagoga evaluó la metodología y un equipo profesional de la UBA la revisó.',
+  },
+  { q: '¿Vas a ver sus respuestas?', a: 'No. Ves cómo avanza y su informe final. Lo que responde es suyo.' },
 ]
 
 const h2 = 'display text-[clamp(2.5rem,5.4vw,4.6rem)]'
 
-/** Colores de las tarjetas de "Lo revisaron", en el orden de LO_QUE_DICEN. */
 const TONOS_CITA = [
   { caja: 'bg-[var(--crema)]', comilla: 'text-[var(--terra)]' },
   { caja: 'bg-[var(--cielo)]', comilla: 'text-[var(--ocean)]' },
@@ -72,6 +75,7 @@ const TONOS_CITA = [
 export default function Home() {
   return (
     <div className="home min-h-screen overflow-x-clip">
+      <ScrollSuave />
       <a
         href="#contenido"
         className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-3 focus:z-50 focus:rounded-full focus:bg-white focus:px-4 focus:py-2"
@@ -83,64 +87,36 @@ export default function Home() {
       <main id="contenido">
         <Hero />
 
-        {/* ── El problema (crema) ──────────────────────────────────────── */}
+        {/* ── 1. Dolor (crema) ─────────────────────────────────────────── */}
         <section className="px-3 sm:px-5">
-          <div className="relative mx-auto max-w-[1240px] overflow-hidden rounded-[40px] bg-[var(--crema)] px-6 py-20 text-center sm:py-28">
-            <span aria-hidden className="blob blob-vivo -left-16 -top-20 h-56 w-56 bg-[var(--durazno)]" />
-            <span aria-hidden className="blob blob-vivo -bottom-24 -right-10 h-64 w-64 bg-white/60 [animation-delay:-7s]" />
-            <Aparece className="relative">
-              <p className="etiqueta text-[var(--terra-hondo)]">El problema</p>
-              <p className="display mx-auto mt-5 max-w-[16ch] text-[clamp(2.3rem,4.8vw,4rem)]">
-                A los 17, nadie conoce <strong>todas las opciones</strong>.
-              </p>
-              <p className="mx-auto mt-7 max-w-[34ch] text-[19px] text-[var(--texto2)]">
-                <strong className="relative mr-2 inline-block whitespace-nowrap font-semibold text-[var(--texto)]">
-                  4 de cada 10
-                  <Dibujo retraso={0.5} className="absolute -inset-x-4 -inset-y-2.5">
-                    <svg viewBox="0 0 200 60" preserveAspectRatio="none" className="h-full w-full overflow-visible">
-                      <Trazo d="M152 7 C 104 0, 34 4, 12 24 C -4 42, 52 58, 118 56 C 172 54, 199 40, 190 22 C 182 8, 146 3, 112 6" ancho={2.5} />
-                    </svg>
-                  </Dibujo>
-                </strong>
-                ingresantes deja la carrera en el primer año.
-              </p>
-              <p className="mt-3 text-[12.5px] text-[var(--tenue)]">SPU, cohorte 2019 · vía iProfesional</p>
-            </Aparece>
+          <div className="relative mx-auto max-w-[1240px] overflow-hidden rounded-[40px] bg-[var(--crema)] px-4 py-16 sm:px-10 sm:py-24">
+            <span aria-hidden className="blob blob-vivo -right-16 -top-24 h-72 w-72 bg-[var(--durazno)]" />
+            <div className="relative">
+              <Aparece className="px-2 text-center">
+                <h2 className={`${h2} mx-auto max-w-[14ch]`}>
+                  Elegir a ciegas <strong className="text-[var(--terra-hondo)]">sale caro</strong>.
+                </h2>
+              </Aparece>
+              <Aparece className="mt-10 sm:mt-14">
+                <Dolor />
+              </Aparece>
+            </div>
           </div>
         </section>
 
-        {/* ── La app por dentro ────────────────────────────────────────── */}
-        <section id="app" className="scroll-mt-16 pb-16 pt-24 sm:pb-24 sm:pt-32">
-          <Aparece className="mx-auto max-w-[1240px] px-5">
-            <p className="etiqueta text-[var(--ocean)]">La app por dentro</p>
-            <h2 className={`${h2} mt-4 max-w-[15ch]`}>
-              Así lo vive, <strong>paso a paso</strong>.
-            </h2>
-            <p className="mt-5 max-w-[42ch] text-[18px] text-[var(--texto2)]">
-              Cuatro partes, desde el celular o la compu. Estas son las pantallas reales.
-            </p>
-          </Aparece>
-          <Recorrido />
-          <p className="mx-auto mt-6 max-w-[1240px] px-5 text-[12.5px] text-[var(--tenue)]">
-            Capturas de la app con datos de ejemplo.
-          </p>
-        </section>
-
-        {/* ── La red (navy) ────────────────────────────────────────────── */}
-        <section id="red" className="scroll-mt-16 bg-[var(--navy)] py-24 text-white sm:py-32">
+        {/* ── 2. Resultado: la red (navy) ──────────────────────────────── */}
+        <section id="red" className="scroll-mt-16 bg-[var(--navy)] py-24 text-white sm:py-32 mt-16 sm:mt-24">
           <Aparece className="px-5 text-center">
-            <p className="etiqueta text-[var(--terra)]">La red</p>
-            <h2 className={`${h2} mx-auto mt-4 max-w-[14ch]`}>
+            <p className="etiqueta text-[var(--terra)]">El Programa Timon</p>
+            <h2 className={`${h2} mx-auto mt-4 max-w-[15ch]`}>
               No es un test. <strong className="text-[var(--crema)]">Es una red.</strong>
             </h2>
-            <p className="mx-auto mt-6 max-w-[40ch] text-[19px] text-white/70">
-              Detrás de cada carrera hay gente que la trabaja. Timon acerca a tu hijo o hija a ese mundo.
-            </p>
+            <p className="mx-auto mt-5 max-w-[34ch] text-[19px] text-white/70">Para que elija conociendo el mundo real.</p>
           </Aparece>
-          <div className="mt-16">
+          <div className="mt-14 sm:mt-16">
             <Red />
           </div>
-          <div className="mt-20">
+          <div className="mt-16 sm:mt-20">
             <Areas />
           </div>
           <dl className="mx-auto mt-16 grid max-w-[1080px] grid-cols-2 gap-y-12 px-5 lg:grid-cols-4">
@@ -153,80 +129,42 @@ export default function Home() {
               </div>
             ))}
           </dl>
-        </section>
-
-        {/* ── Lo que tenés que saber: bento de colores ─────────────────── */}
-        <section id="saber" className="mx-auto max-w-[1180px] scroll-mt-16 px-5 py-24 sm:py-32">
-          <Aparece>
-            <p className="etiqueta text-[var(--terra-hondo)]">Lo que tenés que saber</p>
-            <h2 className={`${h2} mt-4 max-w-[13ch]`}>
-              Fácil de hacer. <strong>Tranquilo para vos.</strong>
-            </h2>
-          </Aparece>
-
-          <div className="mt-12 grid gap-4 md:grid-cols-6">
-            <Aparece className="tesela relative flex min-h-[300px] flex-col justify-between overflow-hidden rounded-[30px] bg-[var(--ocean)] p-8 text-white sm:p-10 md:col-span-3">
-              <p className="etiqueta text-white/70">Tiempo</p>
-              <div>
-                <p className="display text-[clamp(5rem,9vw,7.5rem)] leading-none">
-                  <strong>13</strong>
-                </p>
-                <p className="mt-3 max-w-[18ch] text-[19px] leading-snug text-white/80">paradas de menos de 10 minutos.</p>
-                <div className="mt-7">
-                  <Paradas />
-                </div>
-              </div>
-            </Aparece>
-
-            <Aparece
-              retraso={0.08}
-              className="tesela relative flex min-h-[300px] flex-col justify-between overflow-hidden rounded-[30px] bg-[var(--terra)] p-8 text-white sm:p-10 md:col-span-3"
-            >
-              <p className="etiqueta text-white/75">Desde casa</p>
-              <p className="titulo max-w-[14ch] text-[clamp(2rem,3.4vw,2.8rem)]">Dos semanas, a su ritmo.</p>
-              <span aria-hidden className="blob blob-vivo -bottom-16 -right-10 h-48 w-48 bg-white/15" />
-            </Aparece>
-
-            <Aparece className="tesela relative flex flex-col overflow-hidden rounded-[30px] bg-[var(--crema)] px-8 pt-8 sm:px-10 sm:pt-10 md:col-span-4">
-              <p className="etiqueta text-[var(--terra-hondo)]">Su informe</p>
-              <p className="titulo mt-3 max-w-[20ch] text-[clamp(1.7rem,2.6vw,2.2rem)]">
-                Quién es, qué carreras van con su perfil y dónde estudiarlas.
-              </p>
-              <div className="captura -mb-10 mt-8 sm:mr-[12%]">
-                <Image
-                  src="/producto/caminos-card.webp"
-                  alt="Pantalla de los caminos: sus 5 carreras principales, ordenadas por compatibilidad"
-                  width={1620}
-                  height={1020}
-                  sizes="(min-width: 768px) 640px, 90vw"
-                  className="h-auto w-full"
-                />
-              </div>
-            </Aparece>
-
-            <Aparece
-              retraso={0.08}
-              className="tesela flex min-h-[260px] flex-col justify-between rounded-[30px] bg-[var(--cielo)] p-8 sm:p-10 md:col-span-2"
-            >
-              <p className="etiqueta text-[var(--ocean)]">Precio</p>
-              <div>
-                <p className="titulo text-[clamp(1.8rem,3vw,2.4rem)]">Empieza gratis.</p>
-                <p className="mt-3 text-[16px] text-[var(--texto2)]">El informe completo es un pago único, no una suscripción.</p>
-              </div>
-            </Aparece>
-
-            <Aparece className="tesela flex flex-col items-start gap-6 rounded-[30px] bg-[var(--navy)] p-8 text-white sm:flex-row sm:items-center sm:justify-between sm:p-10 md:col-span-6">
-              <p className="titulo max-w-[26ch] text-[clamp(1.6rem,3vw,2.3rem)]">
-                Vos ves cómo avanza. <span className="text-white/55">Sus respuestas son suyas.</span>
-              </p>
-              <span className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-[var(--terra)]">
-                <LockKeyhole size={22} className="text-white" aria-hidden />
-              </span>
-            </Aparece>
+          <div className="mt-16">
+            <Cta tono="terra" claro />
           </div>
         </section>
 
-        {/* ── Quienes lo revisaron ─────────────────────────────────────── */}
+        {/* ── 3. Cómo funciona: escena fija con GSAP ───────────────────── */}
+        <section id="app" className="scroll-mt-16 pt-24 sm:pt-32 lg:pt-28">
+          <Aparece className="mx-auto max-w-[1240px] px-5 text-center">
+            <p className="etiqueta text-[var(--ocean)]">Cómo funciona</p>
+            <h2 className={`${h2} mx-auto mt-4 max-w-[16ch]`}>
+              Cuatro pasos. <strong>Pantallas reales.</strong>
+            </h2>
+          </Aparece>
+          <Recorrido />
+          <p className="mx-auto mt-8 max-w-[1240px] px-5 text-center text-[12.5px] text-[var(--tenue)] lg:mt-0">
+            Capturas de la app con datos de ejemplo.
+          </p>
+        </section>
+
+        {/* ── 4. Qué recibís vos ───────────────────────────────────────── */}
+        <section id="para-vos" className="mx-auto max-w-[1180px] scroll-mt-16 px-5 py-24 sm:py-32">
+          <Aparece>
+            <p className="etiqueta text-[var(--terra-hondo)]">Para vos</p>
+            <h2 className={`${h2} mt-4 max-w-[14ch]`}>
+              Fácil para tu hijo. <strong>Tranquilo para vos.</strong>
+            </h2>
+          </Aparece>
+          <Aparece className="mt-12">
+            <ParaVos />
+          </Aparece>
+          <div className="mt-12">
+            <Cta />
+          </div>
+        </section>
+
+        {/* ── 5. Prueba: lo revisaron (citas reales de src/lib/landing.ts) ─ */}
         <section className="mx-auto max-w-[1180px] px-5 pb-24 sm:pb-32">
           <Aparece>
             <h2 className={`${h2} max-w-[14ch]`}>
@@ -256,19 +194,18 @@ export default function Home() {
           </ul>
         </section>
 
-        {/* ── Anotalo (ocean) ──────────────────────────────────────────── */}
+        {/* ── 6. Formulario (ocean) ────────────────────────────────────── */}
         <section id="anotalo" className="scroll-mt-16 px-3 sm:px-5">
           <div className="relative mx-auto max-w-[1240px] overflow-hidden rounded-[40px] bg-[var(--ocean)] px-3 py-16 sm:px-10 sm:py-24">
             <span aria-hidden className="blob blob-vivo -left-24 -top-24 h-80 w-80 bg-white/10" />
             <span aria-hidden className="blob blob-vivo -bottom-28 -right-16 h-96 w-96 bg-[var(--terra)] [animation-delay:-4s]" />
             <div className="relative mx-auto max-w-[940px]">
               <Aparece className="px-2 text-center text-white">
-                <p className="etiqueta text-[var(--crema)]">Anotalo</p>
-                <h2 className={`${h2} mt-4`}>
-                  Que empiece <strong>hoy</strong>.
+                <h2 className={h2}>
+                  Que elija <strong>bien</strong>.
                 </h2>
-                <p className="mx-auto mt-5 max-w-[36ch] text-[19px] text-white/80">
-                  Dejás tus datos y elegís: que arranque gratis o pagar ahora.
+                <p className="mx-auto mt-5 max-w-[34ch] text-[19px] text-white/80">
+                  Dejanos tus datos. Te escribimos en menos de 24 h, sin compromiso.
                 </p>
                 <Dibujo retraso={0.6} className="relative mx-auto mt-2 hidden h-[60px] w-[220px] sm:block">
                   <Nota className="left-0 top-1 text-[var(--crema)] [--giro:-4deg]">te lleva 1 minuto</Nota>
@@ -285,7 +222,7 @@ export default function Home() {
           </div>
         </section>
 
-        {/* ── Preguntas ────────────────────────────────────────────────── */}
+        {/* ── 7. Objeciones ────────────────────────────────────────────── */}
         <section
           id="preguntas"
           className="mx-auto grid max-w-[1180px] scroll-mt-16 gap-10 px-5 py-24 sm:py-32 md:grid-cols-[1fr_1.6fr]"
@@ -294,10 +231,9 @@ export default function Home() {
             <h2 className="display text-[clamp(2.2rem,4vw,3.4rem)]">
               <strong>Preguntas</strong> de madres y padres.
             </h2>
-            <a href="#anotalo" className="btn btn-terra group mt-8">
-              Quiero que lo haga
-              <ArrowRight size={18} aria-hidden className="transition-transform duration-300 group-hover:translate-x-1" />
-            </a>
+            <div className="mt-8">
+              <Cta tono="terra" alineado="izquierda" />
+            </div>
           </div>
           <div className="border-b border-[var(--borde)]">
             {FAQS.map((f) => (
@@ -315,7 +251,7 @@ export default function Home() {
         </section>
       </main>
 
-      <footer className="bg-[var(--navy)] text-white">
+      <footer className="bg-[var(--navy)] pb-20 text-white md:pb-0">
         <div className="mx-auto max-w-[1180px] px-5 py-14">
           <div className="flex flex-col gap-8 md:flex-row md:items-center md:justify-between">
             <Isologo tono="crema" />
@@ -333,6 +269,8 @@ export default function Home() {
           </p>
         </div>
       </footer>
+
+      <CtaFija />
     </div>
   )
 }

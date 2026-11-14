@@ -3,7 +3,7 @@ import { Isotipo } from './Isotipo'
 import { URL_ENTRAR } from '@/lib/landing'
 
 const LINKS = [
-  { href: '#app', texto: 'La app' },
+  { href: '#app', texto: 'Cómo funciona' },
   { href: '#red', texto: 'La red' },
   { href: '#preguntas', texto: 'Preguntas' },
 ]

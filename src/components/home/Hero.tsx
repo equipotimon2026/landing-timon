@@ -4,6 +4,7 @@ import Image from 'next/image'
 import { ArrowDown, ArrowRight } from 'lucide-react'
 import { motion, useMotionValue, useReducedMotion, useSpring, useTransform, type Transition } from 'motion/react'
 import { MacBook, IPhone } from './Dispositivos'
+import { CTA_MICRO, CTA_TEXTO } from './Cta'
 import { Dibujo, Nota, Trazo } from './Dibujo'
 
 const SUAVE = [0.22, 1, 0.36, 1] as const
@@ -95,7 +96,7 @@ export function Hero() {
               transition={T({ duration: 0.6, ease: SUAVE })}
             >
               <span className="h-2 w-2 rounded-full bg-[var(--terra)]" aria-hidden />
-              Para madres y padres
+              Programa Timon · para madres y padres
             </motion.p>
 
             <h1 className="display mx-auto mt-5 max-w-[13ch] text-[clamp(2.6rem,6.3vw,6rem)] lg:mx-0">
@@ -132,8 +133,8 @@ export function Hero() {
               animate={{ opacity: 1, y: 0 }}
               transition={T({ duration: 0.8, ease: SUAVE, delay: 0.6 })}
             >
-              Timon le muestra a tu hijo o hija cómo es el trabajo de verdad, con una red de profesionales,
-              universidades, empresas y eventos. Y lo acompaña a elegir.
+              Una red de profesionales, universidades, empresas y eventos para que tu hijo o hija elija
+              con los pies en la tierra.
             </motion.p>
 
             <motion.div
@@ -143,22 +144,22 @@ export function Hero() {
               transition={T({ duration: 0.8, ease: SUAVE, delay: 0.75 })}
             >
               <a href="#anotalo" className="btn group">
-                Quiero que lo haga
+                {CTA_TEXTO}
                 <ArrowRight size={18} aria-hidden className="transition-transform duration-300 group-hover:translate-x-1" />
               </a>
               <a href="#app" className="link-flecha group text-[16px] text-[var(--ocean)]">
-                Mirá la app por dentro
+                Cómo funciona
                 <ArrowDown size={16} aria-hidden className="transition-transform duration-300 group-hover:translate-y-0.5" />
               </a>
             </motion.div>
 
             <motion.p
-              className="mt-6 hidden text-[14px] text-[var(--tenue)] sm:block"
+              className="mt-5 text-[14px] text-[var(--tenue)]"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={T({ duration: 0.8, delay: 1 })}
             >
-              Empieza gratis · Desde casa · A su ritmo
+              {CTA_MICRO}
             </motion.p>
           </div>
 
