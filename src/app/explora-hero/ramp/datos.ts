@@ -51,7 +51,7 @@ export const DONDE_SALUD = {
 /**
  * El mundo que cambia. Dos cifras del World Economic Forum, Future of Jobs
  * Report 2025 (enero de 2025): verificar la cita textual antes de publicar.
- * La tercera queda para completar con un dato argentino con fuente.
+ * No hay un tercer dato argentino verificado: quedan dos.
  */
 export const CAMBIO = [
   {
@@ -63,11 +63,6 @@ export const CAMBIO = [
     cifra: '170 M',
     texto: 'de puestos nuevos se van a crear en el mundo hasta 2030, y 92 millones van a desaparecer.',
     fuente: 'World Economic Forum, Future of Jobs Report 2025',
-  },
-  {
-    cifra: '[DATO]',
-    texto: '[DATO: fuente] Cuántos chicos en Argentina abandonan o cambian la carrera que eligieron.',
-    fuente: '[DATO: fuente]',
   },
 ]
 
@@ -112,7 +107,7 @@ export const MODULOS = [
     id: 'profesionales',
     titulo: 'Profesionales de 16 áreas.',
     gris: 'Les pregunta lo que quiera y ve cómo es el trabajo por dentro.',
-    corte: CORTES.areas,
+    corte: null,
     grande: true,
   },
   {
@@ -167,4 +162,15 @@ export const PASOS_HERO = {
       bajada: 'Quién es, qué carreras van con él y su red.',
     },
   ],
+}
+
+/** "Dónde se trabaja" de Salud (lib/mundos.ts), en filas. */
+export const DONDE_SALUD_LISTA = ['Hospitales públicos y privados', 'Clínicas y sanatorios', 'Consultorios propios', 'Laboratorios']
+
+/** La primera universidad del comparador de demo (captura mac-comparador). */
+export const UNIVERSIDAD_DEMO = {
+  nombre: 'Universidad de Buenos Aires',
+  alineada: 'Muy alineada',
+  carrera: 'Ingeniería en Sistemas',
+  datos: ['Pública', 'Presencial', 'Gratuita', '5 años + CBC'],
 }

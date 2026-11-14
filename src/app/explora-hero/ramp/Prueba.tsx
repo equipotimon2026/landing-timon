@@ -37,7 +37,7 @@ export function Prueba() {
           </div>
 
           <figure className="flex min-h-[220px] flex-col justify-between rounded-[14px] bg-[var(--primario)] p-6 text-white">
-            <blockquote className="text-[22px] font-light leading-[1.2] tracking-[-0.03em]">“{CITA_PSICOPEDAGOGA.texto}”</blockquote>
+            <blockquote className="text-[22px] font-light leading-[1.2] tracking-[-0.018em]">“{CITA_PSICOPEDAGOGA.texto}”</blockquote>
             <figcaption className="mt-6 text-[13.5px] text-white/70">
               <span className="block font-semibold text-white">{CITA_PSICOPEDAGOGA.quien}</span>
               {CITA_PSICOPEDAGOGA.rol}

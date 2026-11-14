@@ -4,6 +4,7 @@ import { ArrowUpRight } from 'lucide-react'
 import { motion } from 'motion/react'
 import { Recorte } from '../app-a/Recorte'
 import { MODULOS } from './datos'
+import { AreasMini } from './Piezas'
 
 const SALIDA = [0.16, 1, 0.3, 1] as const
 
@@ -15,7 +16,7 @@ const SALIDA = [0.16, 1, 0.3, 1] as const
 export function Modulos() {
   return (
     <section id="modulos" className="mx-auto max-w-[1440px] scroll-mt-20 px-5 pb-20 lg:px-16 lg:pb-28">
-      <h2 className="max-w-[24ch] text-[clamp(2rem,3.4vw,3rem)] font-medium leading-[1.08] tracking-[-0.04em] text-[var(--navy)]">
+      <h2 className="max-w-[24ch] text-[clamp(2rem,3.4vw,3rem)] font-medium leading-[1.08] tracking-[-0.022em] text-[var(--navy)]">
         Timon está conectado con quienes viven cada carrera.{' '}
         <span className="text-[var(--tenue)]">Tu hijo entra a esa red. Así es como entra.</span>
       </h2>
@@ -52,7 +53,7 @@ export function Modulos() {
             </div>
             <div className={`relative mt-auto ${m.grande ? 'ml-6 lg:ml-10' : 'mx-6'} translate-y-6 transition-transform duration-500 group-hover:translate-y-3`}>
               <div className="overflow-hidden rounded-t-[10px] bg-white ring-1 ring-[rgba(15,31,54,0.08)] shadow-[0_24px_50px_-30px_rgba(15,31,54,0.4)]">
-                <Recorte corte={m.corte} alt="" sizes={m.grande ? '640px' : '420px'} />
+                {m.corte ? <Recorte corte={m.corte} alt="" sizes={m.grande ? '640px' : '420px'} /> : <AreasMini elegidas={['Salud', 'Tecnología']} />}
               </div>
             </div>
           </motion.li>

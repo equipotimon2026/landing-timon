@@ -36,7 +36,7 @@ export function Cabecera() {
       )}
       <header className="sticky top-0 z-40 border-b border-[var(--borde)] bg-white/95 backdrop-blur">
         <div className="mx-auto flex h-16 max-w-[1440px] items-center gap-8 px-5 lg:px-16">
-          <Link href="/" aria-label="Timon, inicio" className="inline-flex items-center gap-2 text-[19px] font-semibold tracking-[-0.03em] text-[var(--navy)]">
+          <Link href="/" aria-label="Timon, inicio" className="inline-flex items-center gap-2 text-[19px] font-semibold tracking-[-0.018em] text-[var(--navy)]">
             <Isotipo size={22} className="text-[var(--primario)]" />
             Timon
           </Link>

@@ -11,7 +11,7 @@ import { Escenario } from './Escenario'
 export function Hero({ alEnviar }: { alEnviar: (email: string) => void }) {
   return (
     <section className="mx-auto max-w-[1440px] px-5 pt-12 sm:pt-16 lg:px-16 lg:pt-[72px]">
-      <h1 className="text-[clamp(2.3rem,4.2vw,3.75rem)] font-medium leading-[1.04] tracking-[-0.045em] text-[var(--navy)]">
+      <h1 className="text-[clamp(2.3rem,4.2vw,3.75rem)] font-medium leading-[1.04] tracking-[-0.025em] text-[var(--navy)]">
         {/* Opciones de titular en docs/referencias-hero/ramp.md. */}
         El mundo cambia rápido. <br className="hidden md:block" />
         <span className="text-[var(--primario)]">Que tu hijo esté conectado con quienes lo viven.</span>

@@ -6,9 +6,11 @@ import { motion } from 'motion/react'
 import { Isotipo } from '@/components/home/Isotipo'
 import { CONTACT_EMAIL, FUNDADORES } from '@/lib/programa'
 import { URL_ENTRAR } from '@/lib/landing'
+import { CITAS_EJEMPLO, HISTORIA_EJEMPLO } from './contenido-ejemplo'
+import { CITA_PSICOPEDAGOGA } from './datos'
 
 const SALIDA = [0.16, 1, 0.3, 1] as const
-const H2 = 'text-[clamp(2rem,3.4vw,3rem)] font-medium leading-[1.08] tracking-[-0.04em] text-[var(--navy)]'
+const H2 = 'text-[clamp(2rem,3.4vw,3rem)] font-medium leading-[1.08] tracking-[-0.022em] text-[var(--navy)]'
 
 const aparece = (i = 0) => ({
   initial: { opacity: 0, y: 24 },
@@ -100,8 +102,8 @@ export function Banner() {
 
 /**
  * "Escalá el equipo", la sección de Ramp con titular centrado y columnas,
- * usada para la historia de Timon. La historia todavía no está escrita en
- * ningún lado: queda marcada para completar, sin inventar nada.
+ * usada para la historia de Timon. El texto es un BORRADOR DE EJEMPLO
+ * (contenido-ejemplo.ts): solo usa lo que se sabe de los fundadores.
  */
 export function Historia() {
   return (
@@ -110,9 +112,11 @@ export function Historia() {
         <h2 className={H2}>
           Hecho en Argentina. <span className="text-[var(--tenue)]">Por Facu, Feli y Nico.</span>
         </h2>
-        <p className="mx-auto mt-5 max-w-[52ch] rounded-[8px] border border-dashed border-[var(--terra)] px-4 py-3 text-[15px] text-[var(--terra-hondo)]">
-          [HISTORIA: completar] Por qué empezamos Timon, cuándo y cómo arrancó.
-        </p>
+        {HISTORIA_EJEMPLO.parrafos.map((t) => (
+          <p key={t} className="mx-auto mt-5 max-w-[56ch] text-[17px] text-[var(--texto2)]">
+            {t}
+          </p>
+        ))}
       </motion.div>
       <ul className="mx-auto mt-14 grid max-w-[1000px] gap-3 sm:grid-cols-3">
         {FUNDADORES.map((f, i) => (
@@ -130,22 +134,20 @@ export function Historia() {
 }
 
 /**
- * El muro de testimonios de Ramp. La única cita textual documentada es la de
- * la psicopedagoga (MEMORY.md: "es textual y sí sale"). Lo del Colegio María
- * Guadalupe y la UBA está contado con nuestras palabras, no son citas: quedan
- * como lugar para una cita real con permiso.
+ * El muro de testimonios de Ramp. La cita de la psicopedagoga es real y
+ * textual (MEMORY.md); las otras dos son DE EJEMPLO (contenido-ejemplo.ts),
+ * con roles genéricos, para la vista previa local.
  */
 const CITAS = [
-  { texto: '“Es una visión integral, no un simple test.”', quien: 'Psicopedagoga', rol: 'Evaluó la metodología de Timon', real: true },
-  { texto: '[CITA REAL: completar]', quien: '[CITA REAL: completar]', rol: 'Alumno o familia, con permiso para publicar', real: false },
-  { texto: '[CITA REAL: completar]', quien: '[CITA REAL: completar]', rol: 'Profesional o colegio, con permiso para publicar', real: false },
+  { texto: CITA_PSICOPEDAGOGA.texto, quien: CITA_PSICOPEDAGOGA.quien, rol: CITA_PSICOPEDAGOGA.rol },
+  ...CITAS_EJEMPLO,
 ]
 
 export function Testimonios() {
   return (
     <section id="testimonios" className="mx-auto max-w-[1440px] scroll-mt-20 px-5 py-20 lg:px-16 lg:py-28">
       <motion.div {...aparece()} className="text-center">
-        <p className="text-[14px] text-[var(--tenue)]">Lo que dijeron quienes lo revisaron y lo probaron</p>
+        <p className="text-[14px] text-[var(--tenue)]">Lo que dicen de Timon</p>
         <h2 className={`mt-3 ${H2}`}>No es un simple test.</h2>
       </motion.div>
       <ul className="mt-12 grid gap-3 md:grid-cols-3">
@@ -153,9 +155,9 @@ export function Testimonios() {
           <motion.li
             key={i}
             {...aparece(i)}
-            className={`flex flex-col justify-between rounded-[14px] border bg-white p-6 ${c.real ? 'border-[var(--borde)]' : 'border-dashed border-[var(--terra)]'}`}
+            className="flex flex-col justify-between rounded-[14px] border border-[var(--borde)] bg-white p-6"
           >
-            <p className={`text-[17px] leading-[1.5] ${c.real ? 'text-[var(--navy)]' : 'text-[var(--terra-hondo)]'}`}>{c.texto}</p>
+            <p className="text-[17px] leading-[1.5] text-[var(--navy)]">“{c.texto}”</p>
             <div className="mt-8 border-t border-[var(--borde)] pt-4">
               <p className="text-[15px] font-semibold text-[var(--navy)]">{c.quien}</p>
               <p className="text-[14px] text-[var(--tenue)]">{c.rol}</p>

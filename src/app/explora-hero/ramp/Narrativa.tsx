@@ -1,11 +1,11 @@
 'use client'
 
 import { motion } from 'motion/react'
-import { Recorte } from '../app-a/Recorte'
-import { CAMBIO, CITA_PSICOPEDAGOGA, CORTES } from './datos'
+import { CAMBIO, CITA_PSICOPEDAGOGA } from './datos'
+import { CharlaMini, OportunidadMini, PerfilMini } from './Piezas'
 
 const SALIDA = [0.16, 1, 0.3, 1] as const
-const H2 = 'text-[clamp(2rem,3.4vw,3rem)] font-medium leading-[1.08] tracking-[-0.04em] text-[var(--navy)]'
+const H2 = 'text-[clamp(2rem,3.4vw,3rem)] font-medium leading-[1.08] tracking-[-0.022em] text-[var(--navy)]'
 
 const aparece = (i = 0) => ({
   initial: { opacity: 0, y: 24 },
@@ -25,10 +25,10 @@ export function Cambio() {
         Las carreras que tu hijo va a elegir están cambiando ahora.{' '}
         <span className="text-[var(--tenue)]">Lo que hoy se estudia no es lo que mañana se va a pedir.</span>
       </motion.h2>
-      <ul className="mt-14 grid gap-px overflow-hidden rounded-[14px] bg-[var(--borde)] md:grid-cols-3">
+      <ul className="mt-14 grid gap-px overflow-hidden rounded-[14px] bg-[var(--borde)] md:grid-cols-2">
         {CAMBIO.map((c, i) => (
           <motion.li key={c.texto} {...aparece(i)} className="flex flex-col bg-white p-7">
-            <p className="text-[clamp(2.6rem,4.4vw,3.8rem)] font-light leading-none tracking-[-0.05em] text-[var(--primario)]">{c.cifra}</p>
+            <p className="text-[clamp(2.6rem,4.4vw,3.8rem)] font-light leading-none tracking-[-0.018em] text-[var(--primario)]">{c.cifra}</p>
             <p className="mt-4 max-w-[30ch] text-[16.5px] text-[var(--texto2)]">{c.texto}</p>
             <p className="mt-auto pt-6 text-[12.5px] text-[var(--tenue)]">Fuente: {c.fuente}</p>
           </motion.li>
@@ -70,7 +70,7 @@ export function Confianza() {
           Pensado con psicopedagogas, <span className="text-[var(--primario)]">no armado por un algoritmo.</span>
         </motion.h2>
         <motion.figure {...aparece(1)} className="rounded-[14px] bg-[var(--primario)] p-7 text-white">
-          <blockquote className="text-[clamp(1.5rem,2.2vw,1.9rem)] font-light leading-[1.2] tracking-[-0.03em]">“{CITA_PSICOPEDAGOGA.texto}”</blockquote>
+          <blockquote className="text-[clamp(1.5rem,2.2vw,1.9rem)] font-light leading-[1.2] tracking-[-0.018em]">“{CITA_PSICOPEDAGOGA.texto}”</blockquote>
           <figcaption className="mt-6 text-[14px] text-white/75">
             <span className="block font-semibold text-white">{CITA_PSICOPEDAGOGA.quien}</span>
             {CITA_PSICOPEDAGOGA.rol}
@@ -99,7 +99,7 @@ const ETAPAS = [
     cuando: 'Hoy',
     titulo: 'Decide qué estudiar.',
     texto: 'Se conoce en 13 paradas, charla con profesionales de 16 áreas, recibe su informe y compara universidades.',
-    corte: CORTES.esencia,
+    Pieza: PerfilMini,
     existe: true,
   },
   {
@@ -107,7 +107,7 @@ const ETAPAS = [
     cuando: 'Durante la carrera',
     titulo: 'Sigue conectado.',
     texto: 'Habla con profesionales mientras cursa y se mantiene al día con hacia dónde va su área.',
-    corte: CORTES.valentina,
+    Pieza: CharlaMini,
     existe: false,
   },
   {
@@ -115,7 +115,7 @@ const ETAPAS = [
     cuando: 'Después',
     titulo: 'Se le abren puertas.',
     texto: 'La misma red de profesionales y empresas le acerca oportunidades de trabajo.',
-    corte: null,
+    Pieza: OportunidadMini,
     existe: false,
   },
 ]
@@ -139,16 +139,10 @@ export function Camino() {
           <motion.li key={e.cuando} {...aparece(i + 1)} className="relative">
             <span className={`relative z-10 block h-6 w-6 rounded-full border-[3px] border-[var(--primario)] ${i === 0 ? 'bg-[var(--primario)]' : 'bg-white'}`} />
             <p className="mt-5 text-[14px] font-semibold text-[var(--primario)]">{e.cuando}</p>
-            <h3 className="mt-1 text-[22px] font-medium tracking-[-0.03em] text-[var(--navy)]">{e.titulo}</h3>
+            <h3 className="mt-1 text-[22px] font-medium tracking-[-0.018em] text-[var(--navy)]">{e.titulo}</h3>
             <p className="mt-2 max-w-[34ch] text-[16px] text-[var(--texto2)]">{e.texto}</p>
-            <div className="mt-6 flex h-[220px] items-end overflow-hidden rounded-[14px] bg-[var(--escenario)] px-5 pt-5">
-              {e.corte ? (
-                <div className="w-full overflow-hidden rounded-t-[10px] bg-white ring-1 ring-[rgba(15,31,54,0.08)]">
-                  <Recorte corte={e.corte} alt="" sizes="420px" />
-                </div>
-              ) : (
-                <p className="mb-5 text-[15px] text-[var(--tenue)]">Oportunidades de trabajo a través de la red.</p>
-              )}
+            <div className="mt-6 h-[200px] overflow-hidden rounded-[14px] ring-1 ring-[var(--borde)]">
+              <e.Pieza />
             </div>
           </motion.li>
         ))}
