@@ -1,14 +1,21 @@
-'use client'
+"use client";
 
-import { useState } from 'react'
-import { Anotalo } from '@/components/home/Anotalo'
-import { Cabecera } from './Cabecera'
-import { Desorden } from './Desorden'
-import { Hero } from './Hero'
-import { Modulos } from './Modulos'
-import { Camino, Cambio, Confianza } from './Narrativa'
-import { Prueba } from './Prueba'
-import { Banner, Cierre, Historia, Momento, Preguntas, Testimonios } from './Secciones'
+import { useState } from "react";
+import { Anotalo } from "@/components/home/Anotalo";
+import { Cabecera } from "./Cabecera";
+import { Desorden } from "./Desorden";
+import { Hero } from "./Hero";
+import { Modulos } from "./Modulos";
+import { Camino, Cambio, Confianza } from "./Narrativa";
+import { Prueba } from "./Prueba";
+import {
+  Banner,
+  Cierre,
+  Historia,
+  Momento,
+  Preguntas,
+  Testimonios,
+} from "./Secciones";
 
 /**
  * /explora-hero/ramp: la home de Timon con el formato de ramp.com
@@ -22,11 +29,15 @@ import { Banner, Cierre, Historia, Momento, Preguntas, Testimonios } from './Sec
  * ese mail ya cargado.
  */
 export function RampPagina() {
-  const [email, setEmail] = useState('')
+  const [email, setEmail] = useState("");
   const alEnviar = (m: string) => {
-    setEmail(m)
-    requestAnimationFrame(() => document.getElementById('anotalo')?.scrollIntoView({ behavior: 'smooth', block: 'start' }))
-  }
+    setEmail(m);
+    requestAnimationFrame(() =>
+      document
+        .getElementById("anotalo")
+        ?.scrollIntoView({ behavior: "smooth", block: "start" }),
+    );
+  };
 
   return (
     <div className="ramp">
@@ -49,5 +60,5 @@ export function RampPagina() {
         </Cierre>
       </main>
     </div>
-  )
+  );
 }

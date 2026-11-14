@@ -1,7 +1,8 @@
-'use client'
+"use client";
 
-import { Cifras } from './Cifras'
-import { Escenario } from './Escenario'
+import { Cifras } from "./Cifras";
+import { Escenario } from "./Escenario";
+import { Subrayado } from "./Lapiz";
 
 /**
  * Hero con la estructura de ramp.com: eyebrow con un dato, titular de una
@@ -14,18 +15,22 @@ export function Hero({ alEnviar }: { alEnviar: (email: string) => void }) {
       <h1 className="text-[clamp(2.3rem,4.2vw,3.75rem)] font-medium leading-[1.04] tracking-[-0.025em] text-[var(--navy)]">
         {/* Opciones de titular en docs/referencias-hero/ramp.md. */}
         El mundo cambia rápido. <br className="hidden md:block" />
-        <span className="text-[var(--primario)]">Que tu hijo esté conectado con quienes lo viven.</span>
+        <span className="text-[var(--primario)]">
+          Que tu hijo esté conectado con <Subrayado>quienes lo viven</Subrayado>
+          .
+        </span>
       </h1>
       <p className="mt-4 max-w-[62ch] text-[18px] leading-snug text-[var(--tenue)] sm:text-[19.5px]">
         {/* [CONFIRMAR] "empresas" y "mientras estudia": no existen todavía en la app. */}
-        Timon lo conecta con profesionales, universidades y empresas para que elija su carrera y siga conectado mientras estudia.
+        Timon lo conecta con profesionales, universidades y empresas para que
+        elija su carrera y siga conectado mientras estudia.
       </p>
       <form
         className="mt-8 flex max-w-[500px] flex-col gap-2 rounded-[10px] border border-[var(--borde)] bg-white p-1.5 focus-within:border-[var(--primario)] sm:flex-row sm:items-center"
         onSubmit={(e) => {
-          e.preventDefault()
-          const email = new FormData(e.currentTarget).get('email')
-          alEnviar(typeof email === 'string' ? email.trim() : '')
+          e.preventDefault();
+          const email = new FormData(e.currentTarget).get("email");
+          alEnviar(typeof email === "string" ? email.trim() : "");
         }}
       >
         <label htmlFor="hero-mail" className="sr-only">
@@ -47,7 +52,10 @@ export function Hero({ alEnviar }: { alEnviar: (email: string) => void }) {
         </button>
       </form>
       {/* [PSICÓLOGOS: nombres/matrícula] Lo documentado: tres psicopedagogas evaluaron el producto y un equipo de la UBA revisó la metodología. */}
-      <p className="mt-4 text-[14px] text-[var(--tenue)]">Evaluado por psicopedagogas y revisado por un equipo profesional de la UBA.</p>
+      <p className="mt-4 text-[14px] text-[var(--tenue)]">
+        Evaluado por psicopedagogas y revisado por un equipo profesional de la
+        UBA.
+      </p>
       <div className="mt-11">
         <Escenario />
       </div>
@@ -55,5 +63,5 @@ export function Hero({ alEnviar }: { alEnviar: (email: string) => void }) {
         <Cifras />
       </div>
     </section>
-  )
+  );
 }

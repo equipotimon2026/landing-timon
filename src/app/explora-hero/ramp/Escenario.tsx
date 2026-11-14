@@ -14,6 +14,7 @@ import {
 import { Recorte } from "../app-a/Recorte";
 import { CORTES, PASOS_HERO } from "./datos";
 import { AreasMini, UniversidadMini } from "./Piezas";
+import { Circulo, Flecha, Nota } from "./Lapiz";
 
 const SALIDA = [0.16, 1, 0.3, 1] as const;
 const RAPIDA = [0.7, 0, 0.2, 1] as const;
@@ -570,6 +571,23 @@ export function Escenario() {
               <p className="mt-2 text-[15.5px] text-[var(--tenue)]">
                 {textos.bajada}
               </p>
+              {activo === 1 && (
+                <div className="relative mt-6 hidden h-[70px] lg:block">
+                  <Nota className="absolute left-0 top-0">
+                    preguntale lo que quieras
+                  </Nota>
+                  <Flecha
+                    ancho={280}
+                    alto={40}
+                    desde={[0, 4]}
+                    hasta={[270, 30]}
+                    curva={-0.15}
+                    semilla={17}
+                    retraso={0.6}
+                    className="absolute left-[110px] top-[26px]"
+                  />
+                </div>
+              )}
             </motion.div>
           </AnimatePresence>
         </div>
@@ -591,7 +609,7 @@ export function Escenario() {
                     : "text-[var(--tenue)] hover:text-[var(--navy)]"
                 }`}
               >
-                <span className="flex items-center gap-3 text-[15px] font-medium">
+                <span className="relative flex items-center gap-3 text-[15px] font-medium">
                   <span
                     className={`flex h-6 w-6 shrink-0 items-center justify-center rounded-full text-[12px] font-semibold transition-colors duration-300 ${
                       i === activo
@@ -601,6 +619,17 @@ export function Escenario() {
                   >
                     {i + 1}
                   </span>
+                  {i === activo && (
+                    <span
+                      key={activo}
+                      aria-hidden
+                      className="pointer-events-none absolute hidden lg:block"
+                    >
+                      <Circulo semilla={30 + i}>
+                        <span className="block h-6 w-6" />
+                      </Circulo>
+                    </span>
+                  )}
                   <span className="hidden lg:inline">{p.corto}</span>
                 </span>
                 <span className="relative mt-3 block h-[3px] overflow-hidden rounded-full bg-[var(--primario-suave)] lg:h-[2px] lg:bg-transparent">

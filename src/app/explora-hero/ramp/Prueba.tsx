@@ -1,5 +1,5 @@
-import { ArrowRight } from 'lucide-react'
-import { AREAS_CORTAS, CITA_PSICOPEDAGOGA } from './datos'
+import { ArrowRight } from "lucide-react";
+import { AREAS_CORTAS, CITA_PSICOPEDAGOGA } from "./datos";
 
 /**
  * Prueba social con el formato de Ramp: una frase con dato a la izquierda y,
@@ -13,17 +13,24 @@ export function Prueba() {
       <div className="grid gap-12 lg:grid-cols-[minmax(0,4fr)_minmax(0,8fr)] lg:gap-16">
         <div className="lg:pt-2">
           <p className="max-w-[24ch] text-[clamp(1.35rem,2vw,1.6rem)] font-medium leading-[1.25] tracking-[-0.025em] text-[var(--navy)]">
-            Lo probaron alumnos de 5° y 6° año{' '}
-            <span className="text-[var(--tenue)]">del Colegio María Guadalupe, y les gustó.</span>
+            Lo probaron alumnos de 5° y 6° año{" "}
+            <span className="text-[var(--tenue)]">
+              del Colegio María Guadalupe, y les gustó.
+            </span>
           </p>
-          <a href="#testimonios" className="mt-6 inline-flex items-center gap-1.5 text-[15px] text-[var(--navy)] hover:text-[var(--primario)]">
+          <a
+            href="#testimonios"
+            className="mt-6 inline-flex items-center gap-1.5 text-[15px] text-[var(--navy)] hover:text-[var(--primario)]"
+          >
             Qué dijeron de Timon <ArrowRight size={15} aria-hidden />
           </a>
         </div>
 
         <div className="grid gap-4 md:grid-cols-[minmax(0,1fr)_240px] lg:grid-cols-[minmax(0,1fr)_270px]">
           <div className="relative">
-            <p className="sr-only">Algunas de las 16 áreas de trabajo que recorre:</p>
+            <p className="sr-only">
+              Algunas de las 16 áreas de trabajo que recorre:
+            </p>
             <ul className="grid grid-cols-2 gap-px bg-[var(--borde)] sm:grid-cols-3 lg:grid-cols-4">
               {AREAS_CORTAS.map((a) => (
                 <li
@@ -37,14 +44,18 @@ export function Prueba() {
           </div>
 
           <figure className="flex min-h-[220px] flex-col justify-between rounded-[14px] bg-[var(--primario)] p-6 text-white">
-            <blockquote className="text-[22px] font-light leading-[1.2] tracking-[-0.018em]">“{CITA_PSICOPEDAGOGA.texto}”</blockquote>
+            <blockquote className="text-[22px] font-light leading-[1.2] tracking-[-0.018em]">
+              “{CITA_PSICOPEDAGOGA.texto}”
+            </blockquote>
             <figcaption className="mt-6 text-[13.5px] text-white/70">
-              <span className="block font-semibold text-white">{CITA_PSICOPEDAGOGA.quien}</span>
+              <span className="block font-semibold text-white">
+                {CITA_PSICOPEDAGOGA.quien}
+              </span>
               {CITA_PSICOPEDAGOGA.rol}
             </figcaption>
           </figure>
         </div>
       </div>
     </section>
-  )
+  );
 }
