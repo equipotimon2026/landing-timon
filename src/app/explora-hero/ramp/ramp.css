@@ -1,0 +1,23 @@
+/* /explora-hero/ramp. Tokens propios de esta página, sobre los de home.css. */
+.ramp {
+  --escenario: #f7f2ea;
+  background: #fff;
+}
+
+/* La tira de cifras pasa despacio, como la de Ramp. */
+.ramp .cifras-pista {
+  animation: ramp-pasa 48s linear infinite;
+}
+.ramp .cifras:hover .cifras-pista {
+  animation-play-state: paused;
+}
+@keyframes ramp-pasa {
+  to {
+    transform: translateX(-50%);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ramp .cifras-pista {
+    animation: none;
+  }
+}

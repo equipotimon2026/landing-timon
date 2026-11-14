@@ -8,5 +8,7 @@ const CLARAS = ['/explora-hero/d', '/explora-hero/app-a']
 
 export function HeaderExplora() {
   const ruta = usePathname()
+  /** La página con formato Ramp trae su propia barra de anuncio y cabecera. */
+  if (ruta === '/explora-hero/ramp') return null
   return <Header oscuro={!CLARAS.includes(ruta)} />
 }

@@ -25,8 +25,8 @@ const VACIO = { parentName: '', parentWhatsapp: '', parentEmail: '', childName: 
  * pagar ahora (/familia/<token> en la app) o mandarle al hijo el link para
  * empezar gratis. Sin token (la app no respondió): avisamos que escribimos.
  */
-export function Anotalo() {
-  const [datos, setDatos] = useState(VACIO)
+export function Anotalo({ emailInicial = '' }: { emailInicial?: string } = {}) {
+  const [datos, setDatos] = useState({ ...VACIO, parentEmail: emailInicial })
   const [estado, setEstado] = useState<Estado>({ paso: 'form', enviando: false, error: null })
   const caja = useRef<HTMLDivElement>(null)
 
