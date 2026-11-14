@@ -5,7 +5,7 @@ import { ArrowRight, Plus } from 'lucide-react'
 import { motion } from 'motion/react'
 import { Isotipo } from '@/components/home/Isotipo'
 import { CONTACT_EMAIL, FUNDADORES } from '@/lib/programa'
-import { LO_QUE_DICEN, URL_ENTRAR } from '@/lib/landing'
+import { URL_ENTRAR } from '@/lib/landing'
 
 const SALIDA = [0.16, 1, 0.3, 1] as const
 const H2 = 'text-[clamp(2rem,3.4vw,3rem)] font-medium leading-[1.08] tracking-[-0.04em] text-[var(--navy)]'
@@ -129,13 +129,18 @@ export function Historia() {
   )
 }
 
-const resaltado = (t: string) =>
-  t.split('==').map((parte, i) => (i % 2 ? <strong key={i} className="font-semibold text-[var(--navy)]">{parte}</strong> : parte))
-
 /**
- * El muro de testimonios de Ramp. Timon tiene tres citas reales: van quietas,
- * en una fila, en lugar de repetirlas en una cinta que pasa.
+ * El muro de testimonios de Ramp. La única cita textual documentada es la de
+ * la psicopedagoga (MEMORY.md: "es textual y sí sale"). Lo del Colegio María
+ * Guadalupe y la UBA está contado con nuestras palabras, no son citas: quedan
+ * como lugar para una cita real con permiso.
  */
+const CITAS = [
+  { texto: '“Es una visión integral, no un simple test.”', quien: 'Psicopedagoga', rol: 'Evaluó la metodología de Timon', real: true },
+  { texto: '[CITA REAL: completar]', quien: '[CITA REAL: completar]', rol: 'Alumno o familia, con permiso para publicar', real: false },
+  { texto: '[CITA REAL: completar]', quien: '[CITA REAL: completar]', rol: 'Profesional o colegio, con permiso para publicar', real: false },
+]
+
 export function Testimonios() {
   return (
     <section id="testimonios" className="mx-auto max-w-[1440px] scroll-mt-20 px-5 py-20 lg:px-16 lg:py-28">
@@ -144,9 +149,13 @@ export function Testimonios() {
         <h2 className={`mt-3 ${H2}`}>No es un simple test.</h2>
       </motion.div>
       <ul className="mt-12 grid gap-3 md:grid-cols-3">
-        {LO_QUE_DICEN.map((c, i) => (
-          <motion.li key={c.quien} {...aparece(i)} className="flex flex-col justify-between rounded-[14px] border border-[var(--borde)] bg-white p-6">
-            <p className="text-[17px] leading-[1.5] text-[var(--texto2)]">{resaltado(c.texto)}</p>
+        {CITAS.map((c, i) => (
+          <motion.li
+            key={i}
+            {...aparece(i)}
+            className={`flex flex-col justify-between rounded-[14px] border bg-white p-6 ${c.real ? 'border-[var(--borde)]' : 'border-dashed border-[var(--terra)]'}`}
+          >
+            <p className={`text-[17px] leading-[1.5] ${c.real ? 'text-[var(--navy)]' : 'text-[var(--terra-hondo)]'}`}>{c.texto}</p>
             <div className="mt-8 border-t border-[var(--borde)] pt-4">
               <p className="text-[15px] font-semibold text-[var(--navy)]">{c.quien}</p>
               <p className="text-[14px] text-[var(--tenue)]">{c.rol}</p>
