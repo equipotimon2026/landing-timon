@@ -2,9 +2,14 @@
 
 import { ArrowUpRight } from "lucide-react";
 import { motion } from "motion/react";
-import { Recorte } from "../app-a/Recorte";
 import { MODULOS } from "./datos";
-import { AreasMini } from "./Piezas";
+import {
+  HojaInforme,
+  OtraMiradaVista,
+  PilaProfesionales,
+  RankingUniversidades,
+  StepperParadas,
+} from "./Vistas";
 
 const SALIDA = [0.16, 1, 0.3, 1] as const;
 
@@ -13,6 +18,15 @@ const SALIDA = [0.16, 1, 0.3, 1] as const;
  * botones y un bento de dos tarjetas grandes y tres chicas, una por módulo
  * real de la app, con su pantalla adentro. Las tarjetas entran con un fundido.
  */
+/** Cada módulo con su vista de la app armada en código. */
+function Vista({ id }: { id: string }) {
+  if (id === "profesionales") return <PilaProfesionales />;
+  if (id === "universidades") return <RankingUniversidades />;
+  if (id === "test") return <StepperParadas />;
+  if (id === "informe") return <HojaInforme cuantas={2} />;
+  return <OtraMiradaVista />;
+}
+
 export function Modulos() {
   return (
     <section
@@ -64,19 +78,9 @@ export function Modulos() {
                 className="shrink-0 text-[var(--tenue)] transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-[var(--primario)]"
               />
             </div>
-            <div
-              className={`relative mt-auto ${m.grande ? "ml-6 lg:ml-10" : "mx-6"} translate-y-6 transition-transform duration-500 group-hover:translate-y-3`}
-            >
-              <div className="overflow-hidden rounded-t-[10px] bg-white ring-1 ring-[rgba(15,31,54,0.08)] shadow-[0_24px_50px_-30px_rgba(15,31,54,0.4)]">
-                {m.corte ? (
-                  <Recorte
-                    corte={m.corte}
-                    alt=""
-                    sizes={m.grande ? "640px" : "420px"}
-                  />
-                ) : (
-                  <AreasMini elegidas={["Salud", "Tecnología"]} />
-                )}
+            <div className="relative mx-6 min-h-0 flex-1 translate-y-3 transition-transform duration-500 group-hover:translate-y-1">
+              <div className="h-[calc(100%+12px)] overflow-hidden rounded-t-[12px] ring-1 ring-[rgba(15,31,54,0.08)] shadow-[0_24px_50px_-30px_rgba(15,31,54,0.4)]">
+                <Vista id={m.id} />
               </div>
             </div>
           </motion.li>

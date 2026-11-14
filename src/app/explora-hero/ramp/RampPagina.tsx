@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { Anotalo } from "@/components/home/Anotalo";
 import { Cabecera } from "./Cabecera";
-import { Desorden } from "./Desorden";
+import { Vitrina } from "./Vitrina";
 import { Hero } from "./Hero";
 import { Modulos } from "./Modulos";
 import { Camino, Cambio, Confianza } from "./Narrativa";
@@ -46,7 +46,7 @@ export function RampPagina() {
         <Hero alEnviar={alEnviar} />
         <Prueba />
         <Cambio />
-        <Desorden />
+        <Vitrina />
         <Modulos />
         <Confianza />
         <Camino />

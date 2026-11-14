@@ -1,4 +1,4 @@
-import type { Corte } from '../app-datos'
+import type { Corte } from "../app-datos";
 
 /**
  * Contenido de /explora-hero/ramp: la página con el formato de ramp.com
@@ -10,7 +10,13 @@ import type { Corte } from '../app-datos'
  * pantallas son recortes de las capturas de /public/app (datos de demo).
  */
 
-const mac = (nombre: string, x: number, y: number, w: number, h: number): Corte => ({
+const mac = (
+  nombre: string,
+  x: number,
+  y: number,
+  w: number,
+  h: number,
+): Corte => ({
   src: `/app/mac-${nombre}.webp`,
   ancho: 1800,
   alto: 1125,
@@ -18,24 +24,24 @@ const mac = (nombre: string, x: number, y: number, w: number, h: number): Corte 
   y,
   w,
   h,
-})
+});
 
 export const CORTES = {
-  esencia: mac('informe', 680, 400, 800, 600),
-  camino: mac('test', 330, 320, 1140, 580),
-  perfil: mac('test', 340, 132, 1122, 92),
-  vosColegio: mac('test', 850, 568, 620, 110),
-  otraMirada: mac('test', 850, 988, 630, 128),
-  valentina: mac('investigacion', 1056, 561, 304, 232),
-  areas: mac('investigacion', 440, 200, 920, 600),
-  uba: mac('comparador', 600, 740, 960, 200),
-  alineada: mac('comparador', 1340, 770, 200, 60),
-  comparador: mac('comparador', 600, 430, 960, 520),
-  filtros: mac('comparador', 600, 440, 960, 200),
-  indice: mac('informe', 180, 100, 340, 480),
-  diego: mac('investigacion', 1061, 331, 294, 220),
-  ramiro: mac('investigacion', 445, 331, 294, 220),
-}
+  esencia: mac("informe", 680, 400, 800, 600),
+  camino: mac("test", 330, 320, 1140, 580),
+  perfil: mac("test", 340, 132, 1122, 92),
+  vosColegio: mac("test", 850, 568, 620, 110),
+  otraMirada: mac("test", 850, 988, 630, 128),
+  valentina: mac("investigacion", 1056, 561, 304, 232),
+  areas: mac("investigacion", 440, 200, 920, 600),
+  uba: mac("comparador", 600, 740, 960, 200),
+  alineada: mac("comparador", 1340, 770, 200, 60),
+  comparador: mac("comparador", 600, 430, 960, 520),
+  filtros: mac("comparador", 600, 440, 960, 200),
+  indice: mac("informe", 180, 100, 340, 480),
+  diego: mac("investigacion", 1061, 331, 294, 220),
+  ramiro: mac("investigacion", 445, 331, 294, 220),
+};
 
 /**
  * Lugares de trabajo de un área, tal como los cuenta el módulo de
@@ -44,9 +50,10 @@ export const CORTES = {
  * [CONFIRMAR] si "empresas" de la red existe como tal.
  */
 export const DONDE_SALUD = {
-  area: 'Salud',
-  lugares: 'Hospitales públicos y privados, clínicas y sanatorios, laboratorios.',
-}
+  area: "Salud",
+  lugares:
+    "Hospitales públicos y privados, clínicas y sanatorios, laboratorios.",
+};
 
 /**
  * El mundo que cambia. Dos cifras del World Economic Forum, Future of Jobs
@@ -55,48 +62,50 @@ export const DONDE_SALUD = {
  */
 export const CAMBIO = [
   {
-    cifra: '39 %',
-    texto: 'de las habilidades que hoy pide el trabajo va a cambiar o quedar vieja de acá a 2030.',
-    fuente: 'World Economic Forum, Future of Jobs Report 2025',
+    cifra: "39 %",
+    texto:
+      "de las habilidades que hoy pide el trabajo va a cambiar o quedar vieja de acá a 2030.",
+    fuente: "World Economic Forum, Future of Jobs Report 2025",
   },
   {
-    cifra: '170 M',
-    texto: 'de puestos nuevos se van a crear en el mundo hasta 2030, y 92 millones van a desaparecer.',
-    fuente: 'World Economic Forum, Future of Jobs Report 2025',
+    cifra: "170 M",
+    texto:
+      "de puestos nuevos se van a crear en el mundo hasta 2030, y 92 millones van a desaparecer.",
+    fuente: "World Economic Forum, Future of Jobs Report 2025",
   },
-]
+];
 
 /** La tira de números bajo el escenario (lib/landing.ts y la home). */
 export const NUMEROS = [
-  { etiqueta: 'Áreas de trabajo', valor: '16' },
-  { etiqueta: 'Carreras', valor: '300' },
-  { etiqueta: 'Universidades', valor: '50' },
-  { etiqueta: 'Paradas para conocerse', valor: '13' },
-  { etiqueta: 'Dimensiones de análisis', valor: '10' },
-  { etiqueta: 'Combinaciones analizadas', valor: '10000', prefijo: '+' },
-]
+  { etiqueta: "Áreas de trabajo", valor: "16" },
+  { etiqueta: "Carreras", valor: "300" },
+  { etiqueta: "Universidades", valor: "50" },
+  { etiqueta: "Paradas para conocerse", valor: "13" },
+  { etiqueta: "Dimensiones de análisis", valor: "10" },
+  { etiqueta: "Combinaciones analizadas", valor: "10000", prefijo: "+" },
+];
 
 /** Las 16 áreas del catálogo (lib/mundos.ts), en corto, para la grilla de prueba. */
 export const AREAS_CORTAS = [
-  'Salud',
-  'Ingeniería',
-  'Tecnología',
-  'Negocios',
-  'Derecho',
-  'Arquitectura',
-  'Comunicación',
-  'Arte y diseño',
-  'Educación',
-  'Ciencias exactas',
-  'Ambiente y agro',
-  'Deporte',
-]
+  "Salud",
+  "Ingeniería",
+  "Tecnología",
+  "Negocios",
+  "Derecho",
+  "Arquitectura",
+  "Comunicación",
+  "Arte y diseño",
+  "Educación",
+  "Ciencias exactas",
+  "Ambiente y agro",
+  "Deporte",
+];
 
 export const CITA_PSICOPEDAGOGA = {
-  texto: 'Es una visión integral, no un simple test.',
-  quien: 'Psicopedagoga',
-  rol: 'Evaluó la metodología de Timon',
-}
+  texto: "Es una visión integral, no un simple test.",
+  quien: "Psicopedagoga",
+  rol: "Evaluó la metodología de Timon",
+};
 
 /**
  * La red y cómo entra tu hijo: los módulos que existen hoy en la app, contados
@@ -104,38 +113,38 @@ export const CITA_PSICOPEDAGOGA = {
  */
 export const MODULOS = [
   {
-    id: 'profesionales',
-    titulo: 'Profesionales de 16 áreas.',
-    gris: 'Les pregunta lo que quiera y ve cómo es el trabajo por dentro.',
+    id: "profesionales",
+    titulo: "Profesionales de 16 áreas.",
+    gris: "Les pregunta lo que quiera y ve cómo es el trabajo por dentro.",
     corte: null,
     grande: true,
   },
   {
-    id: 'universidades',
-    titulo: 'Universidades.',
-    gris: 'Las compara por cuota, modalidad y zona, y ve cuáles van con su perfil.',
+    id: "universidades",
+    titulo: "Universidades.",
+    gris: "Las compara por cuota, modalidad y zona, y ve cuáles van con su perfil.",
     corte: CORTES.comparador,
     grande: true,
   },
   {
-    id: 'test',
-    titulo: 'Su perfil.',
-    gris: 'Trece paradas cortas para saber por dónde entrar a la red.',
+    id: "test",
+    titulo: "Su perfil.",
+    gris: "Trece paradas cortas para saber por dónde entrar a la red.",
     corte: CORTES.camino,
   },
   {
-    id: 'informe',
-    titulo: 'Su informe.',
-    gris: 'Quién es, qué carreras van con él y dónde estudiarlas.',
+    id: "informe",
+    titulo: "Su informe.",
+    gris: "Quién es, qué carreras van con él y dónde estudiarlas.",
     corte: CORTES.esencia,
   },
   {
-    id: 'mirada',
-    titulo: 'Otra mirada.',
-    gris: 'Alguien que lo conoce bien suma lo que ve de él.',
+    id: "mirada",
+    titulo: "Otra mirada.",
+    gris: "Alguien que lo conoce bien suma lo que ve de él.",
     corte: CORTES.otraMirada,
   },
-]
+];
 
 /**
  * El recorrido guiado del hero. La charla usa el relato real del profesional
@@ -143,34 +152,46 @@ export const MODULOS = [
  */
 export const PASOS_HERO = {
   charla:
-    'Consultorio a la mañana: pacientes de a uno, escuchar, revisar, pedir estudios, ajustar tratamientos. Algunos días hago guardia en el hospital, donde todo es más impredecible y se trabaja contra reloj.',
+    "Consultorio a la mañana: pacientes de a uno, escuchar, revisar, pedir estudios, ajustar tratamientos. Algunos días hago guardia en el hospital, donde todo es más impredecible y se trabaja contra reloj.",
   pasos: [
-    { corto: 'Cuenta qué le gusta', titulo: 'Tu hijo cuenta qué le gusta.', bajada: 'Elige las áreas que le atraen entre 16.' },
+    // Opciones (14/11): 1) "Se conoce en profundidad: 13 paradas y 10 dimensiones." (la elegida)
+    // 2) "Recorre 13 paradas evaluadas por psicopedagogas." 3) "Personalidad, intereses, historia y la mirada de su familia."
     {
-      corto: 'Habla con profesionales',
-      titulo: 'Habla con profesionales que viven esa carrera.',
-      bajada: 'Les pregunta lo que quiera, como en una charla.',
+      corto: "Se conoce en profundidad",
+      titulo: "Se conoce en profundidad: 13 paradas y 10 dimensiones.",
+      bajada:
+        "Personalidad, intereses, aptitudes, su historia en el colegio, su familia y la mirada de alguien que lo conoce.",
     },
     {
-      corto: 'Conoce universidades y empresas',
-      titulo: 'Conoce universidades y empresas.',
-      bajada: 'Compara dónde estudiar y ve dónde se trabaja.',
+      corto: "Habla con profesionales",
+      titulo: "Habla con profesionales que viven esa carrera.",
+      bajada: "Les pregunta lo que quiera, como en una charla.",
     },
     {
-      corto: 'Se lleva su informe',
-      titulo: 'Se lleva su informe y queda conectado.',
-      bajada: 'Quién es, qué carreras van con él y su red.',
+      corto: "Conoce universidades y empresas",
+      titulo: "Conoce universidades y empresas.",
+      bajada: "Compara dónde estudiar y ve dónde se trabaja.",
+    },
+    {
+      corto: "Se lleva su informe",
+      titulo: "Se lleva su informe y queda conectado.",
+      bajada: "Quién es, qué carreras van con él y su red.",
     },
   ],
-}
+};
 
 /** "Dónde se trabaja" de Salud (lib/mundos.ts), en filas. */
-export const DONDE_SALUD_LISTA = ['Hospitales públicos y privados', 'Clínicas y sanatorios', 'Consultorios propios', 'Laboratorios']
+export const DONDE_SALUD_LISTA = [
+  "Hospitales públicos y privados",
+  "Clínicas y sanatorios",
+  "Consultorios propios",
+  "Laboratorios",
+];
 
 /** La primera universidad del comparador de demo (captura mac-comparador). */
 export const UNIVERSIDAD_DEMO = {
-  nombre: 'Universidad de Buenos Aires',
-  alineada: 'Muy alineada',
-  carrera: 'Ingeniería en Sistemas',
-  datos: ['Pública', 'Presencial', 'Gratuita', '5 años + CBC'],
-}
+  nombre: "Universidad de Buenos Aires",
+  alineada: "Muy alineada",
+  carrera: "Ingeniería en Sistemas",
+  datos: ["Pública", "Presencial", "Gratuita", "5 años + CBC"],
+};

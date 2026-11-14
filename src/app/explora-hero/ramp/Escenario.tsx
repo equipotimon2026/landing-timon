@@ -13,8 +13,9 @@ import {
 } from "motion/react";
 import { Recorte } from "../app-a/Recorte";
 import { CORTES, PASOS_HERO } from "./datos";
-import { AreasMini, UniversidadMini } from "./Piezas";
+import { UniversidadMini } from "./Piezas";
 import { Circulo, Flecha, Nota } from "./Lapiz";
+import { HojaInforme, RecorridoParadas } from "./Vistas";
 
 const SALIDA = [0.16, 1, 0.3, 1] as const;
 const RAPIDA = [0.7, 0, 0.2, 1] as const;
@@ -159,13 +160,7 @@ function Paso1({ raton }: { raton: Raton }) {
   return (
     <>
       <div className={PANTALLA}>
-        <AreasMini elegidas={["Salud", "Ingeniería"]} retrasos={[1.0, 1.9]} />
-        <Cursor
-          x={["50%", "18%", "18%", "50%", "50%"]}
-          y={["98%", "42%", "42%", "42%", "42%"]}
-          times={[0, 0.34, 0.5, 0.82, 1]}
-          delay={0.1}
-        />
+        <RecorridoParadas />
       </div>
       <Flotante
         raton={raton}
@@ -174,50 +169,32 @@ function Paso1({ raton }: { raton: Raton }) {
         marcas
         className="-top-5 left-[6%]"
       >
-        <Etiqueta>Salud · elegida</Etiqueta>
+        <Etiqueta>13 paradas</Etiqueta>
       </Flotante>
       <Flotante
         raton={raton}
         orden={1}
         profundidad={-10}
-        className="-right-3 max-sm:-bottom-12 sm:-right-8 sm:-top-4"
+        className="-bottom-5 right-[6%]"
       >
-        <div className="px-3 py-2.5">
-          <p className="text-[11px] font-semibold text-[var(--tenue)]">
-            Para conocerse
-          </p>
-          <p className="mt-0.5 text-[15px] font-semibold text-[var(--navy)]">
-            13 paradas
-          </p>
-          <span
-            aria-hidden
-            className="mt-2 block h-[4px] w-[110px] overflow-hidden rounded-full bg-[var(--primario-suave)]"
-          >
-            <motion.span
-              className="block h-full bg-[var(--primario)]"
-              initial={{ width: "8%" }}
-              animate={{ width: "31%" }}
-              transition={{ duration: 1.6, delay: 0.9 }}
-            />
-          </span>
-        </div>
+        <Etiqueta>10 dimensiones</Etiqueta>
       </Flotante>
       <Flotante
         raton={raton}
         orden={2}
-        profundidad={18}
-        className="-bottom-5 left-[12%]"
+        profundidad={-14}
+        marcas
+        className="-right-8 -top-5"
       >
-        <Etiqueta>Ingeniería · elegida</Etiqueta>
+        <Etiqueta punto={false}>Evaluado por psicopedagogas</Etiqueta>
       </Flotante>
       <Flotante
         raton={raton}
         orden={3}
-        profundidad={-14}
-        marcas
-        className="-bottom-6 right-[6%]"
+        profundidad={16}
+        className="-bottom-5 left-[8%]"
       >
-        <Etiqueta punto={false}>16 áreas de trabajo</Etiqueta>
+        <Etiqueta punto={false}>Menos de 10 min por parada</Etiqueta>
       </Flotante>
     </>
   );
@@ -429,34 +406,14 @@ function Paso3({ raton }: { raton: Raton }) {
 function Paso4({ raton }: { raton: Raton }) {
   return (
     <>
-      <div className={`${PANTALLA} mx-auto max-w-[440px]`}>
-        <Recorte
-          corte={CORTES.esencia}
-          alt="El informe de Timon: los rasgos del alumno, del más fuerte al más suave"
-          sizes="(min-width: 1024px) 560px, 92vw"
-        />
-        <motion.span
-          aria-hidden
-          className="absolute inset-x-0 bottom-0 bg-white"
-          initial={{ top: "14%" }}
-          animate={{ top: "100%" }}
-          transition={{ duration: 1.8, delay: 0.3, ease: [0.45, 0, 0.2, 1] }}
-        />
+      <div className={`${PANTALLA} mx-auto max-w-[520px]`}>
+        <HojaInforme desplaza />
       </div>
       <Flotante
         raton={raton}
         orden={0}
-        profundidad={-12}
-        marcas
-        className="left-2 max-sm:-top-6 sm:left-0 sm:top-[10%]"
-      >
-        <Etiqueta>Análisis · 92</Etiqueta>
-      </Flotante>
-      <Flotante
-        raton={raton}
-        orden={1}
         profundidad={12}
-        className="-bottom-5 right-0"
+        className="-bottom-5 right-0 sm:right-[4%]"
       >
         <p className="flex items-center gap-2 whitespace-nowrap px-3 py-2 text-[12.5px] font-semibold text-[var(--navy)]">
           <span className="flex h-5 w-5 items-center justify-center rounded-full bg-[var(--primario)] text-white">
@@ -467,21 +424,30 @@ function Paso4({ raton }: { raton: Raton }) {
       </Flotante>
       <Flotante
         raton={raton}
-        orden={2}
-        profundidad={16}
-        className="right-0 top-[34%]"
+        orden={1}
+        profundidad={-12}
+        marcas
+        className="-top-11 left-0"
       >
-        <Etiqueta>Curiosidad · 86</Etiqueta>
+        <Etiqueta>Tu esencia · Los caminos · Dónde construir</Etiqueta>
       </Flotante>
       {/* [CONFIRMAR] "queda conectado": qué parte de la red sigue disponible después del informe. */}
       <Flotante
         raton={raton}
-        orden={3}
+        orden={2}
         profundidad={-16}
-        marcas
-        className="-bottom-5 left-[2%]"
+        className="-bottom-5 left-0"
       >
         <Etiqueta>Profesionales en su red</Etiqueta>
+      </Flotante>
+      <Flotante
+        raton={raton}
+        orden={3}
+        profundidad={16}
+        marcas
+        className="-top-11 right-0"
+      >
+        <Etiqueta punto={false}>Revisalo con un profesional</Etiqueta>
       </Flotante>
     </>
   );
@@ -623,7 +589,7 @@ export function Escenario() {
                     <span
                       key={activo}
                       aria-hidden
-                      className="pointer-events-none absolute hidden lg:block"
+                      className="pointer-events-none absolute left-0 top-0 hidden lg:block"
                     >
                       <Circulo semilla={30 + i}>
                         <span className="block h-6 w-6" />
