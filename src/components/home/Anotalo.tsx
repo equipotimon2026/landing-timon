@@ -7,6 +7,7 @@ import {
   ANIOS_HIJO,
   LIMITES,
   urlHijoFamilia,
+  urlLlamadaFamilia,
   urlPagarFamilia,
   urlWhatsappHijo,
   validarLead,
@@ -151,11 +152,18 @@ export function Anotalo() {
   )
 }
 
-function Agenda() {
-  const externo = AGENDA_URL.startsWith('http')
+/**
+ * "Agendá 15 minutos". Con una agenda real cargada (NEXT_PUBLIC_AGENDA_URL) va
+ * ahí. Sin agenda y con la familia creada, va a la app, que guarda el pedido y
+ * le avisa al equipo; sin familia, cae en el mail a info@.
+ */
+function Agenda({ token }: { token?: string | null }) {
+  const hayAgenda = !!process.env.NEXT_PUBLIC_AGENDA_URL
+  const href = !hayAgenda && token ? urlLlamadaFamilia(token) : AGENDA_URL
+  const externo = href.startsWith('http')
   return (
     <a
-      href={AGENDA_URL}
+      href={href}
       {...(externo ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
       className="mt-7 flex items-center justify-center gap-2 border-t border-[var(--linea)] pt-6 text-center text-[15.5px] text-[var(--grafito)] underline-offset-4 hover:underline"
     >
@@ -243,7 +251,7 @@ function Listo({ token }: { token: string | null }) {
         </div>
       </div>
 
-      <Agenda />
+      <Agenda token={token} />
     </div>
   )
 }
