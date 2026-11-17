@@ -41,10 +41,7 @@ export function MapaGuia({ nombre }: { nombre: string }) {
       {/* Portada */}
       <section className="bg-[var(--navy)] px-4 pb-16 pt-14 text-white sm:px-6">
         <div className="mx-auto max-w-[1000px]">
-          <p className="text-[12px] font-semibold uppercase tracking-[0.14em] text-[var(--ocean-light)]">
-            El Mapa de los 16 Mundos · Timon
-          </p>
-          <h1 className="mt-4 max-w-[760px] text-[32px] font-extrabold leading-[1.08] sm:text-[52px]">
+          <h1 className="max-w-[760px] text-[32px] font-extrabold leading-[1.08] sm:text-[52px]">
             {nombre ? `${nombre}, acá` : 'Acá'} están las {TOTAL_CARRERAS} carreras, por dentro.
           </h1>
           <p className="mt-5 max-w-[640px] text-[16px] leading-[1.6] text-white/75 sm:text-[18px]">
@@ -80,7 +77,7 @@ export function MapaGuia({ nombre }: { nombre: string }) {
             ].map(([n, t, d]) => (
               <div key={n} className="rounded-2xl bg-white p-6">
                 <p className="text-[26px] font-semibold text-[var(--ocean)]">{n}</p>
-                <p className="mt-1 text-[14px] font-semibold uppercase tracking-[0.06em]">{t}</p>
+                <p className="mt-1 text-[17px] font-bold">{t}</p>
                 <p className="mt-2 text-[15px] leading-[1.55] text-[var(--hueso)]">{d}</p>
               </div>
             ))}
@@ -131,9 +128,7 @@ export function MapaGuia({ nombre }: { nombre: string }) {
       {/* Cierre: lo que el mapa no puede responder */}
       <section className="bg-[var(--navy)] px-4 py-20 text-white sm:px-6">
         <div className="mx-auto max-w-[760px]">
-          <p className="text-[12px] font-semibold uppercase tracking-[0.14em] text-[var(--ocean-light)]">
-            Tus mundos
-          </p>
+          <h2 className="text-[22px] font-bold">Tus mundos</h2>
           {elegidos.length > 0 ? (
             <div className="mt-4 flex flex-wrap gap-2">
               {elegidos.map((m) => (
@@ -212,8 +207,8 @@ function MundoSeccion({
         <div className="mx-auto max-w-[1000px]">
           <div className="grid items-end gap-6 md:grid-cols-[1fr_340px]">
             <div>
-              <p className="text-[12px] font-semibold uppercase tracking-[0.14em] text-[var(--ocean-deep)]">
-                Mundo {String(numero).padStart(2, '0')} · {carreras} carreras
+              <p className="text-[15px] text-[var(--hueso)]">
+                Mundo {numero} de 16, {carreras} carreras
               </p>
               <h2 className="mt-2 text-[28px] font-extrabold leading-[1.1] sm:text-[40px]">{m.nombre}</h2>
               <button
@@ -235,15 +230,15 @@ function MundoSeccion({
 
           <div className="mt-10 grid gap-8 md:grid-cols-2">
             <div>
-              <h3 className="text-[14px] font-semibold uppercase tracking-[0.06em]">Un día de trabajo</h3>
+              <h3 className="text-[18px] font-bold">Un día de trabajo</h3>
               <blockquote className="mt-3 border-l-2 border-[var(--ocean)] pl-4 text-[16px] italic leading-[1.6] text-[var(--navy-mid)]">
                 &ldquo;{m.dia}&rdquo;
               </blockquote>
-              <h3 className="mt-8 text-[14px] font-semibold uppercase tracking-[0.06em]">Dónde se trabaja</h3>
+              <h3 className="mt-8 text-[18px] font-bold">Dónde se trabaja</h3>
               <p className="mt-3 text-[15px] leading-[1.6] text-[var(--hueso)]">{m.donde}</p>
             </div>
             <div>
-              <h3 className="text-[14px] font-semibold uppercase tracking-[0.06em]">Lo que nadie te cuenta</h3>
+              <h3 className="text-[18px] font-bold">Lo que nadie te cuenta</h3>
               <ul className="mt-3 space-y-3">
                 {m.verdades.map((v) => (
                   <li key={v} className="border-l-2 border-[var(--border-cream-strong)] pl-4 text-[15px] leading-[1.55] text-[var(--hueso)]">
@@ -254,7 +249,7 @@ function MundoSeccion({
             </div>
           </div>
 
-          <h3 className="mt-12 text-[14px] font-semibold uppercase tracking-[0.06em]">Sub-mundos y carreras</h3>
+          <h3 className="mt-12 text-[18px] font-bold">Sub-mundos y carreras</h3>
           <div className="mt-4 grid gap-3 sm:grid-cols-2">
             {m.submundos.map((s) => (
               <div key={s.nombre} className="rounded-2xl border border-[var(--border-cream)] bg-white p-5">

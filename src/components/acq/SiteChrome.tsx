@@ -1,28 +1,17 @@
 import Link from 'next/link'
 import { ArrowRight } from 'lucide-react'
-import { WheelMark } from '@/components/landing/Logo'
+import { MarcaTimon } from '@/components/landing/Marca'
 import { CONTACT_EMAIL } from '@/lib/programa'
 import { URL_EMPEZAR, URL_ENTRAR } from '@/lib/landing'
 
 /**
- * Barra de anuncio + navbar + footer, copiados de acquisition.com: franja de
- * color con la novedad, navbar oscura con un único botón pill, y footer del
- * color de marca con cuatro columnas y el descargo legal.
+ * Barra de anuncio + navbar + footer. Desde el 30/10/2026 el navbar y el
+ * footer usan la marca de la presentación (timón de 8 rayos, Jakarta liviana,
+ * navy #1A2640 y azul #3B5FD4).
  */
 
 export function Wordmark({ tone = 'light' }: { tone?: 'light' | 'dark' }) {
-  return (
-    <span className="inline-flex items-center gap-2">
-      <WheelMark tone={tone === 'light' ? 'cream' : 'navy'} size={26} />
-      <span
-        className={`text-[17px] font-extrabold uppercase tracking-[0.08em] ${
-          tone === 'light' ? 'text-white' : 'text-[var(--navy)]'
-        }`}
-      >
-        Timon
-      </span>
-    </span>
-  )
+  return <MarcaTimon tono={tone === 'light' ? 'blanco' : 'navy'} />
 }
 
 export function AnnouncementBar() {
@@ -31,9 +20,6 @@ export function AnnouncementBar() {
       href="/programa"
       className="group block bg-[var(--ocean)] px-4 py-3 text-center text-[13px] text-white sm:text-[15px]"
     >
-      <span className="mr-2 rounded-full bg-white px-2 py-0.5 text-[10px] font-extrabold uppercase text-[var(--navy)] sm:text-[11px]">
-        Nuevo
-      </span>
       <span className="font-bold">Programa Timon, primeros 100 lugares:</span>{' '}
       <span>conocé el programa</span>
       <ArrowRight size={16} className="ml-2 inline transition-transform group-hover:translate-x-1" />
@@ -51,30 +37,33 @@ const NAV = [
 
 export function SiteNav() {
   return (
-    <header className="sticky top-0 z-50 bg-[var(--navy)]">
+    <header
+      className="sticky top-0 z-50 border-b border-[#e6ddd1] bg-[#f6f3ef]/90 backdrop-blur"
+      style={{ fontFamily: 'var(--font-jakarta)' }}
+    >
       <div className="mx-auto flex h-16 max-w-[1140px] items-center justify-between gap-4 px-4 sm:px-6">
         <Link href="/" aria-label="Timon, inicio">
-          <Wordmark />
+          <Wordmark tone="dark" />
         </Link>
         <nav className="flex items-center gap-5 sm:gap-7">
           {NAV.map((n) => (
             <Link
               key={n.href}
               href={n.href}
-              className="hidden text-[14px] font-medium text-white/90 transition-colors hover:text-white md:inline"
+              className="hidden text-[14px] font-medium text-[#3f3a31] transition-colors hover:text-[#1a2640] md:inline"
             >
               {n.label}
             </Link>
           ))}
           <a
             href={URL_ENTRAR}
-            className="hidden text-[14px] font-medium text-white/90 transition-colors hover:text-white sm:inline"
+            className="hidden text-[14px] font-medium text-[#3f3a31] transition-colors hover:text-[#1a2640] sm:inline"
           >
             Entrar
           </a>
           <a
             href={URL_EMPEZAR}
-            className="rounded-full bg-[var(--ocean)] px-5 py-2.5 text-[14px] font-semibold text-white transition-colors hover:bg-[var(--ocean-deep)]"
+            className="rounded-full bg-[#3b5fd4] px-5 py-2.5 text-[14px] font-medium text-white transition-colors hover:bg-[#2f4fbd]"
           >
             Empezá gratis
           </a>
@@ -112,13 +101,13 @@ const FOOTER_COLS = [
 
 export function SiteFooter() {
   return (
-    <footer className="bg-[var(--ocean)] text-white">
+    <footer className="bg-[#1a2640] text-white" style={{ fontFamily: 'var(--font-jakarta)' }}>
       <div className="mx-auto max-w-[1140px] px-4 pb-10 pt-12 sm:px-6">
         <Wordmark />
         <div className="mt-8 grid grid-cols-2 gap-8 sm:grid-cols-3">
           {FOOTER_COLS.map((c) => (
             <div key={c.title}>
-              <p className="text-[13px] font-bold uppercase tracking-[0.06em]">{c.title}</p>
+              <p className="text-[14px] font-semibold text-[#8ea2e8]">{c.title}</p>
               <ul className="mt-3 space-y-2.5">
                 {c.links.map((l) => (
                   <li key={l.label}>
