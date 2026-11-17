@@ -80,6 +80,14 @@ export function urlWhatsappHijo(link: string) {
 }
 
 /**
+ * Camino 3 (11/11) con la familia ya creada: la app registra el pedido y le
+ * avisa al equipo con el WhatsApp del padre, sin que tenga que escribir nada.
+ */
+export function urlLlamadaFamilia(token: string) {
+  return `${APP_URL}/familia/${encodeURIComponent(token)}?llamada=1`
+}
+
+/**
  * Agenda para hablar 15 minutos con el equipo.
  * TODO: cargar el link real de agenda en NEXT_PUBLIC_AGENDA_URL. Mientras no
  * esté, cae en un mail a info@.

@@ -41,93 +41,6 @@ export const MENSAJE_PARA_HIJO =
 
 export const URL_WHATSAPP_PADRE = `https://wa.me/?text=${encodeURIComponent(MENSAJE_PARA_HIJO)}`
 
-/**
- * Video de las secciones y del proceso. Hoy es el video de lanzamiento v4
- * (29/10, con el review de Feli; la app real con datos ficticios), comprimido
- * a 720p. El viernes 30/10 se filma el definitivo: reemplazar el archivo en
- * /public/video. Ojo: las voces del v4 son del plan free de ElevenLabs, que
- * no tiene licencia comercial.
- */
-export const VIDEO = {
-  src: '/video/timon.mp4',
-  poster: '/video/timon-poster.jpg',
-}
-
-/**
- * Bloque de confianza, justo después del video: tres piezas iguales con cara o
- * logo, una frase corta, nombre y rol.
- *
- * `ejemplo: true` = texto provisorio. Se ve solo en desarrollo, con la etiqueta
- * EJEMPLO, y nunca llega a producción. Pendientes del brief antes de publicar:
- * nombre y matrícula de la psicopedagoga, nombre exacto del premio del María
- * Guadalupe con el año y un resultado concreto, y el OK de Legal sobre avales
- * y testimonios.
- */
-export type Aval = {
-  quien: string
-  rol: string
-  frase: string
-  /** Logo o foto en /public. `null` muestra la inicial. */
-  imagen: string | null
-  ejemplo: boolean
-}
-
-export const AVALES: Aval[] = [
-  {
-    // Cita textual (ya se usaba en /programa). Falta sumar nombre y matrícula.
-    quien: 'Psicopedagoga',
-    rol: 'Evaluó la metodología de Timon',
-    frase: 'Es una visión integral, no un simple test.',
-    imagen: null,
-    ejemplo: false,
-  },
-  {
-    quien: 'Colegio María Guadalupe',
-    rol: 'Premio y año a confirmar',
-    frase:
-      'Lo usan nuestros alumnos de 5° y 6° año. [Resultado concreto a confirmar con el colegio.]',
-    imagen: null,
-    ejemplo: true,
-  },
-  {
-    quien: 'Universidad de Buenos Aires',
-    rol: 'Equipo profesional que revisó la metodología',
-    frase: '[Frase textual a confirmar con la UBA.]',
-    imagen: '/logos/universities/uba.svg',
-    ejemplo: true,
-  },
-]
-
-/** Los números que acompañan al bloque de confianza (brief de Feli). */
-export const CATALOGO = { carreras: 300, universidades: 50 }
-
-/** Lo que te devuelve Timon, cada uno con una captura de la app real. */
-export const RESULTADO = [
-  {
-    titulo: 'Tu perfil personal',
-    texto:
-      'Una descripción detallada de cómo sos, a partir de tus respuestas: cómo pensás, qué te mueve y qué te da energía.',
-    imagen: '/resultado/perfil.jpg',
-  },
-  {
-    titulo: 'Las 6 carreras que van con vos, y de qué vas a trabajar',
-    texto:
-      'Las de mayor afinidad, con duración, plan de estudios, salida laboral, sueldos y demanda. Y por qué encaja cada una: qué va con vos y qué no.',
-    imagen: '/resultado/carreras.jpg',
-  },
-  {
-    titulo: 'Dónde estudiarlas',
-    texto:
-      'Universidades públicas y privadas de todo el país, con modalidad, costos y posibilidades de beca. Y un buscador con todas las carreras, que podés usar desde el primer día.',
-    imagen: '/resultado/universidades.jpg',
-  },
-  {
-    titulo: 'Si querés, lo repasás con un profesional',
-    texto: 'Una devolución de tu resultado con un profesional, para pasar del informe a los próximos pasos.',
-    imagen: '/resultado/profesional.jpg',
-  },
-]
-
 /** Los tres pasos. Sin plazo: cada uno lo hace a su ritmo. */
 export const PASOS = [
   {
@@ -143,5 +56,64 @@ export const PASOS = [
     titulo: 'Timon te devuelve tu resultado',
     texto:
       'Cruzamos tus respuestas con todas las carreras del país. Ves gratis la primera parte de tu perfil, y con el informe completo, tus carreras y dónde estudiarlas.',
+  },
+]
+
+/**
+ * Cierre al estilo del workshop de acquisition.com/o-vegas (pedido de Nico,
+ * 30/10/2026): "lo que dicen" → "lo que te llevás" #1/#2/#3 → un botón. Vende
+ * el programa, no la app. Solo lo que existe hoy: el informe, el módulo de
+ * profesiones (16 áreas, con profesionales virtuales: por eso no dice
+ * "hablás con profesionales") y la revisión con un profesional.
+ *
+ * Las partes resaltadas van entre ==dobles iguales==.
+ */
+export const LO_QUE_DICEN: { quien: string; rol: string; texto: string; imagen: string | null; fuente: string }[] = [
+  {
+    quien: 'Psicopedagoga',
+    rol: 'Evaluó la metodología de Timon',
+    texto: '==“Es una visión integral, no un simple test.”==',
+    imagen: null,
+    fuente: 'Evaluación de la metodología',
+  },
+  {
+    quien: 'Colegio María Guadalupe',
+    rol: 'Lo probaron sus alumnos de 5° y 6° año',
+    texto: 'Los alumnos lo probaron, ==les gustó== y dijeron que ==está muy bueno==.',
+    imagen: null,
+    fuente: 'Prueba con alumnos',
+  },
+  {
+    quien: 'Universidad de Buenos Aires',
+    rol: 'Equipo profesional',
+    texto: 'Su equipo revisó la metodología de Timon y dijo que ==está muy buena==.',
+    imagen: '/logos/universities/uba.svg',
+    fuente: 'Revisión de la metodología',
+  },
+]
+
+/** Los números de la presentación (timon_presentacion_v2_1). */
+export const NUMEROS_PRUEBA = [
+  { valor: '13', texto: 'módulos' },
+  { valor: '10', texto: 'dimensiones de análisis' },
+  { valor: '300', texto: 'carreras en 50 universidades' },
+  { valor: '~10.000', texto: 'combinaciones analizadas' },
+]
+
+export const PROGRAMA = [
+  {
+    n: '#1: Tu Informe Personal',
+    foto: '/resultado/carreras.jpg',
+    texto: 'Tu perfil y tus 6 carreras más compatibles, ==por qué van con vos==, dónde estudiarlas y de qué vas a trabajar.',
+  },
+  {
+    n: '#2: Las Profesiones por Dentro',
+    foto: '/resultado/profesiones.jpg',
+    texto: 'Recorrés 16 áreas de trabajo para ver ==cómo es un día real== en cada profesión antes de elegir.',
+  },
+  {
+    n: '#3: Tus Próximos Pasos',
+    foto: '/resultado/profesional.jpg',
+    texto: 'Si querés, repasás tu resultado con un profesional y salís con ==pasos concretos== para decidir.',
   },
 ]

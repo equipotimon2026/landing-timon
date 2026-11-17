@@ -26,8 +26,8 @@ export default function TerminosPage() {
         >
           Términos <em className="italic-emphasis">y</em> condiciones
         </h1>
-        <p className="text-[var(--hueso)] mb-12 font-mono text-[11px] uppercase tracking-[0.14em]">
-          Próximamente · borrador en revisión legal
+        <p className="text-[var(--hueso)] mb-12 text-[15px]">
+          Es un borrador: lo está revisando un abogado y lo publicamos pronto.
         </p>
         <div className="space-y-5 text-[var(--navy)]/85 text-[1.0625rem] leading-[1.7]">
           <p>
