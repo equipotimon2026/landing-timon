@@ -6,7 +6,8 @@
  * tocar las páginas: el cupo, los lugares que quedan y la garantía.
  */
 
-export const APP_URL = 'https://app.timonear.com'
+/** La app. `NEXT_PUBLIC_APP_URL` permite apuntar a un preview; vacío cae a prod. */
+export const APP_URL = process.env.NEXT_PUBLIC_APP_URL || 'https://app.timonear.com'
 export const CONTACT_EMAIL = 'info@timonear.com'
 
 /**

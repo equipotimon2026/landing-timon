@@ -3,6 +3,7 @@ import { ArrowRight } from 'lucide-react'
 import { WheelMark } from '@/components/landing/Logo'
 import { CONTACT_EMAIL } from '@/lib/programa'
 import { URL_EMPEZAR, URL_ENTRAR } from '@/lib/landing'
+import { QuienSosMenu } from '@/components/acq/QuienSosMenu'
 
 /**
  * Barra de anuncio + navbar + footer, copiados de acquisition.com: franja de
@@ -49,14 +50,20 @@ const NAV = [
   { href: '/#preguntas', label: 'Preguntas' },
 ]
 
-export function SiteNav() {
+/**
+ * `cta` cambia el botón de la derecha en páginas con un objetivo propio (en
+ * /padres lleva al formulario, para que haya un solo llamado en la página).
+ */
+export function SiteNav({
+  cta = { href: URL_EMPEZAR, label: 'Empezá gratis', corto: 'Empezá gratis' },
+}: { cta?: { href: string; label: string; corto: string } } = {}) {
   return (
     <header className="sticky top-0 z-50 bg-[var(--navy)]">
       <div className="mx-auto flex h-16 max-w-[1140px] items-center justify-between gap-4 px-4 sm:px-6">
         <Link href="/" aria-label="Timon, inicio">
           <Wordmark />
         </Link>
-        <nav className="flex items-center gap-5 sm:gap-7">
+        <nav className="flex items-center gap-4 sm:gap-7">
           {NAV.map((n) => (
             <Link
               key={n.href}
@@ -72,11 +79,13 @@ export function SiteNav() {
           >
             Entrar
           </a>
+          <QuienSosMenu />
           <a
-            href={URL_EMPEZAR}
-            className="rounded-full bg-[var(--ocean)] px-5 py-2.5 text-[14px] font-semibold text-white transition-colors hover:bg-[var(--ocean-deep)]"
+            href={cta.href}
+            className="whitespace-nowrap rounded-full bg-[var(--ocean)] px-4 py-2.5 text-[14px] font-semibold text-white transition-colors hover:bg-[var(--ocean-deep)] sm:px-5"
           >
-            Empezá gratis
+            <span className="sm:hidden">{cta.corto}</span>
+            <span className="hidden sm:inline">{cta.label}</span>
           </a>
         </nav>
       </div>
