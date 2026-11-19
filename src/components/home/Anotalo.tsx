@@ -25,8 +25,9 @@ const VACIO = { parentName: '', parentWhatsapp: '', parentEmail: '', childName: 
  * el de padres-flujo-venta: POST /api/padres → { ok, token? }. Con token:
  * pagar ahora (/familia/<token> en la app) o mandarle al hijo el link para
  * empezar gratis. Sin token (la app no respondió): avisamos que escribimos.
+ * `origen` es la variante por video (src/lib/variantes.ts); va en el mail.
  */
-export function Anotalo() {
+export function Anotalo({ origen }: { origen?: string } = {}) {
   const [datos, setDatos] = useState(VACIO)
   const [estado, setEstado] = useState<Estado>({ paso: 'form', enviando: false, error: null })
   const caja = useRef<HTMLDivElement>(null)
@@ -48,7 +49,7 @@ export function Anotalo() {
       const res = await fetch('/api/padres', {
         method: 'POST',
         headers: { 'content-type': 'application/json' },
-        body: JSON.stringify(lead),
+        body: JSON.stringify(origen ? { ...lead, origen } : lead),
       })
       const data = (await res.json().catch(() => null)) as
         | { ok: boolean; token?: string; error?: string; fallbackEmail?: string }
