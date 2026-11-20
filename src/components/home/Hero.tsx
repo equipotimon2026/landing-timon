@@ -7,6 +7,7 @@ import { ArrowRight } from 'lucide-react'
 import { motion, useMotionValue, useReducedMotion, useScroll, useSpring, useTransform, type Transition } from 'motion/react'
 import { MacBook } from './Dispositivos'
 import { CTA_TEXTO } from './Cta'
+import { Resaltado } from './Resaltado'
 
 /** El hero 3D (three.js) baja en su propio chunk y solo en el cliente. */
 const Escena3D = dynamic(() => import('./hero3d/Escena'), { ssr: false })
@@ -66,7 +67,7 @@ function useHero3D(seccion: React.RefObject<HTMLElement | null>, quieto: boolean
  * escena queda fija un rato: al bajar, el texto se va y la MacBook se acerca. Con WebGL la MacBook es 3D (hero3d/Escena); si el equipo no lo
  * banca o el usuario pidió menos movimiento, queda la versión en DOM.
  */
-export function Hero() {
+export function Hero({ titular, bajada }: { titular: string; bajada: string }) {
   const quieto = useReducedMotion()
   const T = (t: Transition): Transition => (quieto ? { duration: 0 } : t)
   const seccion = useRef<HTMLElement>(null)
@@ -144,7 +145,7 @@ export function Hero() {
             animate={{ opacity: 1, y: 0 }}
             transition={T({ duration: 1, ease: SUAVE })}
           >
-            Antes de elegir, que vea hacia dónde va <span className="font-semibold text-[var(--ocean)]">el&nbsp;mundo</span>.
+            <Resaltado texto={titular} clase="font-semibold text-[var(--ocean)]" />
           </motion.h1>
           <motion.p
             className="mx-auto mt-4 max-w-[52ch] text-[16px] leading-[1.5] text-[var(--texto2)] sm:mt-5 sm:text-[19px]"
@@ -152,7 +153,7 @@ export function Hero() {
             animate={{ opacity: 1, y: 0 }}
             transition={T({ duration: 0.9, ease: SUAVE, delay: 0.25 })}
           >
-            Profesionales, universidades y empresas lo ayudan a entender qué hay ahí afuera y a elegir con criterio.
+            {bajada}
           </motion.p>
           <motion.div
             className="mt-6 sm:mt-7"
