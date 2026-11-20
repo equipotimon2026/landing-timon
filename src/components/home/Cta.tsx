@@ -2,17 +2,21 @@
 
 import { useEffect, useState } from 'react'
 import { ArrowRight } from 'lucide-react'
+import type { Accion } from '@/lib/variantes'
 
-export const CTA_TEXTO = 'Quiero anotar a mi hijo'
-export const CTA_MICRO = 'Te escribimos en menos de 24 h. Sin compromiso.'
-
-/** El botón principal con su microcopia. Siempre lleva al formulario. */
+/**
+ * El botón principal con su microcopia. Qué dice y a dónde lleva sale de
+ * `accion` (src/lib/variantes.ts): en la home es el formulario de padres
+ * (#anotalo) y en /chicos es crear la cuenta en la app.
+ */
 export function Cta({
+  accion,
   tono = 'ocean',
   alineado = 'centro',
   micro = true,
   claro = false,
 }: {
+  accion: Accion
   tono?: 'ocean' | 'terra'
   alineado?: 'centro' | 'izquierda'
   micro?: boolean
@@ -20,11 +24,11 @@ export function Cta({
 }) {
   return (
     <div className={`flex flex-col gap-3 ${alineado === 'centro' ? 'items-center text-center' : 'items-start'}`}>
-      <a href="#anotalo" className={`btn group ${tono === 'terra' ? 'btn-terra' : ''}`}>
-        {CTA_TEXTO}
+      <a href={accion.destino} className={`btn group ${tono === 'terra' ? 'btn-terra' : ''}`}>
+        {accion.texto}
         <ArrowRight size={18} aria-hidden className="transition-transform duration-300 group-hover:translate-x-1" />
       </a>
-      {micro && <p className={`text-[14px] ${claro ? 'text-white/70' : 'text-[var(--tenue)]'}`}>{CTA_MICRO}</p>}
+      {micro && <p className={`text-[14px] ${claro ? 'text-white/70' : 'text-[var(--tenue)]'}`}>{accion.micro}</p>}
     </div>
   )
 }
@@ -33,7 +37,7 @@ export function Cta({
  * Barra fija abajo, solo en celular: aparece cuando el hero sale de pantalla
  * y se esconde cuando el formulario está a la vista.
  */
-export function CtaFija() {
+export function CtaFija({ accion }: { accion: Accion }) {
   const [ver, setVer] = useState(false)
   useEffect(() => {
     const form = document.getElementById('anotalo')
@@ -58,11 +62,11 @@ export function CtaFija() {
       aria-hidden={!ver}
     >
       <a
-        href="#anotalo"
+        href={accion.destino}
         tabIndex={ver ? 0 : -1}
         className="btn btn-terra w-full shadow-[0_4px_0_var(--terra-hondo),0_18px_40px_-12px_rgba(15,31,54,0.5)]"
       >
-        {CTA_TEXTO}
+        {accion.texto}
         <ArrowRight size={18} aria-hidden />
       </a>
     </div>
