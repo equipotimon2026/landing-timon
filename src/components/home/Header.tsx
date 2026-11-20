@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { Isotipo } from './Isotipo'
 import { URL_ENTRAR } from '@/lib/landing'
+import type { Accion } from '@/lib/variantes'
 
 const LINKS = [
   { href: '#app', texto: 'Cómo funciona' },
@@ -9,7 +10,7 @@ const LINKS = [
 ]
 
 /** Barra fina y translúcida: marca, tres anclas, Entrar y un solo botón (terra). */
-export function Header() {
+export function Header({ accion }: { accion: Accion }) {
   return (
     <header className="sticky top-0 z-40 border-b border-[var(--borde)]/70 bg-white/80 backdrop-blur-xl backdrop-saturate-150">
       <div className="mx-auto flex h-14 max-w-[1120px] items-center gap-6 px-5">
@@ -34,10 +35,10 @@ export function Header() {
             Entrar
           </a>
           <a
-            href="#anotalo"
+            href={accion.destino}
             className="ml-2 inline-flex h-10 items-center rounded-full bg-[var(--terra)] px-5 text-[14px] font-semibold text-white shadow-[0_3px_0_var(--terra-hondo)] transition-[background-color,transform,box-shadow] hover:bg-[#bd7252] active:translate-y-[3px] active:shadow-none"
           >
-            Anotalo
+            {accion.corto ?? accion.texto}
           </a>
         </nav>
       </div>

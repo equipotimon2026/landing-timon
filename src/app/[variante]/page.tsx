@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import '../home.css'
+import { MetaPixel } from '@/components/analytics/MetaPixel'
 import { HomePrograma } from '@/components/home/HomePrograma'
 import { NOMBRES_VARIANTES, copyDe, esVariante } from '@/lib/variantes'
 
@@ -8,6 +9,9 @@ import { NOMBRES_VARIANTES, copyDe, esVariante } from '@/lib/variantes'
  * Variantes de la home, una por video de Instagram: timonear.com/video1,
  * timonear.com/video2...
  * Los textos se editan en src/lib/variantes.ts.
+ *
+ * A estas rutas va toda la pauta, y solo acá carga el pixel de Meta: así se
+ * puede separar el tráfico pagado del orgánico. La home no lo lleva.
  */
 
 type Props = { params: Promise<{ variante: string }> }
@@ -33,5 +37,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function Variante({ params }: Props) {
   const { variante } = await params
   if (!esVariante(variante)) notFound()
-  return <HomePrograma copy={copyDe(variante)} origen={variante} />
+  return (
+    <>
+      <MetaPixel />
+      <HomePrograma copy={copyDe(variante)} origen={variante} />
+    </>
+  )
 }
