@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { Resend } from 'resend'
 import { APP_URL } from '@/lib/programa'
 import { labelAnio, validarLead, type LeadPadre } from '@/lib/padres'
+import { esVariante } from '@/lib/variantes'
 
 const TO = 'info@timonear.com'
 const FROM = 'Timon <noreply@timonear.com>'
@@ -74,8 +75,10 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ ok: false, error: problema }, { status: 400 })
   }
   const lead = crudo as LeadPadre
+  // De qué landing vino (video1, video2...). Solo va en el mail al equipo.
+  const origen = esVariante(campo('origen')) ? campo('origen') : undefined
 
-  const [app, mail] = await Promise.all([crearFamilia(lead), avisarEquipo(lead)])
+  const [app, mail] = await Promise.all([crearFamilia(lead), avisarEquipo(lead, origen)])
 
   if (app.ok || mail.ok) {
     return NextResponse.json({ ok: true, ...(app.ok && app.token ? { token: app.token } : {}) })
@@ -120,7 +123,7 @@ async function crearFamilia(lead: LeadPadre): Promise<Resultado> {
   }
 }
 
-async function avisarEquipo(lead: LeadPadre): Promise<Resultado> {
+async function avisarEquipo(lead: LeadPadre, origen?: string): Promise<Resultado> {
   const apiKey = process.env.RESEND_API_KEY
   if (!apiKey) {
     console.error('[padres] falta RESEND_API_KEY: el mail al equipo no se mandó')
@@ -131,12 +134,13 @@ async function avisarEquipo(lead: LeadPadre): Promise<Resultado> {
     from: FROM,
     to: TO,
     replyTo: lead.parentEmail,
-    subject: `Padre: ${lead.parentName} (${/^\d$/.test(lead.childYear) ? `hijo en ${anio}` : `hijo: ${anio.toLowerCase()}`})`,
+    subject: `${origen ? `[${origen}] ` : ''}Padre: ${lead.parentName} (${/^\d$/.test(lead.childYear) ? `hijo en ${anio}` : `hijo: ${anio.toLowerCase()}`})`,
     text: [
       `Nombre: ${lead.parentName}`,
       `WhatsApp: ${lead.parentWhatsapp}`,
       `Email: ${lead.parentEmail}`,
       `Año del hijo/a: ${anio}`,
+      ...(origen ? [`Landing: timonear.com/${origen}`] : []),
     ].join('\n'),
   })
   if (error) {
