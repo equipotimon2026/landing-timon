@@ -52,7 +52,7 @@ export const COPY_BASE: CopyHome = {
   metaTitulo: 'Programa Timon: para que tu hijo elija carrera con claridad',
   metaDescripcion:
     'Elegir carrera es difícil. Con profesionales, universidades y empresas, tu hijo o hija entiende sus opciones y decide con claridad. Dos semanas, desde casa.',
-  heroTitular: 'Antes de elegir, que vea hacia dónde va **el\u00a0mundo**.',
+  heroTitular: 'Ayudá a tu hijo a elegir su carrera, **sin elegir por\u00a0él**.',
   heroBajada: 'Profesionales, universidades y empresas lo ayudan a entender qué hay ahí afuera y a elegir con criterio.',
   dolorTitular: 'A los 17, elegir carrera es **difícil de verdad**.',
   redTitular: 'Que sepa cómo es trabajar de eso **antes de anotarse**.',
