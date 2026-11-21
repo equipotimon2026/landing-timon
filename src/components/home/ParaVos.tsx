@@ -3,6 +3,7 @@
 import { motion, useReducedMotion } from 'motion/react'
 import { Check, House, LockKeyhole } from 'lucide-react'
 import { FUNDADORES } from '@/lib/programa'
+import type { Publico } from '@/lib/variantes'
 
 /**
  * Tarjeta con "spotlight" (patrón de Aceternity UI): un brillo suave sigue al
@@ -29,8 +30,12 @@ const ETAPAS = ['Se conoce', 'Investiga', 'Se descubre', 'Compara']
 /**
  * Lo que recibe el padre o la madre, mostrado y no explicado: el avance de su
  * hijo, el tiempo, desde dónde, quién acompaña y cuánto cuesta empezar.
+ *
+ * En /chicos son las mismas cinco tarjetas y la misma ilustración: cambia solo
+ * a quién le habla el texto (`publico`).
  */
-export function ParaVos() {
+export function ParaVos({ publico = 'padres' }: { publico?: Publico }) {
+  const chico = publico === 'chicos'
   const quieto = useReducedMotion()
   const t = (d: number, delay = 0) => (quieto ? { duration: 0 } : { duration: d, delay, ease: [0.22, 1, 0.36, 1] as const })
   const vista = { once: true, margin: '-15% 0px' }
@@ -39,7 +44,9 @@ export function ParaVos() {
     <div className="grid gap-4 md:grid-cols-6">
       {/* Avance: cómo lo ve el padre (ilustración) */}
       <Tarjeta className="bg-[var(--ocean)] p-7 text-white sm:p-9 md:col-span-4">
-        <p className="titulo text-[clamp(1.7rem,2.8vw,2.3rem)]">Así ves su avance.</p>
+        <p className="titulo text-[clamp(1.7rem,2.8vw,2.3rem)]">
+          {chico ? 'Así ves tu recorrido.' : 'Así ves su avance.'}
+        </p>
         <div className="mt-7 rounded-[22px] bg-white p-5 text-[var(--navy)] shadow-[0_30px_60px_-30px_rgba(0,0,0,0.5)] sm:p-6">
           <div className="flex items-center justify-between gap-4">
             <div className="flex items-center gap-3">
@@ -77,7 +84,10 @@ export function ParaVos() {
           </ul>
         </div>
         <p className="mt-4 flex items-center gap-2 text-[14px] text-white/75">
-          <LockKeyhole size={14} aria-hidden /> Lo que responde es suyo. Vos ves el avance y el informe final.
+          <LockKeyhole size={14} aria-hidden />{' '}
+          {chico
+            ? 'Lo que respondés es tuyo. En tu casa ven que avanzás, no tus respuestas.'
+            : 'Lo que responde es suyo. Vos ves el avance y el informe final.'}
         </p>
       </Tarjeta>
 
@@ -98,7 +108,9 @@ export function ParaVos() {
             />
           ))}
         </ol>
-        <p className="text-[16px] text-white/85">Un rato por día, cuando le quede cómodo.</p>
+        <p className="text-[16px] text-white/85">
+          {chico ? 'Un rato por día, cuando te quede cómodo.' : 'Un rato por día, cuando le quede cómodo.'}
+        </p>
       </Tarjeta>
 
       {/* Desde casa */}
@@ -106,7 +118,9 @@ export function ParaVos() {
         <House size={40} className="text-[var(--terra)]" aria-hidden />
         <div>
           <p className="titulo text-[clamp(1.7rem,2.6vw,2.1rem)]">Desde casa.</p>
-          <p className="mt-1 text-[16px] text-[var(--texto2)]">Con el celular o la compu, sin moverse.</p>
+          <p className="mt-1 text-[16px] text-[var(--texto2)]">
+            {chico ? 'Con el celular o la compu, sin moverte.' : 'Con el celular o la compu, sin moverse.'}
+          </p>
         </div>
       </Tarjeta>
 
@@ -126,7 +140,9 @@ export function ParaVos() {
         </div>
         <div>
           <p className="titulo text-[clamp(1.7rem,2.6vw,2.1rem)]">Del otro lado hay personas.</p>
-          <p className="mt-1 text-[16px] text-[var(--texto2)]">El equipo de Timon los acompaña.</p>
+          <p className="mt-1 text-[16px] text-[var(--texto2)]">
+            {chico ? 'El equipo de Timon te acompaña.' : 'El equipo de Timon los acompaña.'}
+          </p>
         </div>
       </Tarjeta>
 
@@ -134,7 +150,9 @@ export function ParaVos() {
       <Tarjeta className="flex flex-col justify-between gap-6 bg-[var(--navy)] p-7 text-white sm:p-9 md:col-span-2">
         <div className="mt-auto">
           <p className="titulo text-[clamp(1.7rem,2.6vw,2.1rem)]">Empezar es gratis.</p>
-          <p className="mt-1 text-[16px] text-white/70">No pide tarjeta. Después deciden juntos si sigue.</p>
+          <p className="mt-1 text-[16px] text-white/70">
+            {chico ? 'No pide tarjeta. El informe completo lo deciden en tu casa.' : 'No pide tarjeta. Después deciden juntos si sigue.'}
+          </p>
         </div>
       </Tarjeta>
     </div>

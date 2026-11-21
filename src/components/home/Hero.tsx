@@ -6,8 +6,9 @@ import dynamic from 'next/dynamic'
 import { ArrowRight } from 'lucide-react'
 import { motion, useMotionValue, useReducedMotion, useScroll, useSpring, useTransform, type Transition } from 'motion/react'
 import { MacBook } from './Dispositivos'
-import { CTA_TEXTO } from './Cta'
+import { EntradaChicos } from './EntradaChicos'
 import { Resaltado } from './Resaltado'
+import type { Accion, Publico } from '@/lib/variantes'
 
 /** El hero 3D (three.js) baja en su propio chunk y solo en el cliente. */
 const Escena3D = dynamic(() => import('./hero3d/Escena'), { ssr: false })
@@ -66,8 +67,21 @@ function useHero3D(seccion: React.RefObject<HTMLElement | null>, quieto: boolean
  * con el informe real, abierta y a la vista desde la primera pantalla. La
  * escena queda fija un rato: al bajar, el texto se va y la MacBook se acerca. Con WebGL la MacBook es 3D (hero3d/Escena); si el equipo no lo
  * banca o el usuario pidió menos movimiento, queda la versión en DOM.
+ *
+ * Debajo del botón, cuando la página le habla al padre, va la entrada para el
+ * chico que cayó de casualidad (EntradaChicos).
  */
-export function Hero({ titular, bajada }: { titular: string; bajada: string }) {
+export function Hero({
+  titular,
+  bajada,
+  accion,
+  publico = 'padres',
+}: {
+  titular: string
+  bajada: string
+  accion: Accion
+  publico?: Publico
+}) {
   const quieto = useReducedMotion()
   const T = (t: Transition): Transition => (quieto ? { duration: 0 } : t)
   const seccion = useRef<HTMLElement>(null)
@@ -161,11 +175,12 @@ export function Hero({ titular, bajada }: { titular: string; bajada: string }) {
             animate={{ opacity: 1, y: 0 }}
             transition={T({ duration: 0.9, ease: SUAVE, delay: 0.4 })}
           >
-            <a href="#anotalo" className="btn group">
-              {CTA_TEXTO}
+            <a href={accion.destino} className="btn group">
+              {accion.texto}
               <ArrowRight size={18} aria-hidden className="transition-transform duration-300 group-hover:translate-x-1" />
             </a>
           </motion.div>
+          {publico === 'padres' && <EntradaChicos />}
         </motion.div>
 
         {/* El protagonista. */}
