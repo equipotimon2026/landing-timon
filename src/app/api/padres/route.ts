@@ -75,10 +75,11 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ ok: false, error: problema }, { status: 400 })
   }
   const lead = crudo as LeadPadre
-  // De qué landing vino (video1, video2...). Solo va en el mail al equipo.
+  // De qué landing vino (video1, video2...). Va al mail del equipo y también
+  // a la app, que lo guarda con el lead para poder medir la pauta.
   const origen = esVariante(campo('origen')) ? campo('origen') : undefined
 
-  const [app, mail] = await Promise.all([crearFamilia(lead), avisarEquipo(lead, origen)])
+  const [app, mail] = await Promise.all([crearFamilia(lead, origen), avisarEquipo(lead, origen)])
 
   if (app.ok || mail.ok) {
     return NextResponse.json({ ok: true, ...(app.ok && app.token ? { token: app.token } : {}) })
@@ -95,7 +96,7 @@ export async function POST(req: NextRequest) {
   )
 }
 
-async function crearFamilia(lead: LeadPadre): Promise<Resultado> {
+async function crearFamilia(lead: LeadPadre, origen?: string): Promise<Resultado> {
   const secret = process.env.LANDING_LEADS_SECRET
   if (!secret) {
     console.error('[padres] falta LANDING_LEADS_SECRET: el lead no se pasó a la app')
@@ -105,7 +106,8 @@ async function crearFamilia(lead: LeadPadre): Promise<Resultado> {
     const res = await fetch(`${APP_URL}/api/familias`, {
       method: 'POST',
       headers: { 'content-type': 'application/json', 'x-landing-secret': secret },
-      body: JSON.stringify(lead),
+      // `origen` es opcional del lado de la app: si no vino, no lo mandamos.
+      body: JSON.stringify(origen ? { ...lead, origen } : lead),
       signal: AbortSignal.timeout(APP_TIMEOUT_MS),
       cache: 'no-store',
     })

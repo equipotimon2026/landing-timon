@@ -14,9 +14,9 @@ import { Areas } from '@/components/home/Areas'
 import { Contador } from '@/components/home/Contador'
 import { Anotalo } from '@/components/home/Anotalo'
 import { Isologo } from '@/components/home/Isotipo'
-import { LO_QUE_DICEN, URL_EMPEZAR } from '@/lib/landing'
+import { LO_QUE_DICEN } from '@/lib/landing'
 import { CONTACT_EMAIL } from '@/lib/programa'
-import type { CopyHome } from '@/lib/variantes'
+import type { CopyHome, Publico } from '@/lib/variantes'
 import { Resaltado } from '@/components/home/Resaltado'
 
 /**
@@ -27,6 +27,10 @@ import { Resaltado } from '@/components/home/Resaltado'
  * formulario → objeciones. Poco texto: cada sección se entiende por el
  * visual. El CTA se repite en cuatro momentos y siempre lleva al formulario
  * (/api/padres). No se muestra precio. Textos y fuentes: docs/wording-v2.md.
+ *
+ * Con `publico="chicos"` la misma página le habla al chico (/chicos): mismo
+ * visual y mismos componentes, con el copy de COPY_CHICOS y un botón que lleva
+ * a crear la cuenta en la app en vez de al formulario de padres.
  */
 
 const NUMEROS = [
@@ -44,7 +48,16 @@ const TONOS_CITA = [
   { caja: 'bg-[var(--durazno)]', comilla: 'text-[var(--terra-hondo)]' },
 ]
 
-export function HomePrograma({ copy, origen }: { copy: CopyHome; origen?: string }) {
+export function HomePrograma({
+  copy,
+  origen,
+  publico = 'padres',
+}: {
+  copy: CopyHome
+  origen?: string
+  publico?: Publico
+}) {
+  const esChico = publico === 'chicos'
   return (
     <div className="home min-h-screen overflow-x-clip">
       <ScrollSuave />
@@ -54,10 +67,10 @@ export function HomePrograma({ copy, origen }: { copy: CopyHome; origen?: string
       >
         Saltar al contenido
       </a>
-      <Header />
+      <Header accion={copy.accion} />
 
       <main id="contenido">
-        <Hero titular={copy.heroTitular} bajada={copy.heroBajada} />
+        <Hero titular={copy.heroTitular} bajada={copy.heroBajada} accion={copy.accion} publico={publico} />
 
         {/* ── 1. Dolor (crema) ─────────────────────────────────────────── */}
         <section className="px-3 sm:px-5">
@@ -103,7 +116,7 @@ export function HomePrograma({ copy, origen }: { copy: CopyHome; origen?: string
             ))}
           </dl>
           <div className="mt-16">
-            <Cta tono="terra" claro />
+            <Cta accion={copy.accion} tono="terra" claro />
           </div>
         </section>
 
@@ -128,10 +141,10 @@ export function HomePrograma({ copy, origen }: { copy: CopyHome; origen?: string
             </h2>
           </Aparece>
           <Aparece className="mt-12">
-            <ParaVos />
+            <ParaVos publico={publico} />
           </Aparece>
           <div className="mt-12">
-            <Cta />
+            <Cta accion={copy.accion} />
           </div>
         </section>
 
@@ -179,7 +192,9 @@ export function HomePrograma({ copy, origen }: { copy: CopyHome; origen?: string
                   {copy.formBajada}
                 </p>
                 <Dibujo retraso={0.6} className="relative mx-auto mt-2 hidden h-[60px] w-[220px] sm:block">
-                  <Nota className="left-0 top-1 text-[var(--crema)] [--giro:-4deg]">te lleva 1 minuto</Nota>
+                  <Nota className="left-0 top-1 text-[var(--crema)] [--giro:-4deg]">
+                    {esChico ? 'arrancás ahora' : 'te lleva 1 minuto'}
+                  </Nota>
                   <svg viewBox="0 0 220 60" className="absolute inset-0 h-full w-full overflow-visible">
                     <Trazo d="M150 18 C 176 22, 190 34, 186 54" color="crema" ancho={2.2} />
                     <Trazo d="M176 46 L186 56 L196 45" color="crema" ancho={2.2} orden={1.6} />
@@ -187,7 +202,13 @@ export function HomePrograma({ copy, origen }: { copy: CopyHome; origen?: string
                 </Dibujo>
               </Aparece>
               <div className="mt-8 sm:mt-4">
-                <Anotalo origen={origen} />
+                {esChico ? (
+                  <div className="mt-6 sm:mt-10">
+                    <Cta accion={copy.accion} tono="terra" claro />
+                  </div>
+                ) : (
+                  <Anotalo origen={origen} />
+                )}
               </div>
             </div>
           </div>
@@ -203,7 +224,7 @@ export function HomePrograma({ copy, origen }: { copy: CopyHome; origen?: string
               <Resaltado texto={copy.preguntasTitular} />
             </h2>
             <div className="mt-8">
-              <Cta tono="terra" alineado="izquierda" />
+              <Cta accion={copy.accion} tono="terra" alineado="izquierda" />
             </div>
           </div>
           <div className="border-b border-[var(--borde)]">
@@ -227,7 +248,11 @@ export function HomePrograma({ copy, origen }: { copy: CopyHome; origen?: string
           <div className="flex flex-col gap-8 md:flex-row md:items-center md:justify-between">
             <Isologo tono="crema" />
             <nav aria-label="Pie" className="flex flex-wrap gap-x-7 gap-y-3 text-[14px] text-white/70">
-              <a href={URL_EMPEZAR} className="hover:text-white">Soy estudiante</a>
+              {esChico ? (
+                <Link href="/" className="hover:text-white">Soy padre o madre</Link>
+              ) : (
+                <Link href="/chicos" className="hover:text-white">Soy estudiante</Link>
+              )}
               <Link href="/colegios" className="hover:text-white">Colegios</Link>
               <Link href="/terminos" className="hover:text-white">Términos</Link>
               <a href={`mailto:${CONTACT_EMAIL}`} className="hover:text-white">{CONTACT_EMAIL}</a>
@@ -241,7 +266,7 @@ export function HomePrograma({ copy, origen }: { copy: CopyHome; origen?: string
         </div>
       </footer>
 
-      <CtaFija />
+      <CtaFija accion={copy.accion} />
     </div>
   )
 }
