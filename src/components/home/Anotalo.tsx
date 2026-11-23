@@ -63,6 +63,9 @@ export function Anotalo({ origen }: { origen?: string } = {}) {
         })
         return
       }
+      // Conversión para la pauta: el pixel de Meta solo carga en /video1,
+      // /video2... (MetaPixel.tsx), así que en la home esto no hace nada.
+      ;(window as unknown as { fbq?: (...a: unknown[]) => void }).fbq?.('track', 'Lead')
       setEstado({ paso: 'listo', token: typeof data.token === 'string' && data.token ? data.token : null })
       requestAnimationFrame(() => caja.current?.scrollIntoView({ behavior: 'smooth', block: 'start' }))
     } catch {
@@ -157,11 +160,18 @@ export function Anotalo({ origen }: { origen?: string } = {}) {
  * "Agendá 15 minutos". Con una agenda real cargada (NEXT_PUBLIC_AGENDA_URL) va
  * ahí. Sin agenda y con la familia creada, va a la app, que guarda el pedido y
  * le avisa al equipo; sin familia, cae en el mail a info@.
+ *
+ * Con la familia creada es la tercera opción de la pantalla "Listo" (feedback
+ * de Facu, 23/11): una tarjeta a lo ancho con su propio botón, no un link al pie.
  */
-function Agenda({ token }: { token?: string | null }) {
+function hrefAgenda(token?: string | null) {
   const hayAgenda = !!process.env.NEXT_PUBLIC_AGENDA_URL
   const href = !hayAgenda && token ? urlLlamadaFamilia(token) : AGENDA_URL
-  const externo = href.startsWith('http')
+  return { href, externo: href.startsWith('http') }
+}
+
+function Agenda({ token }: { token?: string | null }) {
+  const { href, externo } = hrefAgenda(token)
   return (
     <a
       href={href}
@@ -174,6 +184,32 @@ function Agenda({ token }: { token?: string | null }) {
         Agendá 15 minutos
       </strong>
     </a>
+  )
+}
+
+function OpcionAgenda({ token }: { token: string }) {
+  const { href, externo } = hrefAgenda(token)
+  return (
+    <div className="mt-4 flex flex-col gap-5 rounded-[20px] border border-[var(--linea)] bg-[var(--papel)] p-6 md:flex-row md:items-center md:justify-between md:gap-8">
+      <div className="flex items-start gap-4">
+        <span className="flex h-11 w-11 shrink-0 items-center max-sm:hidden justify-center rounded-full bg-white shadow-[0_0_0_1px_rgba(15,31,54,0.06)]">
+          <CalendarClock size={21} className="text-[var(--rumbo)]" aria-hidden />
+        </span>
+        <div>
+          <p className="text-[21px] font-medium tracking-[-0.01em]">Hablarlo antes con nosotros</p>
+          <p className="mt-1.5 max-w-[52ch] text-[15px] leading-[1.55] text-[var(--grafito)]">
+            15 minutos con alguien del equipo para contarte cómo funciona y resolver tus dudas. Después decidís.
+          </p>
+        </div>
+      </div>
+      <a
+        href={href}
+        {...(externo ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+        className="flex h-12 w-full shrink-0 items-center justify-center gap-2 rounded-full border border-[var(--tinta)] bg-white px-6 text-[15px] font-semibold text-[var(--tinta)] transition-colors hover:bg-[var(--tinta)] hover:text-white md:w-auto"
+      >
+        Agendá 15 minutos
+      </a>
+    </div>
   )
 }
 
@@ -252,7 +288,7 @@ function Listo({ token }: { token: string | null }) {
         </div>
       </div>
 
-      <Agenda token={token} />
+      <OpcionAgenda token={token} />
     </div>
   )
 }
