@@ -9,7 +9,7 @@ const LINKS = [
   { href: '#preguntas', texto: 'Preguntas' },
 ]
 
-/** Barra fina y translúcida: marca, tres anclas, Entrar y un solo botón (terra). */
+/** Barra fina y translúcida: marca, tres anclas, "Ya tengo cuenta" y un solo botón (terra). */
 export function Header({ accion }: { accion: Accion }) {
   return (
     <header className="sticky top-0 z-40 border-b border-[var(--borde)]/70 bg-white/80 backdrop-blur-xl backdrop-saturate-150">
@@ -28,11 +28,14 @@ export function Header({ accion }: { accion: Accion }) {
               {l.texto}
             </a>
           ))}
+          {/* Feedback de Facu (26/11): el que ya tiene cuenta no encontraba por
+              dónde entrar. Botón con borde y color propio, visible también en el celu. */}
           <a
             href={URL_ENTRAR}
-            className="hidden rounded-full px-3 py-1.5 text-[var(--texto2)] transition-colors hover:text-[var(--texto)] sm:block"
+            className="ml-1 inline-flex h-10 items-center whitespace-nowrap rounded-full border border-[var(--ocean)] px-4 text-[14px] font-semibold text-[var(--ocean)] transition-colors hover:bg-[var(--ocean)] hover:text-white"
           >
-            Entrar
+            <span className="sm:hidden">Ingresar</span>
+            <span className="hidden sm:inline">Ya tengo cuenta · Ingresar</span>
           </a>
           <a
             href={accion.destino}

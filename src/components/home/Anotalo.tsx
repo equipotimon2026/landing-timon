@@ -7,7 +7,6 @@ import {
   ANIOS_HIJO,
   LIMITES,
   urlHijoFamilia,
-  urlLlamadaFamilia,
   urlPagarFamilia,
   urlWhatsappHijo,
   validarLead,
@@ -157,25 +156,31 @@ export function Anotalo({ origen }: { origen?: string } = {}) {
 }
 
 /**
- * "Agendá 15 minutos". Con una agenda real cargada (NEXT_PUBLIC_AGENDA_URL) va
- * ahí. Sin agenda y con la familia creada, va a la app, que guarda el pedido y
- * le avisa al equipo; sin familia, cae en el mail a info@.
- *
- * Con la familia creada es la tercera opción de la pantalla "Listo" (feedback
- * de Facu, 23/11): una tarjeta a lo ancho con su propio botón, no un link al pie.
+ * "Agendá 15 minutos": abre el Calendly del equipo (AGENDA_URL) en otra pestaña.
+ * Con la familia creada, además le avisamos a la app (vía /api/padres/llamada)
+ * para que en /admin/familias figure que el padre fue a agendar.
  */
-function hrefAgenda(token?: string | null) {
-  const hayAgenda = !!process.env.NEXT_PUBLIC_AGENDA_URL
-  const href = !hayAgenda && token ? urlLlamadaFamilia(token) : AGENDA_URL
-  return { href, externo: href.startsWith('http') }
+function avisarAgenda(token?: string | null) {
+  if (!token) return
+  try {
+    void fetch('/api/padres/llamada', {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ token }),
+      keepalive: true,
+    }).catch(() => {})
+  } catch {
+    // El aviso es opcional: el padre igual llega a la agenda.
+  }
 }
 
 function Agenda({ token }: { token?: string | null }) {
-  const { href, externo } = hrefAgenda(token)
   return (
     <a
-      href={href}
-      {...(externo ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+      href={AGENDA_URL}
+      target="_blank"
+      rel="noopener noreferrer"
+      onClick={() => avisarAgenda(token)}
       className="mt-7 flex items-center justify-center gap-2 border-t border-[var(--linea)] pt-6 text-center text-[15.5px] text-[var(--grafito)] underline-offset-4 hover:underline"
     >
       ¿Preferís hablarlo antes?
@@ -188,7 +193,6 @@ function Agenda({ token }: { token?: string | null }) {
 }
 
 function OpcionAgenda({ token }: { token: string }) {
-  const { href, externo } = hrefAgenda(token)
   return (
     <div className="mt-4 flex flex-col gap-5 rounded-[20px] border border-[var(--linea)] bg-[var(--papel)] p-6 md:flex-row md:items-center md:justify-between md:gap-8">
       <div className="flex items-start gap-4">
@@ -203,8 +207,10 @@ function OpcionAgenda({ token }: { token: string }) {
         </div>
       </div>
       <a
-        href={href}
-        {...(externo ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+        href={AGENDA_URL}
+        target="_blank"
+        rel="noopener noreferrer"
+        onClick={() => avisarAgenda(token)}
         className="flex h-12 w-full shrink-0 items-center justify-center gap-2 rounded-full border border-[var(--tinta)] bg-white px-6 text-[15px] font-semibold text-[var(--tinta)] transition-colors hover:bg-[var(--tinta)] hover:text-white md:w-auto"
       >
         Agendá 15 minutos

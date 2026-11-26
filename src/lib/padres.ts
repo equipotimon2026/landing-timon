@@ -1,4 +1,4 @@
-import { APP_URL, CONTACT_EMAIL } from '@/lib/programa'
+import { APP_URL } from '@/lib/programa'
 
 /**
  * Flujo de venta a padres (plan con Facu del 11/11/2026): el padre deja sus
@@ -88,10 +88,13 @@ export function urlLlamadaFamilia(token: string) {
 }
 
 /**
- * Agenda para hablar 15 minutos con el equipo.
- * TODO: cargar el link real de agenda en NEXT_PUBLIC_AGENDA_URL. Mientras no
- * esté, cae en un mail a info@.
+ * Agenda para hablar 15 minutos con el equipo: el Calendly de Facu (26/11).
+ * NEXT_PUBLIC_AGENDA_URL lo pisa si algún día cambia.
  */
 export const AGENDA_URL =
-  process.env.NEXT_PUBLIC_AGENDA_URL ||
-  `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent('Quiero agendar 15 minutos (padres)')}`
+  process.env.NEXT_PUBLIC_AGENDA_URL || 'https://calendly.com/facundo-cognisanalytics/new-meeting'
+
+/** Token de familia con forma razonable (lo genera la app: minúsculas y números). */
+export function tokenValido(token: unknown): token is string {
+  return typeof token === 'string' && /^[A-Za-z0-9_-]{6,200}$/.test(token)
+}
