@@ -1,13 +1,12 @@
 'use client'
 
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { CalendarClock, Check, Copy, CreditCard, MessageCircle } from 'lucide-react'
 import {
   AGENDA_URL,
   ANIOS_HIJO,
   LIMITES,
   urlHijoFamilia,
-  urlLlamadaFamilia,
   urlPagarFamilia,
   urlWhatsappHijo,
   validarLead,
@@ -83,7 +82,7 @@ export function Anotalo({ origen }: { origen?: string } = {}) {
       className="scroll-mt-24 rounded-[26px] bg-white p-5 text-[var(--tinta)] shadow-[0_0_0_1px_rgba(15,31,54,0.05),0_30px_70px_-40px_rgba(15,31,54,0.3)] sm:p-9"
     >
       {estado.paso === 'listo' ? (
-        <Listo token={estado.token} />
+        <Listo token={estado.token} hijo={primerNombre(datos.childName)} />
       ) : (
         <form onSubmit={enviar} noValidate>
           {/* Campo trampa para bots: fuera de pantalla y fuera del tab. */}
@@ -157,25 +156,31 @@ export function Anotalo({ origen }: { origen?: string } = {}) {
 }
 
 /**
- * "Agendá 15 minutos". Con una agenda real cargada (NEXT_PUBLIC_AGENDA_URL) va
- * ahí. Sin agenda y con la familia creada, va a la app, que guarda el pedido y
- * le avisa al equipo; sin familia, cae en el mail a info@.
- *
- * Con la familia creada es la tercera opción de la pantalla "Listo" (feedback
- * de Facu, 23/11): una tarjeta a lo ancho con su propio botón, no un link al pie.
+ * "Agendá 15 minutos": abre el Calendly del equipo (AGENDA_URL) en otra pestaña.
+ * Con la familia creada, además le avisamos a la app (vía /api/padres/llamada)
+ * para que en /admin/familias figure que el padre fue a agendar.
  */
-function hrefAgenda(token?: string | null) {
-  const hayAgenda = !!process.env.NEXT_PUBLIC_AGENDA_URL
-  const href = !hayAgenda && token ? urlLlamadaFamilia(token) : AGENDA_URL
-  return { href, externo: href.startsWith('http') }
+function avisarAgenda(token?: string | null) {
+  if (!token) return
+  try {
+    void fetch('/api/padres/llamada', {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ token }),
+      keepalive: true,
+    }).catch(() => {})
+  } catch {
+    // El aviso es opcional: el padre igual llega a la agenda.
+  }
 }
 
 function Agenda({ token }: { token?: string | null }) {
-  const { href, externo } = hrefAgenda(token)
   return (
     <a
-      href={href}
-      {...(externo ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+      href={AGENDA_URL}
+      target="_blank"
+      rel="noopener noreferrer"
+      onClick={() => avisarAgenda(token)}
       className="mt-7 flex items-center justify-center gap-2 border-t border-[var(--linea)] pt-6 text-center text-[15.5px] text-[var(--grafito)] underline-offset-4 hover:underline"
     >
       ¿Preferís hablarlo antes?
@@ -188,7 +193,6 @@ function Agenda({ token }: { token?: string | null }) {
 }
 
 function OpcionAgenda({ token }: { token: string }) {
-  const { href, externo } = hrefAgenda(token)
   return (
     <div className="mt-4 flex flex-col gap-5 rounded-[20px] border border-[var(--linea)] bg-[var(--papel)] p-6 md:flex-row md:items-center md:justify-between md:gap-8">
       <div className="flex items-start gap-4">
@@ -203,8 +207,10 @@ function OpcionAgenda({ token }: { token: string }) {
         </div>
       </div>
       <a
-        href={href}
-        {...(externo ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+        href={AGENDA_URL}
+        target="_blank"
+        rel="noopener noreferrer"
+        onClick={() => avisarAgenda(token)}
         className="flex h-12 w-full shrink-0 items-center justify-center gap-2 rounded-full border border-[var(--tinta)] bg-white px-6 text-[15px] font-semibold text-[var(--tinta)] transition-colors hover:bg-[var(--tinta)] hover:text-white md:w-auto"
       >
         Agendá 15 minutos
@@ -213,8 +219,53 @@ function OpcionAgenda({ token }: { token: string }) {
   )
 }
 
-function Listo({ token }: { token: string | null }) {
+/** "juliana pérez" → "Juliana" (como en la app). */
+function primerNombre(nombre: string): string {
+  const w = nombre.trim().split(/\s+/)[0] ?? ''
+  if (!w) return ''
+  const uniforme = w === w.toLowerCase() || w === w.toUpperCase()
+  if (!uniforme) return w
+  const m = w.toLocaleLowerCase('es')
+  return m.charAt(0).toLocaleUpperCase('es') + m.slice(1)
+}
+
+/** Aviso a la app (vía /api/padres/evento) de que el padre compartió el link. */
+function avisarCompartido(token: string, tipo: 'shared_child_whatsapp' | 'shared_child_copy') {
+  try {
+    void fetch('/api/padres/evento', {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ token, tipo }),
+      keepalive: true,
+    }).catch(() => {})
+  } catch {
+    // Es solo medición.
+  }
+}
+
+const fmtArs = (n: number) =>
+  new Intl.NumberFormat('es-AR', { style: 'currency', currency: 'ARS', maximumFractionDigits: 0 }).format(n)
+
+function Listo({ token, hijo }: { token: string | null; hijo: string }) {
   const [copiado, setCopiado] = useState(false)
+  // Después de compartir con el hijo, el padre ve el paywall (Nico, 26/11): qué
+  // desbloquea, el precio y "Pagar ahora".
+  const [compartido, setCompartido] = useState(false)
+  const [precio, setPrecio] = useState<number | null>(null)
+
+  useEffect(() => {
+    if (!token) return
+    let vivo = true
+    fetch(`/api/padres/precio?token=${encodeURIComponent(token)}`)
+      .then((r) => (r.ok ? r.json() : null))
+      .then((d) => {
+        if (vivo && typeof d?.precio === 'number') setPrecio(d.precio)
+      })
+      .catch(() => {})
+    return () => {
+      vivo = false
+    }
+  }, [token])
 
   if (!token) {
     return (
@@ -229,7 +280,9 @@ function Listo({ token }: { token: string | null }) {
     )
   }
 
-  const linkHijo = urlHijoFamilia(token)
+  const tk = token
+  const nombre = hijo || 'tu hijo'
+  const linkHijo = urlHijoFamilia(tk)
   const copiar = async () => {
     try {
       await navigator.clipboard.writeText(linkHijo)
@@ -241,8 +294,72 @@ function Listo({ token }: { token: string | null }) {
       document.execCommand('copy')
       t.remove()
     }
+    avisarCompartido(tk, 'shared_child_copy')
     setCopiado(true)
+    setCompartido(true)
     setTimeout(() => setCopiado(false), 2500)
+  }
+  const botonesCompartir = (
+    <div className="mt-4 grid gap-2 sm:grid-cols-2">
+      <a
+        href={urlWhatsappHijo(linkHijo)}
+        target="_blank"
+        rel="noopener noreferrer"
+        onClick={() => {
+          avisarCompartido(tk, 'shared_child_whatsapp')
+          setCompartido(true)
+        }}
+        className="flex h-12 items-center justify-center gap-2 rounded-full bg-[#25D366] text-[15px] font-bold text-[#0B3D20] transition-colors hover:bg-[#1FBF5B]"
+      >
+        <MessageCircle size={18} aria-hidden /> Por WhatsApp
+      </a>
+      <button
+        type="button"
+        onClick={copiar}
+        className="flex h-12 items-center justify-center gap-2 rounded-full border border-[var(--linea)] text-[15px] font-semibold transition-colors hover:bg-[var(--papel)]"
+      >
+        {copiado ? <><Check size={18} aria-hidden /> Copiado</> : <><Copy size={18} aria-hidden /> Copiar link</>}
+      </button>
+    </div>
+  )
+
+  if (compartido) {
+    return (
+      <div role="status">
+        <p className="flex items-center gap-3 text-[17px] text-[var(--tinta)]">
+          <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[var(--mar)]">
+            <Check size={18} className="text-[var(--rumbo)]" aria-hidden />
+          </span>
+          Listo, se lo mandaste a {nombre}.
+        </p>
+
+        <div className="mt-6 rounded-[20px] bg-[var(--tinta)] p-6 text-white sm:p-8">
+          <p className="titulo text-[26px] text-white sm:text-[32px]">Desbloqueá la experiencia completa</p>
+          <p className="mt-2 max-w-[52ch] text-[15.5px] leading-[1.55] text-white/75">
+            {nombre} hace el recorrido gratis. Con el pago, al terminar ve su informe entero: las
+            carreras que más le van, dónde estudiarlas y su perfil completo.
+          </p>
+          {precio != null && (
+            <p className="mt-5 text-[17px] text-white/80">
+              <span className="text-[28px] font-semibold tracking-[-0.02em] text-white">{fmtArs(precio)}</span>
+              {' · '}pago único
+            </p>
+          )}
+          <a href={urlPagarFamilia(tk)} className="btn mt-6 w-full sm:w-auto">
+            <CreditCard size={19} aria-hidden /> {precio != null ? 'Pagar ahora' : 'Ver precio y pagar'}
+          </a>
+          <p className="mt-3 text-[13px] text-white/60">Se paga por transferencia. Te llega el comprobante por mail.</p>
+        </div>
+
+        <details className="mt-5 text-[15px] text-[var(--grafito)]">
+          <summary className="cursor-pointer underline-offset-4 hover:underline">Volver a mandarle el link</summary>
+          <p className="mt-3 break-all rounded-lg bg-[var(--papel)] px-3 py-2 text-[13px] text-[var(--tinta)]">{linkHijo}</p>
+          {botonesCompartir}
+        </details>
+
+        <OpcionAgenda token={tk} />
+      </div>
+    )
   }
 
   return (
@@ -254,9 +371,10 @@ function Listo({ token }: { token: string | null }) {
         <div className="flex flex-col rounded-[20px] bg-[var(--tinta)] p-6 text-white">
           <p className="text-[21px] font-medium tracking-[-0.01em]">Pagar ahora</p>
           <p className="mt-2 flex-1 text-[15px] leading-[1.55] text-white/75">
-            Tu hijo entra con la cuenta ya desbloqueada y ve el informe completo al terminar.
+            {nombre === 'tu hijo' ? 'Tu hijo entra' : `${nombre} entra`} con la cuenta ya desbloqueada y ve el informe completo al terminar.
+            {precio != null && <><br /><span className="text-white">{fmtArs(precio)} · pago único</span></>}
           </p>
-          <a href={urlPagarFamilia(token)} className="btn mt-5 w-full">
+          <a href={urlPagarFamilia(tk)} className="btn mt-5 w-full">
             <CreditCard size={19} aria-hidden /> Pagar ahora
           </a>
         </div>
@@ -264,31 +382,15 @@ function Listo({ token }: { token: string | null }) {
         <div className="flex flex-col rounded-[20px] border border-[var(--linea)] p-6">
           <p className="text-[21px] font-medium tracking-[-0.01em]">Empezar gratis</p>
           <p className="mt-2 text-[15px] leading-[1.55] text-[var(--grafito)]">
-            Mandale este link a tu hijo. Con él crea su cuenta, ya unida a la tuya.
+            Mandale este link a {nombre}. Con él crea su cuenta, ya unida a la tuya.
           </p>
           <p className="mt-3 break-all rounded-lg bg-[var(--papel)] px-3 py-2 text-[13px] text-[var(--tinta)]">{linkHijo}</p>
-          <div className="mt-4 grid gap-2 sm:grid-cols-2">
-            <a
-              href={urlWhatsappHijo(linkHijo)}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex h-12 items-center justify-center gap-2 rounded-full bg-[#25D366] text-[15px] font-bold text-[#0B3D20] transition-colors hover:bg-[#1FBF5B]"
-            >
-              <MessageCircle size={18} aria-hidden /> Por WhatsApp
-            </a>
-            <button
-              type="button"
-              onClick={copiar}
-              className="flex h-12 items-center justify-center gap-2 rounded-full border border-[var(--linea)] text-[15px] font-semibold transition-colors hover:bg-[var(--papel)]"
-            >
-              {copiado ? <><Check size={18} aria-hidden /> Copiado</> : <><Copy size={18} aria-hidden /> Copiar link</>}
-            </button>
-          </div>
+          {botonesCompartir}
           <span className="sr-only" aria-live="polite">{copiado ? 'Link copiado' : ''}</span>
         </div>
       </div>
 
-      <OpcionAgenda token={token} />
+      <OpcionAgenda token={tk} />
     </div>
   )
 }
